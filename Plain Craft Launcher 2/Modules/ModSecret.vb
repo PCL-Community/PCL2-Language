@@ -9,7 +9,7 @@ Friend Module ModSecret
 #Region "杂项"
 
     '在开源版的注册表与常规版的注册表隔离，以防数据冲突
-    Public Const RegFolder As String = "PCLDebug"
+    Public Const RegFolder As String = "PCLang"
     '用于微软登录的 ClientId
     Public Const OAuthClientId As String = ""
     'CurseForge API Key
@@ -257,13 +257,66 @@ Friend Module ModSecret
     Public IsUpdateStarted As Boolean = False
     Public IsUpdateWaitingRestart As Boolean = False
     Public Sub UpdateCheckByButton()
-        Hint(GetLang("LangModSecretHintNoUpdate"))
+        UpdateStart("https://api.github.com/repos/PCL-Community/PCL2-Language/releases/latest", False)
+        'Hint(GetLang("LangModSecretHintNoUpdate"))
     End Sub
     Public Sub UpdateStart(BaseUrl As String, Slient As Boolean, Optional ReceivedKey As String = Nothing, Optional ForceValidated As Boolean = False)
+        If IsUpdateStarted Then
+            Hint("正在检查更新 - Checking updates...")
+            Exit Sub
+        End If
+        Dim UpdateLoader As New LoaderTask(Of Integer, Integer)("PCL 多语言更新", Sub()
+                                                                                 Try
+                                                                                     IsUpdateStarted = True
+                                                                                     Dim latestReleaseJson As JObject = NetGetCodeByRequestRetry(BaseUrl, IsJson:=True)
+                                                                                     Dim latestVersion As String = latestReleaseJson("tag_name").ToString()
+                                                                                     If latestVersion.Equals(VersionBaseName) AndAlso Not Slient Then
+                                                                                         Hint("最新版本 - You are using the latest version", HintType.Finish)
+                                                                                         IsUpdateStarted = False
+                                                                                         Exit Sub
+                                                                                     End If
+                                                                                     ' 下载更新文件
+                                                                                     Dim fileList As JArray = latestReleaseJson("assets")
+                                                                                     If fileList.Count.Equals(0) Then
+                                                                                         Hint("无更新文件 - No update file available...")
+                                                                                         IsUpdateStarted = False
+                                                                                         Exit Sub
+                                                                                     End If
+                                                                                     Dim downloadUrl As String = fileList.ElementAt(0)("browser_download_url").ToString()
+                                                                                     Dim updateFilePath As String = PathTemp & "PCL2_Lang_Update.zip"
+                                                                                     NetDownload(downloadUrl, updateFilePath)
+
+                                                                                     ExtractFile(updateFilePath, PathTemp)
+
+                                                                                     ' 替换旧文件
+                                                                                     UpdateReplace(Process.GetCurrentProcess().Id, PathWithName, PathTemp & "Plain Craft Launcher 2.exe", True)
+                                                                                 Catch ex As Exception
+                                                                                     IsUpdateStarted = False
+                                                                                     Log(ex, "更新失败…… Update fail...", LogLevel.Msgbox)
+                                                                                 End Try
+                                                                             End Sub)
+        UpdateLoader.Start(1)
     End Sub
+
     Public Sub UpdateRestart(TriggerRestartAndByEnd As Boolean)
+        IsUpdateWaitingRestart = True
+        If TriggerRestartAndByEnd Then
+            Process.Start(PathWithName, $"--update ""{PathWithName}"" ""{PathTemp & "Plain Craft Launcher 2.exe"}"" True")
+        End If
     End Sub
+
     Public Sub UpdateReplace(ProcessId As Integer, OldFileName As String, NewFileName As String, TriggerRestart As Boolean)
+        Try
+            Dim process As Process = Process.GetProcessById(ProcessId)
+            process.Kill()
+            File.Copy(NewFileName, OldFileName, True)
+            File.Delete(NewFileName)
+            If TriggerRestart Then
+                Process.Start(OldFileName)
+            End If
+        Catch ex As Exception
+            MsgBox("替换文件失败：" & ex.Message, MsgBoxStyle.Critical)
+        End Try
     End Sub
 
 #End Region

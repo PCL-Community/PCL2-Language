@@ -1326,13 +1326,15 @@ PCL 不支持其他乱七八糟的下载协议。</s:String>
 3. 右键 PCL 选择属性，打开 兼容性 中的 以管理员身份运行此程序。</s:String>
     <s:String x:Key="LangModSecretPermissionAddition">（例如 C 盘和桌面以外的其他位置）</s:String>
     <s:String x:Key="LangModSecretPermissionError">运行环境错误</s:String>
-    <s:String x:Key="LangModSecretDialogOpenSourceVersionTitle">开源版本说明</s:String>
+    <s:String x:Key="LangModSecretDialogOpenSourceVersionTitle">多语言版本说明</s:String>
     <s:String x:Key="LangModSecretDialogOpenSourceVersionContent">该版本中不包含以下特性：
-- CurseForge API 调用：需要你自行申请 API Key，然后添加到 SecretHeadersSign 方法中
-- 正版登录：需要你自行申请 Client ID，然后添加到 ModSecret.vb 的开头
-- 更新与联网通知：避免滥用隐患
+- 联网通知：避免滥用隐患
 - 主题切换：这是需要赞助解锁的纪念性质的功能，别让赞助者太伤心啦……
-- 百宝箱：开发早期往里面塞了些开发工具，整理起来太麻烦了</s:String>
+- 百宝箱：开发早期往里面塞了些开发工具，整理起来太麻烦了
+此版本限制：
+- 再次分发：受开源版本协议限制，版本不能用于制作整合包等二次分发的情况
+
+此版本仓库地址：https://github.com/PCL-Community/PCL2-Language</s:String>
     <s:String x:Key="LangModSecretHintNoTheme">该版本中不包含主题功能……</s:String>
     <s:String x:Key="LangModSecretHintNoUpdate">该版本中不包含更新功能……</s:String>
     <!--ModMinecraft-->
