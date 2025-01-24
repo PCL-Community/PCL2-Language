@@ -3,11 +3,13 @@ Imports System.Windows.Forms
 
 Module Modi18n
     ''' <summary>
-    ''' 获取语言
+    ''' 获取译文，如果支持可在键值后方加上需要替换原文占位符（<c>{0}, {1}</c>等）的文本。
     ''' </summary>
+    ''' <remarks>
+    ''' </remarks>
     ''' <param name="Key">键值</param>
     ''' <param name="Param">字段中对应要展示的内容</param>
-    ''' <returns></returns>
+    ''' <returns>键值所对应的译文</returns>
     Public Function GetLang(Key As String, ParamArray Param As String()) As String
         Try
             If String.IsNullOrWhiteSpace(Key) Then Throw New Exception("Key 值未提供;No key value provided")
@@ -28,9 +30,9 @@ Module Modi18n
     ''' 通过中文得到其它语言，应付一些 i18n 适配较困难的场景
     ''' </summary>
     ''' <param name="Word">中文文本</param>
-    ''' <returns></returns>
+    ''' <returns>对应语言的译文</returns>
     Public Function GetLangByWord(Word As String) As String
-        If Lang = "zh_CN" Then Return Word '语言设置为中文时不需要处理，直接返回以节约处理时间
+        If Lang = "zh-CN" Then Return Word '语言设置为中文时不需要处理，直接返回以节约处理时间
         Select Case Word
             Case "正式版"
                 Return GetLang("LangDownloadRelease")
@@ -52,12 +54,12 @@ Module Modi18n
     ''' 获取当前语言的时间表达方式
     ''' </summary>
     ''' <param name="Time">时间</param>
-    ''' <returns></returns>
+    ''' <returns>当前地区的时间格式字符串</returns>
     Public Function GetLocalTimeFormat(Time As DateTime) As String
         Select Case Lang
-            Case "ja_JP", "ko_KR", "lzh", "zh_CN", "zh_HK", "zh_MARS", "zh_MEME", "zh_TW" '2024/08/16 11:47
+            Case "ja-JP", "ko-KR", "lzh", "zh-CN", "zh-HK", "zh-MARS", "zh-MEME", "zh-TW" '2024/08/16 11:47
                 Return Time.ToString("yyyy'/'MM'/'dd HH':'mm")
-            Case "en_US" '11:47 08/16/2024
+            Case "en-US" '11:47 08/16/2024
                 Return Time.ToString("MM'/'dd'/'yyyy HH':'mm")
             Case Else '11:47 16/08/2024
                 Return Time.ToString("dd'/'MM'/'yyyy HH':'mm")
@@ -104,17 +106,17 @@ Module Modi18n
     ''' <summary>
     ''' 获取当前系统的默认语言
     ''' </summary>
-    ''' <returns>返回类似于 zh_CN 这样形式的文本</returns>
+    ''' <returns>返回类似于 zh-CN 这样形式的文本</returns>
     Public Function GetDefaultLang() As String
         Dim CurrentCulture As String = CultureInfo.CurrentCulture.Name
         Dim PrefixMap As New Dictionary(Of String, String) From {
-            {"el-", "el_GR"},
-            {"es-", "es_ES"},
-            {"fr-", "fr_FR"},
-            {"ja-", "ja_JP"},
-            {"ko-", "ko_KR"},
-            {"ru-", "ru_RU"},
-            {"sk-", "sk_SK"}
+            {"el-", "el-GR"},
+            {"es-", "es-ES"},
+            {"fr-", "fr-FR"},
+            {"ja-", "ja-JP"},
+            {"ko-", "ko-KR"},
+            {"ru-", "ru-RU"},
+            {"sk-", "sk-SK"}
         }
 
         For Each prefixPair In PrefixMap
@@ -123,18 +125,18 @@ Module Modi18n
             End If
         Next
 
-        Select Case CurrentCulture
+        Select Case CurrentCulture '部分需要特殊匹配的语言
             Case "en-GB", "en-NZ", "en-AU", "en-CA"
-                Return "en_GB"
+                Return "en-GB"
             Case "zh-CN", "zh-SG", "zh-Hans"
-                Return "zh_CN"
+                Return "zh-CN"
             Case "zh-HK", "zh-MO"
-                Return "zh_HK"
+                Return "zh-HK"
             Case "zh-TW", "zh-Hant"
-                Return "zh_TW"
+                Return "zh-TW"
         End Select
 
-        Return "en_US"
+        Return "en-US" '无匹配则返回 en_us
     End Function
 
     ''' <summary>
@@ -144,11 +146,11 @@ Module Modi18n
     ''' <returns>11 Million、2 万等这样的表示</returns>
     Public Function GetLocationNum(Num As Int32) As String
         Select Case Lang
-            Case "zh_CN", "zh_HK", "zh_TW", "lzh", "zh_MEME", "ja_JP", "ko_KR"
+            Case "ja-JP", "ko-KR", "lzh", "zh-CN", "zh-HK", "zh-MARS", "zh-MEME", "zh-TW"
                 Return If(Num > 1000000000000, Math.Round(Num / 1000000000000, 2) & " " & GetLang("LangModCompModDigit3"), '兆
                 If(Num > 100000000, Math.Round(Num / 100000000, 2) & " " & GetLang("LangModCompModDigit2"), '亿
                 If(Num > 100000, Math.Round(Num / 10000, 0) & " " & GetLang("LangModCompModDigit1"), Num.ToString("N0") & " "))) '万
-            Case Else 'en_US, en_GB, fr_FR etc.
+            Case Else 'en-US, en-GB, fr-FR etc.
                 Return If(Num > 1000000000, Math.Round(Num / 1000000000, 2) & GetLang("LangModCompModDigit3"), 'Billion
                 If(Num > 1000000, Math.Round(Num / 1000000, 2) & GetLang("LangModCompModDigit2"), 'Million
                 If(Num > 10000, Math.Round(Num / 1000, 0) & GetLang("LangModCompModDigit1"), Num.ToString("N0")))) 'Thousand(K)
@@ -160,7 +162,8 @@ Module Modi18n
     ''' </summary>
     ''' <param name="Count">数量</param>
     ''' <param name="Key">调用的键名</param>
-    ''' <returns></returns>
+    ''' <param name="Param">字段中对应要展示的内容</param>
+    ''' <returns>对应单复数形式的译文</returns>
     Public Function GetLangByNumIsPlural(Count As Int32, Key As String, ParamArray Param As String()) As String
         If Count <= 1 Then
             Return GetLang(Key, Param)
