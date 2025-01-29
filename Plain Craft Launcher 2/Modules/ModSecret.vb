@@ -40,7 +40,10 @@ Friend Module ModSecret
             Environment.[Exit](Result.Cancel)
         End If
         '开源版本提示
-        MyMsgBox(GetLang("LangModSecretDialogOpenSourceVersionContent"), GetLang("LangModSecretDialogOpenSourceVersionTitle"))
+        If Not Setup.Get("UiHiddenDebugVersionNotice") Then
+            MyMsgBox(GetLang("LangModSecretDialogOpenSourceVersionContent"), GetLang("LangModSecretDialogOpenSourceVersionTitle"))
+        End If
+        Setup.Set("UiHiddenDebugVersionNotice", True)
     End Sub
 
     ''' <summary>
