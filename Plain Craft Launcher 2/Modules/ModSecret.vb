@@ -260,29 +260,36 @@ Friend Module ModSecret
 
     Public IsUpdateStarted As Boolean = False
     Public IsUpdateWaitingRestart As Boolean = False
+    Public LatestVersion As String = VersionBaseName
     Public Sub UpdateCheckByButton()
-        Hint("正在获取更新信息...")
+        Hint("Checking...")
         If IsUpdateStarted Then
             Exit Sub
         End If
-        Dim LatestReleaseInfoJson As JObject = Nothing
         Dim LatestVersion As String = Nothing
         RunInNewThread(Sub()
                            Try
-                               LatestReleaseInfoJson = GetJson(NetRequestRetry("https://api.github.com/repos/PCL-Community/PCL2-Language/releases/latest", "GET", "", "application/x-www-form-urlencoded"))
-                               LatestVersion = LatestReleaseInfoJson("tag_name").ToString
-                               If Not LatestVersion = VersionBaseName Then
-                                   If MyMsgBox($"发现了启动器更新（版本 {LatestVersion}），是否更新？", "启动器更新", "更新", "取消") = 1 Then
-                                       UpdateStart(LatestVersion, False)
-                                   End If
-                               Else
-                                   Hint("启动器已是最新版 " + VersionBaseName + "，无须更新啦！", HintType.Finish)
-                               End If
+                               UpdateLatestVersionInfo()
+                               NoticeUserUpdate()
                            Catch ex As Exception
                                Log(ex, "[Update] 获取启动器更新信息失败", LogLevel.Hint)
                                Hint("获取启动器更新信息失败，请检查网络连接", HintType.Critical)
                            End Try
                        End Sub)
+    End Sub
+    Public Sub UpdateLatestVersionInfo()
+        Dim LatestReleaseInfoJson As JObject = Nothing
+        LatestReleaseInfoJson = GetJson(NetRequestRetry("https://api.github.com/repos/PCL-Community/PCL2-Language/releases/latest", "GET", "", "application/x-www-form-urlencoded"))
+        LatestVersion = LatestReleaseInfoJson("tag_name").ToString
+    End Sub
+    Public Sub NoticeUserUpdate()
+        If Not LatestVersion = VersionBaseName Then
+            If MyMsgBox($"{VersionBaseName} -> {LatestVersion}?", "Update?", "Go update!", GetLang("LangDialogBtnCancel")) = 1 Then
+                UpdateStart(LatestVersion, False)
+            End If
+        Else
+            Hint("Latest " + VersionBaseName, HintType.Finish)
+        End If
     End Sub
     Public Sub UpdateStart(VersionStr As String, Slient As Boolean, Optional ReceivedKey As String = Nothing, Optional ForceValidated As Boolean = False)
         Dim DlLink As String = "https://github.com/PCL-Community/PCL2-Language/releases/download/" + VersionStr + "/PCL2_Lang.exe"
@@ -294,14 +301,20 @@ Friend Module ModSecret
                                '下载
                                Dim Address As New List(Of String)
                                Address.Add(DlLink)
-                               Loaders.Add(New LoaderDownload("下载更新文件", New List(Of NetFile) From {New NetFile(Address.ToArray, DlTargetPath, New FileChecker(MinSize:=1024 * 64))}) With {.ProgressWeight = 15})
-                               Loaders.Add(New LoaderTask(Of Integer, Integer)("安装更新", Sub() UpdateRestart(True)))
+                               Loaders.Add(New LoaderDownload("Download file", New List(Of NetFile) From {New NetFile(Address.ToArray, DlTargetPath, New FileChecker(MinSize:=1024 * 64))}) With {.ProgressWeight = 15})
+                               If Not Slient Then
+                                   Loaders.Add(New LoaderTask(Of Integer, Integer)("Replace file", Sub() UpdateRestart(True)))
+                               End If
                                '启动
-                               Dim Loader As New LoaderCombo(Of JObject)("启动器更新", Loaders)
+                               Dim Loader As New LoaderCombo(Of JObject)("Update", Loaders)
                                Loader.Start()
-                               LoaderTaskbarAdd(Loader)
-                               FrmMain.BtnExtraDownload.ShowRefresh()
-                               FrmMain.BtnExtraDownload.Ribble()
+                               If Slient Then
+                                   IsUpdateWaitingRestart = True
+                               Else
+                                   LoaderTaskbarAdd(Loader)
+                                   FrmMain.BtnExtraDownload.ShowRefresh()
+                                   FrmMain.BtnExtraDownload.Ribble()
+                               End If
                            Catch ex As Exception
                                Log(ex, "[Update] 下载启动器更新文件失败", LogLevel.Hint)
                                Hint("下载启动器更新文件失败，请检查网络连接", HintType.Critical)
@@ -309,9 +322,12 @@ Friend Module ModSecret
                        End Sub)
     End Sub
     Public Sub UpdateRestart(TriggerRestartAndByEnd As Boolean)
-        IsUpdateWaitingRestart = True
         Try
             Dim fileName As String = Path + "PCL\Plain Craft Launcher 2.exe"
+            If Not File.Exists(fileName) Then
+                Log("[System] 更新失败：未找到更新文件")
+                Exit Sub
+            End If
             ' id old new restart
             Dim text As String = String.Concat(New String() {"--update ", Process.GetCurrentProcess().Id, " """, PathWithName, """ """, fileName, """ ", TriggerRestartAndByEnd})
             Log("[System] 更新程序启动，参数：" + text, LogLevel.Normal, "出现错误")
@@ -387,8 +403,22 @@ Friend Module ModSecret
 
 #Region "联网通知"
 
-    Public ServerLoader As New LoaderTask(Of Integer, Integer)("PCL 服务", Sub() Log("[Server] 该版本中不包含更新通知功能……"), Priority:=ThreadPriority.BelowNormal)
+    Public ServerLoader As New LoaderTask(Of Integer, Integer)("PCL 服务", AddressOf LoadOnlineInfo, Priority:=ThreadPriority.BelowNormal)
 
+    Private Sub LoadOnlineInfo()
+        Select Case Setup.Get("SystemSystemUpdate")
+            Case 0
+                UpdateLatestVersionInfo()
+                If VersionBaseName <> LatestVersion Then
+                    UpdateStart(LatestVersion, True) '静默更新
+                End If
+            Case 1
+                UpdateLatestVersionInfo()
+                NoticeUserUpdate()
+            Case 2, 3
+                Exit Sub
+        End Select
+    End Sub
 #End Region
 
 End Module
