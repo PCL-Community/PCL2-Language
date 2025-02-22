@@ -165,9 +165,9 @@ Module Modi18n
     ''' <returns>对应单复数形式的译文</returns>
     Public Function GetLangByNumIsPlural(Count As Int32, Key As String) As String
         If Count <= 1 Then
-            Return GetLang(Key, Count)
+            Return GetLang(Key)
         Else
-            Return GetLang(Key & "P", Count)
+            Return GetLang(Key & "P")
         End If
     End Function
 
