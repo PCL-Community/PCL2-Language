@@ -34,13 +34,9 @@
 
 ### 轻松的下载和安装功能
 
-<detials>
+<details>
 
-<summary>
-
-查看图片共 4 张图片
-
-</summary>
+<summary>查看图片共 4 张图片</summary>
 
 ![image](/docs/images/PCL-InstallPage.png)
 
@@ -54,13 +50,9 @@
 
 ### 一目了然的版本管理界面
 
-<detials>
+<details>
 
-<summary>
-
-查看图片共 2 张图片
-
-</summary>
+<summary>查看图片共 2 张图片</summary>
 
 ![image](/docs/images/PCL-InstanceManagePage.png)
 
