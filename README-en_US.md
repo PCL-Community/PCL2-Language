@@ -76,6 +76,14 @@ You can [Download Visual Studio here](https://visualstudio.microsoft.com/)。
 
 Open `Plain Craft Launcher 2.sln` with Visual Studio.
 
+## Contributers
+
+Data from [upstream](https://github.com/Hex-Dragon/PCL2)
+
+<a href="https://github.com/Hex-Dragon/PCL2/graphs/contributors">
+  <img src="https://contrib.rocks/image?repo=Hex-Dragon/PCL2" alt="contrib.rocks image" />
+</a>
+
 ### Related Resources
 - [PCL Download](https://afdian.com/p/0164034c016c11ebafcb52540025c377): Download the release version of PCL for free!
 - [Feature Voting](https://github.com/Hex-Dragon/PCL2/discussions/2): Join the voting! Developers will prioritize features with higher votes!
