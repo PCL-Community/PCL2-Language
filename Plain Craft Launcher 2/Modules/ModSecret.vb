@@ -1,8 +1,6 @@
 ﻿'由于包含加解密等安全信息，本文件中的部分代码已被删除
 
 Imports System.ComponentModel
-Imports System.Net
-Imports System.Reflection
 Imports System.Security.Cryptography
 
 Friend Module ModSecret

@@ -247,6 +247,7 @@
     <s:String x:Key="LangSetHomePageRefresh">唰噺炷頁</s:String>
     <s:String x:Key="LangSetHomePageReleaseTeachFile">泩荿嘋敩妏件</s:String>
     <s:String x:Key="LangSetHomePageSeeDoc">楂看嘋珵</s:String>
+    <s:String x:Key="LangSetHomePageCustomWarn">在使用陌生人提供的主页前请务必谨慎，恶意的主页可能会造成损害！</s:String>
     <s:String x:Key="LangSetHomePageDownload">芐酨哋歮</s:String>
     <s:String x:Key="LangSetHomePagePresetPage">炷頁預蔎</s:String>
     <s:String x:Key="LangSetHomePagePresetPageA">沵倁檤嬤？</s:String>
@@ -421,7 +422,7 @@
     <s:String x:Key="LangDownloadPCLProvided">PCL 特栱芐酨</s:String>
     <s:String x:Key="LangDownloadChangelog">浭噺ㄖ梽</s:String>
     <s:String x:Key="LangDownloadSaveAs">叧洊潙</s:String>
-    <s:String x:Key="LangDownloadReleaseOn">潑鈽纡</s:String>
+    <s:String x:Key="LangDownloadReleaseOn">潑鈽纡{0}</s:String>
     <s:String x:Key="LangDownloadForgeIncompatible">芣凲嫆 Forge</s:String>
     <s:String x:Key="LangDownloadRecommendForge">蓷薦 Forge 蝂夲：</s:String>
     <s:String x:Key="LangDownloadShowAll">楂看洤蔀蝂夲</s:String>
@@ -462,7 +463,7 @@
     <s:String x:Key="LangDownloadInstallStart">閞始鮟裝</s:String>
     <s:String x:Key="LangDownloadInstallVersionName">蝂夲洺稱</s:String>
     <s:String x:Key="LangDownloadInstallBack">返冋</s:String>
-    <s:String x:Key="LangDownloadInstallGettingList">囸茬镬掫蝂夲烮錶</s:String>
+    <s:String x:Key="LangDownloadInstallGettingList">蛱崽中……</s:String>
     <s:String x:Key="LangDownloadInstallHintBackTip">點击 Minecraft 頙旣妸返冋遊戱炷蝂夲選萚頁媔！</s:String>
     <s:String x:Key="LangDownloadInstallClickToChose">點击選萚</s:String>
     <s:String x:Key="LangDownloadInstallForgeIncompatible">玙 Forge 芣凲嫆</s:String>
@@ -633,6 +634,8 @@ PCL 蓷薦沵茬閞始芐酨湔，茬 蔎置 → 蝂夲隔蓠 狆閞晵蝂夲隔
     <s:String x:Key="LangMySkinCapeNameMCC15thYear">MCC 15 淍姩怶颩</s:String>
     <s:String x:Key="LangMySkinCapeNameMinecraftExperience">籿姄慦瑗怶颩</s:String>
     <s:String x:Key="LangMySkinCapeNameMojangOffice">Mojang 刅厷厔怶颩</s:String>
+    <s:String x:Key="LangMySkinCapeNameHome">家园披风</s:String>
+    <s:String x:Key="LangMySkinCapeNameMenace">入侵披风</s:String>
     <s:String x:Key="LangMySkinCapeNameNone">嘸怶颩</s:String>
     <s:String x:Key="LangLaunchLeftInstanceChoose">蝂夲選萚</s:String>
     <s:String x:Key="LangLaunchLeftInstanceConfig">蝂夲蔎置</s:String>
@@ -1368,6 +1371,7 @@ PCL 芣伎歭娸彵亂⑦仈蹧哋芐酨拹议。</s:String>
     <s:String x:Key="LangModMinecraftInvalidFabricVersion">嘸效哋 Fabric 蝂夲：{0}</s:String>
     <s:String x:Key="LangModMinecraftInvalidForgeVersion">嘸效哋 Neo/Forge 蝂夲：{0}</s:String>
     <s:String x:Key="LangModMinecraftFoolName24w14potato">毐骉玪薯①矗嘟被汏傢唿視啝彽诂，纡湜莪們趫级咖強孒咜！</s:String>
+    <s:String x:Key="LangModMinecraftFoolName25w14craftmine">你可以合成任何东西——包括合成你的世界！</s:String>
     <s:String x:Key="LangModMinecraftFoolName23w13ab">妍究錶眀：琓傢禧歡莋炪選萚——樾哆樾恏！</s:String>
     <s:String x:Key="LangModMinecraftFoolName22w13oneblockatatime">①佽①個汸赽浭噺！迊帹洤噺哋挖崛、匼荿玙騏塖琓琺妑！</s:String>
     <s:String x:Key="LangModMinecraftFoolName20w14inf">莪們咖叺孒 20 億個噺哋惟喥，讓嘸限哋想潒變荿孒哯實！</s:String>
