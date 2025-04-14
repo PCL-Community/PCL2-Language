@@ -78,10 +78,8 @@ Open `Plain Craft Launcher 2.sln` with Visual Studio.
 
 ## Contributers
 
-Data from [upstream](https://github.com/Hex-Dragon/PCL2)
-
-<a href="https://github.com/Hex-Dragon/PCL2/graphs/contributors">
-  <img src="https://contrib.rocks/image?repo=Hex-Dragon/PCL2" alt="contrib.rocks image" />
+<a href="https://github.com/PCL-Community/PCL2-Language/graphs/contributors">
+  <img src="https://contrib.rocks/image?repo=PCL-Community/PCL2-Language" alt="contrib.rocks image" />
 </a>
 
 ### Related Resources

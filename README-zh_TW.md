@@ -78,10 +78,8 @@ git clone git@github.com:Hex-Dragon/PCL2.git
 
 ## 貢獻者們
 
-貢獻者資料來自[上游分支](https://github.com/Hex-Dragon/PCL2)
-
-<a href="https://github.com/Hex-Dragon/PCL2/graphs/contributors">
-  <img src="https://contrib.rocks/image?repo=Hex-Dragon/PCL2" alt="contrib.rocks image" />
+<a href="https://github.com/PCL-Community/PCL2-Language/graphs/contributors">
+  <img src="https://contrib.rocks/image?repo=PCL-Community/PCL2-Language" alt="contrib.rocks image" />
 </a>
 
 ### 相關資源
