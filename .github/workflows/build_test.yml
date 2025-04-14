@@ -1,4 +1,4 @@
-name: Build test
+name: Build Test
 on:
   push:
     paths:
@@ -16,7 +16,7 @@ jobs:
     runs-on: windows-latest
     strategy:  
        matrix:  
-         configuration: [Debug]
+         configuration: [Release]
 
     steps:
 
