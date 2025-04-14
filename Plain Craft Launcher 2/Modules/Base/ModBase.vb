@@ -13,7 +13,7 @@ Public Module ModBase
 #Region "声明"
 
     '下列版本信息由更新器自动修改
-    Public Const VersionBaseName As String = "2.9.3" '不含分支前缀的显示用版本名
+    Public Const VersionBaseName As String = "2.9.3.1" '不含分支前缀的显示用版本名
     Public Const VersionStandardCode As String = "2.9.3." & VersionBranchCode '标准格式的四段式版本号
     Public Const CommitHash As String = "" 'Commit Hash，由 GitHub Workflow 自动替换
 #If BETA Then
