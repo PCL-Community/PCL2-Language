@@ -60,4 +60,4 @@ jobs:
       uses: actions/upload-artifact@v4
       with:
         name: ${{ matrix.configuration }} ${{ env.describe }}
-        path: Plain Craft Launcher 2\bin\${{ matrix.configuration }}\Plain Craft Launcher Language.exe
+        path: Plain Craft Launcher 2\bin\${{ matrix.configuration }}\PCL2_Lang.exe

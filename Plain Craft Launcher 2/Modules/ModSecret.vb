@@ -290,7 +290,7 @@ Friend Module ModSecret
         End If
     End Sub
     Public Sub UpdateStart(VersionStr As String, Slient As Boolean, Optional ReceivedKey As String = Nothing, Optional ForceValidated As Boolean = False)
-        Dim DlLink As String = "https://github.com/PCL-Community/PCL2-Language/releases/download/" + VersionStr + "/Plain Craft Launcher Language.exe"
+        Dim DlLink As String = "https://github.com/PCL-Community/PCL2-Language/releases/download/" + VersionStr + "/PCL2_Lang.exe"
         Dim DlTargetPath As String = Path + "PCL\Plain Craft Launcher 2.exe"
         RunInNewThread(Sub()
                            Try
