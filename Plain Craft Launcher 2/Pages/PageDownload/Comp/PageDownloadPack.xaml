@@ -1,0 +1,28 @@
+﻿<local:MyPageRight
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="clr-namespace:PCL" xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+    mc:Ignorable="d" x:Class="PageDownloadPack"
+    PanScroll="{Binding ElementName=Content}">
+    <local:PageComp x:Name="Content" PageType="ModPack" TypeName="{StaticResource LangDownloadPageLeftModpack}" TypeNameSpaced="{StaticResource LangDownloadPageLeftModpackL}">
+        <local:MyComboBoxItem Tag="" Content="{StaticResource LangDownloadResourceTypeAll}" IsSelected="True" />
+        <local:MyComboBoxItem Tag="4484/" Content="{StaticResource LangDownloadModpackTypeMulti}" />
+        <local:MyComboBoxItem Tag="/optimization" Content="{StaticResource LangDownloadModpackTypeOptimization}" />
+        <local:MyComboBoxItem Tag="4479/challenging" Content="{StaticResource LangDownloadModpackTypeChallenging}" />
+        <local:MyComboBoxItem Tag="4483/combat" Content="{StaticResource LangDownloadModpackTypeCombat}" />
+        <local:MyComboBoxItem Tag="4478/quests" Content="{StaticResource LangDownloadModpackTypeQuests}" />
+        <local:MyComboBoxItem Tag="4472/technology" Content="{StaticResource LangDownloadModpackTypeTech}" />
+        <local:MyComboBoxItem Tag="4473/magic" Content="{StaticResource LangDownloadModpackTypeMagic}" />
+        <local:MyComboBoxItem Tag="4475/adventure" Content="{StaticResource LangDownloadModpackTypeAdventure}" />
+        <local:MyComboBoxItem Tag="/kitchen-sink" Content="{StaticResource LangDownloadModpackTypeCook}" />
+        <local:MyComboBoxItem Tag="4476/" Content="{StaticResource LangDownloadModpackTypeExplore}" />
+        <local:MyComboBoxItem Tag="4477/" Content="{StaticResource LangDownloadModpackTypeGame}" />
+        <local:MyComboBoxItem Tag="4471/" Content="{StaticResource LangDownloadModpackTypeScienceFiction}" />
+        <local:MyComboBoxItem Tag="4736/" Content="{StaticResource LangDownloadModpackTypeSkyblock}" />
+        <local:MyComboBoxItem Tag="5128/" Content="{StaticResource LangDownloadModpackTypeImprove}" />
+        <local:MyComboBoxItem Tag="4487/" Content="{StaticResource LangDownloadModpackTypeFTB}" ToolTip="{StaticResource LangDownloadModpackTypeFTBToolTip}" ToolTipService.HorizontalOffset="70" />
+        <local:MyComboBoxItem Tag="4480/" Content="{StaticResource LangDownloadModpackTypeMapBased}" />
+        <local:MyComboBoxItem Tag="4481/lightweight" Content="{StaticResource LangDownloadModpackTypeLightWeight}" />
+        <local:MyComboBoxItem Tag="4482/" Content="{StaticResource LangDownloadModpackTypeHeavyWeight}" />
+    </local:PageComp>
+</local:MyPageRight>
