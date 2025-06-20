@@ -140,7 +140,7 @@ This operation is irrevocable. Are you sure?</s:String>
     <s:String x:Key="LangDialogCustomPageOverwriteFail">Failed to generate the documentation file.</s:String>
     <s:String x:Key="LangHintCustomPageOverwriteSuccess">The documentation file has been generated!</s:String>
     <s:String x:Key="LangHintCustomPageRefreshed">Homepage refreshed!</s:String>
-    <s:String x:Key="LangDialogCustomPageTeachContent">1. Click the "Generate documentations" button, which will generate the "Custom.xaml" layout file in the PCL folder.
+    <s:String x:Key="LangDialogCustomPageTeachContent">1. Click the "Generate docs" button, which will generate the "Custom.xaml" layout file in the PCL folder.
 2. Modify the file with tools like Notepad, and remember to save it after the modification.
 3. Click the "Refresh" button to see what the homepage looks like now.
 You can directly refresh the homepage after generating the documentation file and make changes accordingly, which will be more helpful for you to understand.
@@ -243,7 +243,7 @@ You can manually edit this file to add text, images, frequently used websites, q
 If you have created a stable online homepage, you can click this tip to contribute it. If it qualifies, it can be added to the presets!</s:String>
     <s:String x:Key="LangSetHomePageOnline">Online</s:String>
     <s:String x:Key="LangSetHomePageRefresh">Refresh</s:String>
-    <s:String x:Key="LangSetHomePageReleaseTeachFile">Generate documentations</s:String>
+    <s:String x:Key="LangSetHomePageReleaseTeachFile">Generate docs</s:String>
     <s:String x:Key="LangSetHomePageSeeDoc">Tutorials</s:String>
     <s:String x:Key="LangSetHomePageCustomWarn">Please exercise caution when using homepages provided by strangers. Malicious homepages may cause harm!</s:String>
     <s:String x:Key="LangSetHomePageDownload">URL</s:String>
@@ -260,6 +260,7 @@ If you have created a stable online homepage, you can click this tip to contribu
     <s:String x:Key="LangSetHomePagePresetPageJ">PCL New Feature Manual (Author: WForst-Breeze)</s:String>
     <s:String x:Key="LangSetHomePagePresetPageK">OpenMCIM Dashboard (Author: SALTWOOD)</s:String>
     <s:String x:Key="LangSetHomePagePresetPageL">Magazine Homepage (Author: CreeperIsASpy)</s:String>
+    <s:String x:Key="LangSetHomePagePresetPageM">PCL GitHub 仪表盘（作者：Deep-Dark-Forest）</s:String>
     <s:String x:Key="LangSetFuncHidden">Feature hiding</s:String>
     <s:String x:Key="LangSetFuncHiddenToolTip">You can hide unnecessary pages or disable specific features. Press "F12" in any interface to show the hidden features temporarily.</s:String>
     <s:String x:Key="LangSetFuncHiddenLaunch">Main interface</s:String>
@@ -621,6 +622,7 @@ This page offers the NeoForge installer for download. After downloading, you nee
     <s:String x:Key="LangDownloadShaderTypeCartoon">卡通风</s:String>
     <s:String x:Key="LangDownloadShaderTypeTitleFeature">特性</s:String>
     <s:String x:Key="LangDownloadShaderTypeVanilla">原版可用</s:String>
+    <s:String x:Key="LangDownloadShaderTypeVanillaToolTip">作为资源包加载，可以直接在原版游戏里使用。</s:String>
     <s:String x:Key="LangDownloadShaderTypeColoredLighting">彩色光照</s:String>
     <s:String x:Key="LangDownloadShaderTypePathTracing">路径追踪</s:String>
     <s:String x:Key="LangDownloadShaderTypePBR">PBR</s:String>
@@ -921,7 +923,6 @@ Opening PCL with the parameter "--memory" will execute memory optimization silen
     <s:String x:Key="LangPageSetupLaunchLaunchMemUsedMem">Memory used</s:String>
     <s:String x:Key="LangPageSetupLaunchLaunchMemMemForGame">Game allocated</s:String>
     <s:String x:Key="LangPageSetupLaunchLaunchAdvanceOptions">Advanced launch options</s:String>
-    <s:String x:Key="LangPageSetupLaunchLaunchAdvanceOptionsHintTip">You can find more advanced launch options in the instance settings.</s:String>
     <s:String x:Key="LangPageSetupLaunchLaunchAdvanceOptionsJVMHead">JVM parameter header</s:String>
     <s:String x:Key="LangPageSetupLaunchLaunchAdvanceOptionsJVMHeadTops">Additional JVM parameters to use when launching Minecraft. Do not attempt to edit if you are not sure.</s:String>
     <s:String x:Key="LangPageSetupLaunchLaunchAdvanceOptionsJVMHeadReset">Reset</s:String>
@@ -1034,7 +1035,7 @@ If login fails with an error like "Could not establish trust relationship for th
     <s:String x:Key="LangPageSetupSystemDownloadAccessibilityRemindGameUpdateRelease">Release update</s:String>
     <s:String x:Key="LangPageSetupSystemDownloadAccessibilityRemindGameUpdateReleaseToolTip">Display a hint when a new Minecraft release is released.</s:String>
     <s:String x:Key="LangPageSetupSystemDownloadAccessibilitySetGameLanguage">Game language</s:String>
-    <s:String x:Key="LangPageSetupSystemDownloadAccessibilityAutoSetGameLanguage">Synchronous game language</s:String>
+    <s:String x:Key="LangPageSetupSystemDownloadAccessibilityAutoSetGameLanguage">Synchronize game language</s:String>
     <s:String x:Key="LangPageSetupSystemSystem">System</s:String>
     <s:String x:Key="LangPageSetupSystemSystemLaunchUpdate">Update</s:String>
     <s:String x:Key="LangPageSetupSystemSystemLaunchUpdateA">Download when a update is available</s:String>
@@ -1376,7 +1377,6 @@ Please check whether the event type is filled in correctly and whether the PCL i
 - Update and networking notifications: Omitted to avoid potential abuse concerns.
 - Theme: This is a commemorative feature that requires sponsorship to unlock. Don't disappoint the sponsors...
 - Utilities: Some development tools were placed here during the early stages of development, making them difficult to sort out.</s:String>
-    <s:String x:Key="LangModSecretHintNoTheme">The current version of PCL does not include themes...</s:String>
     <s:String x:Key="LangModSecretHintNoUpdate">The current version of PCL does not include update...</s:String>
     <s:String x:Key="LangModMinecraftCurrentFolder">Current folder</s:String>
     <s:String x:Key="LangModMinecraftOfficialFolder">Minecraft launcher folder</s:String>
@@ -1683,11 +1683,7 @@ If you are using a VPN, please disable it or switch to a different server and tr
     <s:String x:Key="LangModLaunchDialogContentNoMc">You have not purchased Minecraft yet, or you Xbox Game Pass has expired.</s:String>
     <s:String x:Key="LangModLaunchDialogContentCreateRole">Please create the Minecraft player profile first, then try again.</s:String>
     <s:String x:Key="LangModLaunchDialogBtnCreateRole">Create profile</s:String>
-    <s:String x:Key="LangModLaunchDialogContentGetSkinFail">The game will launch without the custom skin due to a failure in skin obtainance.
-Please check your internet!
-
-Detail: {0}</s:String>
-    <s:String x:Key="LangModLaunchDialogTitleGetSkinFail">Failed to obtain the skin</s:String>
+    <s:String x:Key="LangModLaunchDialogGetSkinFailHint">皮肤信息获取失败，游戏将以无皮肤的方式启动</s:String>
     <s:String x:Key="LangModLaunchExceptionOnlineProfileNotFound">Player profile not found. ({0})</s:String>
     <s:String x:Key="LangModLaunchExceptionOnlineUUIDGetFail">Failed to obtain UUID from the official website. ({0})</s:String>
     <s:String x:Key="LangModLaunchExceptionOnlineUUIDLenIncorrect">The length of the obtained UUID is insufficient. ({0})</s:String>

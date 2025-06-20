@@ -259,6 +259,7 @@
     <s:String x:Key="LangSetHomePagePresetPageJ">PCL 新功能說明書（撰者：WForst-Breeze）</s:String>
     <s:String x:Key="LangSetHomePagePresetPageK">OpenMCIM 儀表板（撰者：SALTWOOD）</s:String>
     <s:String x:Key="LangSetHomePagePresetPageL">杂志主页（作者：CreeperIsASpy）</s:String>
+    <s:String x:Key="LangSetHomePagePresetPageM">PCL GitHub 仪表盘（作者：Deep-Dark-Forest）</s:String>
     <s:String x:Key="LangSetFuncHidden">隱功能</s:String>
     <s:String x:Key="LangSetFuncHiddenToolTip">汝可隱不需之頁，或關特定功。於任界按 F12 可暫顯隱功。</s:String>
     <s:String x:Key="LangSetFuncHiddenLaunch">主頁</s:String>
@@ -494,10 +495,15 @@ PCL 薦汝始下載前，於 設置 → 版本隔離 中開版本隔離選！</s
     <s:String x:Key="LangDownloadPageLeftManualInstallFold">手動裝包</s:String>
     <s:String x:Key="LangDownloadPageLeftResource">資源</s:String>
     <s:String x:Key="LangDownloadPageLeftMods">Mod</s:String>
+    <s:String x:Key="LangDownloadPageLeftModsL"> Mod </s:String>
     <s:String x:Key="LangDownloadPageLeftModpack">整合包</s:String>
+    <s:String x:Key="LangDownloadPageLeftModpackL">整合包</s:String>
     <s:String x:Key="LangDownloadPageLeftResourcepack">资源包</s:String>
+    <s:String x:Key="LangDownloadPageLeftResourcepackL">资源包</s:String>
     <s:String x:Key="LangDownloadPageLeftShader">光影包</s:String>
+    <s:String x:Key="LangDownloadPageLeftShaderL">光影包</s:String>
     <s:String x:Key="LangDownloadPageLeftDatapack">数据包</s:String>
+    <s:String x:Key="LangDownloadPageLeftDatapackL">数据包</s:String>
     <s:String x:Key="LangDownloadPageLeftMinecraft">Minecraft</s:String>
     <s:String x:Key="LangDownloadPageLeftOptiFine">OptiFine</s:String>
     <s:String x:Key="LangDownloadPageLeftForge">Forge</s:String>
@@ -615,6 +621,7 @@ PCL 薦汝始下載前，於 設置 → 版本隔離 中開版本隔離選！</s
     <s:String x:Key="LangDownloadShaderTypeCartoon">卡通风</s:String>
     <s:String x:Key="LangDownloadShaderTypeTitleFeature">特性</s:String>
     <s:String x:Key="LangDownloadShaderTypeVanilla">原版可用</s:String>
+    <s:String x:Key="LangDownloadShaderTypeVanillaToolTip">作为资源包加载，可以直接在原版游戏里使用。</s:String>
     <s:String x:Key="LangDownloadShaderTypeColoredLighting">彩色光照</s:String>
     <s:String x:Key="LangDownloadShaderTypePathTracing">路径追踪</s:String>
     <s:String x:Key="LangDownloadShaderTypePBR">PBR</s:String>
@@ -917,7 +924,6 @@ PCL 薦汝始下載前，於 設置 → 版本隔離 中開版本隔離選！</s
     <s:String x:Key="LangPageSetupLaunchLaunchMemUsedMem">已用之記憶體</s:String>
     <s:String x:Key="LangPageSetupLaunchLaunchMemMemForGame">已用之記憶體</s:String>
     <s:String x:Key="LangPageSetupLaunchLaunchAdvanceOptions">高級始遊戲之項</s:String>
-    <s:String x:Key="LangPageSetupLaunchLaunchAdvanceOptionsHintTip">你可以在版本独立设置中找到更多高级启动选项。</s:String>
     <s:String x:Key="LangPageSetupLaunchLaunchAdvanceOptionsJVMHead">JVM 參之頭</s:String>
     <s:String x:Key="LangPageSetupLaunchLaunchAdvanceOptionsJVMHeadTops">始 Minecraft 時用外加之 JVM 參，若汝不知其用途，請勿易之。
 汝可擊左之初始化鈕以復默認設置。</s:String>
@@ -1002,10 +1008,10 @@ PCL 薦汝始下載前，於 設置 → 版本隔離 中開版本隔離選！</s
     <s:String x:Key="LangPageSetupLeftDialogResetTitle">初始化確認</s:String>
     <s:String x:Key="LangPageSetupSystemDownload">下載</s:String>
     <s:String x:Key="LangPageSetupSystemDownloadVersionListSource">版本列表獲取</s:String>
+    <s:String x:Key="LangPageSetupSystemDownloadVersionDownloadSource">文件下载源</s:String>
     <s:String x:Key="LangPageSetupSystemDownloadVersionListSourceA">儘量使用鏡像源（加載快，但版本可能不是最新的）</s:String>
     <s:String x:Key="LangPageSetupSystemDownloadVersionListSourceB">僅在官方源加載緩慢時改用鏡像源</s:String>
     <s:String x:Key="LangPageSetupSystemDownloadVersionListSourceC">盡量使用官方源（保證版本最新，但加載緩慢）</s:String>
-    <s:String x:Key="LangPageSetupSystemDownloadVersionDownloadSource">文件下载源</s:String>
     <s:String x:Key="LangPageSetupSystemDownloadModFileName">改囊命名風格</s:String>
     <s:String x:Key="LangPageSetupSystemDownloadModFileNameToolTip">決定下載的改囊的默認文件名中，中文譯名應該放在哪個位置
 該選項僅在語言設置為簡體中文時有效</s:String>
@@ -1378,7 +1384,6 @@ PCL 不支持其他亂七八糟的下載協議。</s:String>
 - 更新與聯網通知：避免濫用隱患
 - 主題切換：這是需要贊助解鎖的紀念性質的功能，別讓贊助者太傷心啦……
 - 百寶箱：開發早期往裡面塞了些開發工具，整理起來太麻煩了</s:String>
-    <s:String x:Key="LangModSecretHintNoTheme">該版本中不包含主題功能……</s:String>
     <s:String x:Key="LangModSecretHintNoUpdate">該版本中不包含更新功能……</s:String>
     <s:String x:Key="LangModMinecraftCurrentFolder">當前文件夾</s:String>
     <s:String x:Key="LangModMinecraftOfficialFolder">官方啟動器文件夾</s:String>
@@ -1683,11 +1688,7 @@ PCL 不支持其他亂七八糟的下載協議。</s:String>
     <s:String x:Key="LangModLaunchDialogContentNoMc">你尚未購買正版 Minecraft，或者 Xbox Game Pass 已到期。</s:String>
     <s:String x:Key="LangModLaunchDialogContentCreateRole">請先創建 Minecraft 玩家檔案，然後再重新登錄。</s:String>
     <s:String x:Key="LangModLaunchDialogBtnCreateRole">創建檔案</s:String>
-    <s:String x:Key="LangModLaunchDialogContentGetSkinFail">由於設置的離線啟動時使用的正版皮膚獲取失敗，遊戲將以無皮膚的方式啟動。
-請檢查你的網絡是否通暢，或嘗試使用 VPN！
-
-詳細的錯誤信息：{0}</s:String>
-    <s:String x:Key="LangModLaunchDialogTitleGetSkinFail">皮膚獲取失敗</s:String>
+    <s:String x:Key="LangModLaunchDialogGetSkinFailHint">皮肤信息获取失败，游戏将以无皮肤的方式启动</s:String>
     <s:String x:Key="LangModLaunchExceptionOnlineProfileNotFound">正版玩家檔案不存在（{0}）</s:String>
     <s:String x:Key="LangModLaunchExceptionOnlineUUIDGetFail">從官網獲取正版 UUID 失敗（{0}）</s:String>
     <s:String x:Key="LangModLaunchExceptionOnlineUUIDLenIncorrect">獲取的正版 UUID 長度不足（{0}）</s:String>

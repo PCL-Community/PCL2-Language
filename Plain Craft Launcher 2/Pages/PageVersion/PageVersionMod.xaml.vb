@@ -14,9 +14,10 @@
         AniControlEnabled -= 1
 
         '非重复加载部分
-        If IsLoad Then Exit Sub
+        If IsLoad Then Return
         IsLoad = True
 
+        AddHandler FrmMain.KeyDown, AddressOf FrmMain_KeyDown
         '调整按钮边距（这玩意儿没法从 XAML 改）
         For Each Btn As MyRadioButton In PanFilter.Children
             Btn.LabText.Margin = New Thickness(-2, 0, 8, 0)
@@ -89,7 +90,7 @@
             Else
                 PanEmpty.Visibility = Visibility.Visible
                 PanBack.Visibility = Visibility.Collapsed
-                Exit Sub
+                Return
             End If
             '修改缓存
             ModItems.Clear()
@@ -154,7 +155,7 @@
     ''' 刷新整个 UI。
     ''' </summary>
     Public Sub RefreshUI()
-        If PanList Is Nothing Then Exit Sub
+        If PanList Is Nothing Then Return
         Dim ShowingMods = If(IsSearching, SearchResult, If(McModLoader.Output, New List(Of McMod))).Where(Function(m) CanPassFilter(m)).ToList
         '重新列出列表
         AniControlEnabled += 1
@@ -429,7 +430,8 @@ Install:
         ChangeAllSelected(False)
         AniControlEnabled += CacheAniControlEnabled
     End Sub
-    Private Sub PageVersionMod_KeyDown(sender As Object, e As KeyEventArgs) Handles Me.KeyDown
+    Private Sub FrmMain_KeyDown(sender As Object, e As KeyEventArgs) '监听自己的事件的话进入页面后不点击右侧控件就没办法监听到事件 (#4311)
+        If FrmMain.PageRight IsNot Me Then Return
         If My.Computer.Keyboard.CtrlKeyDown AndAlso e.Key = Key.A Then ChangeAllSelected(True)
     End Sub
 
@@ -590,7 +592,7 @@ Install:
             If MyMsgBox(GetLang("LangPageVersionModDialogUpdateModContent"), GetLang("LangPageVersionModDialogUpdateModTitle"), GetLang("LangPageVersionModDialogUpdateModBtnConfirm"), GetLang("LangDialogBtnCancel"), IsWarn:=True) = 1 Then
                 Setup.Set("HintUpdateMod", True)
             Else
-                Exit Sub
+                Return
             End If
         End If
         Try
@@ -682,7 +684,7 @@ Install:
                     Case LoadState.Aborted
                         Hint(GetLang("LangPageVersionModTaskModUpdateAbort"), HintType.Info)
                     Case Else
-                        Exit Sub
+                        Return
                 End Select
                 Log($"[Mod] 已从正在进行 Mod 更新的文件夹列表移除：{PathMods}")
                 UpdatingVersions.Remove(PathMods)
@@ -765,7 +767,7 @@ Install:
                 RefreshBars()
             End If
             '显示结果提示
-            If Not IsSuccessful Then Exit Sub
+            If Not IsSuccessful Then Return
             If IsShiftPressed Then
                 If ModList.Count = 1 Then
                     Hint(GetLang("LangPageVersionModHintFilePermanentDeleteSuccessA", ModList.Single.FileName), HintType.Finish)
