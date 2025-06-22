@@ -1069,13 +1069,15 @@ StartThread:
                 If Info.Source.Url.StartsWithF("https", True) Then HttpRequest.ProtocolVersion = HttpVersion.Version11
                 'HttpRequest.Proxy = Nothing 'new WebProxy(Ip, Port)
                 HttpRequest.Timeout = Timeout
-                HttpRequest.AddRange(Info.DownloadStart)
+                If Not Info.IsFirstThread Then HttpRequest.AddRange(Info.DownloadStart)
                 SecretHeadersSign(Info.Source.Url, HttpRequest, UseBrowserUserAgent)
                 Dim ContentLength As Long = 0
                 Using HttpResponse As HttpWebResponse = HttpRequest.GetResponse()
                     If State = NetState.Error Then GoTo SourceBreak '快速中断
-                    If ModeDebug AndAlso HttpResponse.ResponseUri.OriginalString <> Info.Source.Url Then
-                        Log($"[Download] {LocalName} {Info.Uuid}#：重定向至 {HttpResponse.ResponseUri.OriginalString}")
+                    Dim redireced = HttpResponse.ResponseUri.OriginalString
+                    If redireced <> Info.Source.Url Then
+                        Log($"[Download] {LocalName} {Info.Uuid}#：重定向至 {redireced}")
+                        Info.Source.Url = redireced
                     End If
                     ''从响应头获取文件名
                     'If Info.IsFirstThread Then
@@ -1100,7 +1102,7 @@ StartThread:
                             FileSize = -1 : IsUnknownSize = True
                             Log($"[Download] {LocalName} {Info.Uuid}#：文件大小未知")
                         End If
-                    ElseIf ContentLength < 0 Then
+                    ElseIf ContentLength <0 Then
                         Throw New Exception("获取片大小失败，结果为 " & ContentLength & "。")
                     ElseIf Info.IsFirstThread Then
                         If Check IsNot Nothing Then
