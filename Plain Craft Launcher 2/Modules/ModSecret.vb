@@ -270,7 +270,7 @@ Friend Module ModSecret
     End Sub
     Public Sub UpdateLatestVersionInfo()
         Dim LatestReleaseInfoJson As JObject = Nothing
-        LatestReleaseInfoJson = GetJson(NetRequestRetry("https://api.github.com/repos/PCL-Community/PCL2-Language/releases/latest", "GET", "", "application/x-www-form-urlencoded"))
+        LatestReleaseInfoJson = GetJson(NetRequestByClientRetry("https://api.github.com/repos/PCL-Community/PCL2-Language/releases/latest", HttpMethod.Get, "", "application/x-www-form-urlencoded"))
         LatestVersion = LatestReleaseInfoJson("tag_name").ToString
     End Sub
     Public Sub NoticeUserUpdate()
