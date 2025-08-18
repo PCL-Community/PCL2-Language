@@ -235,7 +235,7 @@
                         </StackPanel>
                     </StackPanel>
                 </local:MyCard>
-                <local:MyCard Title="{StaticResource LangPageVersionExportAdvancedOptions}" Margin="0,0,0,15" CanSwap="True" IsSwaped="True">
+                <local:MyCard Title="{StaticResource LangPageVersionExportAdvancedOptions}" Margin="0,0,0,15" CanSwap="True" IsSwapped="True">
                     <StackPanel Margin="25,37,23,20">
                         <local:MyHint Text="{StaticResource LangPageVersionExportArchiveModeHint}"
                                       Theme="Yellow" Margin="0,2,0,8" Visibility="{Binding Checked, ElementName=CheckAdvancedInclude, Converter={StaticResource BooleanToVisibilityConverter}}" />

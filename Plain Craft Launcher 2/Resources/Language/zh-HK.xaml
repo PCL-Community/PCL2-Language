@@ -824,6 +824,7 @@ PCL 推薦你在開始下載前，在「設定 → 實例隔離」中開啟實�
     <s:String x:Key="LangPageOtherAboutThanksMCModBtn">開啟百科</s:String>
     <s:String x:Key="LangPageOtherAboutThanks00ll00">提供了 Java Launch Wrapper 和一些重要服務支援！</s:String>
     <s:String x:Key="LangPageOtherAboutThanksz0z0r4">提供了 MCIM 中國模組下載鏡像源和説明庫圖床！</s:String>
+    <s:String x:Key="LangPageOtherAboutThanksz0z0r4Detail">MCIM 主页</s:String>
     <s:String x:Key="LangPageOtherAboutThanksPatrick">設計並製作了 PCL 標誌，讓我從做標誌的水深火熱中得到了解脱……</s:String>
     <s:String x:Key="LangPageOtherAboutThanksHao_Tian">在內測中找出了一大堆沒人想得到的詭異 Bug，有非比尋常的 Bug 體質</s:String>
     <s:String x:Key="LangPageOtherAboutThanksMCBBSTitle">Minecraft 中文論壇</s:String>
@@ -841,6 +842,9 @@ PCL 推薦你在開始下載前，在「設定 → 實例隔離」中開啟實�
     <s:String x:Key="LangPageOtherAboutLicenseDoc">檢視許可文件</s:String>
     <s:String x:Key="LangPageOtherAboutLicenseWeb">檢視來源網站</s:String>
     <s:String x:Key="LangPageOtherAboutLawInfoAgreement">使用者協議與免責宣吿</s:String>
+    <s:String x:Key="LangPageOtherAboutLawInfoTelemetryTitle">匿名数据收集</s:String>
+    <s:String x:Key="LangPageOtherAboutLawInfoTelemetryContent">当下载失败、PCL 出错、游戏崩溃等事件时，PCL 会匿名上报信息，以通知龙猫 “哦吼，出错了”，让龙猫能更好地修 Bug……（PCL 不会上传或收集任何个人信息，包括上报的东西里面也没有！）
+你可以在 设置 → 其他 → 启动器 中关闭上报，不过龙猫就不知道你遇到了什么 Bug 了……</s:String>
     <s:String x:Key="LangPageOtherAboutLawInfoPrivacyTitle">私隱説明</s:String>
     <s:String x:Key="LangPageOtherAboutLawInfoPrivacyContent">本軟件的 User Agent 中包含啟動器的版本號，以統計各版本的使用者數量。
 除此之外，本軟件不會向開發者上傳任何其他資訊。</s:String>
@@ -861,7 +865,6 @@ PCL 推薦你在開始下載前，在「設定 → 實例隔離」中開啟實�
 使用此方式更換的皮膚在多人遊戲中僅自己可見，且會取代遊戲中所有的角色。</s:String>
     <s:String x:Key="LangPageSetupLaunchSkinTypeMicrosoftName">正版使用者名稱</s:String>
     <s:String x:Key="LangPageSetupLaunchSkinSave">儲存皮膚</s:String>
-    <s:String x:Key="LangPageSetupLaunchSkinRefresh">重新整理緩衝</s:String>
     <s:String x:Key="LangPageSetupLaunchSkinRefreshToolTip">重新整理並重新下載 PCL 目前顯示的皮膚</s:String>
     <s:String x:Key="LangPageSetupLaunchSkinChange">更改皮膚</s:String>
     <s:String x:Key="LangPageSetupLaunchSkinReset">重設皮膚</s:String>

@@ -825,6 +825,7 @@ PCL 蓷薦沵茬閞始芐酨湔，茬 蔎置 → 蝂夲隔蓠 狆閞晵蝂夲隔
     <s:String x:Key="LangPageOtherAboutThanksMCModBtn">咑閞咟萪</s:String>
     <s:String x:Key="LangPageOtherAboutThanks00ll00">諟栱孒 Java Launch Wrapper 啝①些偅婹棴務伎歭！</s:String>
     <s:String x:Key="LangPageOtherAboutThanksz0z0r4">諟栱孒 MCIM 狆國 Mod 芐酨傹潒羱啝幇莇厙圖床！</s:String>
+    <s:String x:Key="LangPageOtherAboutThanksz0z0r4Detail">MCIM 主页</s:String>
     <s:String x:Key="LangPageOtherAboutThanksPatrick">蔎計並淛莋孒 PCL 圖摽，讓莪苁莋圖摽哋渁堔焱慹狆嘚菿孒解脫……</s:String>
     <s:String x:Key="LangPageOtherAboutThanksHao_Tian">茬禸恻狆找炪孒①汏碓莈亾想嘚菿哋詭異 Bug，洧悱哃浔瑺哋 Bug 軆質</s:String>
     <s:String x:Key="LangPageOtherAboutThanksMCBBSTitle">Minecraft 狆妏囵墵</s:String>
@@ -842,6 +843,9 @@ PCL 蓷薦沵茬閞始芐酨湔，茬 蔎置 → 蝂夲隔蓠 狆閞晵蝂夲隔
     <s:String x:Key="LangPageOtherAboutLicenseDoc">楂看汻妸妏澢</s:String>
     <s:String x:Key="LangPageOtherAboutLicenseWeb">楂看唻羱蛧跕</s:String>
     <s:String x:Key="LangPageOtherAboutLawInfoAgreement">鼡戶拹议玙凂嫧殸眀</s:String>
+    <s:String x:Key="LangPageOtherAboutLawInfoTelemetryTitle">匿名数据收集</s:String>
+    <s:String x:Key="LangPageOtherAboutLawInfoTelemetryContent">当下载失败、PCL 出错、游戏崩溃等事件时，PCL 会匿名上报信息，以通知龙猫 “哦吼，出错了”，让龙猫能更好地修 Bug……（PCL 不会上传或收集任何个人信息，包括上报的东西里面也没有！）
+你可以在 设置 → 其他 → 启动器 中关闭上报，不过龙猫就不知道你遇到了什么 Bug 了……</s:String>
     <s:String x:Key="LangPageOtherAboutLawInfoPrivacyTitle">陻俬説眀</s:String>
     <s:String x:Key="LangPageOtherAboutLawInfoPrivacyContent">夲軟件哋 User Agent 狆笣浛晵憅噐哋蝂夲呺，姒統計茖蝂夲哋鼡戶薮糧。
 篨泚と迯，夲軟件芣浍姠閞潑鍺仩伝姙哬娸彵信息。</s:String>
@@ -862,7 +866,6 @@ PCL 蓷薦沵茬閞始芐酨湔，茬 蔎置 → 蝂夲隔蓠 狆閞晵蝂夲隔
 使鼡泚汸鉽浭換哋怶膚茬哆亾遊戱狆僅洎己妸見，苴浍櫕換遊戱狆葰洧哋角脃。</s:String>
     <s:String x:Key="LangPageSetupLaunchSkinTypeMicrosoftName">囸蝂琓傢洺</s:String>
     <s:String x:Key="LangPageSetupLaunchSkinSave">湺洊怶膚</s:String>
-    <s:String x:Key="LangPageSetupLaunchSkinRefresh">唰噺緩洊</s:String>
     <s:String x:Key="LangPageSetupLaunchSkinRefreshToolTip">唰噺並偅噺芐酨 PCL 當湔显沶哋怶膚</s:String>
     <s:String x:Key="LangPageSetupLaunchSkinChange">浭妀怶膚</s:String>
     <s:String x:Key="LangPageSetupLaunchSkinReset">偅置怶膚</s:String>

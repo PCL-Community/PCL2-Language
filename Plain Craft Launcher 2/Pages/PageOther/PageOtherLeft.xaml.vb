@@ -137,7 +137,7 @@
             Case 1
                 Feedback(True, False)
             Case 2
-                OpenWebsite("https://github.com/Hex-Dragon/PCL2/issues/")
+                OpenWebsite("https://github.com/Meloong-Git/PCL/issues/")
         End Select
     End Sub
     Private Sub TryVote(sender As Object, e As RouteEventArgs) Handles ItemVote.Changed
@@ -148,7 +148,7 @@
     Public Shared Sub TryVote()
         If MyMsgBox(GetLang("LangPageOtherDialogVoteContent"),
                     GetLang("LangPageOtherDialogVoteTitle"), GetLang("LangPageOtherDialogVoteBtn1"), GetLang("LangDialogBtnCancel")) = 2 Then Return
-        OpenWebsite("https://github.com/Hex-Dragon/PCL2/discussions/categories/%E5%8A%9F%E8%83%BD%E6%8A%95%E7%A5%A8?discussions_q=category%3A%E5%8A%9F%E8%83%BD%E6%8A%95%E7%A5%A8+sort%3Adate_created")
+        OpenWebsite("https://github.com/Meloong-Git/PCL/discussions/categories/%E5%8A%9F%E8%83%BD%E6%8A%95%E7%A5%A8?discussions_q=category%3A%E5%8A%9F%E8%83%BD%E6%8A%95%E7%A5%A8+sort%3Adate_created")
     End Sub
 
 End Class

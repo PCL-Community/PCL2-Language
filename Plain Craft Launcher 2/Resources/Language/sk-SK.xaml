@@ -822,6 +822,7 @@ Originálna chybová správa: </s:String>
     <s:String x:Key="LangPageOtherAboutThanksMCModBtn">Navštíviť</s:String>
     <s:String x:Key="LangPageOtherAboutThanks00ll00">Poskytol Java Launch Wrapper a niektorú dôležitú podporu!</s:String>
     <s:String x:Key="LangPageOtherAboutThanksz0z0r4">Poskytol mcmod-info-mirror pre módov a služby na hostovanie obrázkov pre Centrum pomoci!</s:String>
+    <s:String x:Key="LangPageOtherAboutThanksz0z0r4Detail">MCIM 主页</s:String>
     <s:String x:Key="LangPageOtherAboutThanksPatrick">Navrhol a vytvoril ikonu PCL, zachránil LTCat z priepasti utrpenia...</s:String>
     <s:String x:Key="LangPageOtherAboutThanksHao_Tian">Počas testovania insiderov našiel veľa zvláštnych chýb, ktoré by ľudia nečakali, musí mať talent na hľadanie chýb.</s:String>
     <s:String x:Key="LangPageOtherAboutThanksMCBBSTitle">MCBBS</s:String>
@@ -839,6 +840,9 @@ Originálna chybová správa: </s:String>
     <s:String x:Key="LangPageOtherAboutLicenseDoc">Licencia</s:String>
     <s:String x:Key="LangPageOtherAboutLicenseWeb">Zdroj</s:String>
     <s:String x:Key="LangPageOtherAboutLawInfoAgreement">Podmienky používania a Zrieknutie sa zodpovednosti</s:String>
+    <s:String x:Key="LangPageOtherAboutLawInfoTelemetryTitle">匿名数据收集</s:String>
+    <s:String x:Key="LangPageOtherAboutLawInfoTelemetryContent">当下载失败、PCL 出错、游戏崩溃等事件时，PCL 会匿名上报信息，以通知龙猫 “哦吼，出错了”，让龙猫能更好地修 Bug……（PCL 不会上传或收集任何个人信息，包括上报的东西里面也没有！）
+你可以在 设置 → 其他 → 启动器 中关闭上报，不过龙猫就不知道你遇到了什么 Bug 了……</s:String>
     <s:String x:Key="LangPageOtherAboutLawInfoPrivacyTitle">Vyhlásenie o ochrane osobných údajov</s:String>
     <s:String x:Key="LangPageOtherAboutLawInfoPrivacyContent">Užívateľský agent softvéru obsahuje verziu na účely kvantitatívnej štatistiky.
 Okrem toho softvér nebude nahrávať žiadne ďalšie informácie.</s:String>
@@ -859,7 +863,6 @@ Nie je to oficiálny produkt Minecraftu. Nie je schválené Mojangom alebo Micro
 Výmena vzhľadu týmto spôsobom bude viditeľná len pre hráča samého v multiplayerových hrách a nahradí všetky postavy v hre.</s:String>
     <s:String x:Key="LangPageSetupLaunchSkinTypeMicrosoftName">Používateľské meno</s:String>
     <s:String x:Key="LangPageSetupLaunchSkinSave">Uložiť</s:String>
-    <s:String x:Key="LangPageSetupLaunchSkinRefresh">Obnoviť</s:String>
     <s:String x:Key="LangPageSetupLaunchSkinRefreshToolTip">Obnovte a znovu stiahnite vzhľad zobrazený na PCL v súčasnosti.</s:String>
     <s:String x:Key="LangPageSetupLaunchSkinChange">Zmeniť vzhľad</s:String>
     <s:String x:Key="LangPageSetupLaunchSkinReset">Obnoviť vzhľad</s:String>

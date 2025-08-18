@@ -68,7 +68,7 @@
     <s:String x:Key="LangHintWindowDropFolder">请拖入一个文件，而非文件夹！</s:String>
     <s:String x:Key="LangHintWindowDropFileNotFound">拖入的文件不存在：{0}</s:String>
     <s:String x:Key="LangHintWindowDropFileOneFileAtATime">一次请只拖入一个文件！</s:String>
-    <s:String x:Key="LangCrashReport">请在 https://github.com/Hex-Dragon/PCL2/issues 提交错误报告，以便于作者解决此问题！</s:String>
+    <s:String x:Key="LangCrashReport">请在 https://github.com/Hex-Meloong-Git/PCL2/issues 提交错误报告，以便于作者解决此问题！</s:String>
     <s:String x:Key="LangDialogCustomHomePageReplaceContent">已存在一个主页文件，是否要将它覆盖？</s:String>
     <s:String x:Key="LangDialogCustomHomePageReplaceTitle">覆盖确认</s:String>
     <s:String x:Key="LangDialogBtnCustomHomePageReplaceConfirm">覆盖</s:String>
@@ -272,7 +272,7 @@
     <s:String x:Key="LangSetFuncHiddenSettingsSubPage">设置 子页面</s:String>
     <s:String x:Key="LangSetFuncHiddenSettingsGame">启动</s:String>
     <s:String x:Key="LangSetFuncHiddenSettingsPersonalize">个性化</s:String>
-    <s:String x:Key="LangSetFuncHiddenSettingsLaunch">其它</s:String>
+    <s:String x:Key="LangSetFuncHiddenSettingsLaunch">其他</s:String>
     <s:String x:Key="LangSetFuncHiddenSettingsLink">联机</s:String>
     <s:String x:Key="LangSetFuncHiddenMoreSubPage">更多 子页面</s:String>
     <s:String x:Key="LangSetFuncHiddenMoreHelp">帮助</s:String>
@@ -588,7 +588,7 @@
     <s:String x:Key="LangDownloadModpackTypeMapBased">基于地图</s:String>
     <s:String x:Key="LangDownloadModpackTypeLightWeight">轻量整合</s:String>
     <s:String x:Key="LangDownloadModpackTypeHeavyWeight">大型整合</s:String>
-    <s:String x:Key="LangDownloadModpackTypeOther">其它</s:String>
+    <s:String x:Key="LangDownloadModpackTypeOther">其他</s:String>
     <s:String x:Key="LangDownloadResourcepackTypeTitleStyle">风格</s:String>
     <s:String x:Key="LangDownloadResourcepackTypeVanillaLike">原版风</s:String>
     <s:String x:Key="LangDownloadResourcepackTypeRealistic">写实风</s:String>
@@ -814,8 +814,8 @@
     <s:String x:Key="LangPageOtherDialogVoteBtn1">打开</s:String>
     <s:String x:Key="LangPageOtherAboutAbout">关于</s:String>
     <s:String x:Key="LangPageOtherAboutAboutAuthor">龙腾猫跃</s:String>
-    <s:String x:Key="LangPageOtherAboutAboutAuthorSubtitle">Plain Craft Launcher 的作者！</s:String>
-    <s:String x:Key="LangPageOtherAboutAboutAuthorBtn">赞助作者</s:String>
+    <s:String x:Key="LangPageOtherAboutAboutAuthorSubtitle">Plain Craft Launcher 的开发者！</s:String>
+    <s:String x:Key="LangPageOtherAboutAboutAuthorBtn">赞助 PCL</s:String>
     <s:String x:Key="LangPageOtherAboutAboutVersionSubtitle">当前版本：%VERSION%（%VERSIONCODE%.%BRANCH%）</s:String>
     <s:String x:Key="LangPageOtherAboutAboutVersionBtn">开源代码</s:String>
     <s:String x:Key="LangPageOtherAboutThanks">特别鸣谢</s:String>
@@ -825,7 +825,8 @@
     <s:String x:Key="LangPageOtherAboutThanksMCMod">提供了 Mod 名称的中文翻译和更多相关信息！</s:String>
     <s:String x:Key="LangPageOtherAboutThanksMCModBtn">打开百科</s:String>
     <s:String x:Key="LangPageOtherAboutThanks00ll00">提供了 Java Launch Wrapper 和一些重要服务支持！</s:String>
-    <s:String x:Key="LangPageOtherAboutThanksz0z0r4">提供了 MCIM 中国 Mod 下载镜像源和帮助库图床！</s:String>
+    <s:String x:Key="LangPageOtherAboutThanksz0z0r4">提供了 MCIM 社区资源镜像源和帮助库图床！</s:String>
+    <s:String x:Key="LangPageOtherAboutThanksz0z0r4Detail">MCIM 主页</s:String>
     <s:String x:Key="LangPageOtherAboutThanksPatrick">设计并制作了 PCL 图标，让我从做图标的水深火热中得到了解脱……</s:String>
     <s:String x:Key="LangPageOtherAboutThanksHao_Tian">在内测中找出了一大堆没人想得到的诡异 Bug，有非同寻常的 Bug 体质</s:String>
     <s:String x:Key="LangPageOtherAboutThanksMCBBSTitle">Minecraft 中文论坛</s:String>
@@ -843,9 +844,12 @@
     <s:String x:Key="LangPageOtherAboutLicenseDoc">查看许可文档</s:String>
     <s:String x:Key="LangPageOtherAboutLicenseWeb">查看来源网站</s:String>
     <s:String x:Key="LangPageOtherAboutLawInfoAgreement">用户协议与免责声明</s:String>
-    <s:String x:Key="LangPageOtherAboutLawInfoPrivacyTitle">隐私说明</s:String>
-    <s:String x:Key="LangPageOtherAboutLawInfoPrivacyContent">本软件的 User Agent 中包含启动器的版本号，以统计各版本的用户数量。
-除此之外，本软件不会向开发者上传任何其他信息。</s:String>
+    <s:String x:Key="LangPageOtherAboutLawInfoTelemetryTitle">匿名数据收集</s:String>
+    <s:String x:Key="LangPageOtherAboutLawInfoTelemetryContent">当下载失败、PCL 出错、游戏崩溃等事件时，PCL 会匿名上报信息，以通知龙猫 “哦吼，出错了”，让龙猫能更好地修 Bug……（PCL 不会上传或收集任何个人信息，包括上报的东西里面也没有！）
+你可以在 设置 → 其他 → 启动器 中关闭上报，不过龙猫就不知道你遇到了什么 Bug 了……</s:String>
+    <s:String x:Key="LangPageOtherAboutLawInfoPrivacyTitle">隐私声明与个人信息保护政策</s:String>
+    <s:String x:Key="LangPageOtherAboutLawInfoPrivacyContent">PCL 没有收集个人信息，所以这里其实啥都不用写……
+留个这个其实只是为了让你知道 PCL 没有收集个人信息，诶嘿。</s:String>
     <s:String x:Key="LangPageOtherAboutLawInfoOtherTitle">其他信息</s:String>
     <s:String x:Key="LangPageOtherAboutLawInfoOtherContent">Copyright © 龙腾猫跃 2016. All Rights Reserved.
 计算机软件著作权登记号：2020SR0875133
@@ -863,7 +867,6 @@
 使用此方式更换的皮肤在多人游戏中仅自己可见，且会替换游戏中所有的角色。</s:String>
     <s:String x:Key="LangPageSetupLaunchSkinTypeMicrosoftName">正版玩家名</s:String>
     <s:String x:Key="LangPageSetupLaunchSkinSave">保存皮肤</s:String>
-    <s:String x:Key="LangPageSetupLaunchSkinRefresh">刷新缓存</s:String>
     <s:String x:Key="LangPageSetupLaunchSkinRefreshToolTip">刷新并重新下载 PCL 当前显示的皮肤</s:String>
     <s:String x:Key="LangPageSetupLaunchSkinChange">更改皮肤</s:String>
     <s:String x:Key="LangPageSetupLaunchSkinReset">重置皮肤</s:String>
@@ -927,12 +930,14 @@
     <s:String x:Key="LangPageSetupLaunchLaunchMemUsedMem">已使用内存</s:String>
     <s:String x:Key="LangPageSetupLaunchLaunchMemMemForGame">游戏分配</s:String>
     <s:String x:Key="LangPageSetupLaunchLaunchAdvanceOptions">高级启动选项</s:String>
-    <s:String x:Key="LangPageSetupLaunchLaunchAdvanceOptionsJVMHead">JVM 参数头部</s:String>
-    <s:String x:Key="LangPageSetupLaunchLaunchAdvanceOptionsJVMHeadTops">启动 Minecraft 时使用的额外 JVM 参数，除非有确定把握，否则请不要修改</s:String>
+    <s:String x:Key="LangPageSetupLaunchLaunchAdvanceOptionsJVMHead">Java 虚拟机参数</s:String>
+    <s:String x:Key="LangPageSetupLaunchLaunchAdvanceOptionsJVMHeadTops">启动 Minecraft 时使用的额外 JVM 参数，除非有确定把握，否则请不要修改。
+支持 Minecraft 版本 JSON 中的字符串替换标记，例如 ${library_directory}。</s:String>
     <s:String x:Key="LangPageSetupLaunchLaunchAdvanceOptionsJVMHeadReset">还原</s:String>
-    <s:String x:Key="LangPageSetupLaunchLaunchAdvanceOptionsJVMTail">游戏参数尾部</s:String>
+    <s:String x:Key="LangPageSetupLaunchLaunchAdvanceOptionsJVMTail">游戏参数</s:String>
     <s:String x:Key="LangPageSetupLaunchLaunchAdvanceOptionsJVMTailTip">文本框中的内容将会被直接拼合在启动参数的末尾。
-例如输入 --demo 则会以试玩模式启动游戏。</s:String>
+例如，输入 --demo 则会以试玩模式启动游戏。
+支持 Minecraft 版本 JSON 中的字符串替换标记，例如 ${library_directory}。</s:String>
     <s:String x:Key="LangPageSetupLaunchLaunchAdvanceOptionsCommandBeforeStart">启动前执行命令</s:String>
     <s:String x:Key="LangPageSetupLaunchLaunchAdvanceOptionsCommandBeforeStartTip">在 MC 启动前执行特定命令或程序，语法与 Windows 的命令提示符一致。
 
@@ -997,7 +1002,7 @@
     <s:String x:Key="LangPageSetupLaunchMemReduceDialogEnableTitle">提醒</s:String>
     <s:String x:Key="LangPageSetupLeftGame">启动</s:String>
     <s:String x:Key="LangPageSetupLeftPersonalize">个性化</s:String>
-    <s:String x:Key="LangPageSetupLeftLaunch">其它</s:String>
+    <s:String x:Key="LangPageSetupLeftLaunch">其他</s:String>
     <s:String x:Key="LangPageSetupLeftLink">联机</s:String>
     <s:String x:Key="LangPageSetupLeftReset">初始化本页设置</s:String>
     <s:String x:Key="LangPageSetupLeftDialogResetGameConfirmContent">是否要初始化 启动 页的所有设置？该操作不可撤销。</s:String>
@@ -1041,7 +1046,7 @@
     <s:String x:Key="LangPageSetupSystemDownloadAccessibilityRemindGameUpdateReleaseToolTip">在 Minecraft 正式版更新时弹窗提示</s:String>
     <s:String x:Key="LangPageSetupSystemDownloadAccessibilitySetGameLanguage">游戏语言</s:String>
     <s:String x:Key="LangPageSetupSystemDownloadAccessibilityAutoSetGameLanguage">自动调整游戏语言</s:String>
-    <s:String x:Key="LangPageSetupSystemSystem">系统</s:String>
+    <s:String x:Key="LangPageSetupSystemSystem">启动器</s:String>
     <s:String x:Key="LangPageSetupSystemSystemLaunchUpdate">启动器更新</s:String>
     <s:String x:Key="LangPageSetupSystemSystemLaunchUpdateA">在有新版本时自动下载</s:String>
     <s:String x:Key="LangPageSetupSystemSystemLaunchUpdateB">在有新版本时显示提示</s:String>
@@ -1062,8 +1067,8 @@
     <s:String x:Key="LangPageSetupSystemLangWarn">翻译不保证 100% 准确，修改语言后需要重启 PCL</s:String>
     <s:String x:Key="LangPageSetupSystemDebug">调试选项</s:String>
     <s:String x:Key="LangPageSetupSystemDebugAnimSpeed">动画速度</s:String>
-    <s:String x:Key="LangPageSetupSystemDebugNotCopyExistFileWhenDownload">禁止在下载时复制已存在的文件</s:String>
-    <s:String x:Key="LangPageSetupSystemDebugNotCopyExistFileWhenDownloadToolTip">在下载时不直接复制已经存在的文件，而是重新下载每个文件。
+    <s:String x:Key="LangPageSetupSystemDebugNotCopyExistFileWhenDownload">禁止在下载时从其他文件夹复制文件</s:String>
+    <s:String x:Key="LangPageSetupSystemDebugNotCopyExistFileWhenDownloadToolTip">在下载时不直接复制其他 MC 文件夹中已经存在的相同文件，而是重新下载文件。
 只建议在测试下载速度时开启。</s:String>
     <s:String x:Key="LangPageSetupSystemDebugDebugMode">调试模式</s:String>
     <s:String x:Key="LangPageSetupSystemDebugDebugModeToolTip">显示调试信息与更多错误信息。
@@ -1093,7 +1098,7 @@
 除非你在制作服务器整合包，或时常手动更新启动器，否则极度不推荐选择此项！</s:String>
     <s:String x:Key="LangPageSetupSystemSystemLaunchUpdateFail">确认启动器更新失败</s:String>
     <s:String x:Key="LangPageSetupSystemDownloadModListSource">下载源</s:String>
-    <s:String x:Key="LangPageSetupSystemDownloadModListSourceA">尽量使用镜像源（暂时无效）</s:String>
+    <s:String x:Key="LangPageSetupSystemDownloadModListSourceA">尽量使用镜像源（可能缺少刚刚更新的版本）</s:String>
     <s:String x:Key="LangPageSetupSystemDownloadModListSourceB">仅在官方源加载缓慢时改用镜像源</s:String>
     <s:String x:Key="LangPageSetupSystemDownloadModListSourceC">尽量使用官方源</s:String>
     <s:String x:Key="LangPageSetupSystemDialogContentLanguageRestart">PCL 即将重启以完全应用语言的切换</s:String>
@@ -1271,9 +1276,11 @@
 若存在多个安装了 Mod 的版本，可能会由于 Mod 冲突而导致崩溃。</s:String>
     <s:String x:Key="LangPageVersionSetupIndieEnable">让这个版本与其他版本的存档、Mod 等档案相互独立，互不干涉</s:String>
     <s:String x:Key="LangPageVersionSetupAdvanceOptionsJVMHeadToolTip">启动 Minecraft 时使用的额外 JVM 参数，在没有确定把握的情况下请不要尝试修改。
+支持 Minecraft 版本 JSON 中的字符串替换标记，例如 ${library_directory}。
 若留空，则跟随全局设置的值。</s:String>
     <s:String x:Key="LangPageVersionSetupAdvanceOptionsJVMTailToolTip">文本框中的内容将会被直接拼合在启动参数的末尾。
-例如输入 --demo 则会以试玩模式启动游戏。
+例如，输入 --demo 则会以试玩模式启动游戏。
+支持 Minecraft 版本 JSON 中的字符串替换标记，例如 ${library_directory}。
 若留空，则跟随全局设置的值。</s:String>
     <s:String x:Key="LangPageVersionSetupGotoGlobalSetting">全局设置</s:String>
     <s:String x:Key="LangPageVersionSetupServer">服务器</s:String>
@@ -1653,7 +1660,7 @@ PCL 不支持其他乱七八糟的下载协议。</s:String>
     <s:String x:Key="LangModLaunchExceptionInvalidSelectedRole">选择的角色 {0} 无效！</s:String>
     <s:String x:Key="LangModLaunchHintNoRoleChangeRole">你还没有创建角色，无法更换！</s:String>
     <s:String x:Key="LangModLaunchHintNoRole">你还没有创建角色，请在创建角色后再试！</s:String>
-    <s:String x:Key="LangModLaunchHintNoRoleOnlyOne">你的账户中只有一个角色， 无法更换！</s:String>
+    <s:String x:Key="LangModLaunchHintNoRoleOnlyOne">你的账户中只有一个角色，无法更换！</s:String>
     <s:String x:Key="LangModLaunchDialogSelectRole">选择使用的角色</s:String>
     <s:String x:Key="LangModLaunchExceptionLoginFail">登录失败：{0}</s:String>
     <s:String x:Key="LangModLaunchExceptionTimeout">登录失败：你的网络环境不佳，导致难以连接到海外服务器。
@@ -1960,14 +1967,10 @@ PCL 不支持其他乱七八糟的下载协议。</s:String>
 每个 Mod 只能出现一次，请删除重复的 Mod，然后再启动游戏。</s:String>
     <s:String x:Key="LangModCrashCrashReasonReasonBC">游戏似乎因为实体 {0} 出现了问题。
 
-你可以创建一个新世界，并生成一个该实体，然后观察游戏的运行情况：
- - 若正常运行，则是该实体导致出错，你或许需要使用一些方式删除此实体。
- - 若仍然出错，问题就可能来自其他原因……</s:String>
+你可以创建一个新世界，并生成一个该实体，然后观察游戏的运行情况。</s:String>
     <s:String x:Key="LangModCrashCrashReasonReasonBD">游戏似乎因为世界中的某些实体出现了问题。
 
-你可以创建一个新世界，并生成各种实体，观察游戏的运行情况：
- - 若正常运行，则是某些实体导致出错，你或许需要删除该世界。
- - 若仍然出错，问题就可能来自其他原因……</s:String>
+你可以创建一个新世界，并生成各种实体，然后观察游戏的运行情况。</s:String>
     <s:String x:Key="LangModCrashCrashReasonReasonBE">由于 OptiFine 与当前版本的 Forge 不兼容，导致了游戏崩溃。
 
 请前往 OptiFine 官网（https://optifine.net/downloads）查看 OptiFine 所兼容的 Forge 版本，并严格按照对应版本重新安装游戏。</s:String>
@@ -2051,7 +2054,7 @@ PCL 不支持其他乱七八糟的下载协议。</s:String>
     <s:String x:Key="LangModCrashCrashReasonDialogContentViewLogTip">你可以查看错误报告了解错误具体是如何发生的。</s:String>
     <s:String x:Key="LangModCrashCrashReasonDialogContentAskHelpTip">如果要寻求帮助，请把错误报告文件发给对方，而不是发送这个窗口的照片或者截图。</s:String>
     <s:String x:Key="LangModCrashCrashReasonDialogContentUpgradeTip">此外，你正在使用老版本 PCL，更新 PCL 或许也能解决这个问题。
-你可以点击 设置 → 启动器 → 检查更新 来更新 PCL。</s:String>
+你可以点击 [设置 → 其他 → 启动器 → 检查更新] 来更新 PCL。</s:String>
     <s:String x:Key="LangMyMsgLoginDialogBtnReopenWebPage">重新打开网页</s:String>
     <s:String x:Key="LangMyMsgLoginDialogBtnCopyCode">复制代码</s:String>
     <s:String x:Key="LangMyMsgLoginHintInitFail">登录弹窗初始化失败</s:String>
@@ -2059,7 +2062,7 @@ PCL 不支持其他乱七八糟的下载协议。</s:String>
     <s:String x:Key="LangMyMsgLoginDialogContent">登录网页将自动开启，请在网页中输入 {0}（已自动复制）。
 
 
-如果网络环境不佳，网页可能一直加载不出来，届时请使用使用加速器或 VPN 以改善网络环境。
+如果网络环境不佳，网页可能一直加载不出来，届时请使用加速器或 VPN 以改善网络环境。
 你也可以用其他设备打开 {1} 并输入上述代码。</s:String>
     <s:String x:Key="LangMyMsgLoginHintLoginSuccess">网页登录成功！</s:String>
     <s:String x:Key="LangMyMsgLoginExceptionDecline">你拒绝了 PCL 申请的权限……</s:String>

@@ -818,6 +818,7 @@ PCL은 다운로드를 시작하기 전에 설정 → 버전 격리에서 버전
     <s:String x:Key="LangPageOtherAboutThanksMCModBtn">백과사전 열기</s:String>
     <s:String x:Key="LangPageOtherAboutThanks00ll00">Java Launch Wrapper 및 몇 가지 중요한 서비스 지원 제공!</s:String>
     <s:String x:Key="LangPageOtherAboutThanksz0z0r4">MCIM 중국 모드 다운로드 미러 소스 및 도움말 라이브러리 제공!</s:String>
+    <s:String x:Key="LangPageOtherAboutThanksz0z0r4Detail">MCIM 主页</s:String>
     <s:String x:Key="LangPageOtherAboutThanksPatrick">PCL 아이콘 디자인 및 제작, 아이콘 제작의 고통에서 구출해 주셨습니다…</s:String>
     <s:String x:Key="LangPageOtherAboutThanksHao_Tian">내부 테스트에서 많은 예상치 못한 버그를 발견, 비범한 버그 체질</s:String>
     <s:String x:Key="LangPageOtherAboutThanksMCBBSTitle">Minecraft 한국 포럼</s:String>
@@ -835,6 +836,9 @@ PCL은 다운로드를 시작하기 전에 설정 → 버전 격리에서 버전
     <s:String x:Key="LangPageOtherAboutLicenseDoc">라이센스 문서 보기</s:String>
     <s:String x:Key="LangPageOtherAboutLicenseWeb">출처 웹사이트 보기</s:String>
     <s:String x:Key="LangPageOtherAboutLawInfoAgreement">사용자 계약 및 면책 조항</s:String>
+    <s:String x:Key="LangPageOtherAboutLawInfoTelemetryTitle">匿名数据收集</s:String>
+    <s:String x:Key="LangPageOtherAboutLawInfoTelemetryContent">当下载失败、PCL 出错、游戏崩溃等事件时，PCL 会匿名上报信息，以通知龙猫 “哦吼，出错了”，让龙猫能更好地修 Bug……（PCL 不会上传或收集任何个人信息，包括上报的东西里面也没有！）
+你可以在 设置 → 其他 → 启动器 中关闭上报，不过龙猫就不知道你遇到了什么 Bug 了……</s:String>
     <s:String x:Key="LangPageOtherAboutLawInfoPrivacyTitle">개인정보 보호 설명</s:String>
     <s:String x:Key="LangPageOtherAboutLawInfoPrivacyContent">이 소프트웨어의 User Agent에는 런처의 버전 번호가 포함되어 있어 각 버전의 사용자 수를 통계합니다.
 그 외에는 이 소프트웨어가 개발자에게 다른 정보를 업로드하지 않습니다.</s:String>
@@ -855,7 +859,6 @@ PCL은 다운로드를 시작하기 전에 설정 → 버전 격리에서 버전
 이 방법으로 변경된 스킨은 멀티플레이어 게임에서 본인만 볼 수 있으며, 게임 내 모든 캐릭터를 대체합니다.</s:String>
     <s:String x:Key="LangPageSetupLaunchSkinTypeMicrosoftName">정품 플레이어 이름</s:String>
     <s:String x:Key="LangPageSetupLaunchSkinSave">스킨 저장</s:String>
-    <s:String x:Key="LangPageSetupLaunchSkinRefresh">캐시 새로 고침</s:String>
     <s:String x:Key="LangPageSetupLaunchSkinRefreshToolTip">현재 표시된 스킨을 새로 고치고 다시 다운로드합니다</s:String>
     <s:String x:Key="LangPageSetupLaunchSkinChange">스킨 변경</s:String>
     <s:String x:Key="LangPageSetupLaunchSkinReset">스킨 초기화</s:String>

@@ -115,6 +115,10 @@
                         PageOtherTest.StartCustomDownload(Data(0), "未知")
                     End Try
 
+                Case "修改设置"
+                    Setup.Set(Data(0), Data(1))
+                    Hint($"已写入设置：{Data(0)} → {Data(1)}", HintType.Finish)
+
                 Case Else
                     MyMsgBox(GetLang("LangModEventDialogUnknownEventContent", Type), GetLang("LangModEventDialogEventFailTitle"))
             End Select

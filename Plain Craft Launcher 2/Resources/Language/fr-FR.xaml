@@ -1,36 +1,36 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:s="clr-namespace:System;assembly=mscorlib" xml:space="preserve">
-    <s:String x:Key="LangTaskAbort">Annulé!</s:String>
+    <s:String x:Key="LangTaskAbort">Annulé !</s:String>
     <s:String x:Key="LangDialogBtnOK">OK</s:String>
     <s:String x:Key="LangDialogBtnCancel">Annuler</s:String>
     <s:String x:Key="LangResourcePack">Packs de ressources</s:String>
     <s:String x:Key="LangDialogBtnYes">Oui</s:String>
     <s:String x:Key="LangDialogBtnNo">Non</s:String>
     <s:String x:Key="LangDialogBtnContinue">Continuer</s:String>
-    <s:String x:Key="LangComma">, </s:String>
-    <s:String x:Key="LangColon">: </s:String>
-    <s:String x:Key="LangSaveAs">Sélectionner l'emplacement de sauvegarde</s:String>
-    <s:String x:Key="LangSaveAsFile">文件</s:String>
+    <s:String x:Key="LangComma">,</s:String>
+    <s:String x:Key="LangColon">:</s:String>
+    <s:String x:Key="LangSaveAs">Sélectionner l'emplacement d'enregistrement</s:String>
+    <s:String x:Key="LangSaveAsFile">Fichier</s:String>
     <s:String x:Key="LangReset">重置</s:String>
     <s:String x:Key="LangRefresh">Rafraîchir</s:String>
-    <s:String x:Key="LangRefreshing">Rafraîchissement...</s:String>
+    <s:String x:Key="LangRefreshing">Actualisation…</s:String>
     <s:String x:Key="LangApplicationExceptionNoAccessPermission">PCL n'a pas les permissions d'accès à {0}</s:String>
-    <s:String x:Key="LangApplicationDialogTitleCacheFolderUnavailable">Le dossier de cache est indisponible</s:String>
+    <s:String x:Key="LangApplicationDialogTitleCacheFolderUnavailable">Dossier de cache indisponible</s:String>
     <s:String x:Key="LangApplicationDialogContentCacheFolderUnavailable">“PCL ne peut pas accéder au dossier de cache, ce qui peut entraîner un fonctionnement incorrect de PCL.
 Causé par : {0}”</s:String>
     <s:String x:Key="LangApplicationDialogContentCustomCacheFolderUnavailable">Le dossier de cache sélectionné manuellement est indisponible, PCL utilisera le dossier de cache par défaut.
 Causé par : {0}</s:String>
     <s:String x:Key="LangApplicationDialogTitleRunInTemp">Avertissement sur l'environnement d'exécution</s:String>
     <s:String x:Key="LangApplicationDialogContentRunInTemp">Veuillez extraire PCL du fichier compressé ou le déplacer vers un autre dossier avant de continuer à l'utiliser !
-Le programme est actuellement exécuté dans un dossier temporaire, les paramètres, les sauvegardes, etc. peuvent ne pas être enregistrés et certaines fonctionnalités peuvent ne pas être disponibles.</s:String>
+Le programme est actuellement exécuté dans un dossier temporaire, les paramètres, les sauvegardes, etc. peuvent ne pas être enregistrés et certaines fonctionnalités peuvent ne pas être disponibles ！</s:String>
     <s:String x:Key="LangApplicationDialogContent32BitWarn">PCL et la nouvelle version de Minecraft ne prennent plus en charge les systèmes 32 bits, certaines fonctionnalités ne seront pas disponibles.
 Il est fortement recommandé de réinstaller le jeu après le passage à un système 64 bits !</s:String>
     <s:String x:Key="LangApplicationDialogTitleInitError">Erreur d'initialisation de PCL</s:String>
     <s:String x:Key="LangApplicationDialogTitleNETWarn">Erreur d'environnement d'exécution</s:String>
     <s:String x:Key="LangApplicationDialogContentNETWarn">Votre version de .NET Framework est trop ancienne ou endommagée. Veuillez télécharger et installer .NET Framework 4.6.2 depuis la page web ouverte, puis réessayez!</s:String>
     <s:String x:Key="LangApplicationDialogTitleUnknownError">Erreur inconnue</s:String>
-    <s:String x:Key="LangApplicationDialogContentUnknownError">Une erreur inconnue s'est produite dans le programme.</s:String>
-    <s:String x:Key="LangApplicationDialogContentMemReduceFail">内存优化失败</s:String>
-    <s:String x:Key="LangTitleDownload">téléchargement</s:String>
+    <s:String x:Key="LangApplicationDialogContentUnknownError">Une erreur inconnue s'est produite dans le programme</s:String>
+    <s:String x:Key="LangApplicationDialogContentMemReduceFail">Échec de l'optimisation de la mémoire</s:String>
+    <s:String x:Key="LangTitleDownload">Télécharger</s:String>
     <s:String x:Key="LangTitleHome">Lancer</s:String>
     <s:String x:Key="LangTitleSetup">Paramètres</s:String>
     <s:String x:Key="LangTitleLink">Multijoueur</s:String>
@@ -817,6 +817,7 @@ Message d'erreur original : </s:String>
     <s:String x:Key="LangPageOtherAboutThanksMCModBtn">Visiter</s:String>
     <s:String x:Key="LangPageOtherAboutThanks00ll00">Fournisseur de Java Launch Wrapper et de certains supports importants !</s:String>
     <s:String x:Key="LangPageOtherAboutThanksz0z0r4">Fournisseur du miroir mcmod-info pour les mods et services d'hébergement d'images pour le Centre d'aide !</s:String>
+    <s:String x:Key="LangPageOtherAboutThanksz0z0r4Detail">MCIM 主页</s:String>
     <s:String x:Key="LangPageOtherAboutThanksPatrick">Conçu et réalisé l'icône PCL, a sauvé LTCat des abîmes de la souffrance...</s:String>
     <s:String x:Key="LangPageOtherAboutThanksHao_Tian">A trouvé un tas de bugs étranges que les gens ne penseraient pas lors des tests internes, a une physique de bug inhabituelle.</s:String>
     <s:String x:Key="LangPageOtherAboutThanksMCBBSTitle">MCBBS</s:String>
@@ -834,6 +835,9 @@ Message d'erreur original : </s:String>
     <s:String x:Key="LangPageOtherAboutLicenseDoc">Licence</s:String>
     <s:String x:Key="LangPageOtherAboutLicenseWeb">Source</s:String>
     <s:String x:Key="LangPageOtherAboutLawInfoAgreement">CGU &amp; Avertissement</s:String>
+    <s:String x:Key="LangPageOtherAboutLawInfoTelemetryTitle">匿名数据收集</s:String>
+    <s:String x:Key="LangPageOtherAboutLawInfoTelemetryContent">当下载失败、PCL 出错、游戏崩溃等事件时，PCL 会匿名上报信息，以通知龙猫 “哦吼，出错了”，让龙猫能更好地修 Bug……（PCL 不会上传或收集任何个人信息，包括上报的东西里面也没有！）
+你可以在 设置 → 其他 → 启动器 中关闭上报，不过龙猫就不知道你遇到了什么 Bug 了……</s:String>
     <s:String x:Key="LangPageOtherAboutLawInfoPrivacyTitle">Déclaration de confidentialité</s:String>
     <s:String x:Key="LangPageOtherAboutLawInfoPrivacyContent">L'agent utilisateur du logiciel inclut le numéro de version à des fins de statistiques quantitatives.
 De plus, le logiciel ne téléchargera aucune autre information.</s:String>
@@ -854,7 +858,6 @@ Pas un produit officiel de Minecraft. Non approuvé par Mojang ou Microsoft et n
 Le remplacement de skin de cette manière ne sera visible que par le joueur lui-même dans les jeux multijoueurs et remplacera tous les personnages dans le jeu.</s:String>
     <s:String x:Key="LangPageSetupLaunchSkinTypeMicrosoftName">Nom d'utilisateur</s:String>
     <s:String x:Key="LangPageSetupLaunchSkinSave">Enregistrer</s:String>
-    <s:String x:Key="LangPageSetupLaunchSkinRefresh">Rafraîchir</s:String>
     <s:String x:Key="LangPageSetupLaunchSkinRefreshToolTip">Rafraîchir et redownload le skin affiché sur le PCL actuellement.</s:String>
     <s:String x:Key="LangPageSetupLaunchSkinChange">Changer de skin</s:String>
     <s:String x:Key="LangPageSetupLaunchSkinReset">Réinitialiser le skin</s:String>

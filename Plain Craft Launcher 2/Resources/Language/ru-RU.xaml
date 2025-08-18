@@ -822,6 +822,7 @@ PCL рекомендует включить опцию "Изоляция экз�
     <s:String x:Key="LangPageOtherAboutThanksMCModBtn">Посетить</s:String>
     <s:String x:Key="LangPageOtherAboutThanks00ll00">Предоставил Java Launch Wrapper и некоторые важные поддержки!</s:String>
     <s:String x:Key="LangPageOtherAboutThanksz0z0r4">Предоставил mcmod-info-mirror для модов и услуги хостинга изображений для Центра помощи!</s:String>
+    <s:String x:Key="LangPageOtherAboutThanksz0z0r4Detail">MCIM 主页</s:String>
     <s:String x:Key="LangPageOtherAboutThanksPatrick">Разработал и создал иконку PCL, спас LTCat от бездны страданий...</s:String>
     <s:String x:Key="LangPageOtherAboutThanksHao_Tian">Нашел кучу странных багов, которые никто не подумал бы в тестировании внутри, обладает необычным телосложением багов.</s:String>
     <s:String x:Key="LangPageOtherAboutThanksMCBBSTitle">MCBBS</s:String>
@@ -839,6 +840,9 @@ PCL рекомендует включить опцию "Изоляция экз�
     <s:String x:Key="LangPageOtherAboutLicenseDoc">Лицензия</s:String>
     <s:String x:Key="LangPageOtherAboutLicenseWeb">Исходный код</s:String>
     <s:String x:Key="LangPageOtherAboutLawInfoAgreement">Условия использования и отказ от ответственности</s:String>
+    <s:String x:Key="LangPageOtherAboutLawInfoTelemetryTitle">匿名数据收集</s:String>
+    <s:String x:Key="LangPageOtherAboutLawInfoTelemetryContent">当下载失败、PCL 出错、游戏崩溃等事件时，PCL 会匿名上报信息，以通知龙猫 “哦吼，出错了”，让龙猫能更好地修 Bug……（PCL 不会上传或收集任何个人信息，包括上报的东西里面也没有！）
+你可以在 设置 → 其他 → 启动器 中关闭上报，不过龙猫就不知道你遇到了什么 Bug 了……</s:String>
     <s:String x:Key="LangPageOtherAboutLawInfoPrivacyTitle">Заявление о конфиденциальности</s:String>
     <s:String x:Key="LangPageOtherAboutLawInfoPrivacyContent">Агент пользователя программного обеспечения включает номер версии для целей статистики количества.
 Кроме того, программное обеспечение не будет загружать никакую другую информацию.</s:String>
@@ -859,7 +863,6 @@ PCL рекомендует включить опцию "Изоляция экз�
 Замена кожи этим способом будет видна только самому игроку в многопользовательских играх и заменит всех персонажей в игре.</s:String>
     <s:String x:Key="LangPageSetupLaunchSkinTypeMicrosoftName">Имя пользователя</s:String>
     <s:String x:Key="LangPageSetupLaunchSkinSave">Сохранить</s:String>
-    <s:String x:Key="LangPageSetupLaunchSkinRefresh">Обновить</s:String>
     <s:String x:Key="LangPageSetupLaunchSkinRefreshToolTip">Обновите и перезагрузите кожу, отображаемую в PCL в данный момент.</s:String>
     <s:String x:Key="LangPageSetupLaunchSkinChange">Изменить кожу</s:String>
     <s:String x:Key="LangPageSetupLaunchSkinReset">Сбросить кожу</s:String>

@@ -822,6 +822,7 @@
     <s:String x:Key="LangPageOtherAboutThanksMCModBtn">Επισκεφτείτε</s:String>
     <s:String x:Key="LangPageOtherAboutThanks00ll00">Παρέχει Java Launch Wrapper και κάποια σημαντική υποστήριξη!</s:String>
     <s:String x:Key="LangPageOtherAboutThanksz0z0r4">Παρέχει το mcmod-info-mirror για mods και υπηρεσίες φιλοξενίας εικόνων για το Κέντρο Βοήθειας!</s:String>
+    <s:String x:Key="LangPageOtherAboutThanksz0z0r4Detail">MCIM 主页</s:String>
     <s:String x:Key="LangPageOtherAboutThanksPatrick">Σχεδίασε και δημιούργησε το εικονίδιο PCL, έσωσε το LTCat από την άβυσσο του πόνου...</s:String>
     <s:String x:Key="LangPageOtherAboutThanksHao_Tian">Βρέθηκε ένα σωρό περίεργα σφάλματα που οι άνθρωποι δεν θα σκεφτόντουσαν σε εσωτερικές δοκιμές, έχει μια ασυνήθιστη διάπλαση σφαλμάτων.</s:String>
     <s:String x:Key="LangPageOtherAboutThanksMCBBSTitle">MCBBS</s:String>
@@ -839,6 +840,9 @@
     <s:String x:Key="LangPageOtherAboutLicenseDoc">Άδεια Χρήσης</s:String>
     <s:String x:Key="LangPageOtherAboutLicenseWeb">Πηγή</s:String>
     <s:String x:Key="LangPageOtherAboutLawInfoAgreement">ToS &amp; Αρνηση</s:String>
+    <s:String x:Key="LangPageOtherAboutLawInfoTelemetryTitle">匿名数据收集</s:String>
+    <s:String x:Key="LangPageOtherAboutLawInfoTelemetryContent">当下载失败、PCL 出错、游戏崩溃等事件时，PCL 会匿名上报信息，以通知龙猫 “哦吼，出错了”，让龙猫能更好地修 Bug……（PCL 不会上传或收集任何个人信息，包括上报的东西里面也没有！）
+你可以在 设置 → 其他 → 启动器 中关闭上报，不过龙猫就不知道你遇到了什么 Bug 了……</s:String>
     <s:String x:Key="LangPageOtherAboutLawInfoPrivacyTitle">Δήλωση Απορρήτου</s:String>
     <s:String x:Key="LangPageOtherAboutLawInfoPrivacyContent">Ο παράγοντας χρήστη του λογισμικού περιλαμβάνει τον αριθμό έκδοσης για σκοπούς ποσοτικών στατιστικών.
 Επιπλέον, το λογισμικό δεν θα ανεβάσει άλλες πληροφορίες.</s:String>
@@ -859,7 +863,6 @@ Email για Αναφορά Παράνομης και Παράτυπης Συμ�
 Η αντικατάσταση δέρματος με αυτόν τον τρόπο θα είναι ορατή μόνο στον ίδιο τον παίκτη σε παιχνίδια για πολλούς παίκτες και θα αντικαταστήσει όλους τους χαρακτήρες του παιχνιδιού.</s:String>
     <s:String x:Key="LangPageSetupLaunchSkinTypeMicrosoftName">Όνομα Χρήστη</s:String>
     <s:String x:Key="LangPageSetupLaunchSkinSave">Αποθήκευση</s:String>
-    <s:String x:Key="LangPageSetupLaunchSkinRefresh">Ανανέωση</s:String>
     <s:String x:Key="LangPageSetupLaunchSkinRefreshToolTip">Ανανεώστε και κατεβάστε ξανά το δέρμα που εμφανίζεται στο PCL αυτήν τη στιγμή.</s:String>
     <s:String x:Key="LangPageSetupLaunchSkinChange">Αλλαγή Εμφάνισης</s:String>
     <s:String x:Key="LangPageSetupLaunchSkinReset">Επαναφορά Δέρματος</s:String>

@@ -171,7 +171,7 @@
                     </Grid>
                 </StackPanel>
             </local:MyCard>
-            <local:MyCard x:Name="CardSkin" Margin="0,0,0,15" Title="{StaticResource LangPageSetupLaunchSkin}" CanSwap="True" IsSwaped="True">
+            <local:MyCard x:Name="CardSkin" Margin="0,0,0,15" Title="{StaticResource LangPageSetupLaunchSkin}" CanSwap="True" IsSwapped="True">
                 <StackPanel Margin="25,40,25,15">
                     <local:MyHint Text="{StaticResource LangPageSetupLaunchSkinTips}" Theme="Yellow" Margin="0,0,0,10" />
                     <Grid Margin="-1,0,0,0">
@@ -205,7 +205,7 @@
                                 <ColumnDefinition Width="Auto" SharedSizeGroup="Button" />
                             </Grid.ColumnDefinitions>
                             <local:MyButton x:Name="BtnSkinSave" Text="{StaticResource LangPageSetupLaunchSkinSave}" MinWidth="140" Padding="13,0" Margin="0,0,20,0" Grid.Row="1" />
-                            <local:MyButton x:Name="BtnSkinCache" Text="{StaticResource LangPageSetupLaunchSkinRefresh}" MinWidth="140" Padding="13,0" Margin="0,0,20,0" ToolTip="{StaticResource LangPageSetupLaunchSkinRefreshToolTip}" Grid.Row="1" Grid.Column="1" />
+                            <local:MyButton x:Name="BtnSkinCache" Text="{StaticResource LangRefresh}" MinWidth="140" Padding="13,0" Margin="0,0,20,0" ToolTip="{StaticResource LangPageSetupLaunchSkinRefreshToolTip}" Grid.Row="1" Grid.Column="1" />
                         </Grid>
                     </Grid>
                     <Grid x:Name="PanSkinChange" Margin="0,14,0,2" Height="35" Visibility="Collapsed">
@@ -218,7 +218,7 @@
                     </Grid>
                 </StackPanel>
             </local:MyCard>
-            <local:MyCard Margin="0,0,0,15" Title="{StaticResource LangPageSetupLaunchLaunchAdvanceOptions}" IsSwaped="True" CanSwap="True">
+            <local:MyCard Margin="0,0,0,15" Title="{StaticResource LangPageSetupLaunchLaunchAdvanceOptions}" IsSwapped="True" CanSwap="True">
                 <Grid Margin="25,40,25,15">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="Auto" />

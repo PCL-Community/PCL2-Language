@@ -62,16 +62,18 @@
                             <RowDefinition Height="7" />
                             <RowDefinition Height="28" />
                             <RowDefinition Height="7" />
+                            <RowDefinition Height="28" />
+                            <RowDefinition Height="7" />
                             <RowDefinition Height="Auto" />
                         </Grid.RowDefinitions>
-                        <!--<TextBlock Grid.Row="0" VerticalAlignment="Center" HorizontalAlignment="Left" Text="{StaticResource LangPageSetupSystemDownloadModListSource}" Margin="0,0,25,0" />
+                        <TextBlock Grid.Row="0" VerticalAlignment="Center" HorizontalAlignment="Left" Text="{StaticResource LangPageSetupSystemDownloadModListSource}" Margin="0,0,25,0" />
                         <local:MyComboBox x:Name="ComboDownloadMod" Grid.Row="0" Grid.ColumnSpan="2" Tag="ToolDownloadMod" Grid.Column="1">
                             <local:MyComboBoxItem Content="{StaticResource LangPageSetupSystemDownloadModListSourceA}" />
                             <local:MyComboBoxItem Content="{StaticResource LangPageSetupSystemDownloadModListSourceB}" />
                             <local:MyComboBoxItem Content="{StaticResource LangPageSetupSystemDownloadModListSourceC}" IsSelected="True" />
-                        </local:MyComboBox>-->
-                        <TextBlock Grid.Row="0" VerticalAlignment="Center" HorizontalAlignment="Left" Text="{StaticResource LangPageSetupSystemDownloadModFileName}" Margin="0,0,25,0" />
-                        <local:MyComboBox Grid.Row="0" x:Name="ComboDownloadTranslateV2" Grid.ColumnSpan="2" Tag="ToolDownloadTranslateV2" Grid.Column="1" 
+                        </local:MyComboBox>
+                        <TextBlock Grid.Row="2" VerticalAlignment="Center" HorizontalAlignment="Left" Text="{StaticResource LangPageSetupSystemDownloadModFileName}" Margin="0,0,25,0" />
+                        <local:MyComboBox Grid.Row="2" x:Name="ComboDownloadTranslateV2" Grid.ColumnSpan="2" Tag="ToolDownloadTranslateV2" Grid.Column="1" 
                                           ToolTip="{StaticResource LangPageSetupSystemDownloadModFileNameToolTip}">
                             <local:MyComboBoxItem Content="{StaticResource LangPageSetupSystemDownloadModFileNameE}" />
                             <local:MyComboBoxItem Content="{StaticResource LangPageSetupSystemDownloadModFileNameA}" IsSelected="True" />
@@ -79,13 +81,13 @@
                             <local:MyComboBoxItem Content="{StaticResource LangPageSetupSystemDownloadModFileNameC}" />
                             <local:MyComboBoxItem Content="{StaticResource LangPageSetupSystemDownloadModFileNameD}" />
                         </local:MyComboBox>
-                        <TextBlock Grid.Row="2" VerticalAlignment="Center" HorizontalAlignment="Left" Text="{StaticResource LangPageSetupSystemDownloadModManageStyle}" Margin="0,0,25,0" />
-                        <local:MyComboBox Grid.Row="2" x:Name="ComboModLocalNameStyle" Grid.ColumnSpan="2" Tag="ToolModLocalNameStyle" Grid.Column="1" 
+                        <TextBlock Grid.Row="4" VerticalAlignment="Center" HorizontalAlignment="Left" Text="{StaticResource LangPageSetupSystemDownloadModManageStyle}" Margin="0,0,25,0" />
+                        <local:MyComboBox Grid.Row="4" x:Name="ComboModLocalNameStyle" Grid.ColumnSpan="2" Tag="ToolModLocalNameStyle" Grid.Column="1" 
                                           ToolTip="{StaticResource LangPageSetupSystemDownloadModManageStyleToolTip}">
                             <local:MyComboBoxItem Content="{StaticResource LangPageSetupSystemDownloadModManageStyleA}" IsSelected="True" />
                             <local:MyComboBoxItem Content="{StaticResource LangPageSetupSystemDownloadModManageStyleB}" />
                         </local:MyComboBox>
-                        <local:MyCheckBox Margin="0,2,0,4" Text="{StaticResource LangPageSetupSystemDownloadIgnoreQuiltDisplay}" Grid.Row="4" Height="22" Grid.ColumnSpan="2"
+                        <local:MyCheckBox Margin="0,2,0,4" Text="{StaticResource LangPageSetupSystemDownloadIgnoreQuiltDisplay}" Grid.Row="6" Height="22" Grid.ColumnSpan="2"
                                           x:Name="CheckDownloadIgnoreQuilt" Tag="ToolDownloadIgnoreQuilt" />
                     </Grid>
                 </StackPanel>
@@ -124,6 +126,7 @@
                         <RowDefinition Height="5" />
                         <RowDefinition Height="Auto" />
                         <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
                     </Grid.RowDefinitions>
                     <TextBlock VerticalAlignment="Center" HorizontalAlignment="Left" Text="{StaticResource LangPageSetupSystemSystemLaunchUpdate}" Margin="0,0,25,0" />
                     <local:MyComboBox x:Name="ComboSystemUpdate" Tag="SystemSystemUpdate" Grid.Column="1">
@@ -145,7 +148,10 @@
                             <local:ValidateFolderPath UseMinecraftCharCheck="False" />
                         </local:MyTextBox.ValidateRules>
                     </local:MyTextBox>
-                    <Grid Height="35" Grid.Row="6" Grid.ColumnSpan="5" Margin="0,12,0,0">
+                    <local:MyCheckBox Margin="0,5,0,4" Text="匿名数据收集" Grid.Row="6" Height="22" Grid.ColumnSpan="2"
+                        x:Name="CheckSystemTelemetry" Tag="SystemSystemTelemetry" 
+                        ToolTip="当下载失败、PCL 出错、游戏崩溃等事件时，PCL 会匿名上报情况，以通知龙猫 “哦吼，出错了”，让龙猫能更好地修 Bug……&#xa;你可以关闭上报，不过龙猫就不知道你遇到了什么 Bug 了……&#13;PCL 不会上传或收集任何个人信息，包括上报的东西里面也没有！" />
+                    <Grid Height="35" Grid.Row="7" Grid.ColumnSpan="5" Margin="0,12,0,0">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="Auto" SharedSizeGroup="Button" />
                             <ColumnDefinition Width="Auto" SharedSizeGroup="Button" />
@@ -155,7 +161,7 @@
                         <local:MyButton Grid.Column="1" x:Name="BtnSystemSettingExp" MinWidth="140" Text="{StaticResource LangPageSetupSystemExportSettings}" Padding="13,0" Margin="0,0,20,0" />
                         <local:MyButton Grid.Column="2" x:Name="BtnSystemSettingImp" MinWidth="140" Text="{StaticResource LangPageSetupSystemImportSettings}" Padding="13,0" Margin="0,0,20,0" />
                     </Grid>
-                    <Grid Height="35" Grid.Row="7" Grid.ColumnSpan="5" Margin="0,12,0,0" x:Name="PanDonate">
+                    <Grid Height="35" Grid.Row="8" Grid.ColumnSpan="5" Margin="0,12,0,0" x:Name="PanDonate">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="Auto" SharedSizeGroup="Button" />
                             <ColumnDefinition Width="Auto" SharedSizeGroup="Button" />
@@ -208,7 +214,7 @@
                     </Grid>
                 </Grid>
             </local:MyCard>
-            <local:MyCard x:Name="CardDebug" Margin="0,0,0,15" Title="{StaticResource LangPageSetupSystemDebug}" CanSwap="True" IsSwaped="True">
+            <local:MyCard x:Name="CardDebug" Margin="0,0,0,15" Title="{StaticResource LangPageSetupSystemDebug}" CanSwap="True" IsSwapped="True">
                 <StackPanel Margin="25,40,25,15">
                     <Grid x:Name="PanDebugAnim" Height="22" Margin="0,0,0,10">
                         <Grid.ColumnDefinitions>

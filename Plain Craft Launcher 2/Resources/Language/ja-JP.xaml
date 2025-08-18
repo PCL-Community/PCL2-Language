@@ -822,6 +822,7 @@
     <s:String x:Key="LangPageOtherAboutThanksMCModBtn">百科を開く</s:String>
     <s:String x:Key="LangPageOtherAboutThanks00ll00">Java Launch Wrapper といくつかの重要なサービスサポートを提供しています！</s:String>
     <s:String x:Key="LangPageOtherAboutThanksz0z0r4">MCIM 中国 Mod ダウンロードミラーソースとヘルプライブラリ図床を提供しています！</s:String>
+    <s:String x:Key="LangPageOtherAboutThanksz0z0r4Detail">MCIM 主页</s:String>
     <s:String x:Key="LangPageOtherAboutThanksPatrick">PCL アイコンをデザインし、作成しました、アイコン作りの苦しみから解放してくれました……</s:String>
     <s:String x:Key="LangPageOtherAboutThanksHao_Tian">内測中に誰も予想しなかった奇妙なバグを大量に見つけ出し、特別なバグ体質を持っています</s:String>
     <s:String x:Key="LangPageOtherAboutThanksMCBBSTitle">Minecraft 中文論壇</s:String>
@@ -839,6 +840,9 @@
     <s:String x:Key="LangPageOtherAboutLicenseDoc">ライセンスドキュメントを閲覧</s:String>
     <s:String x:Key="LangPageOtherAboutLicenseWeb">ソースウェブサイトを閲覧</s:String>
     <s:String x:Key="LangPageOtherAboutLawInfoAgreement">利用規約と免責事項</s:String>
+    <s:String x:Key="LangPageOtherAboutLawInfoTelemetryTitle">匿名数据收集</s:String>
+    <s:String x:Key="LangPageOtherAboutLawInfoTelemetryContent">当下载失败、PCL 出错、游戏崩溃等事件时，PCL 会匿名上报信息，以通知龙猫 “哦吼，出错了”，让龙猫能更好地修 Bug……（PCL 不会上传或收集任何个人信息，包括上报的东西里面也没有！）
+你可以在 设置 → 其他 → 启动器 中关闭上报，不过龙猫就不知道你遇到了什么 Bug 了……</s:String>
     <s:String x:Key="LangPageOtherAboutLawInfoPrivacyTitle">プライバシーに関する説明</s:String>
     <s:String x:Key="LangPageOtherAboutLawInfoPrivacyContent">このソフトウェアの User Agent にはランチャーのバージョン番号が含まれており、各バージョンのユーザー数を統計するために使用されます。
 それ以外に、このソフトウェアは開発者にいかなるその他の情報を送信することはありません。</s:String>
@@ -859,7 +863,6 @@ MINECRAFT の公式製品ではありません。MOJANG または MICROSOFT の�
 この方法で変更されたスキンはマルチプレイゲームでは自分だけに表示され、ゲーム内の全てのキャラクターを置き換えます。</s:String>
     <s:String x:Key="LangPageSetupLaunchSkinTypeMicrosoftName">正規プレイヤー名</s:String>
     <s:String x:Key="LangPageSetupLaunchSkinSave">スキンを保存</s:String>
-    <s:String x:Key="LangPageSetupLaunchSkinRefresh">キャッシュをリフレッシュ</s:String>
     <s:String x:Key="LangPageSetupLaunchSkinRefreshToolTip">PCL が現在表示しているスキンを再ダウンロードしてリフレッシュします</s:String>
     <s:String x:Key="LangPageSetupLaunchSkinChange">スキンを変更</s:String>
     <s:String x:Key="LangPageSetupLaunchSkinReset">スキンをリセット</s:String>

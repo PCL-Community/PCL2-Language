@@ -824,6 +824,7 @@ PCL 薦汝始下載前，於 設置 → 版本隔離 中開版本隔離選！</s
     <s:String x:Key="LangPageOtherAboutThanksMCModBtn">覽</s:String>
     <s:String x:Key="LangPageOtherAboutThanks00ll00">供 Java Launch Wrapper 与重要服務之支持！</s:String>
     <s:String x:Key="LangPageOtherAboutThanksz0z0r4">供 MCIM 華夏改囊之鏡像源与説明庫圖之床！</s:String>
+    <s:String x:Key="LangPageOtherAboutThanksz0z0r4Detail">MCIM 主页</s:String>
     <s:String x:Key="LangPageOtherAboutThanksPatrick">設計並製 PCL 之圖標，使餘於制圖標之水深火熱解脫</s:String>
     <s:String x:Key="LangPageOtherAboutThanksHao_Tian">於內測中尋無人問津之詭異問題不計其數，擁非比尋常之問題體質</s:String>
     <s:String x:Key="LangPageOtherAboutThanksMCBBSTitle">Minecraft 汉文論之壇</s:String>
@@ -841,6 +842,9 @@ PCL 薦汝始下載前，於 設置 → 版本隔離 中開版本隔離選！</s
     <s:String x:Key="LangPageOtherAboutLicenseDoc">覽許可之文</s:String>
     <s:String x:Key="LangPageOtherAboutLicenseWeb">覽來源之站</s:String>
     <s:String x:Key="LangPageOtherAboutLawInfoAgreement">用戶協議與免責聲明</s:String>
+    <s:String x:Key="LangPageOtherAboutLawInfoTelemetryTitle">匿名数据收集</s:String>
+    <s:String x:Key="LangPageOtherAboutLawInfoTelemetryContent">当下载失败、PCL 出错、游戏崩溃等事件时，PCL 会匿名上报信息，以通知龙猫 “哦吼，出错了”，让龙猫能更好地修 Bug……（PCL 不会上传或收集任何个人信息，包括上报的东西里面也没有！）
+你可以在 设置 → 其他 → 启动器 中关闭上报，不过龙猫就不知道你遇到了什么 Bug 了……</s:String>
     <s:String x:Key="LangPageOtherAboutLawInfoPrivacyTitle">隱私之說明</s:String>
     <s:String x:Key="LangPageOtherAboutLawInfoPrivacyContent">本軟體之 User Agent 含啟動器之版本號，以計各版本使用者之數。
 除此，本軟體不上傳任何其他資訊于開發者。</s:String>
@@ -861,7 +865,6 @@ PCL 薦汝始下載前，於 設置 → 版本隔離 中開版本隔離選！</s
 以此法易外觀，于多人遊戲僅自己可見，且易遊戲中所有角色之外觀。</s:String>
     <s:String x:Key="LangPageSetupLaunchSkinTypeMicrosoftName">正版玩家之名</s:String>
     <s:String x:Key="LangPageSetupLaunchSkinSave">存外觀</s:String>
-    <s:String x:Key="LangPageSetupLaunchSkinRefresh">重载緩存</s:String>
     <s:String x:Key="LangPageSetupLaunchSkinRefreshToolTip">重载 PCL 當前顯示之外觀</s:String>
     <s:String x:Key="LangPageSetupLaunchSkinChange">易外觀</s:String>
     <s:String x:Key="LangPageSetupLaunchSkinReset">除外觀</s:String>

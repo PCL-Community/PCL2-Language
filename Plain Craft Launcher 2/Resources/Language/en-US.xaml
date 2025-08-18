@@ -823,6 +823,7 @@ Original error message: </s:String>
     <s:String x:Key="LangPageOtherAboutThanksMCModBtn">Website</s:String>
     <s:String x:Key="LangPageOtherAboutThanks00ll00">Provided Java Launch Wrapper and some important support!</s:String>
     <s:String x:Key="LangPageOtherAboutThanksz0z0r4">Provided the mcmod-info-mirror for mods and image hosting services for the help center!</s:String>
+    <s:String x:Key="LangPageOtherAboutThanksz0z0r4Detail">MCIM 主页</s:String>
     <s:String x:Key="LangPageOtherAboutThanksPatrick">Designed and created the PCL icon, saved me from the abyss of suffering...</s:String>
     <s:String x:Key="LangPageOtherAboutThanksHao_Tian">Found a ton of weird bugs during the insider test that people wouldn't expect, must have a talent for finding bugs.</s:String>
     <s:String x:Key="LangPageOtherAboutThanksMCBBSTitle">MCBBS</s:String>
@@ -840,6 +841,9 @@ Original error message: </s:String>
     <s:String x:Key="LangPageOtherAboutLicenseDoc">License</s:String>
     <s:String x:Key="LangPageOtherAboutLicenseWeb">Source</s:String>
     <s:String x:Key="LangPageOtherAboutLawInfoAgreement">ToS &amp; Disclaimer</s:String>
+    <s:String x:Key="LangPageOtherAboutLawInfoTelemetryTitle">匿名数据收集</s:String>
+    <s:String x:Key="LangPageOtherAboutLawInfoTelemetryContent">当下载失败、PCL 出错、游戏崩溃等事件时，PCL 会匿名上报信息，以通知龙猫 “哦吼，出错了”，让龙猫能更好地修 Bug……（PCL 不会上传或收集任何个人信息，包括上报的东西里面也没有！）
+你可以在 设置 → 其他 → 启动器 中关闭上报，不过龙猫就不知道你遇到了什么 Bug 了……</s:String>
     <s:String x:Key="LangPageOtherAboutLawInfoPrivacyTitle">Privacy statement</s:String>
     <s:String x:Key="LangPageOtherAboutLawInfoPrivacyContent">The User Agent of the software incorporates the version number solely for the purpose of gathering quantitative statistics.
 Furthermore, the software is designed not to transmit any additional information.</s:String>
@@ -860,7 +864,6 @@ Not an official Minecraft product. Not approved by Mojang or Microsoft and not a
 In this mode, skin replacement will only be visible to yourself in multiplayer games, and it will apply to all characters within the game.</s:String>
     <s:String x:Key="LangPageSetupLaunchSkinTypeMicrosoftName">Username</s:String>
     <s:String x:Key="LangPageSetupLaunchSkinSave">Save</s:String>
-    <s:String x:Key="LangPageSetupLaunchSkinRefresh">Refresh</s:String>
     <s:String x:Key="LangPageSetupLaunchSkinRefreshToolTip">Refresh and redownload the skin displayed in PCL currently.</s:String>
     <s:String x:Key="LangPageSetupLaunchSkinChange">Change skin</s:String>
     <s:String x:Key="LangPageSetupLaunchSkinReset">Reset skin</s:String>

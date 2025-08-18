@@ -815,6 +815,7 @@ Mensaje de error original: </s:String>
     <s:String x:Key="LangPageOtherAboutThanksMCModBtn">Visitar</s:String>
     <s:String x:Key="LangPageOtherAboutThanks00ll00">Proporcionó el Java Launch Wrapper y un importante soporte!</s:String>
     <s:String x:Key="LangPageOtherAboutThanksz0z0r4">Proporcionó el mcmod-info-mirror para mods y servicios de alojamiento de imágenes para el centro de ayuda!</s:String>
+    <s:String x:Key="LangPageOtherAboutThanksz0z0r4Detail">MCIM 主页</s:String>
     <s:String x:Key="LangPageOtherAboutThanksPatrick">Diseñó e hizo el ícono de PCL, salvó a LTCat del abismo del sufrimiento...</s:String>
     <s:String x:Key="LangPageOtherAboutThanksHao_Tian">Encontró un montón de errores extraños que la gente no pensaría en la prueba interna, tiene una inusual constitución de errores.</s:String>
     <s:String x:Key="LangPageOtherAboutThanksMCBBSTitle">MCBBS</s:String>
@@ -832,6 +833,9 @@ Mensaje de error original: </s:String>
     <s:String x:Key="LangPageOtherAboutLicenseDoc">Licencia</s:String>
     <s:String x:Key="LangPageOtherAboutLicenseWeb">Fuente</s:String>
     <s:String x:Key="LangPageOtherAboutLawInfoAgreement">Términos y condiciones &amp; Descargo de responsabilidad</s:String>
+    <s:String x:Key="LangPageOtherAboutLawInfoTelemetryTitle">匿名数据收集</s:String>
+    <s:String x:Key="LangPageOtherAboutLawInfoTelemetryContent">当下载失败、PCL 出错、游戏崩溃等事件时，PCL 会匿名上报信息，以通知龙猫 “哦吼，出错了”，让龙猫能更好地修 Bug……（PCL 不会上传或收集任何个人信息，包括上报的东西里面也没有！）
+你可以在 设置 → 其他 → 启动器 中关闭上报，不过龙猫就不知道你遇到了什么 Bug 了……</s:String>
     <s:String x:Key="LangPageOtherAboutLawInfoPrivacyTitle">Declaración de privacidad</s:String>
     <s:String x:Key="LangPageOtherAboutLawInfoPrivacyContent">El agente de usuario del software incluye el número de versión con el propósito de estadísticas cuantitativas.
 Además, el software no subirá ninguna otra información.</s:String>
@@ -852,7 +856,6 @@ No es un producto oficial de Minecraft. No está aprobado por Mojang o Microsoft
 El reemplazo de skin de esta manera solo será visible para el jugador en juegos multijugador y reemplazará todos los personajes en el juego.</s:String>
     <s:String x:Key="LangPageSetupLaunchSkinTypeMicrosoftName">Nombre de usuario</s:String>
     <s:String x:Key="LangPageSetupLaunchSkinSave">Guardar</s:String>
-    <s:String x:Key="LangPageSetupLaunchSkinRefresh">Actualizar</s:String>
     <s:String x:Key="LangPageSetupLaunchSkinRefreshToolTip">Actualizar y volver a descargar el skin mostrado actualmente en el PCL.</s:String>
     <s:String x:Key="LangPageSetupLaunchSkinChange">Cambiar Skin</s:String>
     <s:String x:Key="LangPageSetupLaunchSkinReset">Restablecer Skin</s:String>

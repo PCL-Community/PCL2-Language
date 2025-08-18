@@ -14,7 +14,6 @@
         {"HintDownloadThread", New SetupEntry(False, Source:=SetupSource.Registry)},
         {"HintNotice", New SetupEntry(0, Source:=SetupSource.Registry)},
         {"HintDownload", New SetupEntry(0, Source:=SetupSource.Registry)},
-        {"HintInstallBack", New SetupEntry(False, Source:=SetupSource.Registry)},
         {"HintHide", New SetupEntry(False, Source:=SetupSource.Registry)},
         {"HintHandInstall", New SetupEntry(False, Source:=SetupSource.Registry)},
         {"HintBuy", New SetupEntry(False, Source:=SetupSource.Registry)},
@@ -42,6 +41,7 @@
         {"SystemSystemCache", New SetupEntry("", Source:=SetupSource.Registry)},
         {"SystemSystemUpdate", New SetupEntry(0)},
         {"SystemSystemActivity", New SetupEntry(0)},
+        {"SystemSystemTelemetry", New SetupEntry(True, Source:=SetupSource.Registry)},
         {"CacheExportConfig", New SetupEntry("", Source:=SetupSource.Registry)},
         {"CacheSavedPageUrl", New SetupEntry("", Source:=SetupSource.Registry)},
         {"CacheSavedPageVersion", New SetupEntry("", Source:=SetupSource.Registry)},
@@ -124,7 +124,7 @@
         {"ToolDownloadTranslateV2", New SetupEntry(1, Source:=SetupSource.Registry)},
         {"ToolDownloadIgnoreQuilt", New SetupEntry(True, Source:=SetupSource.Registry)},
         {"ToolDownloadCert", New SetupEntry(False, Source:=SetupSource.Registry)},
-        {"ToolDownloadMod", New SetupEntry(1, Source:=SetupSource.Registry)},
+        {"ToolDownloadMod", New SetupEntry(2, Source:=SetupSource.Registry)},
         {"ToolModLocalNameStyle", New SetupEntry(0, Source:=SetupSource.Registry)},
         {"ToolUpdateAlpha", New SetupEntry(0, Source:=SetupSource.Registry, Encoded:=True)},
         {"ToolUpdateRelease", New SetupEntry(False, Source:=SetupSource.Registry)},
@@ -611,7 +611,7 @@
                 FrmSetupUI.HintCustomWarn.Visibility = If(Setup.Get("HintCustomWarn"), Visibility.Collapsed, Visibility.Visible)
                 FrmSetupUI.HintCustom.Text = GetLang("LangSetHomePageTipOnline")
                 FrmSetupUI.HintCustom.EventType = "打开网页"
-                FrmSetupUI.HintCustom.EventData = "https://github.com/Hex-Dragon/PCL2/discussions/2528"
+                FrmSetupUI.HintCustom.EventData = "https://github.com/Meloong-Git/PCL/discussions/2528"
             Case 3 '预设
                 FrmSetupUI.PanCustomPreset.Visibility = Visibility.Visible
                 FrmSetupUI.PanCustomLocal.Visibility = Visibility.Collapsed

@@ -24,9 +24,10 @@
                         <ContextMenu Closed="HidePanel" HorizontalOffset="10" VerticalOffset="18">
                             <local:MyMenuItem Click="BtnSkinEdit_Click" Header="{StaticResource LangPageLoginMsSkinSkinChange}"/>
                             <local:MyMenuItem Click="BtnSkinSave_Click" Header="{StaticResource LangPageLoginMsSkinSkinSave}"/>
-                            <local:MyMenuItem Click="BtnSkinRefresh_Click" Header="{StaticResource LangPageLoginMsSkinSkinRefresh}"/>
                             <Separator />
                             <local:MyMenuItem Click="BtnSkinCape_Click" Header="{StaticResource LangPageLoginMsSkinCapeChange}"/>
+                            <Separator />
+                            <local:MyMenuItem Click="BtnSkinRefresh_Click" Header="{StaticResource LangRefresh}"/>
                         </ContextMenu>
                     </local:MyIconButton.ContextMenu>
                 </local:MyIconButton>
