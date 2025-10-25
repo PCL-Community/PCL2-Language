@@ -92,7 +92,7 @@ applied-energistics-1@ae1|应用能源*
 Universal-Electricity|通用电力*
 @better-than-wolves|比狼好 (Better Than Wolves)
 aether@|天境 (The Aether)
-
+@miscperipherals|电脑外设 (MiscPeripherals)
 
 assassincraft-assassins-creed-mod|刺客信条 (AssassinCraft)
 
@@ -120,7 +120,7 @@ blockphysics_by_id_miner|方块物理学 (BlockPhysics)
 
 remain-in-motion|运动红石机构 (Remain in Motion)
 
-
+openperipheralcore|开放式电脑外设 (OpenPeripheral) - 核心¨openperipheraladdons|开放式电脑外设 (OpenPeripheral) - 附加¨openperipheralintegration|开放式电脑外设 (OpenPeripheral) - 联动
 modular-powersuits@modularpowersuits|模块化动力套装*
 
 
@@ -368,7 +368,7 @@ steves-factory-manager|史蒂夫工厂管理 (Steve's Factory Manager)¨steves-f
 
 
 thaumcraftgates|奥法管道 (ThaumcraftGates)
-
+thaumcraft-recipes|神秘合成*
 player-heads-forge|玩家死亡掉头 (Player Heads)
 notenoughkeys|更好的按键控制 (Not Enough Keys)
 
@@ -522,7 +522,7 @@ inventory-pets|背包宠物*
 levels|装备等级*
 keeping-inventory
 orespawn|矿石菌种 (OreSpawn)
-reliquary-reincarnations|圣遗物 (Reliquary Reincarnations (Reliquary) / Xeno's Reliquary)¨reliquary|圣遗物 (Reliquary Reincarnations* / Xeno's Reliquary)
+reliquary-reincarnations@|圣遗物 (Reliquary Reincarnations (Reliquary) / Xeno's Reliquary)¨reliquary|圣遗物 (Reliquary Reincarnations* / Xeno's Reliquary)
 mo-bends|更多弯曲 (Mo' Bends)
 quark@|夸克*
 
@@ -782,7 +782,7 @@ sleeping-bag|睡袋*
 the-one-probe@|检测器*
 
 simply-jetpacks-2|简易喷气背包2*
-snad|子沙*
+snad@|子沙*
 storage-drawers-extras
 solar-flux-reborn@|日光通量：重制版*
 simple-void-world|简单虚空世界*
@@ -963,7 +963,7 @@ blue-power|蓝石力量 (Blue power)
 redstone-armory|红石军械库*
 qmunitylib
 quest-for-blue-name
-the-last-smith|最后的太刀匠人*
+the-last-smith@|最后的太刀匠人*
 mineamp|我的音乐 (MineAmp)
 quiverbow|Quiver Bow - 官方原版¨quiverbow-restrung|Quiver Bow - 重制版
 cookiecore
@@ -1054,7 +1054,7 @@ radixcore
 familiar-fauna|熟悉的动物*
 
 tinkers-tool-leveling|匠魂工具升级 (Tinkers' Tool Leveling)
-arcana-rpg-final-version|神秘RPG (Arcana RPG)
+
 ingame-info-xml|游戏信息显示XML版 (InGame Info XML)
 
 lovelyrobot|萌化机器人 (LovelyRobot)
@@ -1341,7 +1341,7 @@ thaumic-calculations|神秘计算器*
 pams-weee-flowers|潘马斯花园 (Pam's Weee! Flowers)
 
 
-paragliders|滑翔伞*
+paragliders@|滑翔伞*
 ender-io-endergy|末影接口：管道拓展 (Ender IO:Endergy)
 bwm-suite
 ambience-music-mod|环境音乐 (Ambience)
@@ -1489,7 +1489,7 @@ bitcoin|比特币*
 hungering-darkness
 roots-classic|根源魔法经典版*
 embers-rekindled@embers|余烬复刻版*
-vending-machines-revamped|自动贩卖机 (VendingMachinesRevamped)
+vending-machines-revamped|自动贩卖机*
 thaumic-alchemy|神秘炼金学*
 
 move-plus|移动方式增强*
@@ -1752,7 +1752,7 @@ toolscombine|工具组合 (Tools Combine)
 pollutant-pump|污染泵*
 infinite-pollution-filter|无限污染过滤器*
 jei-hider
-fastflyblockbreaking|飞行速破 (Fast Fly Block Breaking)
+fastflyblockbreaking|飞行速破 (FastFlyBlockBreaking)
 
 planttech-2|植物科技2 (PlantTech 2)
 toast-control|消息框控制*
@@ -1837,7 +1837,7 @@ spice-of-life-carrot-edition|生活调味料：胡萝卜版 (Spice of Life: Carr
 refined-exchange
 rs-requestify|精致存储：请求者 (Refined Storage: Requestify)
 pizzacraft@|披萨工艺 (PizzaCraft)
-super-factory-manager@|超级工厂管理*
+super-factory-manager@|超级工厂管理器*
 sakura|樱*
 sips|更多液体容器*
 gregs-construct|格雷与匠魂 (Greg's Construct)
@@ -1873,7 +1873,7 @@ auto-feeder-helmet|自动进食头盔*
 cc-tweaked-fabric
 simple-farming|简单农业*
 bigger-packets-please
-lockyz-extra-dimensions-mod|更多维度世界 (Lockyz Extra Dimensions)
+lockyz-extra-dimensions-mod|更多维度世界* - 已失效¨@ledm|更多维度世界 (Lockyz Extra Dimensions Mod)
 psi-combat-magic
 dtphc|动态的树：潘马斯附属 (Dynamic Trees - Pam's Harvestcraft Compat)
 largefluidtank@large-fluid-tank|大型储罐 (Large Fluid Tank)¨largefluidtank-fabric|大型储罐 (Large Fluid Tank)
@@ -2155,7 +2155,7 @@ usefultnt|更有用的TNT (UsefulTNT)
 crow-flight|乌鸦坐飞机*
 findme@|东寻西觅 (FindMe)
 minecraft-transit-railway@|我的世界铁路*
-random-loot-mod|随机战利品*
+random-loot-mod@randomloot|随机战利品*
 
 tinkers-aether|天境工匠*
 mine-and-slash-auto-compatibility|挖矿与砍杀自动兼容 (Mine and Slash Auto Compatibility)
@@ -2189,7 +2189,7 @@ glibys-physics|Gliby的物理 (Gliby's Physics)
 electro-magic-tools-ic2-classic|电子神秘工具 (Electro-Thaumic Tools - IC2 Classic)
 forceasciifont|强制ASCII字体 (ForceASCIIFont)
 skewers|烤串*
-get-in-the-bucket-mod|进入水桶*¨get-in-the-bucket-mod-fabric|进入水桶 (Get In The Bucket Mod)
+get-in-the-bucket-mod@|进入水桶*¨get-in-the-bucket-mod-fabric|进入水桶 (Get In The Bucket Mod)
 fertilization|施肥*¨fertilization-fabric|施肥 (Fertilization)
 additional-banners@|更多旗帜*
 dropt
@@ -2300,7 +2300,7 @@ infraredstone
 incorporeal|幻想多媒体*
 amun-ra
 
-mysterious-mountain-lib|妖怪之山通用库 (MysteriousMountainLib)
+mysterious-mountain-lib@mmlib|妖怪之山通用库 (MysteriousMountainLib)
 loottweaker
 rediscovered@|特性重现*
 
@@ -2343,7 +2343,7 @@ multiverse-pouch|多元宇宙袋*
 electroblobs-wizardry-twilight-forest-spell-pack|巫术学：暮色森林法术包 (Electroblob's Wizardry: Twilight Forest Spell Pack)
 blockbuster
 fishs-undead-rising|Fish的不死崛起/Fish的亡灵崛起 (Fish's Undead Rising)
-cloth-config@
+cloth-config@¨cloth-config-legacy
 just-map
 too-realistic-inventory|真实背包 (Realistic Inventory)
 mob-farm|生物农场*
@@ -2451,7 +2451,7 @@ kubejs@¨kubejs-fabric
 tickcentral
 lowocalizatiwn
 redlib
-modern-ui|现代化 UI (Modern UI) - 主页¨@modern-ui|现代化 UI (Modern UI)
+modern-ui@|现代化 UI (Modern UI)
 auto-config-updated-api
 medieval-madness|中世纪的疯狂*
 
@@ -2478,7 +2478,7 @@ lang_tool|加长工具 (lang_tool)
 
 emojiful
 item-compatibility
-aether-lost-content@|天境: 遗失之物 (Aether: Lost Content)
+aether-lost-content@|天境: 遗失之物 (Aether: Lost Content Addon)
 gunpowderlib
 nuclearcraft-overhauled@|核电工艺：重制版 (NuclearCraft: Overhauled)
 nei-lotr|魔戒NEI插件 (NEI LotR)
@@ -2923,7 +2923,7 @@ netherite-horse-armor@netherite_horse_armor|下界合金马铠*
 tacocraft-fabric
 lootr@¨lootr-fabric
 biolib@bio-library
-scavenge
+scavenge@
 
 heaven-earth-ring|乾坤戒指*
 
@@ -3050,7 +3050,7 @@ light-overlay@|亮度覆盖*
 smallerfpsincrements
 regex-filters|正则表达式过滤器*
 
-fluidsystem|流体系统 (FluidSystem)
+fluidsystem@|流体系统 (FluidSystem)
 falling-tree@fallingtree|伐树 (FallingTree)
 untranslated-items|物品名称双语同屏*
 particle-culling@|粒子渲染机制优化*
@@ -3128,7 +3128,7 @@ cardinal-energy|能量基本*
 travel-anchors@|旅行锚*
 bnbgaminglib
 triumph
-overloaded-armor-bar|护甲上限突破*¨overloaded-armor-bar-fabric|护甲上限突破 (Overloaded Armor Bar)
+overloaded-armor-bar@|护甲上限突破*¨overloaded-armor-bar-fabric|护甲上限突破 (Overloaded Armor Bar)
 toomanydanyores
 glass-pipe|玻璃管道*
 origins-classes@|起源：职业 (Origins: Classes)
@@ -3374,7 +3374,7 @@ dawn
 assembly-line-machines|装配线*
 netherending-ores
 Flex-FOV|扭曲视野*
-hooked|抓钩*
+hooked@|抓钩*
 createtweaker@
 iTorch
 
@@ -3407,7 +3407,7 @@ avatar-mod-2-out-of-the-iceberg|降世神通：突破冰山 (Avatar Mod 2: Out o
 lazydfu@|DFU载入优化 (LazyDFU)
 
 ridable-ender-pearls|可骑乘末影珍珠*
-gildedarmor|镀金盔甲 (GildedArmor)
+gildedarmor@|镀金盔甲 (GildedArmor)
 deadly-book|致命书本*
 speedy-hoppers|极速漏斗*
 indium@|铟*
@@ -3666,7 +3666,7 @@ gt-remastered|格雷科技重制版 (GT: Remastered)
 tips@|提示*
 Interactio
 advancement-book|进度之书*
-drawers-tooltip|抽屉提示*
+drawers-tooltip@|抽屉提示*
 paradise-lost@|天境：重生*
 
 @gregfood|格雷的食物 (GregFood)
@@ -3757,7 +3757,7 @@ loading-timer@|加载时长显示*
 ocrocketry
 chime-fabric@chime
 witherite@|凋灵合金*
-mermod-fabric@mermod¨mermaid-tail-mod|人鱼尾*¨mermod-forge
+mermod-fabric@mermod¨mermaid-tail-mod|人鱼尾*¨mermod-neoforge
 astromine-core|天体矿工：核心 (Astromine: Core)
 dungeondq
 dynamic-trees-integrated-dynamics|动态的树：动态联合/集成动力附属 (Dynamic Trees - Integrated Dynamics)
@@ -3776,7 +3776,7 @@ flower-seeds
 
 astemirs-forest-craft
 astromine-foundations|天体矿工：基础 (Astromine: Foundations)
-create-stuff-additions@|机械动力：物品附加 (Create Stuff & Additions)
+create-stuff-additions@|机械动力：物品附加 (Create Stuff 'N Additions)
 slab-machines|台阶型设备*
 more-create-stuffs|更多机械动力物品*
 rsinfinitybooster|RS 无限范围增幅卡 (RSInfinityBooster)
@@ -3885,10 +3885,10 @@ easy-villagers@|村民物品化/简单村民*
 largebar
 tis-3d@tis3d
 entity-nan-health-fix|假死修复 (Entity NaN Health Fix)
-ferritecore@ferrite-core|铁氧体磁芯 (FerriteCore)¨ferritecore-fabric|铁氧体磁芯 (FerriteCore)
+ferritecore-fabric@ferrite-core|铁氧体磁芯 (FerriteCore)¨ferritecore|铁氧体磁芯 (FerriteCore)
 thaumcraft-research-patcher
 masterful-machinery@
-minecraft-earth-mod|Derec 的地球生物 (Derec's Earth Mobs)
+minecraft-earth-mod@earth-mobs-mod|Derec 的地球生物 (Derec's Earth Mobs)
 scotts-essential
 drawerfps|储物抽屉渲染配置 (DrawerFPS)
 
@@ -4089,7 +4089,7 @@ minemenufabric@|我的菜单 Fabric 版 (MineMenuFabric)
 @tabtps
 afkpeace@
 
-
+secret-rooms-fabric@
 smooth-chunks|平滑区块加载*¨@smooth-chunks|平滑区块加载 (Smooth Chunks) - 已失效
 saturationoverflow|饱和度溢出 (SaturationOverflow)
 
@@ -4160,7 +4160,7 @@ selene@moonlight
 compatibilitylayerforcustomskinloader|万用皮肤补丁兼容层 (CompatibilityLayerForCustomSkinLoader)
 no-potion-shift
 no-potion-offset
-demonslayer|鬼灭之刃 (Kimetsu no Yaiba)
+demonslayer@orca-kimetsu-no-yaiba|鬼灭之刃 (Kimetsu no Yaiba)
 nautilium|鹦鹉螺*
 auto-attack|自动攻击*
 tamagotti
@@ -4192,7 +4192,7 @@ wooden-armors-stone-armor@woodenarmor|木制盔甲 (Wooden Armors Mod)
 insanelib@
 daydreamer
 phantomfaces|幻灵接口*
-improved-villagers|改进的村民 (Improved Villager Mod)
+improved-villagers|改进的村民*
 equipment-compare@|装备比较*¨equipment-compare-fabric|装备比较 (Equipment Compare)
 
 PickupWidely
@@ -4212,7 +4212,7 @@ tfc-cellars-add-on
 boats-and-beeps
 konkrete@¨konkrete-fabric
 xp-from-harvest@|收获经验 (XP From Harvest)
-modern-beta¨modern-beta-forge
+modern-beta@modern-beta-forge¨modern-beta-forge
 tfcflux
 tfc-medicinal
 water-flasks
@@ -4655,7 +4655,7 @@ draggable-resource-packs@draggable-lists|可拖动列表/可拖动资源包 (Dra
 fastchest|快速箱子渲染 (FastChest) - 已不再更新¨@fastchest|快速箱子渲染 (FastChest) - 在此处更新
 yuushya-townscape@|方块小镇*
 architects-palette-fabric@|建筑师的调色板 (Architect's Palette)¨architects-palette@architects-palette#all-versions|建筑师的调色板 (Architect's Palette)
-whisperwoods|低语之森*
+whisperwoods@|低语之森*
 dimensional-dungeons@|维度地牢*
 bosses-of-mass-destruction@|祸乱鬼魅 (Bosses of Mass Destruction)
 neoelfeos-medieval-pub-decoration
@@ -4941,7 +4941,7 @@ open-to-lan
 simple-translation@|简单翻译*
 fx-control@|效果控制 (Fx control)
 what-are-you-voting-for@
-steam-powered-create|蒸汽动力 (Create: Steam Powered)
+steam-powered-create@create-steam-powered|蒸汽动力 (Create: Steam Powered)
 creepers-burn@CreepersBurn
 
 pretty-game-enhhancing-gobblet-pgeg-remake|魔法森林重置版 (Pretty, Game-Enhhancing Gobblet Remake)
@@ -5484,7 +5484,7 @@ ae-shield|奕 秉甲*
 
 giant-player-boss|巨人玩家 Boss*
 set-bonus
-tntutils
+tntutils@
 giant-swords|巨剑*
 terrablender@¨terrablender-fabric¨terrablender-neoforge
 commandhelper|命令助手 (CommandHelper)
@@ -5678,14 +5678,14 @@ delogger
 just-another-vanilla-addon-java|迫真原版增强 (Just Another Vanilla Addon)
 spectrite-mod|彩虹 (Spectrite)
 genshin-nature@|原神：自然*
-power-utilities-remastered|能源转换重制*
+power-utilities-remastered@power-utilities|能源转换重制*
 create-gear-addon
 gun-mod-tl
 
 energymeter@
 headindex@|头颅菜单 (Head Index)
-quantum-generators|量子发电机*
-simply-quarries|简易采石场*
+quantum-generators@|量子发电机*
+simply-quarries@|简易采石场*
 lethal-peaceful
 
 
@@ -5774,7 +5774,7 @@ the-backrooms
 creatures-of-the-snow@creatures-from-the-snow-fabric|雪地里的生物！ (Creatures From The Snow!)¨creatures-from-the-snow-forge|雪地里的生物！ (Creatures From The Snow!)
 collisions-lib@
 wooled-boots@|羊毛靴子*
-zawa-evolved|野生动物园：进化 (Zoo and Wild Animals: Evolved)
+zawa-evolved@|野生动物园：进化 (Zoo and Wild Animals: Evolved)
 bongo@|宾果游戏*
 impersonate@
 calemi-core@ccore
@@ -5817,7 +5817,7 @@ delete-worlds-to-trash-forge@delete-worlds-to-trash¨delete-worlds-to-trash-fabr
 
 
 simple-magnets@|简易磁铁*
-guns-without-roses@
+guns-without-roses@|枪炮“没”瑰*
 buddycards-expansions|巴迪卡牌扩展*
 zettai-ars
 cant-sleep-clowns-will-eat-me@|夜不能寐 (Can't Sleep Clowns Will Eat Me)
@@ -5866,7 +5866,7 @@ double-jump-attribute¨@double-jump-attribute|Double Jump Attribute - 已失效
 overweight-farming@
 healthcare@
 betterloadingscreen|加载画面改良 (Better Loading Screen)
-fabric-title-changer
+fabric-title-changer@
 window-title-changer
 
 @betterlight
@@ -6269,7 +6269,7 @@ extrasounds@
 brooms
 the-stormlight-archive-mod|飓光志*
 extrae
-projecte-integration|等价兼容 (ProjectE Integration)
+projecte-integration@|等价兼容 (ProjectE Integration)
 mekajs
 antique-dragons@
 badpackets@
@@ -6658,7 +6658,7 @@ astemirs-fireflies
 
 ender-crop@
 modupdater
-fivehead
+fivehead@5head
 
 attained-drops|可种植掉落物*
 attained-drops-2|可种植掉落物 2*
@@ -6673,7 +6673,7 @@ dynamx
 mob-cards
 mavm@
 @waxednotwaxed
-hidden-names|隐藏名称*
+hidden-names@|隐藏名称*
 doph@|远程命中提示 (Ding On Projectile Hit)
 keybinds@
 hat-list@hatlist
@@ -6689,12 +6689,12 @@ ftb-backups-2|FTB备份2 (FTB Backups 2)
 darkkore@
 
 
-illagers-wear-armor
+illagers-wear-armor@
 hudium@
 ocean-world@|海洋的世界*
 cobblegen@
 zombie-extreme
-modularmovements|模块化动作 (ModularMovements)
+modularmovements|模块化动作 (Modular Movements)
 uncle-js
 wither-bones|凋灵之骨*
 sleep-warp@
@@ -6955,7 +6955,7 @@ better-bad-omen
 can-you-trash-it
 croptopias-chocolaterie-forge@croptopia-chocolaterie|作物盛景：巧克力工坊 (Croptopia's Chocolaterie)¨croptopias-chocolaterie-fabric|作物盛景：巧克力工坊 (Croptopia's Chocolaterie)
 crawl@|爬行*
-fabric-chisel@chisel-reborn
+chisel-reborn@
 roost-ultimate@roostultimate
 cammies-wearable-backpacks@
 
@@ -6981,7 +6981,7 @@ had-enough-characters
 medieval-origins
 
 
-elytra-chestplate-swapper
+elytra-chestplate-swapper@
 the-ends-flora
 apollos-additional-structures
 
@@ -7172,7 +7172,7 @@ extrabotany2|额外植物学重置版 (ExtraBotany2)
 terramine@
 aeinfinitybooster@
 endertech-infinity|Endertech Infinity - 已失效¨@endertech-infinity
-more-frogs-fabric@morefrogs|更多青蛙 (More Frogs)
+more-frogs-fabric@morefrogs|更多青蛙2 (More Frogs 2)
 
 
 create-big-cannons@|机械动力：火炮*
@@ -7225,7 +7225,7 @@ dynamic-surrounding-resurrected
 
 spells-shields
 
-player-companions
+player-companions@
 technical-engineering-3|科能工程3*
 
 extra-utilities-reborn|更多实用设备：重生*
@@ -7331,7 +7331,7 @@ textrues-rubidium-options@|TexTrue的铷视频界面 (TexTrue's Rubidium Options
 
 rubber-duck|橡皮鸭*
 unlimited-dragon-eggs-fabric@unlimited-dragon-eggs
-moreplayermodels-plus@moreplayermodels+
+moreplayermodels-plus@moreplayermodels+|更多玩家模型+ (MorePlayerModels+)
 @actioninventory
 
 custom-void
@@ -7345,7 +7345,7 @@ unusual-end@unusual_end|不同寻常的末地*
 solar-flux|日光通量*
 
 custom-background-color@cbc|自定义背景颜色*
-simple-shulker-preview|Simple Shulker Preview - 已弃用¨@simple-shulker-preview
+simple-shulker-preview@
 bygone-nether|逝去的下界*¨bygone-nether-fabric|逝去的下界 (Bygone Nether)
 @clickopener
 kokoalinux-backport
@@ -7630,7 +7630,7 @@ the-hordes@
 
 inventory-management@
 soul-fired@soul-fire-d
-faithfulbackrooms
+faithfulbackrooms@
 ex-machinis@¨ex-machinis-divitiae-deorum@
 goety@|诡厄巫法*
 torch-hit
@@ -8431,7 +8431,7 @@ windchimes@|风铃*
 diamond-ingots@|钻石锭*
 
 inventory-sorting@
-mine-piece
+mine-piece@orca-mine-piece
 mine-piece-animation
 hbms-nuclear-tech-mod-extended-edition
 custom-skyboxes
@@ -8971,7 +8971,7 @@ json-entity-models-jems@|JSON实体模型 (JSON Entity Models)
 
 rain-of-hell
 
-suggestion-provider-fix
+suggestion-provider-fix@suggestionproviderfix
 worldblender@¨world-blender-fabric@worldblender-fabric
 no-oceans|无海洋的世界*
 monoblocks
@@ -9050,7 +9050,7 @@ chomper
 flamelib
 
 better-planting@
-superfancyclouds-refabricated@|超级华丽云：重筑版 (SuperFancyClouds: Rearchitected)
+superfancyclouds-refabricated@|超级华丽云：重织版 (SuperFancyClouds: Refabricated)
 
 pet-tracker
 @splashfox|狐狸加载界面 (SplashFox)
@@ -9310,7 +9310,7 @@ easy-experience
 full-turtle-armor@
 
 
-tokusatsu-hero-completion-plan@tokusatsu-hero-instrumentality-project|特摄英雄补完计划 (Tokusatsu Hero Instrumentality Project)
+thip@tokusatsu-hero-instrumentality-project|特摄英雄补完计划 (Tokusatsu Hero Instrumentality Project)
 
 
 spyglass-astronomy@
@@ -9440,7 +9440,7 @@ falsetweaks@
 metaworlds-unofficial@metaworldsunofficial|元世界：非官方版*
 tslateffectslib@
 tslatentitystatus-tes@tslatentitystatus
-@invisible-frames-mod
+rounds-invisible-frames@invisible-frames-mod
 elytra-capes@elytracapes
 config-swapper
 viafabricplus@
@@ -9569,7 +9569,7 @@ skybox-loader-forge
 easy-feed@mcf-easyfeed|简单饲养 (Easy feeding)
 create-buffers-beams
 small-boats-mod
-reimplemented
+redev@
 wands-and-wizardry
 geore-nouveau@
 crimsonsteves-more-mobs
@@ -9695,7 +9695,7 @@ cursed-difficulty@
 
 
 algane
-dawn-of-time@dawn-of-time-builder-edition
+dawn-of-time@
 kubejs-projecte@
 biome-backport
 infernal-geode
@@ -9859,7 +9859,7 @@ item-obliterator@
 you-shall-not-spawn@
 hell-on-earth
 zombie-friends@
-
+@stone-craft|石头工艺 (Stone Craft)
 trade-cycling@
 illager-revolution@
 extra-trades
@@ -9981,7 +9981,7 @@ tskimi-seirans-fruit-wine@tskimiseirans-fruit-wine|月见清兰的果酒 (Tskimi
 graduated-cylinders@|刻度量筒*
 
 fps-monitor
-athena@athena-mod
+athena¨@athena-mod|Athena / Stitch - 已失效
 calm-mornings@
 fog-looks-good-now@
 guarding@
@@ -10499,7 +10499,7 @@ arboria
 mekanism-evolution
 
 chiseledadditions
-
+@tinkers_ingenuity|工匠匠心 (Tinkers Ingenuity)
 gregtech-4|格雷科技4移植版 (GregTech 4 Rewritten)
 lacrimis
 productive-villagers¨@productive-villagers|Productive Villagers - 已失效
@@ -10573,7 +10573,7 @@ pokefood
 armor-souls-reforged
 
 aether-redux@the-aether-redux|天境：新生代 (The Aether: Redux)
-@banner
+
 staaaaaaaaaaaack@
 thanks-i-have-rei@tihr
 
@@ -10848,7 +10848,7 @@ xannoszs-better-minecarts|Xannosz的更好的矿车 (Xannosz's Better Minecarts)
 meliusvanish@vanish
 tooltip-tool-tips@
 sanity-descent-into-madness@
-@no-darkness-effect
+no-darkness-effect-mod@no-darkness-effect|无黑暗效果 (No darkness effect)
 @seamless-loading-screen-renewed
 armorskin@
 @translucent-glass
@@ -11274,7 +11274,7 @@ recipe-book-delight@|配方书乐事*
 chest-hoppers|箱子漏斗*
 @gravy-delight
 ubes-delight@|香芋乐事 (Ube's Delight)
-torcherino-unofficial|加速火把非官方版 (Torcherino(Unofficial))
+torcherino-unofficial@torcherino(unofficial)|加速火把非官方版 (Torcherino(Unofficial))
 more-bows-and-arrows@
 xp-shop
 acclaimed-origins@
@@ -11333,8 +11333,8 @@ unbreakable-enchantment-forge@unbreakable-enchantment
 immersive-portal-gun@portal-gun|沉浸式传送枪*
 tac-craft-tactical-armor-pack
 @flexible-arms|灵巧双手 (Flexible Arms)
-boat-tweaks|船只调整*
-new-effect-descriptions@effect-descriptions
+boat-tweaks@|船只调整*
+new-effect-descriptions@effect-insights
 diagonal-windows@
 
 illager-invasion@|灾厄侵扰*
@@ -11455,7 +11455,7 @@ ilmusu-enchantments@ilmusuenchantments
 
 desired-servers@
 attributizer@
-reactive@
+reactive@|反应炼金术 (Reactive Alchemy)
 simple-deepslate
 minunrpg
 more-sheep-wools
@@ -11473,7 +11473,7 @@ green-thing-mod
 lmft@
 peripheralium@
 resource-switcher@|资源切换器 (ResourceSwitcher)
-serializationisbad
+serializationisbad@
 clutter@
 no-enchantment-cap-1-12-2-backport
 survivingtheaftermath|劫后余生 (Surviving The Aftermath)
@@ -11753,7 +11753,7 @@ dangerous-oceans
 @mc-249136-fix|MC-249136 修复 (MC-249136 Fix)
 @featherfallflying
 @lidar
-anvil-never-too-expensive
+anvil-never-too-expensive@ante
 @crossbow|弩 (Crossbow)
 @place-item
 
@@ -11847,7 +11847,7 @@ simple-enchantments
 simple-weapons-for-better-combat@
 wither-drops-netherite-templates
 @spineless
-immersive-melodies@
+immersive-melodies@|沉浸式奏乐*
 theobsidianboat
 dragon-survival-compatibility@|龙之生存：兼容*
 bettercookedaxolotls
@@ -12221,7 +12221,7 @@ akkamaddis-hadite-coal|Hadite Coal - 新
 
 akkamaddis-arsenic-and-lace|Arsenic and Lace - 新
 
-xiyus-exchanted-book@xiyus-enchanted-book|饩雨的附魔书 (xiyu's Exchanted book)
+xiyus-exchanted-book@xiyus-enchanted-book|饩雨的附魔书 (Xiyu's Enchanted Book)
 la-abuelita
 rotted-forge@rotted
 rustic-furniture-compat
@@ -12246,7 +12246,7 @@ snifferent
 jei-recipe-history@
 @yeet
 macaws-paths-and-pavings@|Macaw的小径和路面 (Macaw's Paths and Pavings)
-@chiseled-bookshelf-visualizer
+chiseled-bookshelf-visualizer@
 @elytra-skins
 mcv-biome-makeover-lieonlion@
 more-chest-variants-lieonlion@
@@ -12316,7 +12316,7 @@ dragon-nest-forge-fabric
 geode-creatures
 haraldsbetterstructures
 squake
-ae2-uel-extended|应用能源2非官方拓展 (AE2 Unofficial Extended)
+ae2-uel-extended@|应用能源2非官方拓展 (AE2 Unofficial Extended)
 terraria-calamity-mod|泰拉瑞亚灾厄 (Terraria Calamity)
 darkrtp-rtp-random-teleport@darkrtp
 cute-bears
@@ -12481,7 +12481,7 @@ weapons-of-miracles-epicfight@weapons-of-miracles|奇迹武器 (Weapons of Mirac
 
 @hsrpaths
 
-mcdar|我的世界：地下城法器 (MC Dungeons Artifacts)
+mcdar@|我的世界：地下城法器 (MC Dungeons Artifacts)
 dnt-stronghold-overhaul
 dnt-swamp-hut-overhaul
 jaopcagt@
@@ -12699,7 +12699,7 @@ boliviamod
 leawind-third-person@|Leawind的第三人称 (Leawind's Third Person)
 fabled-weaponry
 lazurite@
-lets-do-nethervinery@
+lets-do-nethervinery@|下界葡园 (Let's Do: NetherVinery)
 shinnyladders|发光梯子/洇荧登纵 (Shinny Ladders)
 macaws-holidays@
 unions-upgrade-scrolls
@@ -13326,7 +13326,7 @@ custom-health-bar@
 lotrimprovements|魔戒改进 (LOTR Improvements)
 mousekeyinventoryfix@
 visible-offhand@|可见副手*
-phosphorcrashfix
+phosphorcrashfix@phosphor-crash-fix
 sound-physics-remixin|籁*
 hextended-staves@
 aquaculture-delight@|水产乐事*
@@ -14067,7 +14067,7 @@ tinyfoes
 pyradium
 anvilcraft@|铁砧工艺：重力科技 (AnvilCraft)
 tiny-mob-farm-remastered@|迷你刷怪场：重制*
-create-aquatic-ambitions@
+create-aquatic-ambitions@|机械动力：瀚海雄心 (Create: Aquatic Ambitions)
 ffl-trinkets-compat
 kaleidios-guns
 mc-vr-playground
@@ -14083,7 +14083,7 @@ kriforfab@
 multiscoreboard@
 @minerally-me!
 @cover-them-in-armor
-jerotes-village|Jerotes村庄*
+jerotes-village|Jerotes村庄-二轮世界 (Jerotes Village - Second Round World)
 @a-cold-day-in-the-nether
 @translucencyfix
 create-ponder@|机械动力：思索*
@@ -14674,12 +14674,12 @@ the-fletching-table-mod@
 customemoji|自定义表情 (CustomEmoji)
 sword-soaring|史诗战斗：御剑凌虚 (Epic Fight - Sword Soaring)
 bigger-ae2@
-scalar
+scalar¨scalar-legacy|Scalar - Scala 2.11，一般使用此
 trials-chambers-backport@
 blus-sign-pack-mts-iv
 alexs-mediumcore@
 sherdsapi@
-@kontraption|精妙机械 (Kontraption)
+@kontraption|精致机械 (Kontraption)
 musketeer-illager
 
 daker-acg|Daker ACG工艺 (DakerACG)
@@ -14706,7 +14706,7 @@ paniclecraft
 cpmpvc@|自定义玩家模型Plasmo语音兼容 (Customizable Player Models Plasmo Voice compat)
 ydms-gunblades-mod@ydms-gunblades
 warp-pads@warppads
-marbleds-arsenal@marbledsarsenal
+marbleds-arsenal¨@marbledsarsenal|Marbled's Arsenal - 已失效
 @inventory-tabs
 mob-spawning-fix|生物生成修复*
 lh-miracle-road|奇迹之路之魂系加点 (LH Miracle Road)
@@ -14898,7 +14898,7 @@ froglins
 create-armor-trim
 slashblade-resharped@|拔刀剑：重锋 (SlashBlade: Resharped)
 spawn-mod@
-@smooth-swapping-1.20.4-port
+@smooth-swapping-1.20.4-port|平滑转移 1.20.4 移植 (Smooth Swapping 1.20.4 Port)
 @create-tab-fix
 scape-and-run-origins@srp-origins
 origins-extra-keybinds@origins-extra-keybinds-fabric
@@ -15196,7 +15196,7 @@ dralards-rock-candy-mod
 
 
 
-@explosion-breaks-no-block|爆炸不破坏方块 (Explosion Breaks No Block)
+explosion-breaks-no-block@|爆炸不破坏方块*
 via-romana@
 lithic-coins
 dynamic-trees-for-natures-spirit@|动态的树：自然之灵附属 (Dynamic Trees for Nature's Spirit)
@@ -15276,7 +15276,7 @@ no-shield-delay@
 musicpower@|音乐之力 (MusicPower)
 macrocraft@
 camerapture@
-simple-voice-radio@
+simple-voice-radio@simple-radio
 
 adorned
 fence-on-slab
@@ -15354,7 +15354,7 @@ dragon-mounts-even-more-dragons|龙骑士附属：附加龙 (Dragon Mounts: Even
 xplus-contingameime@|游戏内输入法 XPlus 版 (XPlus ContingameIME)
 @watersource2|水源 2 (Water Source 2)
 radomraidspawn|随机袭击生成 (Random Raid Spawn)
-enigmatic-legacy-legacy|神秘²遗物*
+enigmatic-legacy-legacy|神秘遗物经典版*
 
 nco-java-legacy-lib
 forge-souls-like-universe@souls-like-universe
@@ -15643,7 +15643,7 @@ tilt-break@
 item-frament@
 water-vision@
 randomized-default-fireworks@randomizeddefaultfireworks
-glowing-torchflower@glowing-torchflower#all-versions
+glowing-torchflower@
 @clock-hud-renew
 cameranoclip
 barriers-dont-block-rain@
@@ -15799,7 +15799,7 @@ mage-flame@
 @powerless-refined-storage
 forgotten-graves@
 day-zombies
-morecoal|更多煤炭
+morecoal|更多煤炭 (More Coal)
 jjku
 
 immersive-combat-feathers
@@ -15917,7 +15917,7 @@ thaumcraftfix|神秘时代6修复 (Thaumcraft Fix)
 
 extended-industrialization@
 small-tetra-additions
-lets-do-furniture@
+lets-do-furniture@|家居装饰 ([Let's Do] Furniture)
 tesseract-api-neoforge@tesseract-api
 tickrate-api
 spectrelib
@@ -15942,7 +15942,7 @@ improved-grindstone
 themetip@
 woodwalkers@
 peaceful-moon@
-to-tweaks-irons-spells@
+to-tweaks-irons-spells¨@to-tweaks-irons-spells|T.O Magic 'n Extras - Iron's Spells Addon - 已失效
 horde-moon@
 
 laser-mod-2
@@ -15966,7 +15966,7 @@ agenta@
 
 more-beehive-variants@
 
-persistent-creative-inventory@
+persistent-creative-inventory
 lets-do-wildernature@|野性自然 ([Let's Do] WilderNature)
 @quitconfirm
 @ressourcepackcommand
@@ -16083,7 +16083,7 @@ glowy-players-renewed@|玩家高亮：重置版*
 epic-fight-kenjis-combat-forms
 mekanism-unleashed@
 
-easy-cake
+easy-cake|简易蛋糕*
 weave-craft
 morefarming@|更多农耕 (MoreFarming)
 iron-bushes
@@ -16186,7 +16186,7 @@ jmx@imx
 another-dyeable-shulkers@|可染色潜影贝*
 
 @thatskyinteractions
-
+@tinker-transplant|匠魂移植 (Tinker Transplant)
 chisatos-more-redstone@|Chisato的更多红石 (Chisato's More Redstone)
 assetmover@
 duclib@
@@ -16274,7 +16274,7 @@ dragon-gear-renewed
 @archers-plushies
 @hephaestus-expansion
 create-structures-arise@
-
+kilt@
 gregtech-extended-chemistry-extended
 ulv-covers-modern
 farmers-structures
@@ -16411,7 +16411,7 @@ scaling-mobs
 multiline-mastery@
 @confetti-stuff
 pirates-treasures
-ars-nouveau-delight@
+ars-nouveau-delight|Ars Nouveau Delight - 已失效¨@ars-nouveau-delight
 crossbow-enchants@
 extendeddrawersaddon@
 minecolonies-letsdo
@@ -16475,7 +16475,7 @@ fastfood-delight-unofficial|重启速食/快餐乐事非官方版 (FastFood Deli
 faster-fly-block-breaking|飞行速速破*
 upgraded-additional-trims
 create-let-the-adventure-begin@
-bountiful-critters
+bountiful-critters@
 flashlight-mcowners
 smartpot@|智能锅 (SmartPot)
 
@@ -16537,7 +16537,7 @@ mca-api
 
 sodium-leaf-culling@sodiumleafculling|钠：树叶剔除*
 homing-xp-orb|引验导追/归航经验球*
-multiblocked2
+multiblocked2@
 armorstatushud-updated|耐久信息显示更新版 (ArmorStatusHUD Updated)
 tfc-better-blast-furnace
 tfc-textile@
@@ -16802,7 +16802,7 @@ gold-nugget-recycling
 sodium-options-api@
 @totom-register
 
-crazyae|疯狂的AE (CrazyAE)
+crazyae@|疯狂的AE (CrazyAE)
 ae2-crafting-tree-legacy|AE2合成树-传统版 (AE2CT-Legacy)
 ae2-alchemistry-addon
 
@@ -16926,7 +16926,7 @@ project-lambda
 @pretty-hitboxes-create-addition|可配置的碰撞箱显示-机械动力功能附加 (Pretty Hitbox-Create Addition)
 watersource-reborn@|水源：重生 (WaterSource: Reborn)
 locks-unofficial@|锁：非官方版 (Locks-Unofficial)
-@epicfight_improve|史诗战斗：改进 (EpicFight：Improve)
+epicfight-improve@epicfight_improve|史诗战斗：改进 (EpicFight：Improve)
 just-in-nether@
 jinghui@|镜回 (JingHui)
 @ripples-of-the-past-mandom-addon|RotP：男人领域附属 (Ripples of the Past: Mandom Addon)
@@ -16947,7 +16947,7 @@ enchanting-tweaker@enchanting-tweaks
 just-a-lot-more-enchantments@
 alessandrvs-enchantments@alessandrv-enchantments
 armor-abilities@
-sleepy-hollows@
+sleepy-hollows@|沉眠空谷*
 
 nametag-tweaks@nametagtweaks|名称标签调整 (Nametag (Display) Tweaks)
 @sodium-no-alerts
@@ -17009,7 +17009,7 @@ eventjs
 backup-manager@
 the-root-of-fear@
 the-modifiger@
-@keypreset|键位预设 (KeyPreset)
+keypreset@|键位预设 (KeyPreset)
 @tweakeroo-features-menu
 sanity-prequel|理智：前传 (Sanity: Prequel)
 ayame-paperdoll@|Ayame 纸娃娃 (Ayame PaperDoll)
@@ -17103,8 +17103,8 @@ neepmeat@
 
 @huangsheng1s-more-monster|更多怪物 (HuangSheng1's More Monster)
 creeping-woods
-@zombie-apocalypse-core
-dragon-mounts-2-expanded@dragon-mounts-2|龙骑士2：延续 (DragonMounts2: Expanded)
+@zac
+dragon-mounts-2@|龙骑士2 (DragonMounts2)
 life-fruits@|生命果*
 ati-structures
 fantasy-armor@fantasy_armor|幻想铠甲*
@@ -17161,7 +17161,7 @@ tensura-reincarnated@|关于我转生变成史莱姆这档事：转生 (Tensura:
 transformer|奥特化身：无限 (Becomes Ultraman:Infinity)
 henshin|变身*
 ridiculous-world
-
+enhanced-biomes
 quartz_craft@|石英工艺 (Quartz_Craft)
 cursed-stare@
 legendblade|传世之刃 (LegendBlade)
@@ -17181,7 +17181,7 @@ formidulus@
 ames-stranger-things
 herobrine-origins
 milkable-blazes@
-
+@rotp-stone-legacy|RotP：暗之遗物 (Stone Legacy (Ripples of the Past addon))
 furniture-beetle@
 mekanism-x-create-northstar@
 @createz
@@ -17313,7 +17313,7 @@ oo-ee-a-e-a@
 
 
 sodium-embeddium-options-mod-compat@sodium-options-mod-compat
-secureseed-reborn
+secureseed-reborn@
 creative-eats
 mazerooms@
 friendly-chests
@@ -17464,7 +17464,7 @@ qualia-carpet-addition@qca
 mouse-tweaks-unofficial|鼠标手势非官方版*
 baubles-lts
 elysium-api@
-noisethreader
+noisethreader@
 @no-bats
 antibat@
 illage-and-spell-age
@@ -17975,7 +17975,7 @@ distinctpaintings@
 @search-on-mcmod|MC百科搜索 (Search on MCMOD)
 infinite-lava-renewed
 @better-fabric-console
-
+mine-tooltips
 fastchest-reforged
 @better-caves-archaic|古早洞穴优化 (Better Caves Archaic)
 
@@ -18174,7 +18174,7 @@ stacksonstacks
 more-of-all@
 
 
-popular-biology|热门生物
+popular-biology|热门生物*
 tolkien-tweaks
 tolkien-tweaks-mobs-edition
 soulplied-energistics
@@ -18202,7 +18202,7 @@ vehicular-movement-light
 vehicular-movement
 onysdvehicles@onysd-vehicles
 
-zunpet-forge|Zun号非官方Forge版 (ZUNPet Forge)
+zunpet-forge|Zun号非官方NeoForge/Forge版 (ZUNPet NeoForge/Forge)
 more-hitboxes@|更多碰撞箱*
 
 shipwreck-fix|沉船修复/沉船卡顿优化*
@@ -18384,7 +18384,7 @@ thaumic-staff|神秘法杖*
 thaumic-bases-mystical-rose-rework|神秘基础学玫瑰重制*
 rhyme-pvz@|PVZ：润 (Rhyme PVZ)
 ichorium-kit
-reforgotten-relics|失落遗物学：重生 (ReForgotten Relics)
+reforgotten-relics@|失落遗物学：重生 (ReForgotten Relics)
 in-your-world@
 warpapocalypse@warp-apocalypse
 
@@ -18606,7 +18606,7 @@ bountifulbaubles-reforked@bountifulbaublesreforked|丰富的饰品：重铸 (Bou
 @mekanismmoremodules|通用机械：更多单元 (Mekanism: More Modules)
 @better-armor-swap
 
-the-man-from-the-shadow
+the-man-from-the-shadow@the-man-from-the-shadow-(horror)
 
 
 
@@ -18667,7 +18667,7 @@ configurable-keepinventory
 better-chat@betterchat
 mekalus-oculus-fork-with-fixed-mekanism-mekasuit
 view-emc
-@fortitude
+fortitude@
 experience-ore|经验矿石*
 passive-torch
 productive-metalworks
@@ -18677,7 +18677,7 @@ spirit-of-fight@|战魂 (Spirit of Fight)
 grim-bleak@grim-and-bleak
 carrymyboss
 ranged-damage-limit|远域挡招/远程伤害保护*
-magichem
+magichem|魔法炼金 (MagiChem)
 iglee-library@
 component-model-hider
 
@@ -18756,7 +18756,7 @@ dungeon-revival
 new-order
 create-more-recipes-addon
 cbc-nuclear@
-@smart-zombies
+smarter-zombies¨@smart-zombies|Smart Zombies - 已失效
 
 
 libguifoxified@
@@ -18968,20 +18968,20 @@ easy-storage@ezstorage|简易存储*
 elrols-gui-elevator
 backrooms-found-footage@minecraft-found-footage
 exposure-polaroid@
-
+surpass@|超限*
 fallingalchemy|坠落炼金 (FallingAlchemy)
 
 fluxloading@
-inventory-swapping
+inventory-swapping@
 seamless-trading@
 sophisticated-auto-walk
 mmmmmmmmmmmmpatch|试验假人补丁 (MmmMmmMmmMmmPatch)
 global-datapacks@datapacks
 world-guard@
-
+more-murphy-pumpkins|更多南瓜 (morepumpkins)
 tetradelight
 
-dragon-mounts-2
+
 heroes-of-might-and-magic-3@
 another-changed
 randomly-tp|随意传送 (Freely/Randomly TP)
@@ -19074,7 +19074,7 @@ screenshot-with-coords@|带标截图 (Screenshot with Coords)
 ccddi-damage-indicator@ccddi
 lidar
 @segmented
-goety-gotta-summon-em-all
+goety-gotta-summon-em-all@goety-gotta-summon-em-all!
 aerlune-rpg-2
 origin-furs@
 grounded-origins-forge@groundedorigins¨grounded-origins-fabric
@@ -19099,7 +19099,7 @@ immersive-armor-hud@|沉浸式盔甲 HUD (Immersive Armor HUD)
 
 yeast-n-feast@
 
-
+vampirism-tinker|血族工匠 (VampirismTinker)
 
 essentia-pipes@|源质管道*
 msp-backpacks
@@ -19169,11 +19169,11 @@ create-advanced-logistics@createadvlogistics
 create-electric-drive
 @lachryvisions
 the-heaven-sword-and-dragon-saber|倚天屠龙 (The Heaven Sword and Dragon Saber)
-
+dreamtinker@|工匠幻梦 (DreamTinker)
 
 
 wolfs-enchantment-lib|狼王的附魔库 (Wolf's Enchantment Lib)
-@caoplus|槽 (Cao)
+@caoplus|槽 (CaoPlus)
 disturb-not-my-dream@|勿扰吾梦 / 起床气*
 @contigency-shop-lite|轻量兑换所 (Exchange Site Lite)
 lootbagsrenewal@lootbags|战利品袋重制版 (LootBagsRenewal)
@@ -19213,11 +19213,11 @@ blacksmith-weapon|铁匠武器 (Blacksmith_Weapon)
 mrqx-s-slashblade-core@mrqx%60s-slashblade-core|墨染琴弦的拔刀剑核心 (mrqx's Slashblade Core)
 goldblade|神刀 (GodBlade)
 
-shanghai-metro-line-one-mod@|上海地铁一号线 (Shanghai Metro Line one Mod)
+shanghai-metro-line-one-mod@|上海地铁一号线*
 
 
 cat-burger|猫猫汉堡*
-mineral-backpacks
+mineral-backpacks@
 @furry_bohe|兽薄荷 (Furry Bohe)
 narcissusfarewell-reflorescence|水仙辞：重绽 (NarcissusFarewell: Reflorescence)
 
@@ -19374,7 +19374,7 @@ emcgadgets
 custom-armor-bar@
 roughly-enough-input-methods@
 pirates-doom@
-techrebornjei@
+techrebornjei@|科技复兴JEI (TechRebornJEI)
 little-joys@
 blasting-raw-metal-blocks-into-blocks-fabric-forge@blasting-raw-metal-blocks-into-blocks
 
@@ -19536,7 +19536,7 @@ picks-of-power@
 
 super-hot
 chill-thrill
-pyrellium
+pyrellium@
 luminous-nether@
 brush-mining-machine|刷矿机 (Ore Generator)
 
@@ -19547,7 +19547,7 @@ projecte-kubejs
 actually-additions-v2-unofficial|实用拓展 V2 非官方版*
 create-ender-link@
 progressive-tweaks
-portable-blueprints
+portable-blueprints@
 carrasconlib@
 blockparticlespawning@|方块粒子生成 (Block Particle Spawning)
 
@@ -19556,7 +19556,7 @@ blockparticlespawning@|方块粒子生成 (Block Particle Spawning)
 aether-dragon-dragon-survival-addon
 tundra-dragon-dragon-survival-add-on
 naturalist-delight
-@civilizations
+civilizations@
 block-factory-biomes@block-factorys-biomes
 underwater-swim-fix-mc-220390|水下游泳修复 (Underwater Swim Fix)
 scaffolding-backported
@@ -19567,7 +19567,7 @@ seeking-immortals-nightmare@|月之石：噩梦之章/求仙者：噩梦之章 (
 enchanted-crystal-arrow|魔法水晶箭 (Enchanted Crystal Arrows)
 touhou-danmaku-kagura-core|东方弹幕神乐核心 (Touhou Danmaku Kagura core)
 hah-ueuh@hah!-ueuh
-eternal-nether@
+eternal-nether@|永恒下界*
 
 
 
@@ -19603,7 +19603,7 @@ create-propulsion@|机械动力：推进工程 (Create: Propulsion)
 event-wrapper@|事件包装器*
 
 @modwhitelist|模组白名单 (ModWhiteList)
-
+@instant-build|瞬时建造 (Instant Build)
 beacon-conduit-tweaks|信标与潮涌核心调整 (Beacon & Conduit Tweaks)
 tfc-tools-trim@|群峦传说：工具纹饰 (TFC Tools Trim)
 @kill-youkai-with-knives
@@ -19712,7 +19712,7 @@ shield-system
 @burythelight
 command-aliases@
 pigium-performance-mod
-spectrumjei@
+spectrumjei@|光谱世界JEI (SpectrumJEI)
 @itemban
 @skiesclear
 vminus@
@@ -19854,7 +19854,7 @@ starve-library@|饿死图书馆*
 infinite-refills|无限续杯*
 systrace@|一导即出*
 fluxed-core@
-@myluckyblock|我的幸运方块 (MyLuckyBlock)
+myluckyblock@|我的幸运方块 (MyLuckyBlock)
 
 backpack-plus|背倍加*
 @hydration-mod
@@ -19917,7 +19917,7 @@ mice@
 ancient-golems@|上古傀儡*
 model-citizens
 botanical-machinery-extra@tPTR9GcJ
-flowerary
+flowerary@
 extrabotany-reburn@extrabotany|额外植物学：重燃 (Extrabotany: Reburn)
 
 
@@ -19971,7 +19971,7 @@ simple-incubator@
 amethyst-stairs-slabs-and-walls
 @vessels
 
-legendary-weapons-byititor
+legendary-weapons-byititor@legendaryweapons
 slender-reborn
 craft-vania-lite
 pollution-of-create
@@ -19999,7 +19999,7 @@ shadered@
 sweety-garden@
 
 @twilight-forest-aurora-palace-regeared
-
+changshengjue|长生诀 (ChangShengJue)
 
 medieval-buildings-nether-edition
 @ribbits-croaks
@@ -20007,14 +20007,14 @@ echoes-of-time@
 horror-alexbrine
 zzz-craft|绝区零·星见雅 (ZZZ Miyabi)
 
-cozy-cabins-and-cottages
+cozy-cabins-and-cottages@
 servereye
 deepseek@deepseek-neoforge
 ai-command|AI指令生成 (AI Command Generator)
 
 flighthud-do-a-barrel-roll-fix
 
-@fast-container-placement|快速容器放置 (Fast Container Placement)
+fast-container-placement@|快速容器放置*
 @teleport-mod
 @what-meme
 crackers-wither-storm-mod-v-sides-soundtrack@
@@ -20038,7 +20038,7 @@ smoking-stuff-a-wizards-hobby
 time-in-a-bottle-charger@
 just-a-sculk-vial@
 lockylocks@
-server-i18n-api¨@server-i18n-api|Server I18n API - 审核中
+server-i18n-api@
 fragmentum-forge@fragmentum¨fragmentum-neoforge¨fragmentum-fabric
 @monument-data-fix|Monument 数据修复 (Monument Data Fix)
 @better_tp
@@ -20073,7 +20073,7 @@ create-remote-terminal@|机械动力：远程终端 (Create: Remote Terminal)
 songs-of-war@|战争之歌 (Songs of War)
 cataclysm-summons@
 cutepuppymod@
-giant-swamp-tree|沼泽巨树*
+giant-swamp-tree@|沼泽巨树*
 big-oak-tree@|大橡树*
 giant-tree-stump|大树桩*
 
@@ -20089,7 +20089,7 @@ portaltransform@|传送门嬗变 (PortalTransform)
 @a555sd|更多的画 (More Paintings)
 unusual-furniture@
 xiaoanmooncake@|小安的月饼狂热 (Xiaoan's Mooncake Fever)
-foragers-insight@
+foragers-insight@|巧觅巧食 (Forager's Insight)
 palestinian-delight@
 mekanism-more-machine@mekanismmoremachine|通用机械：更多机器 (Mekanism: More Machine)
 custom-battleroyale@|自定义大逃杀 (Custom BattleRoyale)
@@ -20113,7 +20113,7 @@ tlib@
 smoothscreen@
 
 @fuzz
-advanced-loot-info@
+advanced-loot-info@|高级战利品信息显示*
 resourcepackcached@
 aotake-sweep|竹叶清*
 
@@ -20161,11 +20161,11 @@ better-sign-edit@
 disc-recipes@|唱片合成 (Disc Recipe)
 
 
-scoutreforked|侦察兵 重构 (Scout Reforked)¨@scoutreforked|侦察兵 重构 (Scout Reforked) - 审核中
-immersion-in-traffic-context|沉浸交通道路 (Immersion in Traffic Context)¨@immersion-in-traffic-context|沉浸交通道路 (Immersion in Traffic Context) - 审核中
+scoutreforked@|侦察兵 重构 (Scout Reforked)
+immersion-in-traffic-context@|沉浸交通道路 (Immersion in Traffic Context)
 arknightsfurniture@|明日方舟家具 (ArknightsFurniture)
 gunsmith-lib
-
+@emixx
 experiencelib@
 mystical-mobs
 
@@ -20211,21 +20211,21 @@ colorwheel-patcher@
 
 
 
-
+@llpswsounds|llpsw的大喇叭 (llpswsounds)
 difficulty-lock@¨difficulty-lock-fabric
 ryymr@
 @lazybeefix
 
 lazy-ae2-tweaks
 coordinates-hud@coordinateshud
-just-enough-botania
+just-enough-botania@
 fumo-fumo
 touhoupixelcanteen-a-farmers-delight-plugin@touhoupixelcanteen|东方像素食堂 (TouhouPixelCanteen)
 perfect-parity-the-garden-awakens-edition@
 perfect-parity-spring-to-life-reforged
 hypertubes@hypertube|机械动力：超级管道 (Create: Hypertubes)
 perfect-parity-spring-to-life-edition@perfect-parity-1-21-5
-create-geography|机械动力：地理学 (Create: Geography)
+create-geography@|机械动力：地理学 (Create: Geography)
 create-apothic-enchanting@
 demis-enigmatic-dice@
 
@@ -20238,7 +20238,7 @@ identity-fix-morph@identity-fix
 
 stick-it@
 aimod
-srp-reset-mod|逃逸寄生体：重置
+srp-reset-mod|逃逸寄生体：重置 (SRP Reset)
 legendary-relics|传说遗物*
 
 true-power@|真正的力量 (True POWER)
@@ -20261,7 +20261,7 @@ farms-and-foods@farms-foods
 @achievement-fix|成就修复 (Achievement Fix)
 
 lang-magic-tweaker
-spawn-dimension-choice|诞生维度自选*
+spawn-dimension-choice@|诞生维度自选*
 reforge-stone@|重铸石*
 numericalbotany
 cameraoverhaul-vintage@
@@ -20311,7 +20311,7 @@ warfare-wings@
 avaritias-delight@|无尽乐事 (Avaritia's Delight)
 mamas-herbs-and-harvest@
 vs-orbit@|瓦尔基里：轨道学 (VS Orbit)
-touhou-little-maid-spell@
+touhou-little-maid-spell@|车万女仆：万法皆通 (Touhou Little Maid: Spell)
 despawn-notifier|余影待终/掉落物消失提醒*
 customnpcs-unofficial-from-betazavr|自定义 NPC BetaZavr 非官方版 (CustomNPCs Unofficial from BetaZavr)
 
@@ -20330,7 +20330,7 @@ create-more-parallel-pipes@
 create-garnished-reworked@
 create-shimmer|机械动力：微光 (Create: Shimmer)
 blue-archive-school-banners
-cialloblade
+cialloblade|重锋:cia出如llo (CialloBlade)
 windows-keyboard-fixes-returns
 aquatic-torches-returns
 cratetech-crate-storage
@@ -20348,7 +20348,7 @@ sussy-sniffers
 firefly-bush-backport@
 agritech-trees-automated-trees@agritech-trees
 agritech-evolved@
-wealizh|WLH工业故事*
+wealizh|工业故事*
 @hydrometallurgy|湿法冶金学 (Hydrometallurgy)
 mekanism-ecoenergistics-unofficial
 
@@ -20368,21 +20368,21 @@ simple-copy@
 natures-aura-render-fix@
 creakingchopperenchantment@
 daily-rewards@
-initialdimensionreborn
+initialdimensionreborn@
 
-
+@oo-ee-a-e-a-fabric
 
 
 the-plugin-mod@
 cave-vision
 @el-addon-retrieve-to-slot
 aether-gloves-for-all
-reducedloot
+reducedloot@
 @irisfixes|Iris 修复 (IrisFixes)
 musicjs
 
 suspendtheserver|自动挂起服务器 (Suspend The Server)
-screenshot-layers
+screenshot-layers@
 anti-spider-climbing
 rechiseled-chipped@
 
@@ -20393,8 +20393,8 @@ cinnabar
 pquality@
 
 mte-patches
-happy-ghast-breeding
-happy-ghast-flight
+happy-ghast-breeding@
+happy-ghast-flight@
 the-angry-ghast@
 @morfonica-in-minecraft
 for-vanilla-flowers
@@ -20402,7 +20402,7 @@ for-vanilla-flowers
 
 
 
-bedrock-hotbar-offset¨@bedrock-hotbar|Bedrock Hotbar Offset - 审核中
+bedrock-hotbar-offset@bedrock-hotbar
 mss-more-slot-swap¨more-slot-swap
 show-all-advancements|显示所有进度*¨@show-all-advancements|显示所有进度 (Show All Advancements) - 审核中
 
@@ -20419,16 +20419,16 @@ lava-chicken-disc
 lava-dennis
 album-go-wall
 forgotten-java
-johanness-renaissance-rebirth@johanness-renaissancerebirth|约翰内斯的文艺复兴：火器重生 (Johannes's Renaissance：Musket Rebirth)
+johanness-renaissance-rebirth@johanness-renaissancerebirth|约翰内斯的文艺复兴：火器重生 (Johannes's Renaissance: Musket Rebirth)
 swarm-infection@
 necro-rooted
-@mycelial-crisis|菌丝危机：崛起 (Mycelial Crisis: Mushroom Rising)
+mycelial-crisis@|菌丝危机：崛起 (Mycelial Crisis: Mushroom Rising)
 
 lethalsteelproject|致命拔刀计划 (Lethal Steel Project)
 lovecraft-girlfriends-3@
 @faithful-mace
 bard-craft
-
+@bilibilimedia|哔哩哔哩WaterMedia兼容模组
 items-timer
 neo-language-reload@
 @oxidizium
@@ -20466,11 +20466,11 @@ nature-reimagined
 ominous-bottle-add
 only-hammers@
 auto-resource|自动资源*
-iu-additions
+iu-additions@
 rubiks-cube|魔方*
 clockworklib
 
-fabridge
+fabridge@
 
 true-fullbright
 quickslots
@@ -20487,7 +20487,7 @@ cbc-chemical-warfare|机械动力火炮：化学与生物战争 (CBC: Chemical W
 cbc-warium-projectiles|机械动力火炮：Warium炮弹 (CBC: Warium Projectiles)
 create-colored
 create-law-and-order|机械动力：法律与秩序 (Create: Law and Order)
-blockexporter
+blockexporter@
 fix-attack-lag@|修复攻击卡顿*
 @clienthings
 @misinput
@@ -20500,7 +20500,7 @@ porting-dead-libs
 panoramica¨panoramica-fabric
 create-mt-integration|资源统合-机械动力配方附加*
 @valkyrien-warpeace|瓦尔基里：战争与和平 (Valkyrien War and Peace)
-sillys-auto-totem
+sillys-auto-totem@
 repairables-anvil@|可修复的铁砧*
 @throwable-bricks
 @now-time|准点报时 (Now Time)
@@ -20512,7 +20512,7 @@ lotr-renewed-class-mod|魔戒种族 (LOTR Races)
 
 craftable-chain-armors
 item-cooling-reduction@|物品冷却缩减*
-yosbs
+yosbs@
 
 
 @no-bugs
@@ -20547,18 +20547,18 @@ philia-amulet|友爱护符 (PhiLia Amulet)
 stronger-fire-boss|原焰帝臻*
 myec@|更多渴望：附魔与制造 (More of Yearn: Enchants & Crafts)
 abandoned-urban|废弃城市 (Abandoned urban)
-fungal-hazard|蕈骸迷途
+fungal-hazard|蕈骸迷途*
 more-useful-copper-2-0@more-useful-copper|更有用的铜 (More Useful Copper)
 boom-bombs@
 polars-exploration-additions@
 
 ozymandias-sundries
 tensura-enigmatic
-
+createtraincontrol@|机械动力：列车控制 (CreateTrainControl)
 create-collection-bundles@
 create-enhanced-mastery
-create-industrial-tools
-create-smart-bounds
+create-industrial-tools@
+create-smart-bounds@
 create-fantasizing-again@|机械动力：又在幻想了 (Create: Fantasizing Again)
 crafting-station-jei-edition-updated
 uncraft-everything@
@@ -20569,7 +20569,7 @@ gregs-modern-construct
 
 smart-key-prompts@|灵活按键提示 (SmartKeyPrompts)
 @zero-whitelist|Zero白名单 (Zero Whitelist)
-
+milometer|计程器*
 @pearlchunkloading|珍珠加载区块移植 (Pearl Chunk Loading)
 clean-drops
 auto-replace
@@ -20577,16 +20577,16 @@ auto-replace
 
 simple-villager-follow@
 tinkers-experience
-hedgehog-companion
-i-want-to-spin@|我要开转 (I want to spin)
+hedgehog-companion@
+i-want-to-spin@|我要开转*
 @kiss-fabric
 
-
+neo-the-titans@|新泰坦生物 (Neo Titans Mod)
 
 nuggets-repair-items@|矿粒修复物品*
 
 
-terra-atmos|群峦环境音效*
+terra-atmos@terra_atmos|群峦环境音效*
 tlm-true-power@true-power-of-maid|车万女仆：真正的力量 (TLM: True POWER)
 
 
@@ -20601,7 +20601,7 @@ ancient-structure@ancient-structures
 
 wizard-samurai-irons-spells-addon¨@wizard-samurai-irons-spells-addon|Wizard Samurai - Iron's Spells Addon - 更新较慢
 survival-instinct
-enderzoo-patched
+enderzoo-patched@enderzoopatched
 illager-keep
 codex-of-champions
 ars-controle@
@@ -20609,13 +20609,13 @@ medieval-craft-historical-firearms
 too-many-withers
 reliquified-l-ender-s-cataclysm@
 
-@log-creator-finder-findshit|找史大王 / 日志溯源 (findshit)
+findshit@log-creator-finder-findshit|找史大王 / 日志溯源 (find log's creator / findshit)
 enchantment-lookup@|附魔查询*
 
 
 
 
-@mods-checker
+@mods-checker|模组校验 (ModsChecker)
 no-enchanting-xp-requirment
 client-dynamic-light|客户端动态光源*
 
@@ -20628,7 +20628,7 @@ ae-inventory-profiles
 tooltips-reforged@|提示框：重铸*
 @wyr
 soaring-phantoms@
-tick128¨@tick128|Tick128 - 审核中
+
 ritchies-projectile-library@rpl
 modopedia@
 @translate-allinone|一体化翻译 (Translate All in One)
@@ -20637,13 +20637,13 @@ button-fix@
 bucketstacking
 creeper-no-break-blocks@
 create-cog-hud@|机械动力：齿轮 HUD (Create: Cog HUD)
-
-create-pipe-networks
-
+@createtools-n-weapons
+create-pipe-networks@
+jiagu-reappearance|岁在甲骨*
 multicolored-redstone-lamps
 reliquified-twilight-forest@
 witch-tower
-the-nightmare-000
+the-nightmare-000@
 meowmere
 @fallenflowers-server-economy|Fallenflower的服务器经济 (Fallenflower's Server Economy)
 deadout-medical-supplies|死亡突围医疗用品 (Deadout Medical)
@@ -20706,12 +20706,12 @@ health-indicator-txf@
 
 snowy-weather
 
-
+dimensionlock@
 fluidium|锍*
 
 peritia
 
-
+inventory-sort|背包整理*
 corpse-kibou-no-hana|希望の花 (Corpse: Kibou no Hana)
 redyeable
 @natural-motion-blur
@@ -20724,7 +20724,7 @@ vintage-vibes@
 custom-trades-mod|自定义村民交易*
 tameable-zombie-horse-and-skeleton-horse|可驯服的僵尸马和骷髅马*
 mi-tweaks
-qa-villager-tweaks|Qa村调整*
+qa-villager-tweaks@qa-villager-extends|Qa 村拓展 & 废物革新 (Qa Villager Extends & Waste Innovations)
 multiblocked-extended-compatibility
 enum-extender-js
 @btc
@@ -20771,9 +20771,9 @@ jeb-just-enough-book@justenoughbook
 pal@
 data-anchor@
 elytra-hopping
-oh-more-wandering-trades|更多游商交易*¨@oh-more-wandering-trades|更多游商交易 (Oh More Wandering Trades) - 审核中
+oh-more-wandering-trades@|更多游商交易*
 beacon-anti-phantom@|不时轻轻肘击幻翼的邻座信标同学 (Beacon Anti-Phantom)
-
+@flexible-painting|灵活的画 (Flexible Painting)
 
 cooler-animations
 
@@ -20792,16 +20792,16 @@ sbm-cardboardboxes
 
 bedrock-age|基岩时代*
 
-
+return-scepter|回程魔杖*
 @koniavacraft|娜拉工艺 (Koniavacraft)
 emojicraft|Emoji工艺*
 kylin-arm|麒麟臂*
 server-hats@
-forgotten-ruins
+forgotten-ruins@
 
 creeperhost-presents-steves-carts@
 perspatium@per-spatium
-face-stealer
+face-stealer@
 offlawn-legacy
 metalborn
 @wizards-mod
@@ -20819,7 +20819,7 @@ dynamic-trees-for-cobblemon
 immersive-portal-gun-for-forge@
 adorable-hamster-pets@
 infinite-lava@|无限熔岩*
-ethereal-shots|虚无射击*
+ethereal-shots|无限箭制 (Unlimited Arrow Works)
 
 epic-fight-super-golem|超级铁傀儡 (Epic Fight - Super Golem)
 fallen-log-hideout
@@ -20829,10 +20829,10 @@ retro-pet-items
 confluence-dimension-patch|汇流来世维度补丁*
 convenient-storage|便捷存储*
 legendreliclib|传世遗产库 (LegendRelicLib)
-jauml
-nemexlib
+jauml@
+nemexlib@
 cryonicconfig@
-@knight-lib
+knight-lib@
 
 
 @okom
@@ -20841,30 +20841,1120 @@ craft-slabs-back-into-blocks@
 highland-statue
 restore-ore@|复原矿石*
 factory-blocks@|工厂方块*
-
+camouflaged-doors
 rotten-planks-and-logs
 
-create-unify-updated-to-create-6
+create-unify-updated-to-create-6@
 create-arm-made-cuisine|机械动力：臂力臂力炒菜 (Create: Arm-made Cuisine)
-create-cultivation-craft@|机械动力：栽培工艺
-kaleidoscope-cookery@|森罗物语：烹饪 (kaleidoscope cookery)
+create-cultivation-craft@|机械动力：栽培工艺 (Create: Cultivation Craft)
+kaleidoscope-cookery@|森罗物语：厨房*
 retroemi-forge@
 @pearlecho
 @mcdaycounter
 minecolonies-war-n-taxes
 falling-down@
-more-red-x-cc-tweaked-compat
+more-red-x-cc-tweaked-compat@
 
-
+@speed-uuuuuuup|加加加加加加加速！ (Speed Uuuuuuup)
 
 wither-reincarnated
 
-toros-auto-attack
-creeperfire|自定义烧货 (CreeperFire)
-fastspawner|刷怪笼渲染优化/产器速算 (Fast Spawner)
-sophisticated-storage-plus|存取思深/精致存储扩容*
+toros-auto-attack@
+creeperfire|自定义烧货 / 苦力怕阳光下燃烧 (CreeperFire)
+fastspawner|刷怪笼渲染优化/产器速算 (FastSpawner)
+sophisticated-storage-plus|存取思深/精妙存储扩容*
 whaleborne
-
+uniful
 newspaper-big-book-bibliocraft-legacy-backport
 bic-clipboard
 templates-2@
+
+
+
+
+workstation-recipe-exporter@|可视化配方编写*
+simple-auto-attack
+hostile-to-neutral
+tracer
+fishing-tick-fix
+fzmm@
+pasteljei@|彩绘世界JEI (PastelJEI)
+e4mc-retro@
+
+mantlejs@
+one-enough-hand|只手遮天*
+persistent-moon-phases
+sakurapack-compatability-patch
+cattlestrophic@cattlestrophic!
+ae-recipe-tool
+minecraft-cursor@
+stalker-creepers-fabric@
+epiv-fight-l-enders-cataclysm-compatibility|史诗战斗灾变兼容 (Epic Fight & L_Enders Cataclysm compatibility)
+lunar-nether-backport
+lookinmyeyes
+more-relics-more-rpg-content@more-relics-rpg
+backstab-reforged
+armamentarium
+
+remnant-bosses@
+choccos-mobs@
+
+
+uncrafting-table-xiaoyu-2009|拆解台 (Uncrafting Table)
+
+aewirelesschannel|AE无线频道 (AE Wireless Channel)
+infinitepower|无尽能源 / 能量叠生 (Infinite Power)
+hoshikima@|随意作品*
+create-bugfix-clipboard-patch|机械动力：剪贴板修复 (Create Bugfix: Clipboard Patch)¨@create-bugfix-clipboard-patch|机械动力：剪贴板修复 (Create Bugfix: Clipboard Patch) - 审核中
+tool-disassemble|拆器碎散/匠魂工具拆解*
+summer-to-life|夏意盎然 (Summer to Life)
+@freedraw
+geckojs@
+sanandreasps-manager-pack
+
+touhoulittlemaid-orihime@|车万女仆：织姬 (Touhou Little Maid: Orihime)
+more-mod-tetra|更多Tetra模组锻造材料*
+cataclysm-dimensions|灾变：维度*
+
+misttaczskills@|TaCZ:圣化技能扩展 (MistCloud Tacz Skills Extension)
+quality-railway@|品质铁路*
+
+custom-mob-attributes@
+custom-durability@
+@dragons-egg(s)
+zombie-variants@
+extra-carts
+fairy-factions-revived
+netherited@netherited-fireproof¨fabric-netherited
+creeperhost-presents-soul-shards@
+myths-n-legends@myths-and-legends
+snackcraft|零食工艺 (SnackCraft)
+
+copper-backport¨@copper-backport|Leaf's Copper Backport - 审核中
+
+@shield-indicator|盾牌指示器 (Shield Indicator)
+a-bastion-remnant-treasure-reset|堡垒遗迹藏宝室重置 (Bastion Remnant Treasure Reset)
+a-bastion-remnant-hoglin-stable-reforged|堡垒遗迹疣猪兽棚重铸 (Bastion Remnant Hoglin Stable Reforged)
+colonial-arcana-minecolonies-addon|殖民地魔法 (Colonial Arcana)
+
+fires-ender-expansion
+thetitansneo@|泰坦生物Neo (The Titans Neo)
+vectorientation-reneoforge
+copyid@|复制ID (CopyID)
+@a-lightcolor-beacon
+@surveyor
+@create-portable-packaging
+create-more-pipe-bombs-in-packages@
+create-bugfix-schematic-patch|机械动力：蓝图补丁 (Create Bugfix: Schematic Patch)¨@create-bugfix-schematic-patch|机械动力：蓝图补丁 (Create Bugfix: Schematic Patch) - 待审核
+
+create-ornithopter-glider
+create-train-parts@
+@breakable-blocks
+flux-network-x-cc-tweaked
+twotility
+opticubes
+closets-by-smplesco@
+variety-chests-mod
+light-detector
+quality-hails
+
+tiger-shark@tigershark|海虎 (TigerShark)
+
+
+
+better-end-cities-better-end@better-end-cities-for-betterend¨better-end-cities-vanilla@better-end-cities-base
+fallen-gems-affixes
+skill-tree
+blatium@
+trimica@
+fantasy-weapons-medieval-series@fantasy_weapons
+
+ksit@
+bestia@
+@itemfinderinall-items
+filterchat
+kit-keep-inventory-timer-keepinventorytimer
+useful-luck@
+@sneak-fertilizing
+p1neros-epic-fight-leawind-compat
+custom-entity-leveling@|自定义实体等级*
+no-monster-rooms
+@carpetrmsaddition
+@fireworkindicator
+squeedometer-reforged-special-port
+
+difficulty-patch
+squake-reforged@squake-fabric-updated¨squake-fabric-1-20
+squake-reforged-special-port
+brigo@
+ae2-web-integration@
+skillet-man-core
+p1neros-dialogue-lib
+
+
+create-arm-made-barbeque|机械动力：臂力臂力烧烤 (Create : Arm-made Barbeque)
+indestructible-blocks
+
+epic-fight-super-chef
+epicfight-nightfall|史诗战斗：黄昏 (EpicFight-Nightfall)
+genesis-official
+featurecreep
+
+fabric-orm-jimmer@
+aces-spell-utils
+targeteventbackport
+silk-kt@silk
+
+
+@playercommands-(old-mc)
+legends-forge-series-vikings-n-northerners
+tinkers-battle-spades
+@its-not-real
+ly-meteors
+ashvehicle
+@smart-absorption
+@mooshees
+city-of-chambers
+tower-of-chambers@tower-of-chambers-neoforge
+
+
+eypipes
+shipping-bin
+hbm-nuclear-tech-mod-community-edition|HBM的核科技社区版 (HBM's Nuclear Tech Mod Community Edition)
+gte2-coremod@
+japan-props@
+
+one-enough-item@
+o123456789@
+friendly-chests-no-fluid
+herios-floral-expansion@
+pinkcabbage-transparent-betterscreen|粉红大包菜的屏幕透明度优化 (PinkCabbage Transparent BetterScreen)
+wastify-returns
+sillys-crossbow-fix@
+thaumpotion-tweaker@
+novoatlas@
+resource-pack-tweaks
+night-vision-decay-fix|夜视衰减修复*
+roid-tweaker
+translatorpp@translatorppv
+modular-machinery-community-edition-addons
+randomaddon|随意之作 (Random Addon)
+myhead|持器射首 / MyGO 你个头 (BanG Dream! It's MyHead!!!)
+boss-dps-tracker|查其所伤/Boss伤害追踪器 (Boss DPS Tracker)
+wandering-trader-may-leave@
+legendary-tabs-neoport
+totem-bar
+visualores-meowmel
+savebabystriders
+bygone-nether-fixes@|逝去的下界修复*
+bossesrise
+
+advancementinfo-update
+expanded-mace-enchanting@
+silky-spawners
+starhud@
+celeritas-dynamic-lights@
+resistance-balancer@
+silkier-touch@
+wither-spawn-fix@|凋灵生成修复*
+accelerated-rendering@acceleratedrendering|加速渲染*
+cii@
+simpler-wooden-pipes@
+garden-cloche-backport
+bh-boss-hatred@boss-hatred|首领仇恨 (Boss Hatred)
+
+camol
+bbb-unforged
+performance-monitoring-enhancer
+create-upsizing@
+better-world-loading-forge@better-world-loading¨better-world-loading-fabric
+
+apocalypse-minimap-hud@apocalypseminimaphud|启示录：小地图Hud*
+advancementnomore|进度移除 (AdvancementNoMore)
+collisium
+dypsis
+@chat-plus
+mcreatormemfix@
+@atlas
+legacy-tweaks@legacytweaks
+easy-elevators@|简单电梯*
+dakimakura-unofficial|抱枕-非官方 (Dakimakura-Unofficial)
+davincing
+aeronautical-radio|航空无线电*
+hunter-vs-mice@|猎人鼠鼠游戏*
+citymod-one-block-one-building@city_mod
+gedrite-mod@
+@shorkie
+enchantable-boat@
+throw-bricks
+animal-pens@animalpens
+
+
+
+@glys-can|GLY的罐头 (GLYCan)
+fargo-soul|Fargo魂石*
+@brokenbows|破损弓 (Broken Bows)
+mekanism-trimming|通用机械纹饰*
+teleportcakes@|跃迁蛋糕 (Teleport Cakes)
+repair-amulet
+alpine
+clientchatclean|客户端消息清理 (ClientChatClean)
+clickmobs
+vlib@
+wabbanode-companion
+@mcmti|麦克风语音识别文本输入 (Microphone Text Input)
+powernexus-menu
+hit-delay-fix
+betterexcavate|更好的挖掘机制 (BetterExcavate)
+optimization-of-campfire-smoke|营火烟雾优化 (Optimization of Campfire Smoke)
+armored-combat-enhancer
+
+@animal-hats-yeah
+@raid-restore
+asgardandelion-for-botania
+trotting-wagons@
+grindstonehoning
+rainbowwrenchforjei-reforge|彩虹扳手：Forge版 (RainbowWrenchForJei:ReForge)
+better-locate-structure-command|更好的结构定位指令*
+att-miss|闪避攻击*
+energizexp@
+no-more-magic-choices|更好的铁魔法UI*
+patternbetter@|更好的ME样板供应器 (Pattern Better)
+legacy-skins@
+@oh-my-pc
+vsprinter@
+clickvillagers
+@button-packet-id-fix
+accessories-compat-layer@
+world-downloader@
+tameable-guinea-pigs
+familiarslib
+dmr@|龙骑士重制版 (Dragon Mounts Remastered)
+
+avaritia-expand|无尽贪婪 : 拓展 (Avaritia : Expand)
+
+ecliptic-seasons-multimod-patch
+random-things-returns
+infinite-storage-cell
+operation-eight-treasure-porridge|八宝粥行动*
+elegant-spells@|雅致咒术*
+@seelescraft|希儿的工坊 (Seele's Craft)
+readyhomes|随时可住 (ReadyHomes)
+arknights-weapon|方舟武器*
+
+illager-warship@
+asian-fountains@
+illager-chef-trader
+skyblock-villager
+@redstoneer-villager
+perrys-urban@
+neo-blahaj
+
+teleportation-crystal|传送水晶*
+majo-spell-enchantment|魔女的魔咒 (Majo's Spell Enchantment)
+oaks-capes@
+
+cobblemon-ride-on@|Cobblemon：骑乘！ (Cobblemon: Ride On!)
+clayium-additions
+farmers-tfc|农夫群峦 (Farmers TFC)
+oaks-delight@
+
+pathfinding-edition-for-minecolonies|殖民地寻路大修*
+clicksigns@
+@salted-fish-craft|咸鱼 (Salted Fish)
+herios-helian-mod@
+@decorative-food|装饰性食物 (Decorative Food)
+
+anvilcraft-alloyextension@|铁砧工艺：合金扩展 (Anvilcraft: Alloy Extension)
+arkifs-hoverboard-mod
+glow@glows
+leaf-villager-trader
+guard-villager-trader
+hunter-villager-trader
+garbage-collector-villager
+more-traders@
+ae2-better-villagers@
+harvester-trader
+railman-villager@
+dimensionaltraders
+taxbiometrader@tax-leons-biome-trader
+quickelytraswapperplus-client@elytraswapper+
+@elytrakey
+elytraswapperplus
+taste-fatigue@|味觉疲劳*
+realistic-nametag@
+hitboxplus@
+@hittable
+hitmarker
+autolandingwater@|自动落地水 (AutoLandingWater)
+skygrid-reloaded@
+@stone-wood-industry|石木工艺 (Stone & Wood Industry)
+roomopolis@
+bbl-placers@
+
+draconic-legacy-models|龙之进化旧版模型*
+furnaces
+tinkersconstruct-classicsfluidvalues
+rain-be-gone-ritual@
+the-vegan-option|素食者的选择*
+gensokyo-delight-youkais-feasts@|幻想乡乐事 ~~ 妖怪们的飨宴 (Gensokyo Delight ~ Youkais' Feasts)
+
+tuttas-doors@
+@effectlivingdead|行尸走肉 (Effect Living Dead)
+vs-chunkloader@|VS区块加载器 (VS ChunkLoader)
+create-blocks-bogies@blocks-bogies
+create-netherite-additions@
+create-sophisticated-backpacks-compat@
+create-item-pets
+c-bc-nukes-6-0-port
+plushieverse@
+thavma@
+arsarms
+yorupo-mod@
+yande-mod@
+gtcefucontent
+mcheli-overdrive-ext@mcheli-o-ext
+iron-biplane@
+realistic-computers
+
+boss-mob-enhancer
+flight-api|飞行 API (Flight API)
+unlimited-spawners@|无限刷怪笼*
+
+@minecart-visualizer|敞骑速视 / 矿车信息可视化 (MinecartVisualizer)
+@shadowborders
+authenticate@|认证*
+
+unbinilium
+veinbreaker
+actions@
+i-have-no-mouth-but-i-must-chat@ihavenomouthbutimustchat
+renderscale@
+proportional-destruction-particles
+tacz-ammo-query
+fast-happy-ghasts
+@starhudforged
+@slotted-armor-hud
+
+@say-sorry!
+@playerautoma
+im-fast@
+@unpath
+no-more-popups@
+sussypatches@
+@simple-item-editor
+baby-zombie-removal@
+immersive-sounds
+boatview360@
+@my-resource-pack
+oaks-bits@oaks-bits-and-bops
+@starsource|星源拔刀剑 (Star Source Blade)
+snow-waifu-spell|雪下的誓言*
+mob-farm-trap@|香草刷怪塔陷阱强化：涌渊敌冢*
+twograve
+perrys-decorations@
+perry-s-decorations-2
+bookshelf-extended-enchanting-reach
+enchanter-fix@
+dynamic-regen-enhancer
+guinea-pig-variety@
+
+@areas-hint|域名 (areas-hint)
+yammo
+
+fps-display-doubler@
+inventory-stages|背包阶段*
+gregmek|格雷矿物通用机械支持 (GregMek)
+@armor-hud
+@ukus-armor-hud
+flowtech-mob-systems@
+
+ftb-materials
+the-great-below
+illagerblabber@
+
+serene-season-extended-fix
+create-enchantment-industry-plus@
+boiled-one-unleashed
+creaturecraft-plus
+war-elephants
+
+one-click-one-block-1c1b@oneclickoneblock|点到为止 (One Click One Block)
+@translatabledebugoptions|可翻译调试选项屏幕 (TranslatableDebugOptions)
+
+suppressopengl1280@|OpenGL错误隐藏 (Suppress OpenGL Error 128(0-2))
+fexs-vehicle-mod@fvtm
+otterlib
+dimban|维度禁用 (DimBan)
+onlyoneitem|仅存一物 (Only One Item)
+bedload|自定义区块加载器 (BedLoad)
+@unreachable-nether
+
+@detail-armor-bar-reconstructed
+@auto-fishing
+
+indrevjei@|工业革命JEI (IndRevJEI)
+fpresearchpatcher|飞向未来研究数据包兼容 (Futurepack Research Patcher)
+me-infinity-cell|ME无限元件 (ME Infinity Cell)
+air-jump
+more-sniffer-flowers@|更多嗅探兽花卉*
+
+enchantability|附魔能力*
+ender-lead|末影拴绳*
+
+
+create-growableores-compat@creategrowableores-compat
+
+gears-n-kinetics@
+valkyrien-sails@
+
+moo-fluids-modern
+yan-from-ff14@|FF14的羊
+
+
+tfc-cuisine@|群峦料理 (TFC Cuisine)
+tfc-no-collapse|群峦传说：塌方禁止 (TFC No Collapse)
+no-sleep-chat-overlay-nsco@no-sleep-chat-overlay-(nsco)
+funkys-fancy-furnaces@
+timber-enchantment
+@alternative-chunkloading
+@particulate
+haydenapi
+spore-inquisition
+ice-and-fire-spartan-weaponry-extras
+@vanitydungeons
+@fcitx5-enhancer
+kubejs-actually-additions@
+vibrative-voice@
+spawnlock
+enchantment-custom-table@|自定义附魔台*
+
+
+
+keeping-inventory-reborn
+camel-extend|骆驼拓展*
+confluence-music|汇流音乐*
+cancel-attack-cooldown|取消冷却间隔*
+surprising-loot|藏奇速释/惊喜战利品*
+@onlykeys
+flair
+minecraft-comes-alive-reforged|凡家物语·重制*
+cave-mita-dweller@mita-dweller
+eeeabs-mobs-death-mode
+revivetoken@|复活币 (ReviveToken)
+real-filing-reborn-cabinet-based-item-storage@
+quivers
+infused-crystals@
+mendingremover@
+auto-vanilla@autovanilla
+underground-villages-stoneholm@underground-village,-stoneholm
+gep@
+
+more-harnesses@|更多挽具*
+vanilla-aiots@
+nether-villager-merchant@
+end-villager-trader@
+deep-dark-trader@
+random-generator-block
+devour
+quantum-storage-reborn@
+library-section@
+move-subtitles@
+@modrenf3
+modern-inline@
+culler@
+@playernoticeboard
+
+@ae2uel-extra
+
+gems-realm@
+arrowcollect@|箭矢回收修复 (ArrowCollect)
+@primitivemobsrevival
+steampunk-clocktower
+piglin-outpost
+nolando-structurez
+skinlayers3d-customskinloader-bridge@
+puffish-biome-dither@biome-dither
+voracious
+@minecraft-dungeons-weaponry
+gentech-block-generation@
+byzantine-styles-pack-for-minecolonies
+
+aquaculture-tinkers@
+cups
+@blue-archive-halo|仿碧蓝档案光环 (Blue Archive Halo)
+
+ecological-replenishment-station|生态补给站*
+@advancedhostility|进阶仇恨 (Advanced Hostility)
+aggro-fix@
+chest-curio-items@|箱子里的小饰品*
+galaxysimagination|Galaxy的奇思妙想 (Galaxy's Imagination)
+delightful-cuisine-for-woodheads-reforged|懒人厨房·重制 (Delightful Cuisine for Woodheads Reforged)
+@loans-cinema
+banana-baking@
+duacan-delight|岩城乐事*
+slashblade-refabricated@|拔刀剑：重织 (SlashBlade: Refabricated)
+ender-dragon-fix
+
+detailab-compat@|细节盔甲兼容 (Detail Armor Bar Compat)
+calypsos-mobs@|卡里普索的生物 (Calypso's Mobs)
+dirtcraft-unoffical|泥土工艺-非官方版 (DirtCraft-Unofficial)
+
+@onlytpnext|仅传送Next (OnlyTPNext)
+easy-survival-command|简单生存指令TP (EasySurvivalCommand)
+@gensokyo-reverie-of-lost-dreams
+reliquified-ars-nouveau@
+requesting-interface@irequesting
+applied-experienced@
+plain-cars-pack@plaincars
+gt-craft-iv-mts@gt-craft-ivmts
+ad-astra-more-structures@
+perfect-dodge|完美闪避*
+simple-paraglider@|简易滑翔翼*
+human-gunner
+tacz-headshot-extension|TaCZ 爆头机制扩展 (TaCZ Headshot Extension)
+dream-in-a-manhunt
+
+
+@thesunrise
+more-critters
+oelib@
+itemblacklistfixed|物品黑名单修复版 (ItemBlackListFIXED)
+
+voxelmap-patch
+xaero-train-map@
+traversable-leaves-neoforge¨traversable-leaves¨traversable-leaves-fabric
+@etched-extension
+@vs-addition-continue
+
+clavis@
+luckyblock-lib
+
+nopackcompatcheck@|禁用资源包兼容性检查 (NoPackCompatCheck)
+
+
+crabbers-delight-expand|蟹农乐事：渔冶锭整 (Crabber's Delight Expand)
+
+offlinegrowth@
+
+fauna-and-orchestra@faunaandorchestra
+
+
+contact-love-rekindled|往来：旧情复燃 (Contact: LoveRekindled)
+autosow-by-neni-o@
+piglin-join-wto|猪灵加入了WTO (Piglin Join WTO)
+@keyboard-detector|键位检测器 (Keyboard Detector)
+potion-pill|药水药丸*
+inhrtburys-coin|Inhrtbury的金币 (Inhrtbury's Coin)
+@firesight
+epic-villages
+@brainfk-in-minecraft
+@aviator-dreams-reloaded
+russian-dream
+
+cbc-ballistics
+create-programmable-pals
+create-ore-excavation-plus@
+@createtreadmill|机械动力：跑步机 (Create:Treadmill)
+create-more-package-couriers@
+regius
+
+
+
+
+
+peyros-scythe|佩伊洛的镰刀 (Peyro's Scythe)
+
+@readstar|占星术 (ReadStar)
+illage-and-legend
+giant-dead-oak-tree@
+
+ascension-nether
+ascension-end
+@echovoids
+@soulfulnether
+zefs-nether
+the-end-update-concept
+@ending-biomes
+charred-horizons@
+@nether-update-expanded
+i-see-my-armored-hand@ismah
+naturally-spawning-withers@|自然生成凋灵*
+wither-infection@
+creeper-infection@
+long-books@
+ftb-chunks-recoloured
+jei-hover-search@
+rollable@
+invisibility-aggro-fix@
+quick-skin@
+countryball@minecraft-countryball-mod
+tinkers-construct-emergence
+pointblank-jelly
+terrabnormals
+extra-mining-world
+herobrine011840s-nether-biomes
+my-end
+update-ender-a-reimagine-of-the-end
+@air-puffers
+companions-mod@
+@ai-chat|AI聊天 (AI Chat)
+apothic-attributes-extension|神化属性拓展*
+databank@
+randomtp@
+@kium-optimizer
+instantunify-reforged
+@blockfire
+morphoverlay
+display-prior-work-count
+extended-scripts
+natures-aura-simplified|自然灵气：简化 (Nature's Aura Simplified)
+bed-spawn-backport@|想设就设*
+visible-effect@|药水效果显示*
+@config-manager|设置管理器 (Config Manager)
+simple-datapacks@
+shulkerrrt@srrt
+custom-icon-sets
+gregic-probe-ceu
+@antilootgame
+@graphene|石墨烯 (Graphene)
+
+talents-fabric@talents
+@combat-maids
+voxelfurni
+voxels
+voxel-pairing
+no-stuck-healing
+pixelcompress
+matrinoxes-village-names
+redlink-wireless-redstone-control@
+@nekohashizuku-blade|雫拔刀剑 (shizukublade)
+xtones-reworked@
+@tinkers-enchanting
+new-woods
+ennuis-bigger-inventories@ennuis_bigger_inventories
+@soldisco
+missing-cookery
+@farmers-tea-resteeped
+peruvians-delight@
+productivefarming
+brewin-compat-delight@cocktails-delight|鸡尾酒乐事 (Cocktails Delight)
+kubejs-tweaks
+krypton-fnp@
+neoauth@
+crystalix
+chisel-chipped-integration
+refined-types
+mystical-automation@
+utility-vest
+little-big-redstone@
+@stone-is-stone
+almost-unified-ie
+@trident-are-weapon
+collect-seeds
+create-delicious-teas@
+@showtime
+@windup-music-box
+babylonian-empire-origins
+mc-mods-the-arcanist-gear
+epitaphs
+biologist|生物学家*
+wandering-trapper2|流浪猎人2*
+skiing2
+backported-animal-variants@
+explore-ruins-aether@
+warpdrive-extras@
+@chest-transport-reloaded
+lrs-blockollection
+@the-what-tools
+tacz-chaoscrafts-apocalyptic-arsernal
+detail-armor-bar-re-equipment@|细节盔甲条：重装 (Detail Armor Bar Re-equepment)
+@jeac
+boat-fly|船飞行*
+finite-water-infinite-lava
+transfer-labels@
+growth-accelerator-tiers
+astages-curios
+astages-pufferfishs-skills
+sound-physics-perfected@
+the-sound-of-rain@
+
+greekfantasy-unofficial
+musketeer-illager-port
+cataclysm-apotheosis-addon-neo
+iron-apples-iron-series@
+
+tinkers-oreganized@
+simple-basketballs@simple-basketball
+decorative-blocks-repurposed
+create-mechanical-botany@
+
+
+naked-gauntlet|焰眼掉装*
+only-one-item@
+
+aimbow-bow-hit-indicator|弓箭瞄准 (AimBow)
+
+@tt20forged
+@worldfarview
+@fixmcstats
+soul-return-scroll|还魂符*
+slashblade-murasame@|拔刀剑：丛雨丸*
+
+dungeon-tools-2|地牢工具 2*
+gregtech-beyond-coremod
+create-compatible-storage@
+antique-rockets@
+meta-changer
+chromatic-enchantments@
+
+
+tfc-detail-armor-bar@|群峦传说：细节盔甲条 (TFC Detail Armor Bar)
+
+tinkers-compatibility@
+fabric-trade@
+giant-nether-tree@
+gamerule-doblockupdates
+terralith-restoned
+guitas-woodworks@
+power-grid@|机械动力：交错电网 (Create: Power Grid)
+
+audaki-cart-engine@
+
+
+humansmod@humans-mod
+aquaacrobaticslegacy
+
+armored-arms@
+armored-golems
+disable-fog@
+accrelatedrendering-refabricated@|加速渲染 重织版 (AccrelatedRendering-reFabricated)
+minemenureforged|我的菜单 重制 (MineMenuReforged)
+function-command-deduplicator|函数命令去重器*
+@hide-armour
+ftb-quests-freeze-fix@|FTB任务冻结修复 (FTB Quests Freeze Fix)
+playeranimatorapi@
+strictly-origins@
+born-in-configuration@
+eyes-of-ice-and-fire@
+better-hp@betterhp
+jsonate
+plsgodie|残血了就给我乖乖去死啊！ (PlsGoDie)
+tetra-patchouli-book|Tetra帕秋莉手册*
+
+configurable-death@
+invenaudio@
+client-curse-of-binding-prevention
+simpleclockmod
+
+audio-improvements@
+
+
+
+simple-crop-harvester|简易农作物收割*
+darkness-curse|暗影诅咒·重生 (Darkness Curse • Reborn)
+@scroll-whell-command|滚轮命令 (Scroll Wheel Command)
+infoplus@
+@bin-slot
+cobblemon-utils
+flamingo-mania
+
+endangered-plants|濒危植物*
+
+better-melon@|更好的西瓜*
+better-snifferty@|更好的嗅探*
+@bobs-originium-dream|鲍勃之源石梦想 (BOB's Originium Dream)
+
+minibloom
+teatime@tea_time
+garden-trails
+
+@gd656killicon|GD656击杀图标 (GD656Killicon)
+itemcleaner@|掉落物清洁者 (ItemCleaner)
+@tinkers-dolabrae
+metallic-tinkering@
+kubejs-draconic-evolution
+kubejs-mystical-agriculture@
+modern-beta-forge-islands
+modern-beta-forge-release-plus
+pomkots-world@
+black-dragon-armor|怪物猎人·世界：黑龙盔甲*
+kimetsu-no-yaiba-reload|鬼灭之刃 重制*
+resonantisshelomoh|同调造物·所罗门 (Fabrica Resonantis:Shelomoh)
+withering-away-reborn
+villager-extend-localbully
+dancing-villagers
+natures-of-witchery
+tct-flashlight@tctflashlight
+mace-attack-assistance
+changed-doomsday
+changed-ice
+tile-entity-breaker
+frozen-ocean
+portable-pet-sphere@
+@thaumicthermae
+bbl-routers
+bed-sapwnpoint
+wans-storage-shelves@storage-shelves
+@winefoxs_spellbooks|酒狐的魔法书 (Winefox's Spellbooks)
+better-allay@
+codechicken-lib-cre@
+solcarrot-fix|生活调味料：胡萝卜版 - 死吃修复*
+
+nanexs-cherry-biome
+digital-botania
+
+crab-city-facilities|螃蟹的城建 (Crab city facilities)
+bbl-casting@casting
+bbl-smart-crafting
+foolproof@
+realistic-terrain-generation-community
+more-outlines@
+phantomtweaks|移除幻翼 (RemovePhantoms)
+simple-item-blacklist
+titlescreen-cleaner
+
+
+manaitaplus-legacy|砧板传承 (ManaitaPlus Legacy)
+
+blockoffensive@|方块攻势 (BlockOffensive)
+
+hugme-forge-edition|抱抱我！Forge 版*
+
+
+
+
+
+
+
+better-turtle-scute@|更好的海龟壳 (Better turtle scute)
+
+floatable-pressure-plates@|可浮空压力板*
+
+
+more-rust@rust|锈 (Rust)
+@cryofloric-arts|严寒插花术 (Cryofloric Arts)
+tacz-refabricated@|TaCZ：重织 (Timeless and Classics Zero: Refabricated)
+
+@ashen-witch-broom|魔女的扫帚：重制版 (Ashen Witch Broom)
+maidswordsoaring|女仆御剑 (Maid Sword Soaring)
+lembrary
+optiboxes@
+create-furnace-lava-adapter
+create-trainutilities@
+@createtrainscustomportalapi1.20.1
+create-xptool@cxptcreatexptool|机械动力：经验抽取 (Create:XPTool)
+graveyard-death-mode
+beautiful-campfires
+kimetsu-no-yaiba-final-hope
+legend-ary@
+tfc-hourglass|床起速时 / 梦该醒了 (TFC Hourglass)¨@tfc-hourglass|床起速时 / 梦该醒了 (TFC Hourglass) - 审核中
+
+
+
+
+
+@alan-unified-ui
+@cntiertagger
+
+jei-tetra
+eyes-in-the-shadows@
+bandagez
+kineticdamage@
+underwater-village@
+dimension-parasite|维度寄生者*
+@realistic-stamina
+ciscos-content
+pet-home@pet_home
+changed-xtras@
+alexs-caves-enriched@|Alex 的洞穴：浓缩 (Alex's Caves: Enriched)
+@fps-to-the-trash
+@entity-desync-viewer
+re-entity-outliner
+@c2mef
+hellspawn-starting-dimension@hellspawn
+jj-weapon-config
+bbl-compat@opolis-compat
+tinkertime-geology
+spectral-arrow-tweaks
+too-many-bows@
+
+@soulbinditem|灵魂绑定 (Soulbind)
+
+
+
+maid-beside|女仆伴行*
+key|键*
+vzlinglib
+@signfinder|告示牌查找器 (Signfinder)
+
+
+
+@colorful-leaves-mod
+decorative-computers@|装饰性电脑 (DECORATIVE COMPUTERS)
+landk-furniture@
+derfl007s-road-mod
+medieval-paintings@
+glymworld-deepslate
+
+roadarchitect@
+
+
+lazybank|咸鱼物品银行*
+
+
+
+
+@projectile-ding
+client-time@clienttime
+replanter-plus@
+ae2-retex-port
+tinker-tantrum
+amethyst-additions
+@tetravsikt
+@advanced-netherite-upgrade-templates
+@falling-sand
+gregified-energistics@
+scalable-storage-ceu@
+luminous-blocks@
+epic-structures-witch-huts
+
+void-block-fabric@void-block-fabric-1.21.1
+more-stews-mod
+@ported
+better-music-player
+berries-and-mobs
+applied-soul
+packagedfluidcrafting|封包流体合成 (PackagedFluidCrafting)
+packagingprovider|封包供应器 (PackagingProvider)
+mts-iv-recurring-air-war
+
+
+
+@explodee
+swift-wheel|迅捷轮盘*¨@swift-wheel|迅捷轮盘 (Swift Wheel) - 审核中
+
+better-spectral-arrows
+polymorphic-tom@polymorphic-toms-simple-storag
+shoulder-surfing-ultimine@
+artisan-pottery@
+epic-fight-avalon
+@neospeedzero|自定义速通挑战：Zero (NeoSpeed Zero)
+fluffy-dandelions@
+nether-update-concept-mod
+@little-maid-mood-flutter|车万女仆：情绪萌动 (Little Maid: Mood Flutter)
+mobvotes-sniffer@sniffer
+ae-wireless-transceiver@|AE无线收发器 (AE Wireless Transceiver)
+create-train-lights@
+kabooms
+zoo-architect@
+
+@noverifychat|无验证聊天 (NoVerifyChat / FixChatVerify)
+giant-cherry-blossom-bonsai-tree@
+lemonskin@|柠檬皮 (LemonSkin)
+water-erosion
+@undertale-healthbars
+
+tetra-gui-compat
+@shortratio-mod
+quantumchunks@
+
+@citrus
+@accessory-api
+@catalyst
+@day-counter-enhanced
+messenger-crow
+epic-fight-super-warden|史诗战斗：超级监守者 (Epic Fight - Super Warden)
+armageddon
+cobblemon-mega-showdown@
+golem-dungeons@|傀儡地牢*
+
+explosion-overhaul-a-new-level-of-destruction
+@skillz
+
+can-you-survive
+eternal-shield-bead|永御盾珠*
+slashnouveau
+@aether-stapi
+@notenoughminecraft
+originiumarts@|源石技艺 (OriginiumArts)
+simplebackhome|简单回家 (SimpleBackHome)
+@qismorecommands|齐的更多命令 (Qi's More Commands)
+polymorphic-travelers-backpack@
+playernbt-quests-ftb-quests
+interactive-block-prompt@ibp|可交互物品提示*
+@timeshifts
+@weathershift
+chat-binds@chatbinds
+tridentperf-1-0-0
+maid-s-bakeries|女仆的烘焙坊 (Maid's Bakeries)
+
+elytraautocollect@|鞘翅自动搜集 (ElytraAutoCollect)
+@banitems|物品封禁 (Banitems)
+
+tt20-forged@tt20-reforged
+default-server-properties|默认服务器属性*
+f3-lite@
+text-animator@
+
+yet-another-furniture@
+
+qarsans-insurgency
+yum-delicious|Yum！美味！ (yum! delicious!)
+lunarinispread@|丰盛晚宴 (Lunarini Spread)
+
+rs-backpack
+no-template-netherite@
+
+@mobcapture
+koifish
+
+
+@mcinspects
+@csgo-inspects
+armor-hud-by-mcjunky33@
+@can-i-sleep-now
+@zenxarch-damage-vignette
+@teleportg
+too-many-binds
+too-many-binds-plus
+astral-dragon
+middle-earth-additions-npc@|中洲拓展：NPC (Middle-Earth Additions: Npc)
+middle-earth-additions-factions@|中洲拓展：派系 (Middle-Earth Additions: Factions)
+middle-earth-additions-war@|中洲拓展：战争 (Middle-Earth Additions: War)
+brews-and-bevs@|酿造与饮料 (Brews and Bevs)
+@kimetsu-no-yaiba-x-epic-fight
+
+lrs-dynamic-dungeon
+@buff-mobs
+banner-claim@|旗帜圈地*
+@reformundyingtotem|不死图腾重制 (ReformUndyingTotem)
+
+more-world-crafting|更多世界合成*¨@more-world-crafting|更多世界合成 (More World Crafting) - 审核中
+@simplelocks|简单的锁 (SimpleLocks)
+luminous-helmet
+steel-armor-blocks@sab|机械动力：钢铁装甲方块 (Create: Steel armor blocks)
+create-armor-blocks@|机械动力：装甲方块 (Create: Armor Blocks)
+rolled-homogenous|轧压均质装甲*
+elemental-end-portal
+unseens-better-stronghold
+salutation
+minecraft-1-7-10-reloaded
+global-customnpc-data
+modern-beta-forge-rivers
+zombie-improvements@zombieimprovements
+rewithered@
+better-lost-candle
+openblocks-reopened
+@rc-toys
+fancy-toasts
+
+
+@trueuuid|正版离线共存 (TrueUUID)
+owapote-bc-exlaser
+truly-custom-horse-tack@
+@tacz-applied-ammo-box
+azurum-miner@
+thermal-recycling|热力回收*
+
+revoted-wildfire@

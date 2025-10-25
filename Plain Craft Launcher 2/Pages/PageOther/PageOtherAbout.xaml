@@ -3,7 +3,7 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:local="clr-namespace:PCL" xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
     mc:Ignorable="d" x:Class="PageOtherAbout"
-    PanScroll="{Binding ElementName=PanBack}" RenderOptions.BitmapScalingMode="LowQuality">
+    PanScroll="PanBack" RenderOptions.BitmapScalingMode="LowQuality">
     <local:MyScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled" x:Name="PanBack">
         <StackPanel x:Name="PanMain" Margin="25,10" Grid.IsSharedSizeScope="True">
             <local:MyCard Margin="0,15" Title="{StaticResource LangPageOtherAboutAbout}">
@@ -29,8 +29,10 @@
                             <EllipseGeometry Center="17 17" RadiusX="17" RadiusY="17" />
                         </Image.Clip>
                     </Image>
-                    <local:MyButton Text="{StaticResource LangPageOtherAboutAboutAuthorBtn}" Grid.Column="2" Grid.Row="0" Height="35" EventType="打开网页" EventData="https://afdian.com/a/LTCat" ColorType="Highlight"/>
-                    <local:MyButton Text="{StaticResource LangPageOtherAboutAboutVersionBtn}" Grid.Column="2" Grid.Row="1" Height="35" EventType="打开网页" EventData="https://github.com/Hex-Dragon/PCL2" />
+                    <local:MyButton Text="{StaticResource LangPageOtherAboutAboutAuthorBtn}" Grid.Column="2" Grid.Row="0" Height="35" ColorType="Highlight"
+                                    local:CustomEventService.EventType="打开网页" local:CustomEventService.EventData="https://afdian.com/a/LTCat"/>
+                    <local:MyButton Text="{StaticResource LangPageOtherAboutAboutVersionBtn}" Grid.Column="2" Grid.Row="1" Height="35" 
+                                    local:CustomEventService.EventType="打开网页" local:CustomEventService.EventData="https://github.com/Hex-Dragon/PCL2" />
                 </Grid>
             </local:MyCard>
             <local:MyCard Margin="0,0,0,15" Title="{StaticResource LangPageOtherAboutThanks}">
@@ -51,11 +53,11 @@
                         <ColumnDefinition Width="150" />
                     </Grid.ColumnDefinitions>
                     <local:MyListItem Title="bangbang93" Margin="-5,0,15,0" IsHitTestVisible="False" Info="{StaticResource LangPageOtherAboutThanksbangbang93}" Grid.Row="0" Grid.Column="1" />
-                    <local:MyButton Text="{StaticResource LangPageOtherAboutThanksbangbang93Btn}" Grid.Row="0" Grid.Column="2" Height="35" EventType="打开网页" EventData="https://afdian.com/a/bangbang93" />
+                    <local:MyButton Text="{StaticResource LangPageOtherAboutThanksbangbang93Btn}" Grid.Row="0" Grid.Column="2" Height="35" local:CustomEventService.EventType="打开网页" local:CustomEventService.EventData="https://afdian.com/a/bangbang93" />
                     <local:MyListItem Title="{StaticResource LangPageOtherAboutThanksMCModTitle}" Margin="-5,0,0,0" IsHitTestVisible="False" Grid.ColumnSpan="2" Info="{StaticResource LangPageOtherAboutThanksMCMod}" Grid.Row="1" Grid.Column="1" />
-                    <local:MyButton Text="{StaticResource LangPageOtherAboutThanksMCModBtn}" Grid.Row="1" Grid.Column="2" Height="35" EventType="打开网页" EventData="https://www.mcmod.cn" />
+                    <local:MyButton Text="{StaticResource LangPageOtherAboutThanksMCModBtn}" Grid.Row="1" Grid.Column="2" Height="35" local:CustomEventService.EventType="打开网页" local:CustomEventService.EventData="https://www.mcmod.cn" />
                     <local:MyListItem Title="z0z0r4" Margin="-5,0,0,0" IsHitTestVisible="False" Grid.ColumnSpan="2" Info="{StaticResource LangPageOtherAboutThanksz0z0r4}" Grid.Row="2" Grid.Column="1" />
-                    <local:MyButton Text="{StaticResource LangPageOtherAboutThanksz0z0r4Detail}" Grid.Row="2" Grid.Column="2" Height="35" EventType="打开网页" EventData="https://github.com/mcmod-info-mirror" />
+                    <local:MyButton Text="{StaticResource LangPageOtherAboutThanksz0z0r4Detail}" Grid.Row="2" Grid.Column="2" Height="35" local:CustomEventService.EventType="打开网页" local:CustomEventService.EventData="https://github.com/mcmod-info-mirror" />
                     <local:MyListItem Title="00ll00" Margin="-5,0,0,0" IsHitTestVisible="False" Grid.ColumnSpan="2" Info="{StaticResource LangPageOtherAboutThanks00ll00}" Grid.Row="3" Grid.Column="1" />
                     <local:MyListItem Title="Patrick" Margin="-5,0,0,0" IsHitTestVisible="False" Grid.ColumnSpan="2" Info="{StaticResource LangPageOtherAboutThanksPatrick}" Grid.Row="4" Grid.Column="1" />
                     <local:MyListItem Title="Hao_Tian" Margin="-5,0,0,0" IsHitTestVisible="False" Grid.ColumnSpan="2" Info="{StaticResource LangPageOtherAboutThanksHao_Tian}" Grid.Row="5" Grid.Column="1" />
@@ -107,244 +109,216 @@
                 <StackPanel Margin="25,40,10,20">
                     <TextBlock HorizontalAlignment="Left" Text="{StaticResource LangPageOtherAboutSponsorsSubtitle}" Margin="0,0,25,5.5" TextTrimming="None" TextWrapping="WrapWithOverflow" />
                     <WrapPanel Margin="0,0,0,10">
-                        <TextBlock Width="120" Margin="0,1.5" Text="ZSF" />
-                        <TextBlock Width="120" Margin="0,1.5" Text="TizhleF" />
-                        <TextBlock Width="120" Margin="0,1.5" Text="方源" />
-                        <TextBlock Width="120" Margin="0,1.5" Text="日月空呵" />
-                        <TextBlock Width="120" Margin="0,1.5" Text="贾明志" />
-                        <TextBlock Width="120" Margin="0,1.5" Text="百瑞" />
-                        <TextBlock Width="120" Margin="0,1.5" Text="Flying___pig" />
-                        <TextBlock Width="120" Margin="0,1.5" Text="绝世" />
-                        <TextBlock Width="120" Margin="0,1.5" Text="Jwac" />
-                        <TextBlock Width="120" Margin="0,1.5" Text="万玖" />
-                        <TextBlock Width="120" Margin="0,1.5" Text="墨忆" />
-                        <TextBlock Width="120" Margin="0,1.5" Text="天刹" />
-                        <TextBlock Width="120" Margin="0,1.5" Text="Cess" />
-                        <TextBlock Width="120" Margin="0,1.5" Text="ender_glass" />
-                        <TextBlock Width="120" Margin="0,1.5" Text="TT" />
-                        <TextBlock Width="120" Margin="0,1.5" Text="白玄.雪狼" />
-                        <TextBlock Width="120" Margin="0,1.5" Text="MUCT" />
-                        <TextBlock Width="120" Margin="0,1.5" Text="崇昀" />
-                        <TextBlock Width="120" Margin="0,1.5" Text="绪" />
-                        <TextBlock Width="120" Margin="0,1.5" Text="吾皇万岁" />
-                        <TextBlock Width="120" Margin="0,1.5" Text="Ander·Les" />
-                        <TextBlock Width="120" Margin="0,1.5" Text="Eoctopus" />
-                        <TextBlock Width="120" Margin="0,1.5" Text="时光飞逝一下午" />
-                        <TextBlock Width="120" Margin="0,1.5" Text="Carl7412" />
-                        <TextBlock Width="120" Margin="0,1.5" Text="ShinyChariot" />
-                        <TextBlock Width="120" Margin="0,1.5" Text="骨故谷" />
-                        <TextBlock Width="120" Margin="0,1.5" Text="?" />
-                        <TextBlock Width="120" Margin="0,1.5" Text="Jinji希子" />
-                        <TextBlock Width="120" Margin="0,1.5" Text="自然选择" />
-                        <TextBlock Width="120" Margin="0,1.5" Text="云念" />
-                        <TextBlock Width="120" Margin="0,1.5" Text="钱尹鹏" />
-                        <TextBlock Width="120" Margin="0,1.5" Text="TBONC" />
-                        <TextBlock Width="120" Margin="0,1.5" Text="祈农" />
-                        <TextBlock Width="120" Margin="0,1.5" Text="凤凰院凶真" />
-                        <TextBlock Width="120" Margin="0,1.5" Text="ShuangDaoRen" />
-                        <TextBlock Width="120" Margin="0,1.5" Text="PXZ233" />
-                        <TextBlock Width="120" Margin="0,1.5" Text="二十二今天有没有" />
-                        <TextBlock Width="120" Margin="0,1.5" Text="天魕" />
-                        <TextBlock Width="120" Margin="0,1.5" Text="南华清" />
-                        <TextBlock Width="120" Margin="0,1.5" Text="66112447" />
-                        <TextBlock Width="120" Margin="0,1.5" Text="夏行子" />
-                        <TextBlock Width="120" Margin="0,1.5" Text="周俊成" />
-                        <TextBlock Width="120" Margin="0,1.5" Text="乌漆嘛黑" />
-                        <TextBlock Width="120" Margin="0,1.5" Text="肘击恶魔佐巴扬" />
-                        <TextBlock Width="120" Margin="0,1.5" Text="Pari~" />
-                        <TextBlock Width="120" Margin="0,1.5" Text="红云" />
-                        <TextBlock Width="120" Margin="0,1.5" Text="Link-an" />
-                        <TextBlock Width="120" Margin="0,1.5" Text="想要钱用不完" />
-                        <TextBlock Width="120" Margin="0,1.5" Text="花宝" />
-                        <TextBlock Width="120" Margin="0,1.5" Text="生于春天的雷电" />
-                        <TextBlock Width="120" Margin="0,1.5" Text="被偷去的睡眠" />
-                        <TextBlock Width="120" Margin="0,1.5" Text="liuxuan" />
-                        <TextBlock Width="120" Margin="0,1.5" Text="寒枫凌" />
-                        <TextBlock Width="120" Margin="0,1.5" Text="雀色时" />
-                        <TextBlock Width="120" Margin="0,1.5" Text="架" />
-                        <TextBlock Width="120" Margin="0,1.5" Text="终成究竟觉" />
-                        <TextBlock Width="120" Margin="0,1.5" Text="S0D1UM" />
-                        <TextBlock Width="120" Margin="0,1.5" Text="吞仔送命" />
-                        <TextBlock Width="120" Margin="0,1.5" Text="白浪宇宙" />
-                        <TextBlock Width="120" Margin="0,1.5" Text="Crimson" />
-                        <TextBlock Width="120" Margin="0,1.5" Text="Mibo_MkIX" />
-                        <TextBlock Width="120" Margin="0,1.5" Text="G.snine18^7" />
-                        <TextBlock Width="120" Margin="0,1.5" Text="两把雨伞" />
-                        <TextBlock Width="120" Margin="0,1.5" Text="古明地苑" />
-                        <TextBlock Width="240" Margin="0,1.5" Text="MarbleMionshevic" />
-                        <TextBlock Width="120" Margin="0,1.5" Text="：〈" />
-                        <TextBlock Width="120" Margin="0,1.5" Text="紫罗兰" />
-                        <TextBlock Width="120" Margin="0,1.5" Text="asai" />
-                        <TextBlock Width="120" Margin="0,1.5" Text="隔壁小明" />
-                        <TextBlock Width="120" Margin="0,1.5" Text="就爱唱歌" />
-                        <TextBlock Width="120" Margin="0,1.5" Text="沫神鹤" />
-                        <TextBlock Width="120" Margin="0,1.5" Text="风已消逝" />
-                        <TextBlock Width="120" Margin="0,1.5" Text="光意留闪" />
-                        <TextBlock Width="120" Margin="0,1.5" Text="我们长征的路上" />
-                        <TextBlock Width="120" Margin="0,1.5" Text="芸芷" />
-                        <TextBlock Width="120" Margin="0,1.5" Text="函数极限" />
-                        <TextBlock Width="120" Margin="0,1.5" Text="冰川泥" />
-                        <TextBlock Width="120" Margin="0,1.5" Text="XunWei" />
-                        <TextBlock Width="120" Margin="0,1.5" Text="sirous" />
-                        <TextBlock Width="120" Margin="0,1.5" Text="路过某打酱油的" />
-                        <TextBlock Width="120" Margin="0,1.5" Text="Gnight07" />
-                        <TextBlock Width="120" Margin="0,1.5" Text="结构德古拉" />
-                        <TextBlock Width="120" Margin="0,1.5" Text="myyukee" />
-                        <TextBlock Width="240" Margin="0,1.5" Text="云之彼端约定的地方" />
-                        <TextBlock Width="120" Margin="0,1.5" Text="苏玖" />
-                        <TextBlock Width="120" Margin="0,1.5" Text="赤沃净" />
-                        <TextBlock Width="120" Margin="0,1.5" Text="YYC" />
-                        <TextBlock Width="120" Margin="0,1.5" Text="晨曦酒庄高冷男" />
-                        <TextBlock Width="120" Margin="0,1.5" Text="herald112" />
-                        <TextBlock Width="120" Margin="0,1.5" Text="Foxman" />
-                        <TextBlock Width="120" Margin="0,1.5" Text="KoreQAQ" />
-                        <TextBlock Width="120" Margin="0,1.5" Text="TechOfRevo" />
-                        <TextBlock Width="120" Margin="0,1.5" Text="lqs" />
-                        <TextBlock Width="120" Margin="0,1.5" Text="简某" />
-                        <TextBlock Width="120" Margin="0,1.5" Text="源起于此" />
-                        <TextBlock Width="120" Margin="0,1.5" Text="爱莉希雅" />
-                        <TextBlock Width="120" Margin="0,1.5" Text=" 和忧" />
-                        <TextBlock Width="240" Margin="0,1.5" Text="全明星小面包批发商DIO" />
-                        <TextBlock Width="120" Margin="0,1.5" Text="碎序" />
-                        <TextBlock Width="120" Margin="0,1.5" Text="U" />
-                        <TextBlock Width="120" Margin="0,1.5" Text="Dumlet" />
-                        <TextBlock Width="120" Margin="0,1.5" Text="johnqian" />
-                        <TextBlock Width="120" Margin="0,1.5" Text="KANG" />
-                        <TextBlock Width="120" Margin="0,1.5" Text="owod" />
-                        <TextBlock Width="120" Margin="0,1.5" Text="九" />
-                        <TextBlock Width="120" Margin="0,1.5" Text="苑煜" />
-                        <TextBlock Width="120" Margin="0,1.5" Text="壹" />
-                        <TextBlock Width="120" Margin="0,1.5" Text="UA-Ming" />
-                        <TextBlock Width="120" Margin="0,1.5" Text="可爱小探姬" />
-                        <TextBlock Width="120" Margin="0,1.5" Text="霜月" />
-                        <TextBlock Width="120" Margin="0,1.5" Text="bud" />
-                        <TextBlock Width="120" Margin="0,1.5" Text="小虐SAIKYO" />
-                        <TextBlock Width="120" Margin="0,1.5" Text="zealotand" />
-                        <TextBlock Width="120" Margin="0,1.5" Text="comico" />
-                        <TextBlock Width="120" Margin="0,1.5" Text="万山松" />
-                        <TextBlock Width="120" Margin="0,1.5" Text="依梦明天" />
-                        <TextBlock Width="120" Margin="0,1.5" Text="化形彧九尾" />
-                        <TextBlock Width="120" Margin="0,1.5" Text="知崎" />
-                        <TextBlock Width="120" Margin="0,1.5" Text="LOG175" />
-                        <TextBlock Width="120" Margin="0,1.5" Text="绵" />
-                        <TextBlock Width="120" Margin="0,1.5" Text="scp00813" />
-                        <TextBlock Width="120" Margin="0,1.5" Text="宝宝" />
-                        <TextBlock Width="120" Margin="0,1.5" Text="9527" />
-                        <TextBlock Width="120" Margin="0,1.5" Text="ICE_xwx" />
-                        <TextBlock Width="120" Margin="0,1.5" Text="羽笙喵喵" />
-                        <TextBlock Width="120" Margin="0,1.5" Text="ssvgg(☉ x ☉)" />
-                        <TextBlock Width="120" Margin="0,1.5" Text="Happymeals" />
-                        <TextBlock Width="120" Margin="0,1.5" Text="shen12244" />
-                        <TextBlock Width="120" Margin="0,1.5" Text="一般路过AAA" />
-                        <TextBlock Width="120" Margin="0,1.5" Text="Niko" />
-                        <TextBlock Width="120" Margin="0,1.5" Text="qroiwopqri" />
-                        <TextBlock Width="120" Margin="0,1.5" Text="TringDron" />
-                        <TextBlock Width="120" Margin="0,1.5" Text="有屳則名" />
-                        <TextBlock Width="120" Margin="0,1.5" Text="TX2006" />
-                        <TextBlock Width="120" Margin="0,1.5" Text="滑天下之大稽" />
-                        <TextBlock Width="120" Margin="0,1.5" Text="中东悍匪" />
-                        <TextBlock Width="120" Margin="0,1.5" Text="鬼泣々离殇" />
-                        <TextBlock Width="120" Margin="0,1.5" Text="蒼崎青子" />
-                        <TextBlock Width="120" Margin="0,1.5" Text="wyh114514" />
-                        <TextBlock Width="120" Margin="0,1.5" Text="飞飞在睡觉。" />
-                        <TextBlock Width="120" Margin="0,1.5" Text="柚西" />
+                        <TextBlock Width="120" Margin="0,1.5" Text="lecoe" />
+                        <TextBlock Width="120" Margin="0,1.5" Text="QIUQI" />
+                        <TextBlock Width="120" Margin="0,1.5" Text="Aquadtr" />
+                        <TextBlock Width="120" Margin="0,1.5" Text="stb" />
+                        <TextBlock Width="120" Margin="0,1.5" Text="mco" />
+                        <TextBlock Width="120" Margin="0,1.5" Text="楠" />
+                        <TextBlock Width="120" Margin="0,1.5" Text="砂糖蜂蜜锡红茶" />
+                        <TextBlock Width="120" Margin="0,1.5" Text="小宸老弟" />
+                        <TextBlock Width="120" Margin="0,1.5" Text="Le Play" />
+                        <TextBlock Width="120" Margin="0,1.5" Text="烨神" />
+                        <TextBlock Width="240" Margin="0,1.5" Text="Kamazi_Yuka5201" />
+                        <TextBlock Width="120" Margin="0,1.5" Text="滚动的拉布拉多" />
+                        <TextBlock Width="120" Margin="0,1.5" Text="王牟" />
+                        <TextBlock Width="120" Margin="0,1.5" Text="Lazarus" />
+                        <TextBlock Width="120" Margin="0,1.5" Text="幻觉" />
+                        <TextBlock Width="120" Margin="0,1.5" Text="凌天" />
+                        <TextBlock Width="120" Margin="0,1.5" Text="lIIIllIIllIIl" />
+                        <TextBlock Width="120" Margin="0,1.5" Text="Zsol" />
+                        <TextBlock Width="120" Margin="0,1.5" Text="榴莲" />
+                        <TextBlock Width="120" Margin="0,1.5" Text="Night Voyager" />
+                        <TextBlock Width="120" Margin="0,1.5" Text="JOHNJIANG" />
+                        <TextBlock Width="120" Margin="0,1.5" Text="柒月" />
+                        <TextBlock Width="120" Margin="0,1.5" Text="不温柔先森" />
+                        <TextBlock Width="120" Margin="0,1.5" Text="Freewind" />
+                        <TextBlock Width="120" Margin="0,1.5" Text="纯萧子" />
+                        <TextBlock Width="120" Margin="0,1.5" Text="扇" />
+                        <TextBlock Width="120" Margin="0,1.5" Text="Amturester" />
+                        <TextBlock Width="120" Margin="0,1.5" Text="maigm" />
+                        <TextBlock Width="120" Margin="0,1.5" Text="JO23" />
+                        <TextBlock Width="120" Margin="0,1.5" Text="JCNB" />
+                        <TextBlock Width="120" Margin="0,1.5" Text="星尘" />
+                        <TextBlock Width="120" Margin="0,1.5" Text="姜桐桐233" />
+                        <TextBlock Width="120" Margin="0,1.5" Text="AkaneRyoba" />
+                        <TextBlock Width="120" Margin="0,1.5" Text="南山必胜客" />
+                        <TextBlock Width="120" Margin="0,1.5" Text="57" />
+                        <TextBlock Width="120" Margin="0,1.5" Text="咸菜萝卜煲" />
+                        <TextBlock Width="120" Margin="0,1.5" Text="shawnlong" />
+                        <TextBlock Width="120" Margin="0,1.5" Text="DDNGSZX1" />
+                        <TextBlock Width="120" Margin="0,1.5" Text="KaguraZaka" />
+                        <TextBlock Width="120" Margin="0,1.5" Text="谶纛" />
+                        <TextBlock Width="120" Margin="0,1.5" Text="666" />
+                        <TextBlock Width="120" Margin="0,1.5" Text="betwangzai" />
+                        <TextBlock Width="120" Margin="0,1.5" Text="卑微小林" />
+                        <TextBlock Width="120" Margin="0,1.5" Text="fjvg" />
+                        <TextBlock Width="120" Margin="0,1.5" Text="TH-x" />
+                        <TextBlock Width="120" Margin="0,1.5" Text="Q" />
+                        <TextBlock Width="120" Margin="0,1.5" Text="清鸢" />
+                        <TextBlock Width="120" Margin="0,1.5" Text="P·咕·D·咕咕·F" />
+                        <TextBlock Width="120" Margin="0,1.5" Text="顾木" />
+                        <TextBlock Width="120" Margin="0,1.5" Text="LAZY" />
+                        <TextBlock Width="120" Margin="0,1.5" Text="沙发上的沙发" />
+                        <TextBlock Width="120" Margin="0,1.5" Text="有熊子来" />
+                        <TextBlock Width="240" Margin="0,1.5" Text="月下誓约，予爱以心" />
+                        <TextBlock Width="120" Margin="0,1.5" Text="超级白给马" />
+                        <TextBlock Width="120" Margin="0,1.5" Text="fwlqpalzmd" />
+                        <TextBlock Width="120" Margin="0,1.5" Text="安执妄dying" />
+                        <TextBlock Width="120" Margin="0,1.5" Text="黄开心" />
+                        <TextBlock Width="120" Margin="0,1.5" Text="于是" />
+                        <TextBlock Width="120" Margin="0,1.5" Text="荆槐序" />
+                        <TextBlock Width="120" Margin="0,1.5" Text="三千游魂" />
+                        <TextBlock Width="120" Margin="0,1.5" Text="^ ^" />
+                        <TextBlock Width="120" Margin="0,1.5" Text="zz" />
+                        <TextBlock Width="120" Margin="0,1.5" Text="爱炫鱼的猫" />
+                        <TextBlock Width="120" Margin="0,1.5" Text="玄月" />
+                        <TextBlock Width="120" Margin="0,1.5" Text="BRfake" />
+                        <TextBlock Width="120" Margin="0,1.5" Text="Lucien_Liu" />
+                        <TextBlock Width="120" Margin="0,1.5" Text="煎bingo子" />
+                        <TextBlock Width="120" Margin="0,1.5" Text="对方正在输入..." />
+                        <TextBlock Width="120" Margin="0,1.5" Text="hakureireimu" />
+                        <TextBlock Width="120" Margin="0,1.5" Text="wwxa2019" />
+                        <TextBlock Width="120" Margin="0,1.5" Text="TAIGA" />
+                        <TextBlock Width="120" Margin="0,1.5" Text="墨玉" />
+                        <TextBlock Width="120" Margin="0,1.5" Text="Jane" />
+                        <TextBlock Width="120" Margin="0,1.5" Text="雪下丨残影" />
+                        <TextBlock Width="120" Margin="0,1.5" Text="未命名3742" />
+                        <TextBlock Width="120" Margin="0,1.5" Text="烧冻鸡翅" />
+                        <TextBlock Width="120" Margin="0,1.5" Text="嘟嘟可" />
+                        <TextBlock Width="120" Margin="0,1.5" Text="利姆露" />
+                        <TextBlock Width="120" Margin="0,1.5" Text="ATH9" />
+                        <TextBlock Width="120" Margin="0,1.5" Text="教主" />
+                        <TextBlock Width="120" Margin="0,1.5" Text="落雪有声" />
+                        <TextBlock Width="120" Margin="0,1.5" Text="苏子霄" />
+                        <TextBlock Width="120" Margin="0,1.5" Text="一握砂" />
+                        <TextBlock Width="120" Margin="0,1.5" Text="马春明" />
+                        <TextBlock Width="120" Margin="0,1.5" Text="远力高" />
+                        <TextBlock Width="120" Margin="0,1.5" Text="玉米片" />
+                        <TextBlock Width="120" Margin="0,1.5" Text="sun次方" />
+                        <TextBlock Width="120" Margin="0,1.5" Text="憨憨橙子" />
+                        <TextBlock Width="120" Margin="0,1.5" Text="染年" />
+                        <TextBlock Width="120" Margin="0,1.5" Text="准江月" />
+                        <TextBlock Width="120" Margin="0,1.5" Text="蓝叶" />
+                        <TextBlock Width="120" Margin="0,1.5" Text="ELUCIDATE" />
+                        <TextBlock Width="120" Margin="0,1.5" Text="兔饼干哈哈" />
+                        <TextBlock Width="120" Margin="0,1.5" Text="Styx誓约" />
+                        <TextBlock Width="120" Margin="0,1.5" Text="V" />
+                        <TextBlock Width="120" Margin="0,1.5" Text="月芸柔" />
+                        <TextBlock Width="120" Margin="0,1.5" Text="灯火鬼魂" />
+                        <TextBlock Width="120" Margin="0,1.5" Text="A" />
+                        <TextBlock Width="120" Margin="0,1.5" Text="项刀关志" />
+                        <TextBlock Width="120" Margin="0,1.5" Text="剑鱼776" />
+                        <TextBlock Width="120" Margin="0,1.5" Text="叶明心" />
+                        <TextBlock Width="120" Margin="0,1.5" Text="Ashlxy" />
+                        <TextBlock Width="120" Margin="0,1.5" Text="小时" />
+                        <TextBlock Width="120" Margin="0,1.5" Text="fisher426" />
+                        <TextBlock Width="120" Margin="0,1.5" Text="老罗" />
+                        <TextBlock Width="120" Margin="0,1.5" Text="百忧解" />
+                        <TextBlock Width="120" Margin="0,1.5" Text="杨三海" />
+                        <TextBlock Width="120" Margin="0,1.5" Text="锂化氩" />
+                        <TextBlock Width="120" Margin="0,1.5" Text="饺子川" />
+                        <TextBlock Width="120" Margin="0,1.5" Text="流年遥想" />
+                        <TextBlock Width="120" Margin="0,1.5" Text="基围虾" />
+                        <TextBlock Width="120" Margin="0,1.5" Text="山有木兮325" />
+                        <TextBlock Width="120" Margin="0,1.5" Text="37号村民" />
+                        <TextBlock Width="120" Margin="0,1.5" Text="白承宣" />
+                        <TextBlock Width="240" Margin="0,1.5" Text="某蓝毛借钱不还的贝斯手" />
+                        <TextBlock Width="120" Margin="0,1.5" Text="白狼" />
+                        <TextBlock Width="120" Margin="0,1.5" Text="工蜂" />
+                        <TextBlock Width="120" Margin="0,1.5" Text="封不觉" />
+                        <TextBlock Width="120" Margin="0,1.5" Text="南樵鱼子" />
+                        <TextBlock Width="120" Margin="0,1.5" Text="寂-御神幻狐" />
+                        <TextBlock Width="120" Margin="0,1.5" Text="好" />
+                        <TextBlock Width="120" Margin="0,1.5" Text="NeonSoda" />
+                        <TextBlock Width="120" Margin="0,1.5" Text="UNICORN" />
+                        <TextBlock Width="120" Margin="0,1.5" Text="红石beaker" />
+                        <TextBlock Width="120" Margin="0,1.5" Text="EliasLSK" />
+                        <TextBlock Width="120" Margin="0,1.5" Text="思考人生" />
+                        <TextBlock Width="120" Margin="0,1.5" Text="L" />
+                        <TextBlock Width="120" Margin="0,1.5" Text="起床了" />
+                        <TextBlock Width="120" Margin="0,1.5" Text="服群" />
+                        <TextBlock Width="120" Margin="0,1.5" Text="云符爱睡觉" />
+                        <TextBlock Width="120" Margin="0,1.5" Text="幽幽秋" />
+                        <TextBlock Width="120" Margin="0,1.5" Text="FAMS" />
+                        <TextBlock Width="120" Margin="0,1.5" Text="会变身的栖仔" />
+                        <TextBlock Width="120" Margin="0,1.5" Text="baka王" />
+                        <TextBlock Width="120" Margin="0,1.5" Text="深海带鱼" />
+                        <TextBlock Width="120" Margin="0,1.5" Text="四戒梨子" />
+                        <TextBlock Width="120" Margin="0,1.5" Text="无限" />
+                        <TextBlock Width="120" Margin="0,1.5" Text="Xc_AcE" />
+                        <TextBlock Width="120" Margin="0,1.5" Text="@6#" />
+                        <TextBlock Width="120" Margin="0,1.5" Text="molFish" />
+                        <TextBlock Width="120" Margin="0,1.5" Text="雪见" />
+                        <TextBlock Width="120" Margin="0,1.5" Text="AAALLLAAANNN" />
+                        <TextBlock Width="120" Margin="0,1.5" Text="华氏451" />
+                        <TextBlock Width="120" Margin="0,1.5" Text="纸不好" />
+                        <TextBlock Width="120" Margin="0,1.5" Text="博衍" />
+                        <TextBlock Width="120" Margin="0,1.5" Text="志摩凛" />
+                        <TextBlock Width="120" Margin="0,1.5" Text="八云蓝LIN" />
+                        <TextBlock Width="120" Margin="0,1.5" Text="LittleBlue" />
+                        <TextBlock Width="120" Margin="0,1.5" Text="老梦" />
+                        <TextBlock Width="120" Margin="0,1.5" Text="动漫男主" />
+                        <TextBlock Width="120" Margin="0,1.5" Text="Red_橙子" />
+                        <TextBlock Width="120" Margin="0,1.5" Text="Junmucheng" />
+                        <TextBlock Width="120" Margin="0,1.5" Text="无印" />
+                        <TextBlock Width="120" Margin="0,1.5" Text="窗前露" />
+                        <TextBlock Width="120" Margin="0,1.5" Text="1111111" />
+                        <TextBlock Width="120" Margin="0,1.5" Text="什雨" />
+                        <TextBlock Width="120" Margin="0,1.5" Text="七日 SEVENDAYS" />
+                        <TextBlock Width="120" Margin="0,1.5" Text="Gǔdù" />
+                        <TextBlock Width="120" Margin="0,1.5" Text="白吃白喝" />
+                        <TextBlock Width="120" Margin="0,1.5" Text="路明非" />
+                        <TextBlock Width="120" Margin="0,1.5" Text="子不语" />
+                        <TextBlock Width="120" Margin="0,1.5" Text="王璟" />
+                        <TextBlock Width="120" Margin="0,1.5" Text="阿星" />
+                        <TextBlock Width="240" Margin="0,1.5" Text="小狗很担心你有没有好好喝水" />
+                        <TextBlock Width="120" Margin="0,1.5" Text="hjhmeibao" />
+                        <TextBlock Width="120" Margin="0,1.5" Text="网络白字话事人" />
+                        <TextBlock Width="120" Margin="0,1.5" Text="想要点好运" />
+                        <TextBlock Width="120" Margin="0,1.5" Text="Timmy1950" />
+                        <TextBlock Width="120" Margin="0,1.5" Text="栩" />
+                        <TextBlock Width="120" Margin="0,1.5" Text="玛卡巴卡" />
+                        <TextBlock Width="120" Margin="0,1.5" Text="楞可" />
+                        <TextBlock Width="120" Margin="0,1.5" Text="顶级牛板筋收藏家" />
+                        <TextBlock Width="120" Margin="0,1.5" Text="HansOffice" />
+                        <TextBlock Width="120" Margin="0,1.5" Text="466某某某" />
+                        <TextBlock Width="120" Margin="0,1.5" Text="zztzzy" />
+                        <TextBlock Width="120" Margin="0,1.5" Text="辉光离子管" />
+                        <TextBlock Width="120" Margin="0,1.5" Text="联开开" />
                         <TextBlock Width="120" Margin="0,1.5" Text="XIAOSHUAI" />
-                        <TextBlock Width="120" Margin="0,1.5" Text="saxioh" />
-                        <TextBlock Width="120" Margin="0,1.5" Text="baibaibai" />
-                        <TextBlock Width="120" Margin="0,1.5" Text="事屑Jerry" />
-                        <TextBlock Width="120" Margin="0,1.5" Text="Rs32" />
-                        <TextBlock Width="120" Margin="0,1.5" Text="SPDish" />
-                        <TextBlock Width="120" Margin="0,1.5" Text="风早九夜" />
-                        <TextBlock Width="120" Margin="0,1.5" Text="Reg" />
-                        <TextBlock Width="120" Margin="0,1.5" Text="hellord" />
-                        <TextBlock Width="120" Margin="0,1.5" Text="时本ki" />
-                        <TextBlock Width="120" Margin="0,1.5" Text="mamana" />
-                        <TextBlock Width="120" Margin="0,1.5" Text="放肆的微笑" />
-                        <TextBlock Width="120" Margin="0,1.5" Text="人没逝" />
-                        <TextBlock Width="120" Margin="0,1.5" Text="wddjww" />
-                        <TextBlock Width="120" Margin="0,1.5" Text="xiao澄" />
-                        <TextBlock Width="120" Margin="0,1.5" Text="银狼碎片" />
-                        <TextBlock Width="120" Margin="0,1.5" Text="OniKata_Kayoko" />
-                        <TextBlock Width="120" Margin="0,1.5" Text="曦" />
-                        <TextBlock Width="120" Margin="0,1.5" Text="Echo" />
-                        <TextBlock Width="120" Margin="0,1.5" Text="画卿颜" />
-                        <TextBlock Width="120" Margin="0,1.5" Text="夏 " />
-                        <TextBlock Width="120" Margin="0,1.5" Text="jiege45" />
-                        <TextBlock Width="120" Margin="0,1.5" Text="甜食先生" />
-                        <TextBlock Width="120" Margin="0,1.5" Text="虚莫妄玄" />
-                        <TextBlock Width="120" Margin="0,1.5" Text="天恒" />
-                        <TextBlock Width="120" Margin="0,1.5" Text="我有馄饨" />
-                        <TextBlock Width="120" Margin="0,1.5" Text="布布曼" />
-                        <TextBlock Width="120" Margin="0,1.5" Text="qwqewe" />
-                        <TextBlock Width="120" Margin="0,1.5" Text="114514" />
-                        <TextBlock Width="120" Margin="0,1.5" Text="YJ_42" />
-                        <TextBlock Width="120" Margin="0,1.5" Text="Xricron" />
-                        <TextBlock Width="120" Margin="0,1.5" Text="抛弃大脑" />
-                        <TextBlock Width="120" Margin="0,1.5" Text="10455885" />
-                        <TextBlock Width="120" Margin="0,1.5" Text="羽渡白砂" />
-                        <TextBlock Width="120" Margin="0,1.5" Text="沙" />
-                        <TextBlock Width="120" Margin="0,1.5" Text="sukous" />
-                        <TextBlock Width="120" Margin="0,1.5" Text="册那" />
                         <TextBlock Width="120" Margin="0,1.5" Text="KMYLS" />
-                        <TextBlock Width="120" Margin="0,1.5" Text="kakadeso" />
-                        <TextBlock Width="120" Margin="0,1.5" Text="懒猫" />
-                        <TextBlock Width="120" Margin="0,1.5" Text="清岚" />
-                        <TextBlock Width="120" Margin="0,1.5" Text="Atopos" />
-                        <TextBlock Width="120" Margin="0,1.5" Text="苦尽柑来" />
-                        <TextBlock Width="120" Margin="0,1.5" Text="脑洞大开的血魔" />
-                        <TextBlock Width="120" Margin="0,1.5" Text="ももかわるこ" />
-                        <TextBlock Width="120" Margin="0,1.5" Text="空中的风" />
-                        <TextBlock Width="120" Margin="0,1.5" Text="黑夜幽灵" />
-                        <TextBlock Width="120" Margin="0,1.5" Text="H1saNe" />
-                        <TextBlock Width="120" Margin="0,1.5" Text="故风" />
-                        <TextBlock Width="120" Margin="0,1.5" Text="臭氧化碳" />
-                        <TextBlock Width="120" Margin="0,1.5" Text="云阿云" />
-                        <TextBlock Width="120" Margin="0,1.5" Text="小命" />
-                        <TextBlock Width="120" Margin="0,1.5" Text="南宫若兮" />
-                        <TextBlock Width="120" Margin="0,1.5" Text="Landsilde" />
-                        <TextBlock Width="120" Margin="0,1.5" Text="zzz" />
-                        <TextBlock Width="120" Margin="0,1.5" Text="星期三" />
-                        <TextBlock Width="120" Margin="0,1.5" Text="Ashburn" />
+                        <TextBlock Width="120" Margin="0,1.5" Text="聽音" />
+                        <TextBlock Width="120" Margin="0,1.5" Text="oPzPo" />
+                        <TextBlock Width="120" Margin="0,1.5" Text="dream" />
                         <TextBlock Width="120" Margin="0,1.5" Text="123" />
-                        <TextBlock Width="120" Margin="0,1.5" Text="九日" />
-                        <TextBlock Width="120" Margin="0,1.5" Text="古神" />
-                        <TextBlock Width="120" Margin="0,1.5" Text="月宫星耀" />
-                        <TextBlock Width="120" Margin="0,1.5" Text="郁子恒是FW" />
-                        <TextBlock Width="240" Margin="0,1.5" Text="每天吃吃吃吃吃不饱" />
-                        <TextBlock Width="120" Margin="0,1.5" Text="Freezhao" />
-                        <TextBlock Width="120" Margin="0,1.5" Text="ZHypocrite" />
-                        <TextBlock Width="120" Margin="0,1.5" Text="十下小雨" />
-                        <TextBlock Width="120" Margin="0,1.5" Text="九 十" />
-                        <TextBlock Width="120" Margin="0,1.5" Text="RuthlessXdream" />
-                        <TextBlock Width="120" Margin="0,1.5" Text="zv-vz" />
-                        <TextBlock Width="120" Margin="0,1.5" Text="汐沄的随记" />
-                        <TextBlock Width="120" Margin="0,1.5" Text="REMOTE" />
-                        <TextBlock Width="120" Margin="0,1.5" Text="昔阳" />
-                        <TextBlock Width="120" Margin="0,1.5" Text="七度ユキノ" />
-                        <TextBlock Width="120" Margin="0,1.5" Text="KNISX" />
-                        <TextBlock Width="120" Margin="0,1.5" Text="RainbowDashRD" />
-                        <TextBlock Width="120" Margin="0,1.5" Text="夢曦" />
-                        <TextBlock Width="120" Margin="0,1.5" Text="跳雨风" />
-                        <TextBlock Width="120" Margin="0,1.5" Text="望言苏" />
-                        <TextBlock Width="120" Margin="0,1.5" Text="四分白Fortenz" />
-                        <TextBlock Width="120" Margin="0,1.5" Text="UUZ" />
-                        <TextBlock Width="120" Margin="0,1.5" Text="Ankairis" />
-                        <TextBlock Width="120" Margin="0,1.5" Text="Jn1E" />
-                        <TextBlock Width="120" Margin="0,1.5" Text="云山如昨好" />
-                        <TextBlock Width="120" Margin="0,1.5" Text="LYJ0415" />
-                        <TextBlock Width="120" Margin="0,1.5" Text="空?" />
-                        <TextBlock Width="120" Margin="0,1.5" Text="Awfrlu+" />
-                        <TextBlock Width="120" Margin="0,1.5" Text="懒帝" />
-                        <TextBlock Width="120" Margin="0,1.5" Text="北安丶七叔" />
-                        <TextBlock Width="120" Margin="0,1.5" Text="xkw" />
-                        <TextBlock Width="120" Margin="0,1.5" Text="KINO" />
-                        <TextBlock Width="120" Margin="0,1.5" Text="POTATO" />
-                        <TextBlock Width="120" Margin="0,1.5" Text="少昊氏" />
-                        <TextBlock Width="240" Margin="0,1.5" Text="狂踹瘸子那條好腿丶" />
-                        <TextBlock Width="240" Margin="0,1.5" Text="Thallium_Ash【铊尘】（坨坨）" />
-                        <TextBlock Width="120" Margin="0,1.5" Text="陌雨泠涯" />
-                        <TextBlock Width="120" Margin="0,1.5" Text="bajie79" />
-                        <TextBlock Width="120" Margin="0,1.5" Text="紘垰" />
+                        <TextBlock Width="120" Margin="0,1.5" Text="Zik yeung" />
+                        <TextBlock Width="120" Margin="0,1.5" Text="wihz" />
+                        <TextBlock Width="120" Margin="0,1.5" Text="九平" />
+                        <TextBlock Width="120" Margin="0,1.5" Text="liu" />
+                        <TextBlock Width="120" Margin="0,1.5" Text="PickStars" />
+                        <TextBlock Width="240" Margin="0,1.5" Text="我真的事仁济啊（恼）" />
+                        <TextBlock Width="120" Margin="0,1.5" Text="李白" />
+                        <TextBlock Width="120" Margin="0,1.5" Text="HurgerLiPy" />
+                        <TextBlock Width="120" Margin="0,1.5" Text="Crishen70400" />
+                        <TextBlock Width="120" Margin="0,1.5" Text="孤独" />
+                        <TextBlock Width="120" Margin="0,1.5" Text="夏末彡微凉" />
+                        <TextBlock Width="120" Margin="0,1.5" Text="山本樱桃不是df" />
+                        <TextBlock Width="120" Margin="0,1.5" Text="陶牧馆长" />
+                        <TextBlock Width="120" Margin="0,1.5" Text="一二三四" />
+                        <TextBlock Width="120" Margin="0,1.5" Text="17382073935" />
+                        <TextBlock Width="120" Margin="0,1.5" Text="不知道" />
+                        <TextBlock Width="120" Margin="0,1.5" Text="重庆你周哥" />
+                        <TextBlock Width="120" Margin="0,1.5" Text="熳ai" />
+                        <TextBlock Width="120" Margin="0,1.5" Text="Rainbow Stars" />
+                        <TextBlock Width="120" Margin="0,1.5" Text="无名岩" />
+                        <TextBlock Width="120" Margin="0,1.5" Text="快乐小子" />
+                        <TextBlock Width="120" Margin="0,1.5" Text="沙西凯" />
+                        <TextBlock Width="120" Margin="0,1.5" Text="一只小孽QAQ" />
+                        <TextBlock Width="120" Margin="0,1.5" Text="五度左右" />
+                        <TextBlock Width="120" Margin="0,1.5" Text="咖喱鱼" />
+                        <TextBlock Width="120" Margin="0,1.5" Text="千叶GG" />
+                        <TextBlock Width="120" Margin="0,1.5" Text="泽木_Zemu" />
                     </WrapPanel>
                     <Grid Height="35">
                         <Grid.ColumnDefinitions>
@@ -353,7 +327,7 @@
                             <ColumnDefinition Width="Auto" SharedSizeGroup="Button" />
                         </Grid.ColumnDefinitions>
                         <local:MyButton x:Name="BtnDonateOutput" Grid.Column="0" MinWidth="140" Text="{StaticResource LangPageOtherAboutSponsorsCreateUnlockCode}" Padding="13,0" Margin="0,0,20,0" HorizontalAlignment="Left" ColorType="Highlight" Visibility="Collapsed" />
-                        <local:MyButton x:Name="BtnDonateDonate" Grid.Column="0" MinWidth="140" Text="{StaticResource LangPageOtherAboutSponsorsDonate}" Padding="13,0" Margin="0,0,20,0" HorizontalAlignment="Left" ColorType="Highlight" EventType="打开网页" EventData="https://afdian.com/a/LTCat" />
+                        <local:MyButton x:Name="BtnDonateDonate" Grid.Column="0" MinWidth="140" Text="{StaticResource LangPageOtherAboutSponsorsDonate}" Padding="13,0" Margin="0,0,20,0" HorizontalAlignment="Left" ColorType="Highlight" local:CustomEventService.EventType="打开网页" local:CustomEventService.EventData="https://afdian.com/a/LTCat" />
                         <local:MyButton x:Name="BtnDonateCopy" Grid.Column="1" MinWidth="140" Text="{StaticResource LangPageOtherAboutSponsorsCopyUUID}" Padding="13,0" Margin="0,0,20,0" HorizontalAlignment="Left" />
                         <local:MyButton x:Name="BtnDonateInput" Grid.Column="2" MinWidth="140" Text="{StaticResource LangPageOtherAboutSponsorsSetUnlockCode}" Padding="13,0" Margin="0,0,20,0" HorizontalAlignment="Left" />
                     </Grid>
@@ -362,14 +336,14 @@
             <local:MyCard Margin="0,0,0,15" Title="{StaticResource LangPageOtherAboutLawInfo}" IsSwapped="True" CanSwap="True">
                 <StackPanel Margin="25,39,23,20">
                     <TextBlock Text="{StaticResource LangPageOtherAboutLawInfoTelemetryTitle}" TextWrapping="Wrap" Margin="0,6,0,4" FontWeight="Bold" />
-                    <TextBlock Margin="0,0,0,2" LineHeight="17" Text="{StaticResource angPageOtherAboutLawInfoTelemetryContent}" TextWrapping="Wrap" />
+                    <TextBlock Margin="0,0,0,2" LineHeight="17" Text="{StaticResource LangPageOtherAboutLawInfoTelemetryContent}" TextWrapping="Wrap" />
                     <TextBlock Text="{StaticResource LangPageOtherAboutLawInfoPrivacyTitle}" TextWrapping="Wrap" Margin="0,10,0,4" FontWeight="Bold" />
                     <TextBlock Margin="0,0,0,2" LineHeight="17" Text="{StaticResource LangPageOtherAboutLawInfoPrivacyContent}" TextWrapping="Wrap" />
                     <TextBlock Text="{StaticResource LangPageOtherAboutLawInfoOtherTitle}" TextWrapping="Wrap" Margin="0,10,0,4" FontWeight="Bold" />
                     <TextBlock Margin="0,0,0,2" LineHeight="17" Text="{StaticResource LangPageOtherAboutLawInfoOtherContent}" TextWrapping="Wrap" />
                     <StackPanel Orientation="Horizontal" Height="35" HorizontalAlignment="Left" Margin="0,12,0,0">
-                        <local:MyButton Text="{StaticResource LangPageOtherAboutLawInfoAgreement}" Width="170" Padding="13,0" Margin="0,0,20,0" ColorType="Highlight" EventType="打开网页" EventData="https://shimo.im/docs/rGrd8pY8xWkt6ryW" />
-                        <local:MyButton Text="{StaticResource LangPageOtherAboutAboutVersionBtn}" Width="140" Padding="13,0" EventType="打开网页" EventData="https://github.com/Hex-Dragon/PCL2" />
+                        <local:MyButton Text="{StaticResource LangPageOtherAboutLawInfoAgreement}" Width="170" Padding="13,0" Margin="0,0,20,0" ColorType="Highlight" local:CustomEventService.EventType="打开网页" local:CustomEventService.EventData="https://shimo.im/docs/rGrd8pY8xWkt6ryW" />
+                        <local:MyButton Text="{StaticResource LangPageOtherAboutAboutVersionBtn}" Width="140" Padding="13,0" local:CustomEventService.EventType="打开网页" local:CustomEventService.EventData="https://github.com/Hex-Dragon/PCL2" />
                     </StackPanel>
                 </StackPanel>
             </local:MyCard>
@@ -397,53 +371,69 @@
                         <RowDefinition Height="Auto" />
                         <RowDefinition Height="60" />
                         <RowDefinition Height="Auto" />
+                        <RowDefinition Height="60" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="60" />
+                        <RowDefinition Height="Auto" />
                     </Grid.RowDefinitions>
                     <TextBlock Grid.Row="0" Grid.Column="0" Text="Java Launch Wrapper" TextWrapping="Wrap" FontWeight="Bold" />
                     <TextBlock Grid.Row="0" Grid.Column="2" Grid.ColumnSpan="2" Text="Copyright © 2022 00ll00&#xa;Licensed under the MIT License." TextWrapping="Wrap" />
                     <local:MyButton Grid.Row="1" Grid.Column="2" MinWidth="140" Text="{StaticResource LangPageOtherAboutLicenseWeb}" Padding="13,0" Margin="0,7,20,18" HorizontalAlignment="Left"
-                                    EventType="打开网页" EventData="https://github.com/00ll00/java_launch_wrapper" />
+                                    local:CustomEventService.EventType="打开网页" local:CustomEventService.EventData="https://github.com/00ll00/java_launch_wrapper" />
                     <local:MyButton Grid.Row="1" Grid.Column="3" MinWidth="140" Text="{StaticResource LangPageOtherAboutLicenseDoc}" Padding="13,0" Margin="0,7,20,18" HorizontalAlignment="Left"
-                                    EventType="打开网页" EventData="https://github.com/00ll00/java_launch_wrapper?tab=MIT-1-ov-file#readme" />
+                                    local:CustomEventService.EventType="打开网页" local:CustomEventService.EventData="https://github.com/00ll00/java_launch_wrapper?tab=MIT-1-ov-file#readme" />
 
                     <TextBlock Grid.Row="2" Grid.Column="0" Text="Newtonsoft.Json" TextWrapping="Wrap" FontWeight="Bold" />
                     <TextBlock Grid.Row="2" Grid.Column="2" Grid.ColumnSpan="2" Text="Copyright © 2007 James Newton-King&#xa;Licensed under the MIT License." TextWrapping="Wrap" />
                     <local:MyButton Grid.Row="3" Grid.Column="2" MinWidth="140" Text="{StaticResource LangPageOtherAboutLicenseWeb}" Padding="13,0" Margin="0,7,20,18" HorizontalAlignment="Left"
-                                    EventType="打开网页" EventData="https://www.newtonsoft.com/json" />
+                                    local:CustomEventService.EventType="打开网页" local:CustomEventService.EventData="https://www.newtonsoft.com/json" />
                     <local:MyButton Grid.Row="3" Grid.Column="3" MinWidth="140" Text="{StaticResource LangPageOtherAboutLicenseDoc}" Padding="13,0" Margin="0,7,20,18" HorizontalAlignment="Left"
-                                    EventType="打开网页" EventData="https://opensource.org/licenses/MIT" />
+                                    local:CustomEventService.EventType="打开网页" local:CustomEventService.EventData="https://opensource.org/licenses/MIT" />
                     
                     <TextBlock Grid.Row="4" Grid.Column="0" Text="NAudio" TextWrapping="Wrap" FontWeight="Bold" />
                     <TextBlock Grid.Row="4" Grid.Column="2" Grid.ColumnSpan="2" Text="Copyright © 2015 Mark Heath (mark.heath@gmail.com)&#xa;Licensed under the MIT License." TextWrapping="Wrap" />
                     <local:MyButton Grid.Row="5" Grid.Column="2" MinWidth="140" Text="{StaticResource LangPageOtherAboutLicenseWeb}" Padding="13,0" Margin="0,7,20,18" HorizontalAlignment="Left"
-                                    EventType="打开网页" EventData="https://github.com/naudio/NAudio" />
+                                    local:CustomEventService.EventType="打开网页" local:CustomEventService.EventData="https://github.com/naudio/NAudio" />
                     <local:MyButton Grid.Row="5" Grid.Column="3" MinWidth="140" Text="{StaticResource LangPageOtherAboutLicenseDoc}" Padding="13,0" Margin="0,7,20,18" HorizontalAlignment="Left" 
-                                    EventType="打开网页" EventData="https://github.com/naudio/NAudio/blob/master/license.txt" />
-                    
+                                    local:CustomEventService.EventType="打开网页" local:CustomEventService.EventData="https://github.com/naudio/NAudio/blob/master/license.txt" />
+
                     <TextBlock Grid.Row="6" Grid.Column="0" Text="Ookii.Dialogs" TextWrapping="Wrap" FontWeight="Bold" />
                     <TextBlock Grid.Row="6" Grid.Column="2" Grid.ColumnSpan="2" Text="Copyright © 2009 Sven Groot (Ookii.org)" TextWrapping="Wrap" />
                     <local:MyButton Grid.Row="7" Grid.Column="2" MinWidth="140" Text="{StaticResource LangPageOtherAboutLicenseWeb}" Padding="13,0" Margin="0,7,20,18" HorizontalAlignment="Left"
-                                    EventType="打开网页" EventData="https://www.ookii.org/Software/Dialogs/" />
+                                    local:CustomEventService.EventType="打开网页" local:CustomEventService.EventData="https://www.ookii.org/Software/Dialogs/" />
                     <local:MyButton Grid.Row="7" Grid.Column="3" MinWidth="140" Text="{StaticResource LangPageOtherAboutLicenseDoc}" Padding="13,0" Margin="0,7,20,18" HorizontalAlignment="Left"
-                                    EventType="打开网页" EventData="https://github.com/caioproiete/ookii-dialogs-wpf/blob/master/LICENSE" />
+                                    local:CustomEventService.EventType="打开网页" local:CustomEventService.EventData="https://github.com/caioproiete/ookii-dialogs-wpf/blob/master/LICENSE" />
                     
                     <TextBlock Grid.Row="8" Grid.Column="0" Text="Iconmonstr" TextWrapping="Wrap" FontWeight="Bold" />
                     <TextBlock Grid.Row="8" Grid.Column="2" Grid.ColumnSpan="2" Text="Copyright © 2019 iconmonstr (Alexander Kahlkopf)" TextWrapping="Wrap" />
                     <local:MyButton Grid.Row="9" Grid.Column="2" MinWidth="140" Text="{StaticResource LangPageOtherAboutLicenseWeb}" Padding="13,0" Margin="0,7,20,18" HorizontalAlignment="Left"
-                                    EventType="打开网页" EventData="https://iconmonstr.com/" />
+                                    local:CustomEventService.EventType="打开网页" local:CustomEventService.EventData="https://iconmonstr.com/" />
                     <local:MyButton Grid.Row="9" Grid.Column="3" MinWidth="140" Text="{StaticResource LangPageOtherAboutLicenseDoc}" Padding="13,0" Margin="0,7,20,18" HorizontalAlignment="Left"
-                                    EventType="打开网页" EventData="https://iconmonstr.com/license/" />
+                                    local:CustomEventService.EventType="打开网页" local:CustomEventService.EventData="https://iconmonstr.com/license/" />
                     
                     <TextBlock Grid.Row="10" Grid.Column="0" Text="libwebp wrapper for .NET" TextWrapping="Wrap" FontWeight="Bold" />
                     <TextBlock Grid.Row="10" Grid.Column="2" Grid.ColumnSpan="2" Text="Copyright © 2012 Imazen&#xa;Licensed under the MIT License." TextWrapping="Wrap" />
                     <local:MyButton Grid.Row="11" Grid.Column="2" MinWidth="140" Text="{StaticResource LangPageOtherAboutLicenseWeb}" Padding="13,0" Margin="0,7,20,18" HorizontalAlignment="Left"
-                                    EventType="打开网页" EventData="https://github.com/imazen/libwebp-net" />
+                                    local:CustomEventService.EventType="打开网页" local:CustomEventService.EventData="https://github.com/imazen/libwebp-net" />
                     <local:MyButton Grid.Row="11" Grid.Column="3" MinWidth="140" Text="{StaticResource LangPageOtherAboutLicenseDoc}" Padding="13,0" Margin="0,7,20,18" HorizontalAlignment="Left"
-                                    EventType="打开网页" EventData="https://github.com/imazen/libwebp-net/blob/master/LICENSE.txt" />
+                                    local:CustomEventService.EventType="打开网页" local:CustomEventService.EventData="https://github.com/imazen/libwebp-net/blob/master/LICENSE.txt" />
 
                     <TextBlock Grid.Row="12" Grid.Column="0" Text="Iconfont" TextWrapping="Wrap" FontWeight="Bold" />
                     <TextBlock Grid.Row="12" Grid.Column="2" Grid.ColumnSpan="2" Text="Copyright © ALIMAMA MUX, powered by alimama THX." TextWrapping="Wrap" />
                     <local:MyButton Grid.Row="13" Grid.Column="2" MinWidth="140" Text="{StaticResource LangPageOtherAboutLicenseWeb}" Padding="13,0" Margin="0,7,20,18" HorizontalAlignment="Left"
-                                    EventType="打开网页" EventData="https://www.iconfont.cn/" />
+                                    local:CustomEventService.EventType="打开网页" local:CustomEventService.EventData="https://www.iconfont.cn/" />
+
+                    <TextBlock Grid.Row="14" Grid.Column="0" Text="EasyTier" TextWrapping="Wrap" FontWeight="Bold" />
+                    <TextBlock Grid.Row="14" Grid.Column="2" Grid.ColumnSpan="2" Text="Copyright © 2024-present Easytier Programme within The Commons Conservancy&#xa;Licensed under the GNU Lesser General Public License." TextWrapping="Wrap" />
+                    <local:MyButton Grid.Row="15" Grid.Column="2" MinWidth="140" Text="查看来源网站" Padding="13,0" Margin="0,7,20,18" HorizontalAlignment="Left"
+                                    local:CustomEventService.EventType="打开网页" local:CustomEventService.EventData="https://easytier.cn/" />
+                    <local:MyButton Grid.Row="15" Grid.Column="3" MinWidth="140" Text="查看许可文档" Padding="13,0" Margin="0,7,20,18" HorizontalAlignment="Left" 
+                                    local:CustomEventService.EventType="打开网页" local:CustomEventService.EventData="https://github.com/EasyTier/EasyTier/blob/main/LICENSE" />
+                    
+                    <TextBlock Grid.Row="16" Grid.Column="0" Text="Costura.Fody" TextWrapping="Wrap" FontWeight="Bold" />
+                    <TextBlock Grid.Row="16" Grid.Column="2" Grid.ColumnSpan="2" Text="Copyright © 2012 Simon Cropp and contributors" TextWrapping="Wrap" />
+                    <local:MyButton Grid.Row="17" Grid.Column="2" MinWidth="140" Text="{StaticResource LangPageOtherAboutLicenseWeb}" Padding="13,0" Margin="0,7,20,18" HorizontalAlignment="Left"
+                                    local:CustomEventService.EventType="打开网页" local:CustomEventService.EventData="https://github.com/Fody/Costura" />
 
                 </Grid>
             </local:MyCard>

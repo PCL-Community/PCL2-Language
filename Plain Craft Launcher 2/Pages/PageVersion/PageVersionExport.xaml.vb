@@ -22,7 +22,8 @@ Public Class PageVersionExport
     Private Sub PageVersionExport_Loaded() Handles Me.Loaded
         AniControlEnabled += 1
         If CurrentVersion <> PageVersionLeft.Version.Path Then RefreshAll() '切换到了另一个版本，重置页面
-        BtnAdvancedHelp.EventData = If(VersionBranchName = "Release", "指南/整合包制作 - Public.json", "指南/整合包制作 - Snapshot.json")
+        CustomEventService.SetEventData(BtnAdvancedHelp,
+            If(VersionBranchName = "Release", "指南/整合包制作 - Public.json", "指南/整合包制作 - Snapshot.json"))
         AniControlEnabled -= 1
     End Sub
     Public Sub RefreshAll() Implements IRefreshable.Refresh
@@ -35,7 +36,7 @@ Public Class PageVersionExport
         TextExportVersion.HintText = "1.0.0"
         CheckAdvancedInclude.Checked = False
         CheckAdvancedModrinth.Checked = False
-        GetExportOption(CheckOptionsBasic).Description = PageVersionLeft.Version.GetDefaultDescription()
+        GetExportOption(CheckOptionsBasic).Description = PageVersionLeft.Version.GetVersionDescription()
         ResetConfigOverrides()
         ReloadAllSubOptions()
         RefreshAllOptionsUI()
@@ -341,7 +342,7 @@ Public Class PageVersionExport
             ConfigLines.AddRange(GetExtraFileLines())
             '结束
             WriteFile(ConfigPath, ConfigLines.Join(vbCrLf))
-            Hint(GetLang("LangPageVersionExportHintSavedExportConfig", ConfigPath), HintType.Finish)
+            Hint(GetLang("LangPageVersionExportHintSavedExportConfig", ConfigPath), HintType.Green)
             OpenExplorer(ConfigPath)
         Catch ex As Exception
             Log(ex, GetLang("LangPageVersionExportSaveExportConfigFail"), LogLevel.Msgbox)
@@ -378,7 +379,7 @@ Public Class PageVersionExport
                 ExtraFiles = Nothing
             End If
             '结束
-            Hint(GetLang("LangPageVersionExportHintReadExportConfig", ConfigPath), HintType.Finish)
+            Hint(GetLang("LangPageVersionExportHintReadExportConfig", ConfigPath), HintType.Green)
         Catch ex As Exception
             Log(ex, GetLang("LangPageVersionExportReadExportConfigFail"), LogLevel.Msgbox)
         End Try
@@ -418,7 +419,7 @@ Public Class PageVersionExport
                 Log($"[Export] 使用配置文件中指定的导出路径：{ConfigPackPath}")
             Catch ex As Exception
                 Log(ex, $"无法使用配置文件中指定的导出路径（{ConfigPackPath}）", LogLevel.Debug)
-                If MyMsgBox(GetLang("LangPageVersionExportDialogContentConfigInvalid", ConfigPackPath, GetExceptionDetail(ex)), GetLang("LangPageVersionExportDialogTitleConfigInvalid"), GetLang("LangDialogBtnOK"), GetLang("LangDialogBtnCancel")) = 2 Then Return
+                If MyMsgBox(GetLang("LangPageVersionExportDialogContentConfigInvalid", ConfigPackPath, ex.GetDetail), GetLang("LangPageVersionExportDialogTitleConfigInvalid"), GetLang("LangDialogBtnOK"), GetLang("LangDialogBtnCancel")) = 2 Then Return
             End Try
         End If
         If PackPath Is Nothing Then
@@ -517,19 +518,20 @@ Public Class PageVersionExport
                     If Directory.Exists(Line) Then
                         CopyDirectory(Line, BaseFolder & GetFolderNameFromPath(Line) & "\")
                     Else
-                        Hint(GetLang("LangPageVersionExportHintFolderInConfigNotFound", Line), HintType.Critical)
+                        Hint(GetLang("LangPageVersionExportHintFolderInConfigNotFound", Line), HintType.Red)
                     End If
                 Else
                     If File.Exists(Line) Then
                         CopyFile(Line, BaseFolder & GetFileNameFromPath(Line))
                     Else
-                        Hint(GetLang("LangPageVersionExportHintFileInConfigNotFound", Line), HintType.Critical)
+                        Hint(GetLang("LangPageVersionExportHintFileInConfigNotFound", Line), HintType.Red)
                     End If
                 End If
             Next
             Loader.Progress = 0.97
             '复制 PCL 版本设置
             CopyDirectory(McVersion.Path & "PCL\", OverridesFolder & "PCL\")
+            WriteIni(OverridesFolder & "PCL\Setup.ini", "IsStar", False)
 #If BETA Then
             '复制 PCL 本体
             If IncludePCL Then CopyFile(PathWithName, CacheFolder & "Plain Craft Launcher.exe")

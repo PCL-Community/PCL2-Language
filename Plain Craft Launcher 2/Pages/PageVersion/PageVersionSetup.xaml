@@ -4,7 +4,7 @@
     xmlns:local="clr-namespace:PCL" xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
     xmlns:System="clr-namespace:System;assembly=mscorlib" 
     mc:Ignorable="d" x:Class="PageVersionSetup"
-    PanScroll="{Binding ElementName=PanBack}">
+    PanScroll="PanBack">
     <local:MyScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled" x:Name="PanBack">
         <StackPanel x:Name="PanMain" Margin="25,25,25,25">
             <local:MyHint Text="{StaticResource LangPageVersionSetupTips}" Theme="Blue" Margin="0,0,0,15"
@@ -219,6 +219,9 @@
                     <local:MyCheckBox Grid.Row="5" Grid.Column="1" x:Name="CheckAdvanceRunWait" Tag="VersionAdvanceRunWait" Visibility="Collapsed"
                                       Text="{StaticResource LangPageSetupLaunchLaunchAdvanceOptionsCommandStartWaitForCommand}" Margin="0,5,0,0" />
                     <StackPanel Margin="0,12,0,4" Grid.Row="6" Grid.ColumnSpan="2" HorizontalAlignment="Left">
+                        <local:MyCheckBox Height="28" Text="禁止更新 Mod" x:Name="CheckAdvanceDisableModUpdate" Tag="VersionAdvanceDisableModUpdate"
+                                          ToolTip="禁止为此版本更新 Mod，以防止整合包玩家误操作"
+                                          ToolTipService.Placement="Right" />
                         <local:MyCheckBox Height="28" Text="{StaticResource LangPageSetupLaunchLaunchAdvanceOptionsIgnoreJavaCompatibility}" x:Name="CheckAdvanceJava" Tag="VersionAdvanceJava"
                                           ToolTipService.Placement="Right"
                                           ToolTip="{StaticResource LangPageSetupLaunchLaunchAdvanceOptionsIgnoreJavaCompatibilityToolTip}" />

@@ -4,7 +4,7 @@
     xmlns:local="clr-namespace:PCL" xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
     xmlns:System="clr-namespace:System;assembly=mscorlib" 
     mc:Ignorable="d" x:Class="PageSetupLaunch"
-    PanScroll="{Binding ElementName=PanBack}">
+    PanScroll="PanBack">
     <local:MyScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled" x:Name="PanBack">
         <StackPanel x:Name="PanMain" Margin="25,25,25,10">
             <local:MyCard x:Name="CardArgument" Margin="0,0,0,15" Title="{StaticResource LangPageSetupLaunchLaunchOptions}">
@@ -255,7 +255,7 @@
                         <local:MyCheckBox Height="28" Text="{StaticResource LangPageSetupLaunchLaunchAdvanceOptionsGPUPerfence}" x:Name="CheckAdvanceGraphicCard" Tag="LaunchAdvanceGraphicCard"
                             ToolTipService.Placement="Right" ToolTip="{StaticResource LangPageSetupLaunchLaunchAdvanceOptionsGPUPerfenceToolTip}" />
                     </StackPanel>
-                    <local:MyHint Text="你还可以在版本独立设置中找到更多高级启动选项。" Margin="0,5,0,10" Theme="Blue" Grid.Row="7" Grid.ColumnSpan="2"
+                    <local:MyHint Text="版本独立设置中还有更多高级选项可供调整。" Margin="0,5,0,10" Theme="Blue" Grid.Row="7" Grid.ColumnSpan="2"
                                   CanClose="True" RelativeSetup="HintMoreAdvancedSetup" />
                 </Grid>
             </local:MyCard>

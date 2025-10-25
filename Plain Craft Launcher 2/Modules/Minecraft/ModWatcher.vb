@@ -349,7 +349,7 @@
             State = MinecraftState.Crashed
             '崩溃分析
             WatcherLog("Minecraft 已崩溃，将在 2 秒后开始崩溃分析")
-            Hint(GetLang("LangModWatcherMcCrashed"), HintType.Critical)
+            Hint(GetLang("LangModWatcherMcCrashed"), HintType.Red)
             FeedbackInfo()
             RunInNewThread(
             Sub()

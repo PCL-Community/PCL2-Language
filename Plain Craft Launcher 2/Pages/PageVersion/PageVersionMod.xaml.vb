@@ -306,7 +306,7 @@
             If Result.Any Then
                 MyMsgBox(Join(Result, vbCrLf & vbCrLf), "Mod 检查结果")
             Else
-                Hint("Mod 检查完成，未发现任何问题！", HintType.Finish)
+                Hint("Mod 检查完成，未发现任何问题！", HintType.Green)
             End If
         Catch ex As Exception
             Log(ex, "进行 Mod 检查时出错", LogLevel.Feedback)
@@ -340,7 +340,7 @@
         Log("[System] 文件为 jar/litemod 格式，尝试作为 Mod 安装")
         '检查回收站：回收站中的文件有错误的文件名
         If FilePathList.First.Contains(":\$RECYCLE.BIN\") Then
-            Hint(GetLang("LangHintDropFileFromRecycleBin"), HintType.Critical)
+            Hint(GetLang("LangHintDropFileFromRecycleBin"), HintType.Red)
             Return True
         End If
         '获取并检查目标版本
@@ -368,9 +368,9 @@ Install:
                     CopyFile(ModFile, TargetVersion.PathIndie & "mods\" & NewFileName)
                 Next
                 If FilePathList.Count = 1 Then
-                    Hint(GetLang("LangHintInstallModSuccessA", GetFileNameFromPath(FilePathList.First).Replace(".disabled", "").Replace(".old", "")), HintType.Finish)
+                    Hint(GetLang("LangHintInstallModSuccessA", GetFileNameFromPath(FilePathList.First).Replace(".disabled", "").Replace(".old", "")), HintType.Green)
                 Else
-                    Hint(GetLang("LangHintInstallModSuccessB", FilePathList.Count), HintType.Finish)
+                    Hint(GetLang("LangHintInstallModSuccessB", FilePathList.Count), HintType.Green)
                 End If
                 '刷新列表
                 If FrmMain.PageCurrent = FormMain.PageType.VersionSetup AndAlso FrmMain.PageCurrentSub = FormMain.PageSubType.VersionMod Then
@@ -576,7 +576,7 @@ Install:
         If IsSuccessful Then
             RefreshBars()
         Else
-            Hint(GetLang("LangPageVersionModHintFileOccupyWhenChangeStatus"), HintType.Critical)
+            Hint(GetLang("LangPageVersionModHintFileOccupyWhenChangeStatus"), HintType.Red)
             ReloadModList(True)
         End If
         LoaderRun(LoaderFolderRunType.UpdateOnly)
@@ -649,14 +649,14 @@ Install:
                 Try
                     For Each Entry As McMod In ModList
                         If File.Exists(Entry.Path) Then
-                            My.Computer.FileSystem.DeleteFile(Entry.Path, FileIO.UIOption.AllDialogs, FileIO.RecycleOption.SendToRecycleBin)
+                            My.Computer.FileSystem.DeleteFile(Entry.Path, FileIO.UIOption.OnlyErrorDialogs, FileIO.RecycleOption.SendToRecycleBin)
                         Else
                             Log($"[Mod] 未找到更新前的 Mod 文件，跳过对它的删除：{Entry.Path}", LogLevel.Debug)
                         End If
                     Next
                     For Each Entry As KeyValuePair(Of String, String) In FileCopyList
                         If File.Exists(Entry.Value) Then
-                            My.Computer.FileSystem.DeleteFile(Entry.Value, FileIO.UIOption.AllDialogs, FileIO.RecycleOption.SendToRecycleBin)
+                            My.Computer.FileSystem.DeleteFile(Entry.Value, FileIO.UIOption.OnlyErrorDialogs, FileIO.RecycleOption.SendToRecycleBin)
                             Log($"[Mod] 更新后的 Mod 文件已存在，将会把它放入回收站：{Entry.Value}", LogLevel.Debug)
                         End If
                         If Directory.Exists(GetPathFromFullPath(Entry.Value)) Then
@@ -682,14 +682,14 @@ Install:
                             Case 0 '一般是由于 Mod 文件被占用，然后玩家主动取消
                                 Log($"[Mod] 没有 Mod 被成功更新")
                             Case 1
-                                Hint(GetLang("LangPageVersionModTaskModUpdateSuccessB") & FinishedFileNames.Single, HintType.Finish)
+                                Hint(GetLang("LangPageVersionModTaskModUpdateSuccessB") & FinishedFileNames.Single, HintType.Green)
                             Case Else
-                                Hint(GetLang("LangPageVersionModTaskModUpdateSuccessA", FinishedFileNames.Count), HintType.Finish)
+                                Hint(GetLang("LangPageVersionModTaskModUpdateSuccessA", FinishedFileNames.Count), HintType.Green)
                         End Select
                     Case LoadState.Failed
-                        Hint(GetLang("LangPageVersionModTaskModUpdateFail") & GetExceptionSummary(Loader.Error), HintType.Critical)
+                        Hint(GetLang("LangPageVersionModTaskModUpdateFail") & Loader.Error.GetBrief(), HintType.Red)
                     Case LoadState.Aborted
-                        Hint(GetLang("LangPageVersionModTaskModUpdateAbort"), HintType.Info)
+                        Hint(GetLang("LangPageVersionModTaskModUpdateAbort"), HintType.Blue)
                     Case Else
                         Return
                 End Select
@@ -745,7 +745,7 @@ Install:
                     If IsShiftPressed Then
                         File.Delete(ModEntity.Path)
                     Else
-                        My.Computer.FileSystem.DeleteFile(ModEntity.Path, FileIO.UIOption.AllDialogs, FileIO.RecycleOption.SendToRecycleBin)
+                        My.Computer.FileSystem.DeleteFile(ModEntity.Path, FileIO.UIOption.OnlyErrorDialogs, FileIO.RecycleOption.SendToRecycleBin)
                     End If
                 Catch ex As OperationCanceledException
                     Log(ex, "删除 Mod 被主动取消")
@@ -766,7 +766,7 @@ Install:
             Next
             RefreshBars()
             If Not IsSuccessful Then
-                Hint(GetLang("LangPageVersionModHintFileOccupyWhenDelete"), HintType.Critical)
+                Hint(GetLang("LangPageVersionModHintFileOccupyWhenDelete"), HintType.Red)
                 ReloadModList(True)
             ElseIf PanList.Children.Count = 0 Then
                 ReloadModList(True) '删除了全部文件
@@ -777,15 +777,15 @@ Install:
             If Not IsSuccessful Then Return
             If IsShiftPressed Then
                 If ModList.Count = 1 Then
-                    Hint(GetLang("LangPageVersionModHintFilePermanentDeleteSuccessA", ModList.Single.FileName), HintType.Finish)
+                    Hint(GetLang("LangPageVersionModHintFilePermanentDeleteSuccessA", ModList.Single.FileName), HintType.Green)
                 Else
-                    Hint(GetLang("LangPageVersionModHintFilePermanentDeleteSuccessB", ModList.Count), HintType.Finish)
+                    Hint(GetLang("LangPageVersionModHintFilePermanentDeleteSuccessB", ModList.Count), HintType.Green)
                 End If
             Else
                 If ModList.Count = 1 Then
-                    Hint(GetLang("LangPageVersionModHintFileDeleteSuccessA", ModList.Single.FileName), HintType.Finish)
+                    Hint(GetLang("LangPageVersionModHintFileDeleteSuccessA", ModList.Single.FileName), HintType.Green)
                 Else
-                    Hint(GetLang("LangPageVersionModHintFileDeleteSuccessB", ModList.Count), HintType.Finish)
+                    Hint(GetLang("LangPageVersionModHintFileDeleteSuccessB", ModList.Count), HintType.Green)
                 End If
             End If
         Catch ex As OperationCanceledException
@@ -814,7 +814,7 @@ Install:
             Dim ModEntry As McMod = CType(If(TypeOf sender Is MyIconButton, sender.Tag, sender), MyLocalModItem).Entry
             '加载失败信息
             If ModEntry.State = McMod.McModState.Unavailable Then
-                MyMsgBox(GetLang("LangPageVersionModDialogFailGetModDetail") & vbCrLf & vbCrLf & "详细的错误信息：" & GetExceptionDetail(ModEntry.FileUnavailableReason), "Mod 读取失败")
+                MyMsgBox(GetLang("LangPageVersionModDialogFailGetModDetail") & vbCrLf & vbCrLf & "详细的错误信息：" & ModEntry.FileUnavailableReason.GetDetail(), "Mod 读取失败")
                 Return
             End If
             If ModEntry.Comp IsNot Nothing Then

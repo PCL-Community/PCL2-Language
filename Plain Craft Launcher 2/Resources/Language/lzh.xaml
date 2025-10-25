@@ -13,14 +13,15 @@
     <s:String x:Key="LangReset">重置</s:String>
     <s:String x:Key="LangRefresh">刷新</s:String>
     <s:String x:Key="LangRefreshing">正在刷新……</s:String>
+    <s:String x:Key="LangRefreshed">已刷新！</s:String>
     <s:String x:Key="LangApplicationExceptionNoAccessPermission">PCL 尚無此權勢以用 {0}</s:String>
     <s:String x:Key="LangApplicationDialogTitleCacheFolderUnavailable">弗可用臨時資料夾</s:String>
     <s:String x:Key="LangApplicationDialogContentCacheFolderUnavailable">PCL 不得用臨時資料夾，或致錯，或致功效弗可用。
 錯之故：{0}</s:String>
     <s:String x:Key="LangApplicationDialogContentCustomCacheFolderUnavailable">汝設之臨時資料夾不得用，以既定臨時資料夾替之。
 錯之故：{0}</s:String>
-    <s:String x:Key="LangApplicationDialogTitleRunInTemp">告</s:String>
-    <s:String x:Key="LangApplicationDialogContentRunInTemp">汝用 PCL 於臨時資料夾，設與存檔之類或不得存，或致功效弗可用。
+    <s:String x:Key="LangApplicationDialogTitleUnzipLauncher">告</s:String>
+    <s:String x:Key="LangApplicationDialogContentUnzipLauncher">汝用 PCL 於臨時資料夾，設與存檔之類或不得存，或致功效弗可用。
 請於減縮文卷之中抽取 PCL，或易資料夾後用！</s:String>
     <s:String x:Key="LangApplicationDialogContent32BitWarn">PCL 和新版 Minecraft 均不再支持 32 位系统，部分功能将无法使用。
 非常建议重装为 64 位系统后再进行游戏！</s:String>
@@ -42,6 +43,8 @@
     <s:String x:Key="LangDialogBtnUpdateFullLog">全更新志</s:String>
     <s:String x:Key="LangDialogUpdateTo">PCL 已更至 {0}</s:String>
     <s:String x:Key="LangDialogPolicyContent">用 PCL 前，請允 PCL 之用戶約與免責言。</s:String>
+    <s:String x:Key="LangDialogPolicyContentModified">PCL 的用户协议与免责声明已更新。
+请阅读更新后的用户协议与免责声明。</s:String>
     <s:String x:Key="LangDialogPolicyTitle">約授</s:String>
     <s:String x:Key="LangDialogBtnAgree">允</s:String>
     <s:String x:Key="LangDialogBtnDeny">否</s:String>
@@ -139,7 +142,6 @@
     <s:String x:Key="LangDialogCustomPageOverwriteConfirmationContent">今有布局文，續生教學文將覆舊布局文！</s:String>
     <s:String x:Key="LangDialogCustomPageOverwriteFail">生教學文失</s:String>
     <s:String x:Key="LangHintCustomPageOverwriteSuccess">教學文已生！</s:String>
-    <s:String x:Key="LangHintCustomPageRefreshed">已刷主頁！</s:String>
     <s:String x:Key="LangDialogCustomPageTeachContent">一、點生教學文按，此將於 PCL 文夾下生 Custom.xaml 布局文。
 二、以記事本等工開此文並改之，改畢記存。
 三、點刷主頁按，觀主頁今何狀。
@@ -366,7 +368,6 @@
     <s:String x:Key="LangSelectVersionNoHiddenTip">無版被隱，汝可於版設之版類選中隱版。
 再按 F11 即可出隱版觀模。</s:String>
     <s:String x:Key="LangSelectVersionListLoadFail">轉版簿顯失</s:String>
-    <s:String x:Key="LangSelectVersionListLoadIconFail">載版標失</s:String>
     <s:String x:Key="LangSelectBtnFavorite">藏</s:String>
     <s:String x:Key="LangSelectBtnCancelFavorite">去藏</s:String>
     <s:String x:Key="LangSelectBtnSet">設</s:String>
@@ -375,8 +376,8 @@
     <s:String x:Key="LangSelectDeleteVersionContentA">汝確欲刪版 {0} 乎？</s:String>
     <s:String x:Key="LangSelectDeleteVersionContentB">汝確欲永刪版 {0} 乎？</s:String>
     <s:String x:Key="LangSelectDeleteVersionContentC">因此版開版隔，刪版時此版之存檔、資囊、改囊等文亦將同刪！</s:String>
-    <s:String x:Key="LangSelectVersionDeletedA">版 {0} 已永刪！</s:String>
-    <s:String x:Key="LangSelectVersionDeletedB">版 {0} 已刪入回收簿！</s:String>
+    <s:String x:Key="LangSelectVersionDeletedPermanently">版 {0} 已永刪！</s:String>
+    <s:String x:Key="LangSelectVersionDeletedToRecycleBin">版 {0} 已刪入回收簿！</s:String>
     <s:String x:Key="LangSelectVersionDeleteCancelled">刪版 {0} 被主動止</s:String>
     <s:String x:Key="LangSelectVersionDeleteFail">刪版 {0} 失</s:String>
     <s:String x:Key="LangSpeedTotalProgress">全程</s:String>
@@ -486,13 +487,6 @@ PCL 薦汝始下載前，於 設置 → 版本隔離 中開版本隔離選！</s
     <s:String x:Key="LangDownloadInstallOptiFabricManually">不相容舊版 Fabric，請手下 OptiFabric Origins</s:String>
     <s:String x:Key="LangDownloadPageLeftRefresh">更新</s:String>
     <s:String x:Key="LangDownloadPageLeftAutoInstall">自動裝</s:String>
-    <s:String x:Key="LangDownloadPageLeftManualInstall">▼ 手動裝包</s:String>
-    <s:String x:Key="LangDownloadPageLeftDialogManualInstallContent">手動裝包功能可下載 OptiFine、Forge 等組件之 JAR 裝文，然不能自動裝。
-於自動裝頁先選 MC 版，而後可選 OptiFine、Forge 等組件，令 PCL 自動裝之。</s:String>
-    <s:String x:Key="LangDownloadPageLeftDialogManualInstallTitle">自動裝之提</s:String>
-    <s:String x:Key="LangDownloadPageLeftDialogManualInstallBtn1">返自動裝</s:String>
-    <s:String x:Key="LangDownloadPageLeftDialogManualInstallBtn2">續下手動裝包</s:String>
-    <s:String x:Key="LangDownloadPageLeftManualInstallFold">手動裝包</s:String>
     <s:String x:Key="LangDownloadPageLeftResource">資源</s:String>
     <s:String x:Key="LangDownloadPageLeftMods">Mod</s:String>
     <s:String x:Key="LangDownloadPageLeftModsL"> Mod </s:String>
@@ -694,6 +688,10 @@ PCL 薦汝始下載前，於 設置 → 版本隔離 中開版本隔離選！</s
     <s:String x:Key="LangMySkinCapeNameHome">家园披风</s:String>
     <s:String x:Key="LangMySkinCapeNameMenace">入侵披风</s:String>
     <s:String x:Key="LangMySkinCapeNameYearn">渴望披风</s:String>
+    <s:String x:Key="LangMySkinCapeNameCommon">普通披风</s:String>
+    <s:String x:Key="LangMySkinCapeNamePan">薄煎饼披风</s:String>
+    <s:String x:Key="LangMySkinCapeNameFounders">创始人披风</s:String>
+    <s:String x:Key="LangMySkinCapeNameCopper">铜披风</s:String>
     <s:String x:Key="LangMySkinCapeNameNone">無</s:String>
     <s:String x:Key="LangLaunchLeftInstanceChoose">版擇</s:String>
     <s:String x:Key="LangLaunchLeftInstanceConfig">版設</s:String>
@@ -711,7 +709,6 @@ PCL 薦汝始下載前，於 設置 → 版本隔離 中開版本隔離選！</s
     <s:String x:Key="LangLaunchLeftStageDownload">下載之速</s:String>
     <s:String x:Key="LangLaunchLeftTip">知之乎</s:String>
     <s:String x:Key="LangLaunchLeftInit">始置之</s:String>
-    <s:String x:Key="LangLaunchLeftAccountOfflineLinkLogin">聯於機，然離線登</s:String>
     <s:String x:Key="LangLaunchLeftAccountOfflineLogin">離線登</s:String>
     <s:String x:Key="LangLaunchLeftAccountMicrosoftLogin">正版登</s:String>
     <s:String x:Key="LangLaunchLeftAccountUnifiedPassLogin">大一統通關文牒登</s:String>
@@ -1342,12 +1339,11 @@ PCL 薦汝始下載前，於 設置 → 版本隔離 中開版本隔離選！</s
     <s:String x:Key="LangModMainExceptionNoHelpFound">未找到可用的幫助；若不需要幫助頁面，可以在 設置 → 個性化 → 功能隱藏 中將其隱藏</s:String>
     <s:String x:Key="LangModMainExceptionNoFileFound">未找到帮助文件：{0}</s:String>
     <s:String x:Key="LangModMainExceptionNoTitleArgFound">未得 Title 项</s:String>
-    <s:String x:Key="LangModMainExceptionNoEventTypeArgFound">未得 EventType 项</s:String>
     <s:String x:Key="LangModMainExceptionNoXamlFileFound">未找到帮助条目 .json 对应的 .xaml 文件（{0}）</s:String>
     <s:String x:Key="LangModEventOpeningWeb">正在開啟中，請稍候……</s:String>
     <s:String x:Key="LangModEventStartInstance">正在啟動 {0}……</s:String>
     <s:String x:Key="LangModEventChoseAnInstance">請先選擇一個 Minecraft 版本！</s:String>
-    <s:String x:Key="LangModEventHomePageRefreshed">已刷新主頁！</s:String>
+    <s:String x:Key="LangModEventNoRefreshSupport">当前页面不支持刷新操作！</s:String>
     <s:String x:Key="LangModEventDialogDownloadIncorrectContent">EventData 必須為以 http:// 或 https:// 開頭的網址。
 PCL 不支持其他亂七八糟的下載協議。</s:String>
     <s:String x:Key="LangModEventDialogEventFailTitle">事件執行失敗</s:String>
@@ -1504,6 +1500,7 @@ PCL 不支持其他亂七八糟的下載協議。</s:String>
     <s:String x:Key="LangModBaseExceptionOutOfMemoryException">你的電腦運行內存不足，導致 PCL 無法繼續運行。請在關閉一部分不需要的程序後再試。</s:String>
     <s:String x:Key="LangModBaseExceptionCOMException">由於操作系統或顯卡存在問題，導致出現錯誤。請嘗試重啟 PCL。</s:String>
     <s:String x:Key="LangModBaseExceptionBadNetwork">你的網絡環境不佳，導致難以連接到服務器。請檢查網絡，多重試幾次，或嘗試使用 VPN。</s:String>
+    <s:String x:Key="LangModBaseExceptionWSAStartup">请尝试卸载中国移动云盘，然后再试。</s:String>
     <s:String x:Key="LangModLaunchStartStageGetJava">獲取 Java</s:String>
     <s:String x:Key="LangModLaunchStartStageCompleteFile">補全文件</s:String>
     <s:String x:Key="LangModLaunchStartStageGetParameters">獲取啟動參數</s:String>
@@ -1603,6 +1600,7 @@ PCL 不支持其他亂七八糟的下載協議。</s:String>
     <s:String x:Key="LangModJavaManuallyImport">手動導入</s:String>
     <s:String x:Key="LangModJava32Bit">32 位</s:String>
     <s:String x:Key="LangModJavaExceptionFileNotFound">未找到 {0} 文件</s:String>
+    <s:String x:Key="LangModJavaExceptionUnsupportedPDFBookmarkJava">不兼容 PDF Bookmark 的 Java</s:String>
     <s:String x:Key="LangModJavaExceptionTryRunFail">嘗試運行該 Java 失敗</s:String>
     <s:String x:Key="LangModJavaExceptionRunFail">無法運行該 Java，請在刪除 Java 文件夾中的 /lib/ext 文件夾後再試</s:String>
     <s:String x:Key="LangModJavaExceptionVersionNotFound">未找到該 Java 的版本號</s:String>
@@ -1732,8 +1730,6 @@ PCL 不支持其他亂七八糟的下載協議。</s:String>
     <s:String x:Key="LangModModpackTaskOrganizeFiles">最終整理文件</s:String>
     <s:String x:Key="LangModModpackTaskCurseForgeModpackInstall">CurseForge 整合包安裝：</s:String>
     <s:String x:Key="LangModModpackHintInstalling">該整合包正在安裝中！</s:String>
-    <s:String x:Key="LangModModpackHintQuiltNotSupport">PCL 暫不支持安裝需要 Quilt 的整合包！</s:String>
-    <s:String x:Key="LangModModpackHintUnknownModLoader">無法安裝整合包，其中出現了未知的改囊加載器 {0}！</s:String>
     <s:String x:Key="LangModModpackTaskDownloadExtraFile">下載額外文件</s:String>
     <s:String x:Key="LangModModpackTaskModrinthModpackInstall">Modrinth 整合包安裝：</s:String>
     <s:String x:Key="LangModModpackTaskRenameInstanceJsonFileSideLoader">重命名版本 Json（副加載器）</s:String>
@@ -1774,7 +1770,6 @@ PCL 不支持其他亂七八糟的下載協議。</s:String>
     <s:String x:Key="LangModBaseExceptionRenameSubKeyNotSupport">不支持對包含子鍵的子鍵進行重命名：{0}。</s:String>
     <s:String x:Key="LangModBaseExceptionPathIncorrect">不包含路徑：{0}</s:String>
     <s:String x:Key="LangModBaseExceptionFileNameIncorrect">不包含文件名：{0}</s:String>
-    <s:String x:Key="LangModBaseExceptionFileNameTooLong">文件名過長：{0}</s:String>
     <s:String x:Key="LangModBaseExceptionCopyFileFail">複製文件出錯：{0} → {1}</s:String>
     <s:String x:Key="LangModBaseSelectFolder">選擇文件夾</s:String>
     <s:String x:Key="LangModBaseExceptionEmptyFolderName">文件夾名不能為空！</s:String>
@@ -1964,16 +1959,10 @@ PCL 不支持其他亂七八糟的下載協議。</s:String>
     <s:String x:Key="LangModCrashCrashReasonReasonBB">你可能重复安装了多个相同的 Mod，导致游戏无法继续加载。
         
 每个 Mod 只能出现一次，请删除重复的 Mod，然后再启动游戏。</s:String>
-    <s:String x:Key="LangModCrashCrashReasonReasonBC">游戏似乎因为实体 {0} 出现了问题。
-        
-你可以创建一个新世界，并生成一个该实体，然后观察游戏的运行情况：
- - 若正常运行，则是该实体导致出错，你或许需要使用一些方式删除此实体。
- - 若仍然出错，问题就可能来自其他原因……</s:String>
-    <s:String x:Key="LangModCrashCrashReasonReasonBD">游戏似乎因为世界中的某些实体出现了问题。
-        
-你可以创建一个新世界，并生成各种实体，观察游戏的运行情况：
- - 若正常运行，则是某些实体导致出错，你或许需要删除该世界。
- - 若仍然出错，问题就可能来自其他原因……</s:String>
+    <s:String x:Key="LangModCrashCrashReasonReasonTargetPlayerEntity">游戏因为位于 {0} 的玩家实体导致了崩溃。</s:String>
+    <s:String x:Key="LangModCrashCrashReasonReasonPlayerEntity">游戏因为玩家实体导致了崩溃。</s:String>
+    <s:String x:Key="LangModCrashCrashReasonReasonTargetEntity">游戏因为实体 {0} 导致了崩溃。</s:String>
+    <s:String x:Key="LangModCrashCrashReasonReasonTargetEntities">游戏因为下列实体导致了崩溃：{0}</s:String>
     <s:String x:Key="LangModCrashCrashReasonReasonBE">由于 OptiFine 与当前版本的 Forge 不兼容，导致了游戏崩溃。
         
 请前往 OptiFine 官网（https://optifine.net/downloads）查看 OptiFine 所兼容的 Forge 版本，并严格按照对应版本重新安装游戏。</s:String>
@@ -2080,7 +2069,6 @@ PCL 不支持其他亂七八糟的下載協議。</s:String>
     <s:String x:Key="LangModExceptionDownloadFail">直接下载文件失败（{0}）</s:String>
     <s:String x:Key="LangModExceptionCreateDirectoryFail">预处理下载文件路径失败（{0}）</s:String>
     <s:String x:Key="LangModExceptionUnknown">未知错误</s:String>
-    <s:String x:Key="LangModExceptionTimeOutAskCheck">连接服务器超时，请检查你的网络环境是否良好（{0}）</s:String>
     <s:String x:Key="LangModExceptionRequestFailed">网络请求失败（{0}）</s:String>
     <s:String x:Key="LangModExceptionReturnErrorCode">服务器返回错误（{0}）</s:String>
     <s:String x:Key="LangModExceptionUnknownFileStatus">文件状态未知：{0}</s:String>

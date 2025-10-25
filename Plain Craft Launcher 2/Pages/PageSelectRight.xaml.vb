@@ -114,22 +114,7 @@
             Log(ex, GetLang("LangSelectVersionListLoadFail"), LogLevel.Feedback)
         End Try
     End Sub
-    Public Shared Function McVersionListItem(Version As McVersion) As MyListItem
-        Dim NewItem As New MyListItem With {.Title = Version.Name, .Info = Version.Info, .Height = 42, .Tag = Version, .SnapsToDevicePixels = True, .Type = MyListItem.CheckType.Clickable}
-        Try
-            If Version.Logo.EndsWith("PCL\Logo.png") Then
-                NewItem.Logo = Version.Path & "PCL\Logo.png" '修复老版本中，存储的自定义 Logo 使用完整路径，导致移动后无法加载的 Bug
-            Else
-                NewItem.Logo = Version.Logo
-            End If
-        Catch ex As Exception
-            Log(ex, GetLang("LangSelectVersionListLoadIconFail"), LogLevel.Hint)
-            NewItem.Logo = "pack://application:,,,/images/Blocks/RedstoneBlock.png"
-        End Try
-        NewItem.ContentHandler = AddressOf McVersionListContent
-        Return NewItem
-    End Function
-    Private Shared Sub McVersionListContent(sender As MyListItem, e As EventArgs)
+    Public Shared Sub McVersionListContent(sender As MyListItem, e As EventArgs)
         Dim Version As McVersion = sender.Tag
         '注册点击事件
         AddHandler sender.Click, AddressOf Item_Click
@@ -225,10 +210,10 @@
                     IniClearCache(Version.Path & "PCL\Setup.ini")
                     If IsShiftPressed Then
                         DeleteDirectory(Version.Path)
-                        Hint(GetLang("LangSelectVersionDeletedA", Version.Name), HintType.Finish)
+                        Hint(GetLang("LangSelectVersionDeletedPermanently", Version.Name), HintType.Green)
                     Else
                         FileIO.FileSystem.DeleteDirectory(Version.Path, FileIO.UIOption.AllDialogs, FileIO.RecycleOption.SendToRecycleBin)
-                        Hint(GetLang("LangSelectVersionDeletedB", Version.Name), HintType.Finish)
+                        Hint(GetLang("LangSelectVersionDeletedToRecycleBin", Version.Name), HintType.Green)
                     End If
                 Case 2
                     Return

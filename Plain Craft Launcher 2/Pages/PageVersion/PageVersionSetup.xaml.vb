@@ -61,6 +61,7 @@
             CheckAdvanceAssetsV2.Checked = Setup.Get("VersionAdvanceAssetsV2", Version:=PageVersionLeft.Version)
             CheckAdvanceJava.Checked = Setup.Get("VersionAdvanceJava", Version:=PageVersionLeft.Version)
             CheckAdvanceDisableJLW.Checked = Setup.Get("VersionAdvanceDisableJLW", Version:=PageVersionLeft.Version)
+            CheckAdvanceDisableModUpdate.Checked = Setup.Get("VersionAdvanceDisableModUpdate", Version:=PageVersionLeft.Version)
 
         Catch ex As Exception
             Log(ex, "重载版本独立设置时出错", LogLevel.Feedback)
@@ -91,12 +92,13 @@
             Setup.Reset("VersionAdvanceRun", Version:=PageVersionLeft.Version)
             Setup.Reset("VersionAdvanceRunWait", Version:=PageVersionLeft.Version)
             Setup.Reset("VersionAdvanceDisableJLW", Version:=PageVersionLeft.Version)
+            Setup.Reset("VersionAdvanceDisableModUpdate", Version:=PageVersionLeft.Version)
 
             Setup.Reset("VersionArgumentJavaSelect", Version:=PageVersionLeft.Version)
             JavaSearchLoader.Start(IsForceRestart:=True)
 
             Log("[Setup] 已初始化版本独立设置")
-            Hint(GetLang("LangPageVersionSetupHintIndependentSetResetSuccess"), HintType.Finish, False)
+            Hint(GetLang("LangPageVersionSetupHintIndependentSetResetSuccess"), HintType.Green, False)
         Catch ex As Exception
             Log(ex, GetLang("LangPageVersionSetupHintIndependentSetResetFail"), LogLevel.Msgbox)
         End Try
@@ -125,7 +127,7 @@
     Private Shared Sub CheckBoxLikeComboChange(sender As MyComboBox, e As Object) Handles ComboArgumentIndieV2.SelectionChanged
         If AniControlEnabled = 0 Then Setup.Set(sender.Tag, sender.SelectedIndex = 0, Version:=PageVersionLeft.Version)
     End Sub
-    Private Shared Sub CheckBoxChange(sender As MyCheckBox, e As Object) Handles CheckAdvanceRunWait.Change, CheckAdvanceAssetsV2.Change, CheckAdvanceJava.Change, CheckAdvanceDisableJLW.Change
+    Private Shared Sub CheckBoxChange(sender As MyCheckBox, e As Object) Handles CheckAdvanceRunWait.Change, CheckAdvanceAssetsV2.Change, CheckAdvanceJava.Change, CheckAdvanceDisableJLW.Change, CheckAdvanceDisableModUpdate.Change
         If AniControlEnabled = 0 Then Setup.Set(sender.Tag, sender.Checked, Version:=PageVersionLeft.Version)
     End Sub
 
@@ -515,4 +517,12 @@ PreFin:
         FrmMain.PageChange(FormMain.PageType.Setup, FormMain.PageSubType.SetupLaunch)
     End Sub
 
+    '去除参数中的回车
+    Private Sub ReplaceEnter(sender As MyTextBox, e As TextChangedEventArgs) Handles TextAdvanceJvm.TextChanged, TextAdvanceGame.TextChanged
+        Dim NewText = sender.Text.Replace(vbCrLf, vbCr).Replace(vbLf, vbCr).Replace(vbCr, " ")
+        If NewText = sender.Text Then Return
+        Dim CaretIndex = sender.CaretIndex
+        sender.Text = NewText
+        sender.CaretIndex = Math.Max(0, CaretIndex - 1)
+    End Sub
 End Class

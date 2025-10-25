@@ -352,14 +352,11 @@ Public Class MyLocalModItem
             End If
             '标题与描述
             Dim DescFileName As String
-            Select Case Entry.State
-                Case McMod.McModState.Fine
-                    DescFileName = GetFileNameWithoutExtentionFromPath(Entry.Path)
-                Case McMod.McModState.Disabled
-                    DescFileName = GetFileNameWithoutExtentionFromPath(Entry.Path.Replace(".disabled", "").Replace(".old", ""))
-                Case Else 'McMod.McModState.Unavailable
-                    DescFileName = GetFileNameFromPath(Entry.Path)
-            End Select
+            If Entry.State = McMod.McModState.Fine OrElse Entry.State = McMod.McModState.Disabled Then
+                DescFileName = IO.Path.GetFileNameWithoutExtension(Entry.Path)
+            Else
+                DescFileName = GetFileNameFromPath(Entry.Path)
+            End If
             Dim NewDescription As String
             If Setup.Get("ToolModLocalNameStyle") = 1 Then
                 '标题显示文件名，详情显示译名

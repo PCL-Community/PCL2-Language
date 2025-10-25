@@ -13,14 +13,15 @@
     <s:String x:Key="LangReset">重置</s:String>
     <s:String x:Key="LangRefresh">Obnoviť</s:String>
     <s:String x:Key="LangRefreshing">Obnovuje sa...</s:String>
+    <s:String x:Key="LangRefreshed">已刷新！</s:String>
     <s:String x:Key="LangApplicationExceptionNoAccessPermission">PCL nemá práva na {0}</s:String>
     <s:String x:Key="LangApplicationDialogTitleCacheFolderUnavailable">Priečinok cache je nedostupný</s:String>
     <s:String x:Key="LangApplicationDialogContentCacheFolderUnavailable">PCL is unable to access the cache folder, which may result in a program error or unusability.
 Error Cause: {0}</s:String>
     <s:String x:Key="LangApplicationDialogContentCustomCacheFolderUnavailable">The manually selected cache folder is unavailable, PCL will use the default cache folder instead.
 Error Cause: {0}</s:String>
-    <s:String x:Key="LangApplicationDialogTitleRunInTemp">Upozornenie prostredia</s:String>
-    <s:String x:Key="LangApplicationDialogContentRunInTemp">Prosím, extrahujte súbor PCL z komprimovaného archívu alebo zmeňte priečinok pred pokračovaním v používaní!
+    <s:String x:Key="LangApplicationDialogTitleUnzipLauncher">Upozornenie prostredia</s:String>
+    <s:String x:Key="LangApplicationDialogContentUnzipLauncher">Prosím, extrahujte súbor PCL z komprimovaného archívu alebo zmeňte priečinok pred pokračovaním v používaní!
 Program sa momentálne spúšťa v dočasnom priečinku a nastavenia, uložené hry a pod. nemusia byť uložené a niektoré funkcie nemusia byť dostupné.</s:String>
     <s:String x:Key="LangApplicationDialogContent32BitWarn">PCL a nové verzie Minecraftu už nepodporujú 32-bitové systémy a niektoré funkcie nemusia byť dostupné.
 Dôrazne sa odporúča preinštalovať na 64-bitový systém pred pokračovaním v hraní!</s:String>
@@ -42,6 +43,8 @@ Dôrazne sa odporúča preinštalovať na 64-bitový systém pred pokračovaním
     <s:String x:Key="LangDialogBtnUpdateFullLog">Celý záznam zmien</s:String>
     <s:String x:Key="LangDialogUpdateTo">PCL {0} Aktualizovaný</s:String>
     <s:String x:Key="LangDialogPolicyContent">Pred použitím PCL, prosím, súhlaste s Podmienkami používania a Zrieknutím sa zodpovednosti PCL.</s:String>
+    <s:String x:Key="LangDialogPolicyContentModified">PCL 的用户协议与免责声明已更新。
+请阅读更新后的用户协议与免责声明。</s:String>
     <s:String x:Key="LangDialogPolicyTitle">Agreement Authorization</s:String>
     <s:String x:Key="LangDialogBtnAgree">Súhlasiť</s:String>
     <s:String x:Key="LangDialogBtnDeny">Odmietnuť</s:String>
@@ -139,7 +142,6 @@ Táto operácia je nevratná. Ste si istí?</s:String>
     <s:String x:Key="LangDialogCustomPageOverwriteConfirmationContent">Existuje už súbor rozloženia. Pokračovaním v generovaní súboru dokumentácie sa prepíše existujúci súbor rozloženia!</s:String>
     <s:String x:Key="LangDialogCustomPageOverwriteFail">Nepodarilo sa generovať súbor dokumentácie</s:String>
     <s:String x:Key="LangHintCustomPageOverwriteSuccess">Súbor dokumentácie bol generovaný!</s:String>
-    <s:String x:Key="LangHintCustomPageRefreshed">Úvodná stránka bola obnovená!</s:String>
     <s:String x:Key="LangDialogCustomPageTeachContent">1. Kliknite na tlačidlo "Generovať dokumentáciu", čo vygeneruje súbor rozloženia "Custom.xaml" pod priečinok PCL.
 2. Upravte súbor pomocou nástrojov ako Notepad, nezapomeňte ho uložiť po úprave.
 3. Kliknite na tlačidlo "Obnoviť úvodnú stránku" a pozrite, ako vyzerá teraz úvodná stránka.
@@ -366,7 +368,6 @@ Ak existuje už existujúca inštancia, kliknite na "Pridať existujúce prieči
     <s:String x:Key="LangSelectVersionNoHiddenTip">Žiadne inštancie nie sú skryté, môžete vybrať "Skryť zoznamu" v "Vlastnosti inštancie → Personalizácia → Kategória" na skrytie inštancie.
 Stlačte znovu "F11" na opustenie režimu zobrazenia skrytých inštancií.</s:String>
     <s:String x:Key="LangSelectVersionListLoadFail">Nepodarilo sa konvertovať zoznam inštancií na zobrazenie.</s:String>
-    <s:String x:Key="LangSelectVersionListLoadIconFail">Nepodarilo sa načítať ikonu inštancie.</s:String>
     <s:String x:Key="LangSelectBtnFavorite">Obľúbiť</s:String>
     <s:String x:Key="LangSelectBtnCancelFavorite">Zrušiť obľúbenie</s:String>
     <s:String x:Key="LangSelectBtnSet">Vlastnosti</s:String>
@@ -375,8 +376,8 @@ Stlačte znovu "F11" na opustenie režimu zobrazenia skrytých inštancií.</s:S
     <s:String x:Key="LangSelectDeleteVersionContentA">Ste si istý, že chcete odstrániť inštanciu {0}?</s:String>
     <s:String x:Key="LangSelectDeleteVersionContentB">Ste si istý, že chcete odstrániť inštanciu {0} navždy?</s:String>
     <s:String x:Key="LangSelectDeleteVersionContentC">Keďže je pre túto inštanciu povolená "Izolácia inštancie", budú tiež odstránené súvisiace uloženia, balíčky zdrojov, modmi a iné súbory tejto inštancie!</s:String>
-    <s:String x:Key="LangSelectVersionDeletedA">Inštancia {0} bola navždy odstránená!</s:String>
-    <s:String x:Key="LangSelectVersionDeletedB">Inštancia {0} bola odstránená do košovníka!</s:String>
+    <s:String x:Key="LangSelectVersionDeletedPermanently">Inštancia {0} bola navždy odstránená!</s:String>
+    <s:String x:Key="LangSelectVersionDeletedToRecycleBin">Inštancia {0} bola odstránená do košovníka!</s:String>
     <s:String x:Key="LangSelectVersionDeleteCancelled">Odstránenie inštancie {0} bolo ručne zrušené.</s:String>
     <s:String x:Key="LangSelectVersionDeleteFail">Nepodarilo sa odstrániť inštanciu {0}.</s:String>
     <s:String x:Key="LangSpeedTotalProgress">Pokrok</s:String>
@@ -486,13 +487,6 @@ PCL odporúča aktivovať "Izoláciu inštancie" v "Nastavenia → Izolácia in�
     <s:String x:Key="LangDownloadInstallOptiFabricManually">Nekompatibilný s staršími verziemi Fabric, prosím, stiahnite OptiFabric Origins manuálne.</s:String>
     <s:String x:Key="LangDownloadPageLeftRefresh">Obnoviť</s:String>
     <s:String x:Key="LangDownloadPageLeftAutoInstall">Inštalácia</s:String>
-    <s:String x:Key="LangDownloadPageLeftManualInstall">▼ Balíčky</s:String>
-    <s:String x:Key="LangDownloadPageLeftDialogManualInstallContent">Funkcia "Balíčky" vám umožňuje stiahnuť súbor JAR pre inštaláciu načítavacích modov ako OptiFine a Forge, ale nemôže byť automaticky inštalovaný.
-Najprv vyberte verziu Minecraftu na stránke "Inštalácia", potom vyberte OptiFine, Forge alebo akýkoľvek iný načítavací mod, aby ho PCL mohol inštalovať automaticky.</s:String>
-    <s:String x:Key="LangDownloadPageLeftDialogManualInstallTitle">Tip na inštaláciu</s:String>
-    <s:String x:Key="LangDownloadPageLeftDialogManualInstallBtn1">Stránka inštalácie</s:String>
-    <s:String x:Key="LangDownloadPageLeftDialogManualInstallBtn2">Pokračovať</s:String>
-    <s:String x:Key="LangDownloadPageLeftManualInstallFold">Balíčky</s:String>
     <s:String x:Key="LangDownloadPageLeftResource">Zdroje</s:String>
     <s:String x:Key="LangDownloadPageLeftMods">Módy</s:String>
     <s:String x:Key="LangDownloadPageLeftModsL"> Mod </s:String>
@@ -694,6 +688,10 @@ Prosím, skontrolujte internet a potom sa znovu pokúste.</s:String>
     <s:String x:Key="LangMySkinCapeNameHome">家园披风</s:String>
     <s:String x:Key="LangMySkinCapeNameMenace">入侵披风</s:String>
     <s:String x:Key="LangMySkinCapeNameYearn">渴望披风</s:String>
+    <s:String x:Key="LangMySkinCapeNameCommon">普通披风</s:String>
+    <s:String x:Key="LangMySkinCapeNamePan">薄煎饼披风</s:String>
+    <s:String x:Key="LangMySkinCapeNameFounders">创始人披风</s:String>
+    <s:String x:Key="LangMySkinCapeNameCopper">铜披风</s:String>
     <s:String x:Key="LangMySkinCapeNameNone">Žiadny</s:String>
     <s:String x:Key="LangLaunchLeftInstanceChoose">Výber</s:String>
     <s:String x:Key="LangLaunchLeftInstanceConfig">Vlastnosti</s:String>
@@ -711,7 +709,6 @@ Prosím, skontrolujte internet a potom sa znovu pokúste.</s:String>
     <s:String x:Key="LangLaunchLeftStageDownload">Rýchlosť</s:String>
     <s:String x:Key="LangLaunchLeftTip">Tipy</s:String>
     <s:String x:Key="LangLaunchLeftInit">Inicializácia</s:String>
-    <s:String x:Key="LangLaunchLeftAccountOfflineLinkLogin">Hostovanie offline</s:String>
     <s:String x:Key="LangLaunchLeftAccountOfflineLogin">Offline</s:String>
     <s:String x:Key="LangLaunchLeftAccountMicrosoftLogin">Microsoft</s:String>
     <s:String x:Key="LangLaunchLeftAccountUnifiedPassLogin">Jednotné heslo</s:String>
@@ -1341,12 +1338,11 @@ Ak ste nezměnili relevantné súbory, prosím, nekontrolujte túto položku.</s
     <s:String x:Key="LangModMainExceptionNoHelpFound">Neboli nájdené žiadne dostupné pomoci. Môžete skryť Centrum pomoci v "Nastaveniach → Osobné nastavenie → Skrývanie funkcií", ak nie je potrebné.</s:String>
     <s:String x:Key="LangModMainExceptionNoFileFound">Súbor nápovedy nenájdený: {0}</s:String>
     <s:String x:Key="LangModMainExceptionNoTitleArgFound">未找到 Title 项</s:String>
-    <s:String x:Key="LangModMainExceptionNoEventTypeArgFound">Položka EventType nenájdená.</s:String>
     <s:String x:Key="LangModMainExceptionNoXamlFileFound">Súbor .xaml zodpovedajúci položke nápovedy .json ({0}) nenájdený.</s:String>
     <s:String x:Key="LangModEventOpeningWeb">Otvára sa, prosím čakajte...</s:String>
     <s:String x:Key="LangModEventStartInstance">Spúšťa sa {0}...</s:String>
     <s:String x:Key="LangModEventChoseAnInstance">Prosím, najprv vyberte inštanciu!</s:String>
-    <s:String x:Key="LangModEventHomePageRefreshed">Domovská stránka bola obnovená!</s:String>
+    <s:String x:Key="LangModEventNoRefreshSupport">当前页面不支持刷新操作！</s:String>
     <s:String x:Key="LangModEventDialogDownloadIncorrectContent">"EventData" musí byť URL, ktorá začína "http://" alebo "https://".
 PCL nepodporuje iné bláznivé protokoly stiahnutia.</s:String>
     <s:String x:Key="LangModEventDialogEventFailTitle">Zlyhalo spustenie udalosti</s:String>
@@ -1503,6 +1499,7 @@ Prosím, potvrďte, že problém pretrváva v najnovšej verzii po aktualizácii
     <s:String x:Key="LangModBaseExceptionOutOfMemoryException">Váš počítač sa dostáva do situácie, že sa nedostáva pamäte, čo spôsobuje, že PCL nemôže bežať. Prosím, zatvorte niektoré nepotrebné programy a skúste znovu.</s:String>
     <s:String x:Key="LangModBaseExceptionCOMException">Nastala chyba kvôli problému s operačným systémom alebo grafickou kartou. Prosím, skúste restartovať PCL.</s:String>
     <s:String x:Key="LangModBaseExceptionBadNetwork">Je ťažké spojiť sa so serverom kvôli slabému síťovému prostrediu. Prosím, skontrolujte internet a skúste znovu niekoľkokrát.</s:String>
+    <s:String x:Key="LangModBaseExceptionWSAStartup">请尝试卸载中国移动云盘，然后再试。</s:String>
     <s:String x:Key="LangModLaunchStartStageGetJava">Získajte Java</s:String>
     <s:String x:Key="LangModLaunchStartStageCompleteFile">Opraviť súbory</s:String>
     <s:String x:Key="LangModLaunchStartStageGetParameters">Získajte parametre</s:String>
@@ -1602,6 +1599,7 @@ Kliknite na aktualizáciu, kliknite pravým tlačidlom na zobrazenie záznamov z
     <s:String x:Key="LangModJavaManuallyImport">Ručne importovať</s:String>
     <s:String x:Key="LangModJava32Bit">32-bit</s:String>
     <s:String x:Key="LangModJavaExceptionFileNotFound">Súbor {0} sa nenašiel.</s:String>
+    <s:String x:Key="LangModJavaExceptionUnsupportedPDFBookmarkJava">不兼容 PDF Bookmark 的 Java</s:String>
     <s:String x:Key="LangModJavaExceptionTryRunFail">Zlyhalo spustenie tejto Javy.</s:String>
     <s:String x:Key="LangModJavaExceptionRunFail">Nie je možné spustiť túto Javu, prosím, odstráňte priečinek "/lib/ext" v priečinku Javy a skúste to znovu.</s:String>
     <s:String x:Key="LangModJavaExceptionVersionNotFound">Verzia Javy sa nenašla.</s:String>
@@ -1730,8 +1728,6 @@ Ak táto možnosť nie je dostupná, prosím, vyberte "Nastaviť heslo", a prihl
     <s:String x:Key="LangModModpackTaskOrganizeFiles">Finálna organizácia súborov</s:String>
     <s:String x:Key="LangModModpackTaskCurseForgeModpackInstall">Inštalácia modpacku CurseForge: </s:String>
     <s:String x:Key="LangModModpackHintInstalling">Tento modpack je momentálne inštalovaný!</s:String>
-    <s:String x:Key="LangModModpackHintQuiltNotSupport">PCL momentálne nepodporuje modpacky Quilt!</s:String>
-    <s:String x:Key="LangModModpackHintUnknownModLoader">Nemôžem inštalovaliť modpack kvôli neznámému načítavateľu modov {0}!</s:String>
     <s:String x:Key="LangModModpackTaskDownloadExtraFile">Stiahnite prídavky</s:String>
     <s:String x:Key="LangModModpackTaskModrinthModpackInstall">Inštalácia modpacku Modrinth: </s:String>
     <s:String x:Key="LangModModpackTaskRenameInstanceJsonFileSideLoader">Preimenovanie JSON súboru inštancie (Stranný načítavateľ)</s:String>
@@ -1772,7 +1768,6 @@ Otvorenie: {0}</s:String>
     <s:String x:Key="LangModBaseExceptionRenameSubKeyNotSupport">Preimenovanie podkľúča, ktoré obsahuje podkľúče, nie je podporované: {0}.</s:String>
     <s:String x:Key="LangModBaseExceptionPathIncorrect">Cesta nie je zahrnutá: {0}</s:String>
     <s:String x:Key="LangModBaseExceptionFileNameIncorrect">Názov súboru nie je zahrnutý: {0}</s:String>
-    <s:String x:Key="LangModBaseExceptionFileNameTooLong">Názov súboru je príliš dlhý: {0}</s:String>
     <s:String x:Key="LangModBaseExceptionCopyFileFail">Chyba pri kopírovaní súboru: {0} → {1}</s:String>
     <s:String x:Key="LangModBaseSelectFolder">Vyberte priečinok</s:String>
     <s:String x:Key="LangModBaseExceptionEmptyFolderName">Názov priečinku nemôže byť prázdny!</s:String>
@@ -1962,16 +1957,10 @@ Každá modifikácia musí byť jedinečná; uistite sa, že odstránite akéko�
     <s:String x:Key="LangModCrashCrashReasonReasonBB">Hra sa zrútila, pretože boli nainštalované opakované modifikácie.
 
 Každá modifikácia musí byť jedinečná; uistite sa, že odstránite akékoľvek duplicitné modifikácie, predtým ako znovu spustíte hru.</s:String>
-    <s:String x:Key="LangModCrashCrashReasonReasonBC">Hra narazila na problém s entitou {0}.
-
-Rozwažte vytvorenie nového sveta, spustenie entity a sledovanie výkonu hry:
- - Ak funguje normálne, je pravdepodobné, že táto entita bola zdrojom chyby, a môžete potrebovať spôsobiť odstránenie tejto entity.
- - Ak problém pretrváva, môže byť spôsobený inými faktormi...</s:String>
-    <s:String x:Key="LangModCrashCrashReasonReasonBD">Hra narazila na problém s niektorými entitami vo svete.
-
-Rozwažte vytvorenie nového sveta, spustenie entít a sledovanie výkonu hry:
- - Ak funguje normálne, je pravdepodobné, že niektoré entity boli zdrojom chyby, a môžete potrebovať odstrániť tento svet.
- - Ak problém pretrváva, môže byť spôsobený inými faktormi...</s:String>
+    <s:String x:Key="LangModCrashCrashReasonReasonTargetPlayerEntity">游戏因为位于 {0} 的玩家实体导致了崩溃。</s:String>
+    <s:String x:Key="LangModCrashCrashReasonReasonPlayerEntity">游戏因为玩家实体导致了崩溃。</s:String>
+    <s:String x:Key="LangModCrashCrashReasonReasonTargetEntity">游戏因为实体 {0} 导致了崩溃。</s:String>
+    <s:String x:Key="LangModCrashCrashReasonReasonTargetEntities">游戏因为下列实体导致了崩溃：{0}</s:String>
     <s:String x:Key="LangModCrashCrashReasonReasonBE">Hra sa zrútila kvôli nekompatibilitám medzi OptiFine a aktuálnou verziou Forge.
 
 Rozwažte navštívenie webovej stránky OptiFine (https://optifine.net/downloads) a reinstaláciu hry pomocou odpovedajúcej kompatibilnej verzie.</s:String>
@@ -2077,7 +2066,6 @@ Môžete tiež pristupovať k {1} na inom zariadení a zadať kód.</s:String>
     <s:String x:Key="LangModExceptionDownloadFail">直接下载文件失败（{0}）</s:String>
     <s:String x:Key="LangModExceptionCreateDirectoryFail">预处理下载文件路径失败（{0}）</s:String>
     <s:String x:Key="LangModExceptionUnknown">未知错误</s:String>
-    <s:String x:Key="LangModExceptionTimeOutAskCheck">连接服务器超时，请检查你的网络环境是否良好（{0}）</s:String>
     <s:String x:Key="LangModExceptionRequestFailed">网络请求失败（{0}）</s:String>
     <s:String x:Key="LangModExceptionReturnErrorCode">服务器返回错误（{0}）</s:String>
     <s:String x:Key="LangModExceptionUnknownFileStatus">文件状态未知：{0}</s:String>

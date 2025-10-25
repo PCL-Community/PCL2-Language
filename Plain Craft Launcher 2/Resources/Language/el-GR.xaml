@@ -13,14 +13,15 @@
     <s:String x:Key="LangReset">重置</s:String>
     <s:String x:Key="LangRefresh">Ανανέωση</s:String>
     <s:String x:Key="LangRefreshing">Ανανέωση...</s:String>
+    <s:String x:Key="LangRefreshed">已刷新！</s:String>
     <s:String x:Key="LangApplicationExceptionNoAccessPermission">PCL δεν έχει δικαιώματα πρόσβασης σε {0}</s:String>
     <s:String x:Key="LangApplicationDialogTitleCacheFolderUnavailable">Μη Διαθέσιμος Φάκελος Προσωρινής Αποθήκευσης</s:String>
     <s:String x:Key="LangApplicationDialogContentCacheFolderUnavailable">PCL δεν μπορεί να προσπελάσει το φάκελο κρυφής μνήμης, το οποίο μπορεί να προκαλέσει σφάλμα προγράμματος ή ανενεργότητα.
 Αιτίες Σφάλματος: {0}</s:String>
     <s:String x:Key="LangApplicationDialogContentCustomCacheFolderUnavailable">Ο χειριστικά επιλεγμένος φάκελο κρυφής μνήμης είναι αδιαθέσιμος, PCL θα χρησιμοποιήσει τον προεπιλεγμένο φάκελο κρυφής μνήμης αντίθετα.
 Αιτίες Σφάλματος: {0}</s:String>
-    <s:String x:Key="LangApplicationDialogTitleRunInTemp">Περιβαλλοντική Προειδοποίηση</s:String>
-    <s:String x:Key="LangApplicationDialogContentRunInTemp">Εξαγάγετε το PCL από το συμπιεσμένο αρχείο ή μετακινήστε το σε διαφορετικό φάκελο πριν συνεχίσετε να χρησιμοποιείτε!
+    <s:String x:Key="LangApplicationDialogTitleUnzipLauncher">Περιβαλλοντική Προειδοποίηση</s:String>
+    <s:String x:Key="LangApplicationDialogContentUnzipLauncher">Εξαγάγετε το PCL από το συμπιεσμένο αρχείο ή μετακινήστε το σε διαφορετικό φάκελο πριν συνεχίσετε να χρησιμοποιείτε!
 Το πρόγραμμα εκτελείται αυτήν τη στιγμή σε προσωρινό φάκελο, ενδέχεται να μην αποθηκευτούν ρυθμίσεις, αποθηκεύσεις κ.λπ. και ορισμένες λειτουργίες ενδέχεται να μην είναι διαθέσιμες.</s:String>
     <s:String x:Key="LangApplicationDialogContent32BitWarn">Το PCL και η νεότερη έκδοση του Minecraft δεν υποστηρίζουν πλέον συστήματα 32-bit, ορισμένες λειτουργίες δεν θα είναι διαθέσιμες.
 Συνιστάται ιδιαίτερα η επανεγκατάσταση του παιχνιδιού μετά τη μετάβαση σε σύστημα 64-bit!</s:String>
@@ -42,6 +43,8 @@
     <s:String x:Key="LangDialogBtnUpdateFullLog">Πλήρες Ημερολόγιο Ενημερώσεων</s:String>
     <s:String x:Key="LangDialogUpdateTo">Το PCL έχει ενημερωθεί σε {0}</s:String>
     <s:String x:Key="LangDialogPolicyContent">Πριν χρησιμοποιήσετε το PCL, συμφωνήστε με τη Συμφωνία Χρήστη του PCL και την Αποποίηση ευθυνών.</s:String>
+    <s:String x:Key="LangDialogPolicyContentModified">PCL 的用户协议与免责声明已更新。
+请阅读更新后的用户协议与免责声明。</s:String>
     <s:String x:Key="LangDialogPolicyTitle">Έγκριση πρωτοκόλλου</s:String>
     <s:String x:Key="LangDialogBtnAgree">Συμφωνώ</s:String>
     <s:String x:Key="LangDialogBtnDeny">Απόρριψη</s:String>
@@ -139,7 +142,6 @@
     <s:String x:Key="LangDialogCustomPageOverwriteConfirmationContent">Ένα αρχείο διάταξης υπάρχει ήδη. Η συνέχιση της δημιουργίας του αρχείου τεκμηρίωσης θα αντικαταστήσει το υπάρχον αρχείο διάταξης!</s:String>
     <s:String x:Key="LangDialogCustomPageOverwriteFail">Απέτυχε η δημιουργία του αρχείου τεκμηρίωσης</s:String>
     <s:String x:Key="LangHintCustomPageOverwriteSuccess">Το αρχείο τεκμηρίωσης δημιουργήθηκε!</s:String>
-    <s:String x:Key="LangHintCustomPageRefreshed">Η αρχική σελίδα έχει ανανεωθεί!</s:String>
     <s:String x:Key="LangDialogCustomPageTeachContent">1. Κάντε κλικ στο κουμπί «Δημιουργία της τεκμηρίωσης», το οποίο θα δημιουργήσει το αρχείο διάταξης «Custom.xaml» κάτω από το φάκελο PCL.
 2. Τροποποιήστε το αρχείο με εργαλεία όπως το Σημειωματάριο, θυμηθείτε να το αποθηκεύσετε μετά την τροποποίηση.
 3. Κάντε κλικ στο κουμπί «Ανανέωση αρχικής σελίδας» για να δείτε πώς είναι τώρα η αρχική σελίδα.
@@ -366,7 +368,6 @@
     <s:String x:Key="LangSelectVersionNoHiddenTip">Δεν υπάρχουν κρυφές εμφανίσεις, μπορείτε να επιλέξετε «Κρυφό από τη Λίστα» στο «Παράδειγμα Ιδιότητες → Εξατομίκευση → Κατηγορία» για να αποκρύψετε την παρουσία.
 Πατήστε ξανά το «F11» για έξοδο από τη λειτουργία προβολής κρυφής παρουσίας.</s:String>
     <s:String x:Key="LangSelectVersionListLoadFail">Απέτυχε κατά τη μετατροπή της λίστας παρουσιών για εμφάνιση.</s:String>
-    <s:String x:Key="LangSelectVersionListLoadIconFail">Απέτυχε η φόρτωση του εικονιδίου παρουσίας.</s:String>
     <s:String x:Key="LangSelectBtnFavorite">Αγαπημένο</s:String>
     <s:String x:Key="LangSelectBtnCancelFavorite">Ακύρωση Αγαπημένων</s:String>
     <s:String x:Key="LangSelectBtnSet">Ιδιότητες</s:String>
@@ -375,8 +376,8 @@
     <s:String x:Key="LangSelectDeleteVersionContentA">Είστε βέβαιοι ότι θα διαγράψετε την παρουσία {0};</s:String>
     <s:String x:Key="LangSelectDeleteVersionContentB">Είστε βέβαιοι ότι θα διαγράψετε οριστικά την παρουσία {0};</s:String>
     <s:String x:Key="LangSelectDeleteVersionContentC">Δεδομένου ότι η «Απομόνωση Παρουσίας είναι ενεργοποιημένη για αυτήν την περίπτωση, οι αντίστοιχες αποθηκευμένες ρυθμίσεις, πακέτα πόρων, mods και άλλα αρχεία αυτής της παρουσίας θα διαγραφούν επίσης!</s:String>
-    <s:String x:Key="LangSelectVersionDeletedA">Η παρουσία {0} έχει διαγραφεί οριστικά!</s:String>
-    <s:String x:Key="LangSelectVersionDeletedB">Η παρουσία {0} έχει διαγραφεί στον κάδο ανακύκλωσης!</s:String>
+    <s:String x:Key="LangSelectVersionDeletedPermanently">Η παρουσία {0} έχει διαγραφεί οριστικά!</s:String>
+    <s:String x:Key="LangSelectVersionDeletedToRecycleBin">Η παρουσία {0} έχει διαγραφεί στον κάδο ανακύκλωσης!</s:String>
     <s:String x:Key="LangSelectVersionDeleteCancelled">Η διαγραφή της παρουσίας {0} ακυρώθηκε μη αυτόματα.</s:String>
     <s:String x:Key="LangSelectVersionDeleteFail">Απέτυχε η διαγραφή της παρουσίας {0}.</s:String>
     <s:String x:Key="LangSpeedTotalProgress">Πρόοδος</s:String>
@@ -486,13 +487,6 @@
     <s:String x:Key="LangDownloadInstallOptiFabricManually">Μη συμβατό με παλαιότερες εκδόσεις του Fabric, πραγματοποιήστε λήψη του OptiFabric Origins με μη αυτόματο τρόπο.</s:String>
     <s:String x:Key="LangDownloadPageLeftRefresh">Ανανέωση</s:String>
     <s:String x:Key="LangDownloadPageLeftAutoInstall">Εγκατάσταση</s:String>
-    <s:String x:Key="LangDownloadPageLeftManualInstall">▼ Πακέτα</s:String>
-    <s:String x:Key="LangDownloadPageLeftDialogManualInstallContent">Η δυνατότητα «Πακέτα» σάς επιτρέπει να κάνετε λήψη ενός αρχείου εγκατάστασης JAR για φορτωτές όπως το OptiFine και το Forge, αλλά δεν μπορεί να εγκατασταθεί αυτόματα.
-Επιλέξτε την έκδοση Minecraft πρώτα στη σελίδα «Εγκατάσταση» και μετά επιλέξτε OptiFine, Forge ή οποιοδήποτε άλλο πρόγραμμα φόρτωσης που επιτρέπει στο PCL να το εγκαταστήσει αυτόματα.</s:String>
-    <s:String x:Key="LangDownloadPageLeftDialogManualInstallTitle">Συμβουλή Εγκατάστασης</s:String>
-    <s:String x:Key="LangDownloadPageLeftDialogManualInstallBtn1">Σελίδα Εγκατάστασης</s:String>
-    <s:String x:Key="LangDownloadPageLeftDialogManualInstallBtn2">Συνέχεια</s:String>
-    <s:String x:Key="LangDownloadPageLeftManualInstallFold">Πακέτα</s:String>
     <s:String x:Key="LangDownloadPageLeftResource">Πόροι</s:String>
     <s:String x:Key="LangDownloadPageLeftMods">Mods</s:String>
     <s:String x:Key="LangDownloadPageLeftModsL"> Mod </s:String>
@@ -694,6 +688,10 @@
     <s:String x:Key="LangMySkinCapeNameHome">家园披风</s:String>
     <s:String x:Key="LangMySkinCapeNameMenace">入侵披风</s:String>
     <s:String x:Key="LangMySkinCapeNameYearn">渴望披风</s:String>
+    <s:String x:Key="LangMySkinCapeNameCommon">普通披风</s:String>
+    <s:String x:Key="LangMySkinCapeNamePan">薄煎饼披风</s:String>
+    <s:String x:Key="LangMySkinCapeNameFounders">创始人披风</s:String>
+    <s:String x:Key="LangMySkinCapeNameCopper">铜披风</s:String>
     <s:String x:Key="LangMySkinCapeNameNone">Κανένα</s:String>
     <s:String x:Key="LangLaunchLeftInstanceChoose">Επιλογή</s:String>
     <s:String x:Key="LangLaunchLeftInstanceConfig">Ιδιότητες</s:String>
@@ -711,7 +709,6 @@
     <s:String x:Key="LangLaunchLeftStageDownload">Ταχύτητα</s:String>
     <s:String x:Key="LangLaunchLeftTip">Πρωτότυπα</s:String>
     <s:String x:Key="LangLaunchLeftInit">Αρχικοποίηση</s:String>
-    <s:String x:Key="LangLaunchLeftAccountOfflineLinkLogin">Φιλοξενία Εκτός Σύνδεσης</s:String>
     <s:String x:Key="LangLaunchLeftAccountOfflineLogin">Εκτός Σύνδεσης</s:String>
     <s:String x:Key="LangLaunchLeftAccountMicrosoftLogin">Microsoft</s:String>
     <s:String x:Key="LangLaunchLeftAccountUnifiedPassLogin">Ενοποιημένο Πάσο</s:String>
@@ -1341,12 +1338,11 @@ Email για Αναφορά Παράνομης και Παράτυπης Συμ�
     <s:String x:Key="LangModMainExceptionNoHelpFound">Δεν βρέθηκαν διαθέσιμες διαθέσιμες βοήθειες. Μπορείτε να αποκρύψετε το Κέντρο Βοήθειας στις «Ρυθμίσεις → Εξατομίκευση → Απόκρυψη λειτουργιών» εάν δεν χρειάζεται.</s:String>
     <s:String x:Key="LangModMainExceptionNoFileFound">未找到帮助文件：{0}</s:String>
     <s:String x:Key="LangModMainExceptionNoTitleArgFound">未找到 Title 项</s:String>
-    <s:String x:Key="LangModMainExceptionNoEventTypeArgFound">未找到 EventType 项</s:String>
     <s:String x:Key="LangModMainExceptionNoXamlFileFound">未找到帮助条目 .json 对应的 .xaml 文件（{0}）</s:String>
     <s:String x:Key="LangModEventOpeningWeb">Άνοιγμα, περιμένετε...</s:String>
     <s:String x:Key="LangModEventStartInstance">Εκκίνηση του {0}...</s:String>
     <s:String x:Key="LangModEventChoseAnInstance">Επιλέξτε πρώτα μια παρουσία!</s:String>
-    <s:String x:Key="LangModEventHomePageRefreshed">Η αρχική σελίδα έχει ανανεωθεί!</s:String>
+    <s:String x:Key="LangModEventNoRefreshSupport">当前页面不支持刷新操作！</s:String>
     <s:String x:Key="LangModEventDialogDownloadIncorrectContent">«Δεδομένα συμβάντος» πρέπει να είναι μια διεύθυνση URL που ξεκινά με «http://» ή «https://».
 Το PCL δεν υποστηρίζει άλλα πρωτόκολλα λήψεων.</s:String>
     <s:String x:Key="LangModEventDialogEventFailTitle">Η Εκτέλεση του Συμβάντος Απέτυχε</s:String>
@@ -1503,6 +1499,7 @@ URL: {0}</s:String>
     <s:String x:Key="LangModBaseExceptionOutOfMemoryException">Η μνήμη του υπολογιστή σας εξαντλείται, γεγονός που προκαλεί αδυναμία εκτέλεσης του PCL. Κλείστε ορισμένα περιττά προγράμματα και δοκιμάστε ξανά.</s:String>
     <s:String x:Key="LangModBaseExceptionCOMException">Παρουσιάστηκε σφάλμα λόγω προβλήματος με το λειτουργικό σύστημα ή την κάρτα γραφικών. Δοκιμάστε να επανεκκινήσετε το PCL.</s:String>
     <s:String x:Key="LangModBaseExceptionBadNetwork">Είναι δύσκολη η σύνδεση στον διακομιστή λόγω του κακού περιβάλλοντος δικτύου. Ελέγξτε το διαδίκτυο και δοκιμάστε ξανά αρκετές φορές.</s:String>
+    <s:String x:Key="LangModBaseExceptionWSAStartup">请尝试卸载中国移动云盘，然后再试。</s:String>
     <s:String x:Key="LangModLaunchStartStageGetJava">Λήψη Java</s:String>
     <s:String x:Key="LangModLaunchStartStageCompleteFile">Επισκευή Αρχείων</s:String>
     <s:String x:Key="LangModLaunchStartStageGetParameters">Λήψη παραμέτρων</s:String>
@@ -1602,6 +1599,7 @@ URL: {0}</s:String>
     <s:String x:Key="LangModJavaManuallyImport">Μη αυτόματη εισαγωγή</s:String>
     <s:String x:Key="LangModJava32Bit">32-bit</s:String>
     <s:String x:Key="LangModJavaExceptionFileNotFound">Το αρχείο {0} δεν βρέθηκε.</s:String>
+    <s:String x:Key="LangModJavaExceptionUnsupportedPDFBookmarkJava">不兼容 PDF Bookmark 的 Java</s:String>
     <s:String x:Key="LangModJavaExceptionTryRunFail">Απέτυχε η εκτέλεση αυτής της Java.</s:String>
     <s:String x:Key="LangModJavaExceptionRunFail">Δεν είναι δυνατή η εκτέλεση αυτής της Java, διαγράψτε το φάκελο «/lib/ext» στο φάκελο Java και δοκιμάστε ξανά.</s:String>
     <s:String x:Key="LangModJavaExceptionVersionNotFound">Δεν βρέθηκε η έκδοση Java.</s:String>
@@ -1730,8 +1728,6 @@ URL: {0}</s:String>
     <s:String x:Key="LangModModpackTaskOrganizeFiles">Οργάνωση Τελικών Αρχείων</s:String>
     <s:String x:Key="LangModModpackTaskCurseForgeModpackInstall">Εγκατάσταση Modpack CurseForge: </s:String>
     <s:String x:Key="LangModModpackHintInstalling">Αυτό το modpack βρίσκεται υπό εγκατάσταση!</s:String>
-    <s:String x:Key="LangModModpackHintQuiltNotSupport">Το PCL προς το παρόν δεν υποστηρίζει Quilt modpacks!</s:String>
-    <s:String x:Key="LangModModpackHintUnknownModLoader">Δεν είναι δυνατή η εγκατάσταση του modpack λόγω άγνωστου Mod Φορτωτής {0}!</s:String>
     <s:String x:Key="LangModModpackTaskDownloadExtraFile">Λήψη Προσθηκών</s:String>
     <s:String x:Key="LangModModpackTaskModrinthModpackInstall">Εγκατάσταση Modrinth Modpack: </s:String>
     <s:String x:Key="LangModModpackTaskRenameInstanceJsonFileSideLoader">Μετονομασία Παρουσίας JSON (Πλευρικός Φορτωτής)</s:String>
@@ -1772,7 +1768,6 @@ URL: {0}</s:String>
     <s:String x:Key="LangModBaseExceptionRenameSubKeyNotSupport">Η μετονομασία ενός δευτερεύοντος κλειδιού που περιέχει δευτερεύοντα κλειδιά δεν υποστηρίζεται: {0}.</s:String>
     <s:String x:Key="LangModBaseExceptionPathIncorrect">Η διαδρομή δεν περιλαμβάνεται: {0}</s:String>
     <s:String x:Key="LangModBaseExceptionFileNameIncorrect">Το όνομα αρχείου δεν περιλαμβάνεται: {0}</s:String>
-    <s:String x:Key="LangModBaseExceptionFileNameTooLong">Το όνομα αρχείου είναι πολύ μεγάλο: {0}</s:String>
     <s:String x:Key="LangModBaseExceptionCopyFileFail">Σφάλμα αντιγραφής αρχείου: {0} → {1}</s:String>
     <s:String x:Key="LangModBaseSelectFolder">Επιλογή φακέλου</s:String>
     <s:String x:Key="LangModBaseExceptionEmptyFolderName">Το όνομα του φακέλου δεν μπορεί να είναι κενό!</s:String>
@@ -1962,16 +1957,10 @@ URL: {0}</s:String>
     <s:String x:Key="LangModCrashCrashReasonReasonBB">Το παιχνίδι διακόπηκε επειδή τα mods εγκαταστάθηκαν επανειλημμένα.
 
 Κάθε mod πρέπει να είναι μοναδικό. Βεβαιωθείτε ότι έχετε αφαιρέσει τυχόν διπλότυπα mod πριν ξεκινήσετε ξανά το παιχνίδι.</s:String>
-    <s:String x:Key="LangModCrashCrashReasonReasonBC">Το παιχνίδι αντιμετώπισε πρόβλημα με την οντότητα {0}.
-
-Σκεφτείτε να δημιουργήσετε έναν νέο κόσμο, να δημιουργήσετε την οντότητα και να παρακολουθήσετε την απόδοση του παιχνιδιού:
- - Εάν λειτουργεί κανονικά, είναι πιθανό ότι αυτή η οντότητα ήταν η πηγή του σφάλματος και ίσως χρειαστεί να χρησιμοποιήσετε μια μέθοδο για να καταργήσετε αυτήν την οντότητα.
- - Εάν επιμείνει, το πρόβλημα μπορεί να οφείλεται σε άλλους παράγοντες...</s:String>
-    <s:String x:Key="LangModCrashCrashReasonReasonBD">Το παιχνίδι αντιμετώπισε πρόβλημα με ορισμένες οντότητες στον κόσμο.
-
-Σκεφτείτε να δημιουργήσετε έναν νέο κόσμο, να δημιουργήσετε τις οντότητες και να παρακολουθήσετε την απόδοση του παιχνιδιού:
- - Εάν λειτουργεί κανονικά, είναι πιθανό ότι ορισμένες οντότητες ήταν η πηγή του σφάλματος και ίσως χρειαστεί να διαγράψετε αυτόν τον κόσμο.
- - Εάν επιμείνει, το πρόβλημα μπορεί να οφείλεται σε άλλους παράγοντες...</s:String>
+    <s:String x:Key="LangModCrashCrashReasonReasonTargetPlayerEntity">游戏因为位于 {0} 的玩家实体导致了崩溃。</s:String>
+    <s:String x:Key="LangModCrashCrashReasonReasonPlayerEntity">游戏因为玩家实体导致了崩溃。</s:String>
+    <s:String x:Key="LangModCrashCrashReasonReasonTargetEntity">游戏因为实体 {0} 导致了崩溃。</s:String>
+    <s:String x:Key="LangModCrashCrashReasonReasonTargetEntities">游戏因为下列实体导致了崩溃：{0}</s:String>
     <s:String x:Key="LangModCrashCrashReasonReasonBE">Το παιχνίδι διακόπηκε λόγω ασυμβατότητας μεταξύ του OptiFine και της τρέχουσας έκδοσης του Forge.
 
 Εξετάστε το ενδεχόμενο να επισκεφτείτε τον ιστότοπο του OptiFine (https://optifine.net/downloads) και να εγκαταστήσετε ξανά το παιχνίδι χρησιμοποιώντας την αντίστοιχη συμβατή έκδοση.</s:String>
@@ -2079,7 +2068,6 @@ URL: {0}</s:String>
     <s:String x:Key="LangModExceptionDownloadFail">直接下载文件失败（{0}）</s:String>
     <s:String x:Key="LangModExceptionCreateDirectoryFail">预处理下载文件路径失败（{0}）</s:String>
     <s:String x:Key="LangModExceptionUnknown">未知错误</s:String>
-    <s:String x:Key="LangModExceptionTimeOutAskCheck">连接服务器超时，请检查你的网络环境是否良好（{0}）</s:String>
     <s:String x:Key="LangModExceptionRequestFailed">网络请求失败（{0}）</s:String>
     <s:String x:Key="LangModExceptionReturnErrorCode">服务器返回错误（{0}）</s:String>
     <s:String x:Key="LangModExceptionUnknownFileStatus">文件状态未知：{0}</s:String>

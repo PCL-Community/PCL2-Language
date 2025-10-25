@@ -4,7 +4,7 @@
     xmlns:local="clr-namespace:PCL" xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
     xmlns:System="clr-namespace:System;assembly=mscorlib" 
     mc:Ignorable="d" x:Class="PageVersionExport"
-    PanScroll="{Binding ElementName=PanBack}">
+    PanScroll="PanBack">
     <Grid x:Name="PanAllBack">
         <Grid.Resources>
             <Style TargetType="local:MyCheckBox">
@@ -102,7 +102,15 @@
                                 <local:MyCheckBox.Tag>
                                     <local:ExportOption 
                                 Title="{StaticResource LangPageVersionExportModSettings}"
-                                Rules="config/|!config/jei/world/|!config/worldedit/|config/worldedit/worldedit.properties|!config/spark/|config/spark/config.json|defaultconfigs/|journeymap/config/|journeymap/server/|TrashSlotSaveState.json|customfov.txt|gg.essential.mod/|essential/|!essential/*/|!essential/*.jar*|!essential/screenshot-checksum-caches.json|!essential/microsoft_accounts.json|paragliderSettings.nbt|local/client_config.json|local/ftbl.json|local/client/sidebar_buttons.json|local/client/ftbutilities.cfg|local/client/ftblib.cfg|local/client/xencraft.cfg|liteloader.properties|default_reference.xml|CustomSkinLoader/CustomSkinLoader.json"
+                                Rules="config/|!config/jei/world/|!config/worldedit/|config/worldedit/worldedit.properties|!config/spark/|config/spark/config.json|defaultconfigs/|journeymap/config/|journeymap/server/|TrashSlotSaveState.json|customfov.txt|gg.essential.mod/|essential/|!essential/*/|!essential/*.jar*|!essential/screenshot-checksum-caches.json|!essential/microsoft_accounts.json|paragliderSettings.nbt|local/client_config.json|local/ftbl.json|local/client/sidebar_buttons.json|local/client/ftbutilities.cfg|local/client/ftblib.cfg|local/client/xencraft.cfg|liteloader.properties|default_reference.xml|CustomSkinLoader/CustomSkinLoader.json|!config/tacz/custom"
+                                DefaultChecked="True" />
+                                </local:MyCheckBox.Tag>
+                            </local:MyCheckBox>
+                            <local:MyCheckBox>
+                                <local:MyCheckBox.Tag>
+                                    <local:ExportOption 
+                                Title="TaCZ 枪包"
+                                Rules="tacz/|config/tacz/custom/"
                                 DefaultChecked="True" />
                                 </local:MyCheckBox.Tag>
                             </local:MyCheckBox>
@@ -254,7 +262,7 @@
                             <local:MyButton Grid.Column="0" x:Name="BtnAdvancedImport" MinWidth="140" Text="{StaticResource LangPageVersionExportExportConfigRead}" Padding="13,0" Margin="0,0,20,0" ColorType="Highlight" />
                             <local:MyButton Grid.Column="1" x:Name="BtnAdvancedExport" MinWidth="140" Text="{StaticResource LangPageVersionExportExportConfigSave}" Padding="13,0" Margin="0,0,20,0" />
                             <local:MyButton Grid.Column="2" MinWidth="140" Text="{StaticResource LangPageVersionExportModpackGuide}" Padding="13,0" Margin="0,0,20,0" x:Name="BtnAdvancedHelp"
-                                            EventType="打开帮助" />
+                                            local:CustomEventService.EventType="打开帮助" />
                         </Grid>
                     </StackPanel>
                 </local:MyCard>

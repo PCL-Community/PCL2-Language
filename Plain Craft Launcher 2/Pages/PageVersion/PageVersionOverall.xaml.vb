@@ -30,7 +30,7 @@
         BtnFolderMods.Visibility = If(PageVersionLeft.Version.Modable, Visibility.Visible, Visibility.Collapsed)
         '刷新版本显示
         PanDisplayItem.Children.Clear()
-        ItemVersion = PageSelectRight.McVersionListItem(PageVersionLeft.Version)
+        ItemVersion = PageVersionLeft.Version.ToListItem
         ItemVersion.IsHitTestVisible = False
         PanDisplayItem.Children.Add(ItemVersion)
         FrmMain.PageNameRefresh()
@@ -109,19 +109,19 @@
             Dim OldName As String = PageVersionLeft.Version.Name
             Dim OldPath As String = PageVersionLeft.Version.Path
             '修改此部分的同时修改快速安装的版本名检测*
-            Dim NewName As String = MyMsgBoxInput(GetLang("LangPageVersionOverallDialogEditNameTitle"), "", OldName, New ObjectModel.Collection(Of Validate) From {New ValidateFolderName(PathMcFolder & "versions", IgnoreCase:=False)})
+            Dim NewName As String = MyMsgBoxInput(GetLang("LangPageVersionOverallDialogEditNameTitle"), "", OldName, New ObjectModel.Collection(Of Validate) From {
+                New ValidateFolderName(PathMcFolder & "versions", IgnoreCase:=False), New ValidateExceptSame(OldName & "_temp", "不能使用该名称！")})
             If String.IsNullOrWhiteSpace(NewName) Then Return
             Dim NewPath As String = PathMcFolder & "versions\" & NewName & "\"
             '获取临时中间名，以防止仅修改大小写的重命名失败
             Dim TempName As String = NewName & "_temp"
             Dim TempPath As String = PathMcFolder & "versions\" & TempName & "\"
-            Dim IsCaseChangedOnly As Boolean = NewName.ToLower = OldName.ToLower
+            Dim OnlyChangedCase As Boolean = NewName.ToLower = OldName.ToLower
             '重新读取版本 JSON 信息，避免 JsonObject 中已被合并的项被重新存储
             Dim JsonObject As JObject
+            Dim OldJsonPath As String = PageVersionLeft.Version.GetJsonPath()
             Try
-                Dim JsonPath As String = PageVersionLeft.Version.GetJsonPath()
-                JsonObject = GetJson(ReadFile(JsonPath))
-                File.Delete(JsonPath)
+                JsonObject = GetJson(ReadFile(OldJsonPath))
             Catch ex As Exception
                 Log(ex, "在重命名读取 json 时失败")
                 JsonObject = PageVersionLeft.Version.JsonObject
@@ -135,7 +135,7 @@
             '重命名 jar 文件与 natives 文件夹
             '不能进行遍历重命名，否则在版本名很短的时候容易误伤其他文件（#6443）
             If Directory.Exists($"{NewPath}{OldName}-natives") Then
-                If IsCaseChangedOnly Then
+                If OnlyChangedCase Then
                     My.Computer.FileSystem.RenameDirectory($"{NewPath}{OldName}-natives", $"{OldName}natives_temp")
                     My.Computer.FileSystem.RenameDirectory($"{NewPath}{OldName}-natives_temp", $"{NewName}-natives")
                 Else
@@ -144,7 +144,7 @@
                 End If
             End If
             If File.Exists($"{NewPath}{OldName}.jar") Then
-                If IsCaseChangedOnly Then
+                If OnlyChangedCase Then
                     My.Computer.FileSystem.RenameFile($"{NewPath}{OldName}.jar", $"{OldName}_temp.jar")
                     My.Computer.FileSystem.RenameFile($"{NewPath}{OldName}_temp.jar", $"{NewName}.jar")
                 Else
@@ -160,15 +160,16 @@
             If ReadIni(PathMcFolder & "PCL.ini", "Version") = OldName Then
                 WriteIni(PathMcFolder & "PCL.ini", "Version", NewName)
             End If
-            '写入版本 Json
+            '更新版本 Json
             Try
                 JsonObject("id") = NewName
                 WriteFile(NewPath & NewName & ".json", JsonObject.ToString)
+                File.Delete(NewPath & GetFileNameFromPath(OldJsonPath))
             Catch ex As Exception
                 Log(ex, "重命名版本 json 失败")
             End Try
             '刷新与提示
-            Hint(GetLang("LangPageVersionOverallHintEditNameSuccess"), HintType.Finish)
+            Hint(GetLang("LangPageVersionOverallHintEditNameSuccess"), HintType.Green)
             PageVersionLeft.Version = New McVersion(NewName).Load()
             If Not IsNothing(McVersionCurrent) AndAlso McVersionCurrent.Equals(PageVersionLeft.Version) Then WriteIni(PathMcFolder & "PCL.ini", "Version", NewName)
             Reload()
@@ -262,7 +263,7 @@
             If SavePath = "" Then Return
             '检查中断（等玩家选完弹窗指不定任务就结束了呢……）
             If McLaunchLoader.State = LoadState.Loading Then
-                Hint(GetLang("LangPageVersionOverallHintWaitForTaskOver"), HintType.Critical)
+                Hint(GetLang("LangPageVersionOverallHintWaitForTaskOver"), HintType.Red)
                 Return
             End If
             '生成脚本
@@ -283,13 +284,13 @@
         Try
             '忽略文件检查提示
             If ShouldIgnoreFileCheck(PageVersionLeft.Version) Then
-                Hint(GetLang("LangPageVersionOverallHintEnableInstanceAssetsCheck"), HintType.Info)
+                Hint(GetLang("LangPageVersionOverallHintEnableInstanceAssetsCheck"), HintType.Blue)
                 Return
             End If
             '重复任务检查
             For Each OngoingLoader In LoaderTaskbar
                 If OngoingLoader.Name <> PageVersionLeft.Version.Name & " " & GetLang("LangPageVersionOverallTaskCompleteFile") Then Continue For
-                Hint(GetLang("LangPageVersionOverallCompleteFileInTask"), HintType.Critical)
+                Hint(GetLang("LangPageVersionOverallCompleteFileInTask"), HintType.Red)
                 Return
             Next
             '启动
@@ -298,11 +299,11 @@
             Sub()
                 Select Case Loader.State
                     Case LoadState.Finished
-                        Hint(Loader.Name & GetLang("LangPageVersionOverallCompleteFileSuccess"), HintType.Finish)
+                        Hint(Loader.Name & GetLang("LangPageVersionOverallCompleteFileSuccess"), HintType.Green)
                     Case LoadState.Failed
-                        Hint(Loader.Name & GetLang("LangPageVersionOverallCompleteFileFail") & GetExceptionSummary(Loader.Error), HintType.Critical)
+                        Hint(Loader.Name & GetLang("LangPageVersionOverallCompleteFileFail") & Loader.Error.GetBrief(), HintType.Red)
                     Case LoadState.Aborted
-                        Hint(Loader.Name & GetLang("LangTaskAbort"), HintType.Info)
+                        Hint(Loader.Name & GetLang("LangTaskAbort"), HintType.Blue)
                 End Select
             End Sub
             Loader.Start(PageVersionLeft.Version.Name)
@@ -333,10 +334,10 @@
                     IniClearCache(PageVersionLeft.Version.Path & "PCL\Setup.ini")
                     If IsShiftPressed Then
                         DeleteDirectory(PageVersionLeft.Version.Path)
-                        Hint(GetLang("LangPageVersionOverallHintPermanentDeleteSuccess", PageVersionLeft.Version.Name), HintType.Finish)
+                        Hint(GetLang("LangPageVersionOverallHintPermanentDeleteSuccess", PageVersionLeft.Version.Name), HintType.Green)
                     Else
                         FileIO.FileSystem.DeleteDirectory(PageVersionLeft.Version.Path, FileIO.UIOption.AllDialogs, FileIO.RecycleOption.SendToRecycleBin)
-                        Hint(GetLang("LangPageVersionOverallHintDeleteSuccess", PageVersionLeft.Version.Name), HintType.Finish)
+                        Hint(GetLang("LangPageVersionOverallHintDeleteSuccess", PageVersionLeft.Version.Name), HintType.Green)
                     End If
                 Case 2
                     Return

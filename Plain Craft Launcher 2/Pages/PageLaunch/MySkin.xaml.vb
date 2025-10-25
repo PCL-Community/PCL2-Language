@@ -47,7 +47,7 @@
     Public Shared Sub Save(Loader As LoaderTask(Of EqualableList(Of String), String))
         Dim Address = Loader.Output
         If Not Loader.State = LoadState.Finished Then
-            Hint(GetLang("LangMySkinHintLoading"), HintType.Critical)
+            Hint(GetLang("LangMySkinHintLoading"), HintType.Red)
             If Not Loader.State = LoadState.Loading Then Loader.Start()
             Return
         End If
@@ -61,7 +61,7 @@
                 Else
                     CopyFile(Address, FileAddress)
                 End If
-                Hint(GetLang("LangMySkinHintSaveSuccess"), HintType.Finish)
+                Hint(GetLang("LangMySkinHintSaveSuccess"), HintType.Green)
             End If
         Catch ex As Exception
             Log(ex, GetLang("LangMySkinHintSaveFail"), LogLevel.Hint)
@@ -143,7 +143,7 @@
         Next
         If FrmLaunchLeft IsNot Nothing AndAlso HasLoaderRunning Then
             '由于 Abort 不是实时的，暂时不会释放文件，会导致删除报错，故只能取消执行
-            Hint(GetLang("LangMySkinHintExistSkinFileGetTask"), HintType.Info)
+            Hint(GetLang("LangMySkinHintExistSkinFileGetTask"), HintType.Blue)
         Else
             RunInThread(
             Sub()
@@ -161,7 +161,7 @@
                     For Each SkinLoader In If(sender IsNot Nothing, {sender}, {PageLaunchLeft.SkinLegacy, PageLaunchLeft.SkinMs})
                         SkinLoader.WaitForExit(IsForceRestart:=True)
                     Next
-                    Hint(GetLang("LangMySkinHintRefreshed"), HintType.Finish)
+                    Hint(GetLang("LangMySkinHintRefreshed"), HintType.Green)
                 Catch ex As Exception
                     Log(ex, GetLang("LangMySkinHintRefreshFail"), LogLevel.Msgbox)
                 End Try
@@ -184,7 +184,7 @@
                     SkinLoader.WaitForExit(IsForceRestart:=True)
                 Next
                 '完成提示
-                Hint(GetLang("LangMySkinHintChangeSuccess"), HintType.Finish)
+                Hint(GetLang("LangMySkinHintChangeSuccess"), HintType.Green)
             Catch ex As Exception
                 Log(ex, "更改正版皮肤后刷新皮肤失败", LogLevel.Feedback)
             End Try
@@ -212,7 +212,7 @@
             Return
         End If
         If McLoginMsLoader.State = LoadState.Failed Then
-            Hint(GetLang("LangMySkinHintChangFailByLoginFail"), HintType.Critical)
+            Hint(GetLang("LangMySkinHintChangFailByLoginFail"), HintType.Red)
             Return
         End If
         Hint(GetLang("LangMySkinHintGettingCape"))
@@ -225,7 +225,7 @@ Retry:
                 '获取登录信息
                 If McLoginMsLoader.State <> LoadState.Finished Then McLoginMsLoader.WaitForExit(PageLoginMsSkin.GetLoginData())
                 If McLoginMsLoader.State <> LoadState.Finished Then
-                    Hint(GetLang("LangMySkinHintChangFailByLoginFail"), HintType.Critical)
+                    Hint(GetLang("LangMySkinHintChangFailByLoginFail"), HintType.Red)
                     Return
                 End If
                 Dim AccessToken As String = McLoginMsLoader.Output.AccessToken
@@ -243,8 +243,8 @@ Retry:
                             {"Minecon2013", GetLang("LangMySkinCapeNameMinecon2013")}, {"Minecon2015", GetLang("LangMySkinCapeNameMinecon2015")}, {"Minecon2016", GetLang("LangMySkinCapeNameMinecon2016")},
                             {"Cherry Blossom", GetLang("LangMySkinCapeNameCherryBlossom")}, {"15th Anniversary", GetLang("LangMySkinCapeName15th-Anniversary")}, {"Purple Heart", GetLang("LangMySkinCapeNamePurpleHeart")},
                             {"Follower's", GetLang("LangMySkinCapeNameFollower's")}, {"MCC 15th Year", GetLang("LangMySkinCapeNameMCC15thYear")}, {"Minecraft Experience", GetLang("LangMySkinCapeNameMinecraftExperience")},
-                            {"Mojang Office", GetLang("LangMySkinCapeNameMojangOffice")}, {"Home", GetLang("LangMySkinCapeNameHome")}, {"Menace", GetLang("LangMySkinCapeNameMenace")}, {"Yearn", GetLang("LangMySkinCapeNameYearn")},
-                            {"Common", "普通披风"}, {"Pan", "薄煎饼披风"}, {"Founder's", "创始人披风"}
+                            {"Mojang Office", GetLang("LangMySkinCapeNameMojangOffice")}, {"Waiting", GetLang("LangMySkinCapeNameHome")}, {"Menace", GetLang("LangMySkinCapeNameMenace")}, {"Yearn", GetLang("LangMySkinCapeNameYearn")},
+                            {"Common", GetLang("LangMySkinCapeNameCommon")}, {"Pan", GetLang("LangMySkinCapeNamePan")}, {"Founder's", GetLang("LangMySkinCapeNameFounders")}, {"Copper", GetLang("LangMySkinCapeNameCopper")}
                         }
                         Dim SelectionControl As New List(Of IMyRadio) From {New MyRadioBox With {.Text = GetLang("LangMySkinCapeNameNone")}}
                         For Each Cape In SkinData("capes")
@@ -265,10 +265,10 @@ Retry:
                     ContentType:="application/json",
                     Headers:={{"Authorization", "Bearer " & AccessToken}})
                 If Result.Contains("""errorMessage""") Then
-                    Hint(GetLang("LangMySkinHintChangeCapeFail") & ":" & GetJson(Result)("errorMessage").ToString, HintType.Critical)
+                    Hint(GetLang("LangMySkinHintChangeCapeFail") & ":" & GetJson(Result)("errorMessage").ToString, HintType.Red)
                     Return
                 Else
-                    Hint(GetLang("LangMySkinHintChangeCapeSuccess"), HintType.Finish)
+                    Hint(GetLang("LangMySkinHintChangeCapeSuccess"), HintType.Green)
                 End If
             Catch ex As Exception
                 Log(ex, GetLang("LangMySkinHintChangeCapeFail"), LogLevel.Hint)

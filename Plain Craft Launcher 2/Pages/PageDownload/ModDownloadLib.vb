@@ -1,5 +1,4 @@
 ﻿Imports System.IO.Compression
-Imports System.Net.Http
 
 Public Module ModDownloadLib
 
@@ -32,7 +31,7 @@ Public Module ModDownloadLib
             For Each OngoingLoader In LoaderTaskbar.ToList()
                 If OngoingLoader.Name <> GetLang("LangModDownloadLibTaskMcDownload", Id) Then Continue For
                 If Behaviour = NetPreDownloadBehaviour.ExitWhileExistsOrDownloading Then Return OngoingLoader
-                Hint(GetLang("LangModDownloadLibHintInstanceDownloading"), HintType.Critical)
+                Hint(GetLang("LangModDownloadLibHintInstanceDownloading"), HintType.Red)
                 Return OngoingLoader
             Next
 
@@ -223,7 +222,7 @@ Public Module ModDownloadLib
             '重复任务检查
             For Each OngoingLoader In LoaderTaskbar.ToList()
                 If OngoingLoader.Name <> GetLang("LangModDownloadLibTaskDownloadServer", Id) Then Continue For
-                Hint(GetLang("LangModDownloadLibTaskDownloadServerHintDownloading"), HintType.Critical)
+                Hint(GetLang("LangModDownloadLibTaskDownloadServerHintDownloading"), HintType.Red)
                 Return
             Next
 
@@ -241,7 +240,7 @@ Public Module ModDownloadLib
                         File.Delete(VersionFolder & Id & ".json")
                         If Not New DirectoryInfo(VersionFolder).GetFileSystemInfos.Any() Then Directory.Delete(VersionFolder)
                         Task.Output = New List(Of NetFile)
-                        Hint(GetLang("LangModDownloadLibExceptionTaskDownloadServerNoResource", Id), HintType.Critical)
+                        Hint(GetLang("LangModDownloadLibExceptionTaskDownloadServerNoResource", Id), HintType.Red)
                         Thread.Sleep(2000) '等玩家把上一个提示看完
                         Task.Abort()
                         Return
@@ -300,7 +299,7 @@ pause"
             '重复任务检查
             For Each OngoingLoader In LoaderTaskbar.ToList()
                 If OngoingLoader.Name <> GetLang("LangModDownloadLibTaskMcDownload") Then Continue For
-                Hint(GetLang("LangModDownloadLibHintInstanceDownloading"), HintType.Critical)
+                Hint(GetLang("LangModDownloadLibHintInstanceDownloading"), HintType.Red)
                 Return
             Next
 
@@ -856,7 +855,7 @@ pause"
             '重复任务检查
             For Each OngoingLoader In LoaderTaskbar.ToList()
                 If OngoingLoader.Name <> GetLang("LangModDownloadLibTaskOptiFineDownload", DownloadInfo.NameDisplay) Then Continue For
-                Hint(GetLang("LangModDownloadLibHintInstanceDownloading"), HintType.Critical)
+                Hint(GetLang("LangModDownloadLibHintInstanceDownloading"), HintType.Red)
                 Return
             Next
 
@@ -904,7 +903,7 @@ pause"
         '开始启动
         SyncLock InstallSyncLock
             Dim Info = New ProcessStartInfo With {
-                .FileName = Java.PathJavaw,
+                .FileName = Java.PathJava,
                 .Arguments = Arguments,
                 .UseShellExecute = False,
                 .CreateNoWindow = True,
@@ -1026,7 +1025,7 @@ pause"
             Dim PageData As String
             Try
                 PageData = NetRequestByClient("https://optifine.net/adloadx?f=" & DownloadInfo.NameFile,
-                    Encoding:=New UTF8Encoding(False), Timeout:=15000, Accept:="text/html", UseBrowserUserAgent:=True)
+                    Encoding:=New UTF8Encoding(False), Timeout:=15000, Accept:="text/html", SimulateBrowserHeaders:=True)
                 Task.Progress = 0.8
                 Sources.Add("https://optifine.net/" & RegexSearch(PageData, "downloadx\?f=[^""']+")(0))
                 Log("[Download] OptiFine " & DownloadInfo.NameDisplay & " 官方下载地址：" & Sources.Last)
@@ -1190,7 +1189,7 @@ Retry:
             Dim PageData As String
             Try
                 PageData = NetRequestByClient("https://optifine.net/adloadx?f=" & DownloadInfo.NameFile,
-                    Encoding:=New UTF8Encoding(False), Timeout:=15000, Accept:="text/html", UseBrowserUserAgent:=True)
+                    Encoding:=New UTF8Encoding(False), Timeout:=15000, Accept:="text/html", SimulateBrowserHeaders:=True)
                 Task.Progress = 0.8
                 Sources.Add("https://optifine.net/" & RegexSearch(PageData, "downloadx\?f=[^""']+")(0))
                 Log("[Download] OptiFine " & DownloadInfo.NameDisplay & " 官方下载地址：" & Sources.Last)
@@ -1287,7 +1286,7 @@ Retry:
             '重复任务检查
             For Each OngoingLoader In LoaderTaskbar.ToList()
                 If OngoingLoader.Name <> GetLang("LangModDownloadLibTaskLiteLoaderDownload", Id) Then Continue For
-                Hint(GetLang("LangModDownloadLibHintInstanceDownloading"), HintType.Critical)
+                Hint(GetLang("LangModDownloadLibHintInstanceDownloading"), HintType.Red)
                 Return
             Next
 
@@ -1321,7 +1320,7 @@ Retry:
             '重复任务检查
             For Each OngoingLoader In LoaderTaskbar.ToList()
                 If OngoingLoader.Name <> GetLang("LangModDownloadLibTaskLiteLoaderDownload", Id) Then Continue For
-                Hint(GetLang("LangModDownloadLibHintInstanceDownloading"), HintType.Critical)
+                Hint(GetLang("LangModDownloadLibHintInstanceDownloading"), HintType.Red)
                 Return
             Next
 
@@ -1503,7 +1502,7 @@ Retry:
             '重复任务检查
             For Each OngoingLoader In LoaderTaskbar.ToList()
                 If OngoingLoader.Name <> GetLang("LangModDownloadLibTaskForgelikeDownload", DisplayName) Then Continue For
-                Hint(GetLang("LangModDownloadLibHintInstanceDownloading"), HintType.Critical)
+                Hint(GetLang("LangModDownloadLibHintInstanceDownloading"), HintType.Red)
                 Return
             Next
 
@@ -1575,7 +1574,7 @@ Retry:
         '开始启动
         SyncLock InstallSyncLock
             Dim Info = New ProcessStartInfo With {
-                .FileName = Java.PathJavaw,
+                .FileName = Java.PathJava,
                 .Arguments = Arguments,
                 .UseShellExecute = False,
                 .CreateNoWindow = True,
@@ -1800,7 +1799,7 @@ Retry:
                         Dim RawJson As JObject = GetJson(NetRequestByLoader(DlSourceLauncherOrMetaGet(DlClientListGet(Inherit)), IsJson:=True))
                         '[net.minecraft:client:1.17.1-20210706.113038:mappings@txt] 或 @tsrg]
                         Dim OriginalName As String = Json("data")("MOJMAPS")("client").ToString.Trim("[]".ToCharArray()).BeforeFirst("@")
-                        Dim Address = McLibGet(OriginalName).Replace(".jar", "-mappings." & Json("data")("MOJMAPS")("client").ToString.Trim("[]".ToCharArray()).Split("@")(1))
+                        Dim Address = McLibGet(OriginalName).Replace(".jar", "." & Json("data")("MOJMAPS")("client").ToString.Trim("[]".ToCharArray()).Split("@")(1))
                         Dim ClientMappings As JToken = RawJson("downloads")("client_mappings")
                         Libs.Add(New McLibToken With {
                                  .IsNatives = False, .LocalPath = Address, .OriginalName = OriginalName,
@@ -2104,7 +2103,7 @@ Retry:
         Sub()
             Try
                 Log("[Download] 刷新 Forge 推荐版本缓存开始")
-                Dim Result As String = NetRequestByClientRetry("https://bmclapi2.bangbang93.com/forge/promos")
+                Dim Result As String = NetRequestByClientRetry("https://bmclapi2.bangbang93.com/forge/promos", RequireJson:=True)
                 If Result.Length < 1000 Then Throw New Exception("获取的结果过短（" & Result & "）")
                 Dim ResultJson As JContainer = GetJson(Result)
                 '获取所有推荐版本列表
@@ -2260,7 +2259,7 @@ Retry:
             '重复任务检查
             For Each OngoingLoader In LoaderTaskbar.ToList()
                 If OngoingLoader.Name <> GetLang("LangModDownloadLibTaskFabricInstallerDownload", Version) Then Continue For
-                Hint(GetLang("LangModDownloadLibHintInstanceDownloading"), HintType.Critical)
+                Hint(GetLang("LangModDownloadLibHintInstanceDownloading"), HintType.Red)
                 Return
             Next
 
@@ -2443,28 +2442,28 @@ Retry:
     ''' 在加载器状态改变后显示一条提示。
     ''' 不会进行任何其他操作。
     ''' </summary>
-    Public Sub LoaderStateChangedHintOnly(Loader)
+    Public Sub LoaderStateChangedHintOnly(Loader As LoaderBase)
         Select Case Loader.State
             Case LoadState.Finished
-                Hint(GetLang("LangModDownloadLibSuccess", Loader.Name), HintType.Finish)
+                Hint(GetLang("LangModDownloadLibSuccess", Loader.Name), HintType.Green)
             Case LoadState.Failed
-                Hint(GetLang("LangModDownloadLibFail", Loader.Name, GetExceptionSummary(Loader.Error)), HintType.Critical)
+                Hint(GetLang("LangModDownloadLibFail", Loader.Name, Loader.Error.GetBrief()), HintType.Red)
             Case LoadState.Aborted
-                Hint(GetLang("LangModDownloadLibCancel", Loader.Name), HintType.Info)
+                Hint(GetLang("LangModDownloadLibCancel", Loader.Name), HintType.Blue)
         End Select
     End Sub
     ''' <summary>
     ''' 安装加载器状态改变后进行提示和重载文件夹列表的方法。
     ''' </summary>
-    Public Sub McInstallState(Loader)
+    Public Sub McInstallState(Loader As LoaderBase)
         Select Case Loader.State
             Case LoadState.Finished
                 WriteIni(PathMcFolder & "PCL.ini", "VersionCache", "") '清空缓存（合并安装会先生成文件夹，这会在刷新时误判为可以使用缓存）
-                Hint(GetLang("LangModDownloadLibSuccess", Loader.Name), HintType.Finish)
+                Hint(GetLang("LangModDownloadLibSuccess", Loader.Name), HintType.Green)
             Case LoadState.Failed
-                Hint(GetLang("LangModDownloadLibFail", Loader.Name, GetExceptionSummary(Loader.Error)), HintType.Critical)
+                Hint(GetLang("LangModDownloadLibFail", Loader.Name, Loader.Error.GetBrief()), HintType.Red)
             Case LoadState.Aborted
-                Hint(GetLang("LangModDownloadLibCancel", Loader.Name), HintType.Info)
+                Hint(GetLang("LangModDownloadLibCancel", Loader.Name), HintType.Blue)
             Case LoadState.Loading
                 Return '不重新加载版本列表
         End Select
@@ -2565,7 +2564,7 @@ Retry:
 
         '重复版本检查
         If File.Exists($"{VersionFolder}{Request.TargetVersionName}.json") Then
-            Hint(GetLang("LangModDownloadLibHintMcExist", Request.TargetVersionName), HintType.Critical)
+            Hint(GetLang("LangModDownloadLibHintMcExist", Request.TargetVersionName), HintType.Red)
             Throw New CancelledException
         End If
 

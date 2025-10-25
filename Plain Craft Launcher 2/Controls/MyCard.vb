@@ -123,14 +123,6 @@
         End Select
         '控件转换
         Select Case Type
-            Case 5
-                Dim LoadingPickaxe As New MyLoading With {.Text = GetLang("LangSelectGettingVersion"), .Margin = New Thickness(5)}
-                Dim Loader = New LoaderTask(Of String, List(Of DlForgeVersionEntry))("DlForgeVersion Main", AddressOf DlForgeVersionMain)
-                LoadingPickaxe.State = Loader
-                Loader.Start(Stack.Tag)
-                AddHandler LoadingPickaxe.StateChanged, AddressOf FrmDownloadForge.Forge_StateChanged
-                AddHandler LoadingPickaxe.Click, AddressOf FrmDownloadForge.Forge_Click
-                Stack.Children.Add(LoadingPickaxe)
             Case 6
                 ForgeDownloadListItemPreload(Stack, Stack.Tag, AddressOf ForgeSave_Click, True)
             Case 8
@@ -140,14 +132,13 @@
         For Each Data As Object In Stack.Tag
             Select Case Type
                 Case 0
-                    Stack.Children.Add(PageSelectRight.McVersionListItem(Data))
+                    Dim VersionItem As MyListItem = CType(Data, McVersion).ToListItem
+                    VersionItem.ContentHandler = AddressOf PageSelectRight.McVersionListContent
+                    Stack.Children.Add(VersionItem)
                 Case 2
                     Stack.Children.Add(McDownloadListItem(Data, AddressOf McDownloadMenuSave, True))
                 Case 3
                     Stack.Children.Add(OptiFineDownloadListItem(Data, AddressOf OptiFineSave_Click, True))
-                Case 4
-                    Stack.Children.Add(LiteLoaderDownloadListItem(Data, AddressOf FrmDownloadLiteLoader.DownloadStart, False))
-                Case 5
                 Case 6
                     Stack.Children.Add(ForgeDownloadListItem(Data, AddressOf ForgeSave_Click, True))
                 Case 7
@@ -320,52 +311,58 @@
         End Set
     End Property
     Private _IsSwapped As Boolean = False
-    ''' <summary>
-    ''' 是否已被折叠。(已过时，请使用 IsSwapped)
-    ''' </summary>
     <Obsolete("IsSwaped 存在拼写错误，请换用 IsSwapped 属性。")>
     Public Property IsSwaped As Boolean
         Get
-            Return IsSwapped
+            Return GetValue(IsSwapedProperty)
         End Get
         Set(value As Boolean)
-            IsSwapped = value
+            SetValue(IsSwapedProperty, value)
         End Set
     End Property
-    Public Shared ReadOnly IsSwapedProperty As DependencyProperty = DependencyProperty.Register("IsSwaped", GetType(Boolean), GetType(MyCard), New PropertyMetadata(False))
+    Public Shared ReadOnly IsSwapedProperty As DependencyProperty = DependencyProperty.Register("IsSwaped", GetType(Boolean), GetType(MyCard), New PropertyMetadata(False,
+    Sub(sender, e) If sender IsNot Nothing AndAlso TypeOf sender Is MyCard Then CType(sender, MyCard).IsSwapped = CType(e.NewValue, Boolean)))
 
     Public Property SwapLogoRight As Boolean = False
-    Private IsMouseDown As Boolean = False
+    Private IsSwapMouseDown As Boolean = False '用于触发卡片展开/折叠的 MouseDown
+    Private IsCustomMouseDown As Boolean = False '用于触发自定义事件的 MouseDown
     Public Event PreviewSwap(sender As Object, e As RouteEventArgs)
     Public Event Swap(sender As Object, e As RouteEventArgs)
     Public Const SwapedHeight As Integer = 40
     Private Sub MyCard_MouseLeftButtonDown(sender As Object, e As MouseButtonEventArgs) Handles Me.MouseLeftButtonDown
         Dim Pos As Double = Mouse.GetPosition(Me).Y
         If Not IsSwapped AndAlso
+            (Pos > If(IsSwapped, SwapedHeight, SwapedHeight - 6) OrElse (Pos = 0 AndAlso Not IsMouseDirectlyOver)) Then Return
+        IsCustomMouseDown = True
+        If Not IsSwapped AndAlso
             (SwapControl Is Nothing OrElse Pos > If(IsSwapped, SwapedHeight, SwapedHeight - 6) OrElse (Pos = 0 AndAlso Not IsMouseDirectlyOver)) Then Return '检测点击位置；或已经不在可视树上的误判
-        IsMouseDown = True
+        IsSwapMouseDown = True
     End Sub
-    Private Sub MyCard_MouseLeftButtonUp(sender As Object, e As MouseButtonEventArgs) Handles Me.MouseLeftButtonUp
-        If Not IsMouseDown Then Return
-        IsMouseDown = False
+    Private Sub MyCard_MouseLeftButtonUp() Handles Me.MouseLeftButtonUp
+        If Not IsCustomMouseDown Then Return
+        IsCustomMouseDown = False
+        RaiseCustomEvent() '触发自定义事件
+
+        If Not IsSwapMouseDown Then Return
+        IsSwapMouseDown = False
 
         Dim Pos As Double = Mouse.GetPosition(Me).Y
         If Not IsSwapped AndAlso
             (SwapControl Is Nothing OrElse Pos > If(IsSwapped, SwapedHeight, SwapedHeight - 6) OrElse (Pos = 0 AndAlso Not IsMouseDirectlyOver)) Then Return '检测点击位置；或已经不在可视树上的误判
 
-        Dim ee = New RouteEventArgs(True)
-        RaiseEvent PreviewSwap(Me, ee)
-        If ee.Handled Then
-            IsMouseDown = False
+        Dim e = New RouteEventArgs(True)
+        RaiseEvent PreviewSwap(Me, e)
+        If e.Handled Then
+            IsSwapMouseDown = False
             Return
         End If
 
         IsSwapped = Not IsSwapped
         Log("[Control] " & If(IsSwapped, "折叠卡片", "展开卡片") & If(Title Is Nothing, "", "：" & Title))
-        RaiseEvent Swap(Me, ee)
+        RaiseEvent Swap(Me, e)
     End Sub
     Private Sub MyCard_MouseLeave_Swap(sender As Object, e As MouseEventArgs) Handles Me.MouseLeave
-        IsMouseDown = False
+        IsSwapMouseDown = False
     End Sub
 
 #End Region

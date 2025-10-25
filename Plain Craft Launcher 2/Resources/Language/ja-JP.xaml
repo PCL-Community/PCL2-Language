@@ -13,20 +13,22 @@
     <s:String x:Key="LangReset">リセット</s:String>
     <s:String x:Key="LangRefresh">リフレッシュ</s:String>
     <s:String x:Key="LangRefreshing">リフレッシュ中……</s:String>
+    <s:String x:Key="LangRefreshed">已刷新！</s:String>
     <s:String x:Key="LangApplicationExceptionNoAccessPermission">PCL は {0} へのアクセス権がありません</s:String>
     <s:String x:Key="LangApplicationDialogTitleCacheFolderUnavailable">キャッシュフォルダーが利用できません</s:String>
     <s:String x:Key="LangApplicationDialogContentCacheFolderUnavailable">PCL はキャッシュフォルダーにアクセスできず、プログラムが正常に動作しないか、エラーが発生する可能性があります。
 エラー原因：{0}</s:String>
     <s:String x:Key="LangApplicationDialogContentCustomCacheFolderUnavailable">PCL はキャッシュフォルダーにアクセスできず、プログラムが正常に動作しないか、エラーが発生する可能性があります。
 エラー原因：{0}</s:String>
-    <s:String x:Key="LangApplicationDialogTitleRunInTemp">環境警告</s:String>
-    <s:String x:Key="LangApplicationDialogContentRunInTemp">PCLを圧縮ファイルから解凍するか、フォルダを変更してから使用を続けてください！ 
+    <s:String x:Key="LangApplicationDialogTitleUnzipLauncher">環境警告</s:String>
+    <s:String x:Key="LangApplicationDialogContentUnzipLauncher">PCLを圧縮ファイルから解凍するか、フォルダを変更してから使用を続けてください！ 
 現在プログラムは一時フォルダで実行されており、設定やゲームのセーブデータが保存できない可能性がありますし、一部の機能は使用できません。</s:String>
     <s:String x:Key="LangApplicationDialogContent32BitWarn">PCLと新版のMinecraftは32ビットシステムをサポートしておらず、一部の機能が使用できません。
 64ビットシステムに再インストールした後、ゲームを行うことを強くお勧めします！</s:String>
     <s:String x:Key="LangApplicationDialogTitleInitError">PCL 初期化エラー</s:String>
     <s:String x:Key="LangApplicationDialogTitleNETWarn">実行環境エラー</s:String>
-    <s:String x:Key="LangApplicationDialogContentNETWarn">お使いの.NET Frameworkのバージョンが低すぎるか、損傷しています。開かれたウェブページから.NET Framework 4.6.2を再ダウンロードしてインストールした後、再試行してください！</s:String>
+    <s:String x:Key="LangApplicationDialogContentNETWarn">あなたの .NET Framework バージョンが低すぎるか、破損しています。 .NET Framework 4.6.2 をダウンロードして再インストールしてください！
+インストールできない場合は、.NET Framework の高バージョンをアンインストールした後に再試行してください。</s:String>
     <s:String x:Key="LangApplicationDialogTitleUnknownError">未知エラー</s:String>
     <s:String x:Key="LangApplicationDialogContentUnknownError">プログラムに未知のエラーが発生しました</s:String>
     <s:String x:Key="LangApplicationDialogContentMemReduceFail">メモリの最適化に失敗しました</s:String>
@@ -42,6 +44,8 @@
     <s:String x:Key="LangDialogBtnUpdateFullLog">完全な更新ログ</s:String>
     <s:String x:Key="LangDialogUpdateTo">PCL が {0} に更新されました</s:String>
     <s:String x:Key="LangDialogPolicyContent">PCL を使用する前に、ユーザー契約と免責事項に同意してください。</s:String>
+    <s:String x:Key="LangDialogPolicyContentModified">PCL 的用户协议与免责声明已更新。
+请阅读更新后的用户协议与免责声明。</s:String>
     <s:String x:Key="LangDialogPolicyTitle">契約ライセンス</s:String>
     <s:String x:Key="LangDialogBtnAgree">同意する</s:String>
     <s:String x:Key="LangDialogBtnDeny">拒否する</s:String>
@@ -67,8 +71,8 @@
     <s:String x:Key="LangHintWindowDropFolder">ファイルをドラッグしてください。フォルダーではありません！</s:String>
     <s:String x:Key="LangHintWindowDropFileNotFound">ドラッグされたファイルが存在しません：{0}</s:String>
     <s:String x:Key="LangHintWindowDropFileOneFileAtATime">一度に一つのファイルをドラッグしてください！</s:String>
-    <s:String x:Key="LangCrashReport">https://github.com/Hex-Dragon/PCL2/issues でエラーレポートを提出してください。これにより作者が問題を解決する手助けになります！</s:String>
-    <s:String x:Key="LangDialogCustomHomePageReplaceContent">カスタムホームページファイルが既に存在します。これを上書きしますか？</s:String>
+    <s:String x:Key="LangCrashReport">https://github.com/Meloong-Git/PCL/issues でエラーレポートを提出してください。これにより作者が問題を解決する手助けになります！</s:String>
+    <s:String x:Key="LangDialogCustomHomePageReplaceContent">ホームページファイルが既に存在します。これを上書きしますか？</s:String>
     <s:String x:Key="LangDialogCustomHomePageReplaceTitle">上書き確認</s:String>
     <s:String x:Key="LangDialogBtnCustomHomePageReplaceConfirm">上書き</s:String>
     <s:String x:Key="LangHintLoadedCustomHomePage">カスタムホームページファイルが読み込まれました！</s:String>
@@ -139,12 +143,11 @@
     <s:String x:Key="LangDialogCustomPageOverwriteConfirmationContent">現在レイアウトファイルが存在します、指導文書の生成は既存のレイアウトファイルを上書きします！</s:String>
     <s:String x:Key="LangDialogCustomPageOverwriteFail">指導文書の生成に失敗しました</s:String>
     <s:String x:Key="LangHintCustomPageOverwriteSuccess">指導文書が生成されました！</s:String>
-    <s:String x:Key="LangHintCustomPageRefreshed">ホームページが更新されました！</s:String>
     <s:String x:Key="LangDialogCustomPageTeachContent">1.「指導文書生成」ボタンをクリックすると、PCLフォルダに Custom.xaml レイアウトファイルが生成されます。
 2. このファイルをメモ帳などで開いて編集し、編集後に保存してください。
 3.「ホームページ更新」ボタンをクリックして、ホームページがどのように変わったか確認してください。
 教育ファイルを生成してからホームページを更新し、比較しながら編集することで理解が深まります。
-カスタムホームページファイルをPCLウィンドウに直接ドラッグすることで、簡単に読み込むことができます。</s:String>
+ホームページファイルをPCLウィンドウに直接ドラッグすることで、簡単に読み込むことができます。</s:String>
     <s:String x:Key="LangDialogCustomPageTeachTitle">ホームページカスタマイズチュートリアル</s:String>
     <s:String x:Key="LangThemeBackUnlock">隠しテーマ「玄素黒」がアンロックされました！</s:String>
     <s:String x:Key="LangDialogThemeUnlockGameContent">1. 関連サービスやサイトをクロールしたり、攻撃したり、関連アカウントを盗んだりしないでください。パズルを解くにはこのような行動は必要ありません。
@@ -209,7 +212,7 @@
     <s:String x:Key="LangSetBackgroundPicBlur">背景ぼかし</s:String>
     <s:String x:Key="LangSetBackgroundPicBlurToolTip">強いぼかしはランチャーのフレームレートを大幅に低下させる可能性がありますので、慎重に使用してください。
 低性能のコンピュータでスムーズに動作させるために、統合パッケージを作成する際にぼかしを使用することはお勧めしません。</s:String>
-    <s:String x:Key="LangSetBackgroundPicColorfulBack">カラフルな背景を使用する</s:String>
+    <s:String x:Key="LangSetBackgroundPicColorfulBack">カラフルな背景を重ねる</s:String>
     <s:String x:Key="LangSetOpenFolder">フォルダを開く</s:String>
     <s:String x:Key="LangSetBackgroundPicOpenFolderToolTip">背景画像をこのフォルダに入れると、PCL が起動時にランダムに画像を読み込みます</s:String>
     <s:String x:Key="LangSetBackgroundPicRefresh">背景画像を更新する</s:String>
@@ -260,7 +263,7 @@
     <s:String x:Key="LangSetHomePagePresetPageJ">PCL 新機能マニュアル（著者：WForst-Breeze）</s:String>
     <s:String x:Key="LangSetHomePagePresetPageK">OpenMCIM ダッシュボード（著者：SALTWOOD）</s:String>
     <s:String x:Key="LangSetHomePagePresetPageL">雑誌のホームページ（著者：CreeperIsASpy）</s:String>
-    <s:String x:Key="LangSetHomePagePresetPageM">PCL GitHub 仪表盘（作者：Deep-Dark-Forest）</s:String>
+    <s:String x:Key="LangSetHomePagePresetPageM">PCL GitHub ダッシュボード（著者：Deep-Dark-Forest）</s:String>
     <s:String x:Key="LangSetFuncHidden">機能隠し</s:String>
     <s:String x:Key="LangSetFuncHiddenToolTip">不要なページを隠したり、特定の機能をオフにしたりできます。任意の画面で F12 を押すと、隠された機能を一時的に表示できます。</s:String>
     <s:String x:Key="LangSetFuncHiddenLaunch">メインページ</s:String>
@@ -269,9 +272,9 @@
     <s:String x:Key="LangSetFuncHiddenSettings">設定</s:String>
     <s:String x:Key="LangSetFuncHiddenMore">その他</s:String>
     <s:String x:Key="LangSetFuncHiddenSettingsSubPage">設定 サブページ</s:String>
-    <s:String x:Key="LangSetFuncHiddenSettingsGame">ゲーム</s:String>
+    <s:String x:Key="LangSetFuncHiddenSettingsGame">起動</s:String>
     <s:String x:Key="LangSetFuncHiddenSettingsPersonalize">パーソナライズ</s:String>
-    <s:String x:Key="LangSetFuncHiddenSettingsLaunch">ランチャー</s:String>
+    <s:String x:Key="LangSetFuncHiddenSettingsLaunch">その他</s:String>
     <s:String x:Key="LangSetFuncHiddenSettingsLink">オンライン</s:String>
     <s:String x:Key="LangSetFuncHiddenMoreSubPage">その他 サブページ</s:String>
     <s:String x:Key="LangSetFuncHiddenMoreHelp">ヘルプ</s:String>
@@ -281,7 +284,7 @@
     <s:String x:Key="LangSetFuncHiddenMoreVote">新機能投票</s:String>
     <s:String x:Key="LangSetFuncHiddenSpecial">特定機能</s:String>
     <s:String x:Key="LangSetFuncHiddenSpecialEmail">メール隠し</s:String>
-    <s:String x:Key="LangSetFuncHiddenSpecialEmailToolTip">サードパーティログインのアカウントメールを非表示にし、メールをマスクしてプライバシーの漏洩を防ぎます。
+    <s:String x:Key="LangSetFuncHiddenSpecialEmailToolTip">サードパーティログインのアカウントメールを非表示にし、プライバシー漏洩を防止します。
 このオプションの変更は、ランチャーを再起動した後に有効になります。</s:String>
     <s:String x:Key="LangSetFuncHiddenSpecialInstanceSetting">インスタンス管理</s:String>
     <s:String x:Key="LangSetFuncHiddenSpecialInstanceSettingToolTip">起動ボタンの下にあるバージョン選択とバージョン設定の入口を隠す。</s:String>
@@ -367,7 +370,6 @@
     <s:String x:Key="LangSelectVersionNoHiddenTip">バージョンは隠されていません。バージョン設定のバージョンカテゴリーオプションでバージョンを隠すことができます。
 もう一度 F11 を押すと、隠されたバージョンの表示モードを終了します。</s:String>
     <s:String x:Key="LangSelectVersionListLoadFail">バージョンリストの表示変換に失敗しました</s:String>
-    <s:String x:Key="LangSelectVersionListLoadIconFail">バージョンアイコンの読み込みに失敗しました</s:String>
     <s:String x:Key="LangSelectBtnFavorite">お気に入りに追加</s:String>
     <s:String x:Key="LangSelectBtnCancelFavorite">お気に入りを解除</s:String>
     <s:String x:Key="LangSelectBtnSet">設定</s:String>
@@ -376,8 +378,8 @@
     <s:String x:Key="LangSelectDeleteVersionContentA">本当にバージョン {0} を削除しますか？</s:String>
     <s:String x:Key="LangSelectDeleteVersionContentB">本当にバージョン {0} を永久に削除しますか？</s:String>
     <s:String x:Key="LangSelectDeleteVersionContentC">このバージョンはバージョン隔離が有効になっているため、バージョンを削除すると、対応するセーブデータ、リソースパック、Mod などが一緒に削除されます！</s:String>
-    <s:String x:Key="LangSelectVersionDeletedA">バージョン {0} が永久に削除されました！</s:String>
-    <s:String x:Key="LangSelectVersionDeletedB">バージョン {0} がゴミ箱に移動されました！</s:String>
+    <s:String x:Key="LangSelectVersionDeletedPermanently">バージョン {0} が永久に削除されました！</s:String>
+    <s:String x:Key="LangSelectVersionDeletedToRecycleBin">バージョン {0} がゴミ箱に移動されました！</s:String>
     <s:String x:Key="LangSelectVersionDeleteCancelled">バージョン {0} の削除がキャンセルされました</s:String>
     <s:String x:Key="LangSelectVersionDeleteFail">バージョン {0} の削除に失敗しました</s:String>
     <s:String x:Key="LangSpeedTotalProgress">総進捗</s:String>
@@ -436,9 +438,9 @@
     <s:String x:Key="LangDownloadCompToMCMod">MC百科に移動</s:String>
     <s:String x:Key="LangDownloadCompCopyName">名前をコピー</s:String>
     <s:String x:Key="LangDownloadCompLoadingList">バージョンリストの取得中</s:String>
-    <s:String x:Key="LangDownloadCompApiSlow">API のバージョン情報の更新が遅いため、最近更新されたばかりの MC バージョンを認識できない可能性があります。数日待てば自動的に正常に戻ります。</s:String>
+    <s:String x:Key="LangDownloadCompApiSlow">バージョン情報の更新が遅いため、最新の Minecraft バージョンが認識できない場合があります。数日後には正常に認識されるようになります。</s:String>
     <s:String x:Key="LangDownloadCompSearchingSuitableInstance">適切なゲームバージョンを探しています……</s:String>
-    <s:String x:Key="LangDownloadCompNoSuitableInstance">現在の MC フォルダに、この Mod に適したバージョンが見つかりませんでした！</s:String>
+    <s:String x:Key="LangDownloadCompNoSuitableInstance">現在の Minecraft フォルダに、このリソースに適したバージョンが見つかりませんでした！</s:String>
     <s:String x:Key="LangDownloadCompSelectedVersion">選択したバージョン：</s:String>
     <s:String x:Key="LangDownloadCompDownloadModpack">Modpack ダウンロード：</s:String>
     <s:String x:Key="LangDownloadCompInputInstanceName">バージョン名を入力</s:String>
@@ -460,7 +462,7 @@
     <s:String x:Key="LangDownloadInstallOptiFabric">まだ OptiFabric のインストールを選択していません。これにより OptiFine が使用できなくなります！</s:String>
     <s:String x:Key="LangDownloadInstallOptiFine">OptiFine は一部の Mod との互換性が良くないため、インストールには注意してください。</s:String>
     <s:String x:Key="LangDownloadInstallOldOptiFabric">インストールが完了したら、Mod ダウンロードで OptiFabric Origins を検索してダウンロードしてください。そうしないと OptiFine が使用できなくなります！</s:String>
-    <s:String x:Key="LangDownloadInstallStart">インストールを開始</s:String>
+    <s:String x:Key="LangDownloadInstallStart">ダウンロードを開始</s:String>
     <s:String x:Key="LangDownloadInstallVersionName">バージョン名</s:String>
     <s:String x:Key="LangDownloadInstallBack">戻る</s:String>
     <s:String x:Key="LangDownloadInstallGettingList">読み込み中……</s:String>
@@ -486,13 +488,6 @@
     <s:String x:Key="LangDownloadInstallOptiFabricManually">古いバージョンの Fabric と互換性がありません。OptiFabric Origins を手動でダウンロードしてください。</s:String>
     <s:String x:Key="LangDownloadPageLeftRefresh">リフレッシュ</s:String>
     <s:String x:Key="LangDownloadPageLeftAutoInstall">ゲームのダウンロード</s:String>
-    <s:String x:Key="LangDownloadPageLeftManualInstall">▼ 手動インストールパッケージ</s:String>
-    <s:String x:Key="LangDownloadPageLeftDialogManualInstallContent">手動インストールパッケージ機能では OptiFine、Forge などのコンポーネントの JAR インストールファイルをダウンロードできますが、自動インストールはできません。
-自動インストールページでまず MC バージョンを選択し、その後 OptiFine、Forge などのコンポーネントを選択することで、PCL が自動的にインストールを行います。</s:String>
-    <s:String x:Key="LangDownloadPageLeftDialogManualInstallTitle">自動インストールのヒント</s:String>
-    <s:String x:Key="LangDownloadPageLeftDialogManualInstallBtn1">自動インストールに戻る</s:String>
-    <s:String x:Key="LangDownloadPageLeftDialogManualInstallBtn2">手動インストールパッケージのダウンロードを続ける</s:String>
-    <s:String x:Key="LangDownloadPageLeftManualInstallFold">手動インストールパッケージ</s:String>
     <s:String x:Key="LangDownloadPageLeftResource">コミュニティリソース</s:String>
     <s:String x:Key="LangDownloadPageLeftMods">Mod</s:String>
     <s:String x:Key="LangDownloadPageLeftModsL"> Mod </s:String>
@@ -531,14 +526,14 @@
     <s:String x:Key="LangDownloadModTypeWorldElement">ワールドエレメント</s:String>
     <s:String x:Key="LangDownloadModTypeBiome">バイオーム</s:String>
     <s:String x:Key="LangDownloadModTypeDimension">ディメンション</s:String>
-    <s:String x:Key="LangDownloadModTypeMineral">鉱物 / リソース</s:String>
+    <s:String x:Key="LangDownloadModTypeMineral">鉱物とリソース</s:String>
     <s:String x:Key="LangDownloadModTypeStructure">構造物</s:String>
     <s:String x:Key="LangDownloadModTypeTech">テクノロジー</s:String>
-    <s:String x:Key="LangDownloadModTypePipe">パイプ / 物流</s:String>
+    <s:String x:Key="LangDownloadModTypePipe">パイプラインと物流</s:String>
     <s:String x:Key="LangDownloadModTypeAuto">オートメーション</s:String>
     <s:String x:Key="LangDownloadModTypeEnergy">エネルギー</s:String>
     <s:String x:Key="LangDownloadModTypeRedstone">レッドストーン</s:String>
-    <s:String x:Key="LangDownloadModTypeFood">食べ物 / 料理</s:String>
+    <s:String x:Key="LangDownloadModTypeFood">食べ物と料理</s:String>
     <s:String x:Key="LangDownloadModTypeAgriculture">農業</s:String>
     <s:String x:Key="LangDownloadModTypeGameMechanics">ゲームメカニクス</s:String>
     <s:String x:Key="LangDownloadModTypeTransportation">輸送</s:String>
@@ -547,7 +542,7 @@
     <s:String x:Key="LangDownloadModTypeAdventure">冒険</s:String>
     <s:String x:Key="LangDownloadModTypeDecoration">装飾</s:String>
     <s:String x:Key="LangDownloadModTypeMobs">モブ</s:String>
-    <s:String x:Key="LangDownloadModTypeEquipment">装備 / ツール</s:String>
+    <s:String x:Key="LangDownloadModTypeEquipment">装備とツール</s:String>
     <s:String x:Key="LangDownloadModTypeOptimization">パフォーマンス最適化</s:String>
     <s:String x:Key="LangDownloadModTypeDisplay">情報表示</s:String>
     <s:String x:Key="LangDownloadModTypeServer">サーバー</s:String>
@@ -586,71 +581,71 @@
     <s:String x:Key="LangDownloadModpackTypeMapBased">マップベース</s:String>
     <s:String x:Key="LangDownloadModpackTypeLightWeight">ライトウェイト</s:String>
     <s:String x:Key="LangDownloadModpackTypeHeavyWeight">ヘビーウェイト</s:String>
-    <s:String x:Key="LangDownloadModpackTypeOther">其它</s:String>
-    <s:String x:Key="LangDownloadResourcepackTypeTitleStyle">风格</s:String>
-    <s:String x:Key="LangDownloadResourcepackTypeVanillaLike">原版风</s:String>
-    <s:String x:Key="LangDownloadResourcepackTypeRealistic">写实风</s:String>
-    <s:String x:Key="LangDownloadResourcepackTypeModern">现代风</s:String>
-    <s:String x:Key="LangDownloadResourcepackTypeMedieval">中世纪</s:String>
-    <s:String x:Key="LangDownloadResourcepackTypeSteampunk">蒸汽朋克</s:String>
-    <s:String x:Key="LangDownloadResourcepackTypeThemed">主题化</s:String>
-    <s:String x:Key="LangDownloadResourcepackTypeSimplistic">简洁</s:String>
-    <s:String x:Key="LangDownloadResourcepackTypeDecoration">装饰</s:String>
-    <s:String x:Key="LangDownloadResourcepackTypeCombat">战斗</s:String>
-    <s:String x:Key="LangDownloadResourcepackTypeUtility">实用</s:String>
-    <s:String x:Key="LangDownloadResourcepackTypeTweaks">改良</s:String>
-    <s:String x:Key="LangDownloadResourcepackTypeCursed">神经病</s:String>
-    <s:String x:Key="LangDownloadResourcepackTypeTitleFeature">特性</s:String>
-    <s:String x:Key="LangDownloadResourcepackTypeEntities">含实体</s:String>
-    <s:String x:Key="LangDownloadResourcepackTypeAudio">含声音</s:String>
-    <s:String x:Key="LangDownloadResourcepackTypeFonts">含字体</s:String>
-    <s:String x:Key="LangDownloadResourcepackTypeModels">含模型</s:String>
-    <s:String x:Key="LangDownloadResourcepackTypeLocale">含语言</s:String>
-    <s:String x:Key="LangDownloadResourcepackTypeGUI">含 UI</s:String>
-    <s:String x:Key="LangDownloadResourcepackTypeCoreShader">核心着色器</s:String>
-    <s:String x:Key="LangDownloadResourcepackTypeDynamic">动态效果</s:String>
-    <s:String x:Key="LangDownloadResourcepackTypeModed">兼容 Mod</s:String>
-    <s:String x:Key="LangDownloadResourcepackTypeTitleResolution">分辨率</s:String>
-    <s:String x:Key="LangDownloadResourcepackTypeLowerThan8x">8x 或更低</s:String>
-    <s:String x:Key="LangDownloadResourcepackTypeHigherThan512x">512x 或更高</s:String>
-    <s:String x:Key="LangDownloadShaderTypeTitleStyle">风格</s:String>
-    <s:String x:Key="LangDownloadShaderTypeVanillaLike">原版风</s:String>
-    <s:String x:Key="LangDownloadShaderTypeFantasy">幻想风</s:String>
-    <s:String x:Key="LangDownloadShaderTypeRealistic">写实风</s:String>
-    <s:String x:Key="LangDownloadShaderTypeSemiRealistic">半写实风</s:String>
-    <s:String x:Key="LangDownloadShaderTypeCartoon">卡通风</s:String>
-    <s:String x:Key="LangDownloadShaderTypeTitleFeature">特性</s:String>
-    <s:String x:Key="LangDownloadShaderTypeVanilla">原版可用</s:String>
-    <s:String x:Key="LangDownloadShaderTypeVanillaToolTip">作为资源包加载，可以直接在原版游戏里使用。</s:String>
-    <s:String x:Key="LangDownloadShaderTypeColoredLighting">彩色光照</s:String>
-    <s:String x:Key="LangDownloadShaderTypePathTracing">路径追踪</s:String>
+    <s:String x:Key="LangDownloadModpackTypeOther">その他</s:String>
+    <s:String x:Key="LangDownloadResourcepackTypeTitleStyle">スタイル</s:String>
+    <s:String x:Key="LangDownloadResourcepackTypeVanillaLike">バニラ風</s:String>
+    <s:String x:Key="LangDownloadResourcepackTypeRealistic">リアル</s:String>
+    <s:String x:Key="LangDownloadResourcepackTypeModern">モダン</s:String>
+    <s:String x:Key="LangDownloadResourcepackTypeMedieval">中世の</s:String>
+    <s:String x:Key="LangDownloadResourcepackTypeSteampunk">スチームパンク</s:String>
+    <s:String x:Key="LangDownloadResourcepackTypeThemed">テーマ付き</s:String>
+    <s:String x:Key="LangDownloadResourcepackTypeSimplistic">単純な</s:String>
+    <s:String x:Key="LangDownloadResourcepackTypeDecoration">装飾</s:String>
+    <s:String x:Key="LangDownloadResourcepackTypeCombat">戦闘</s:String>
+    <s:String x:Key="LangDownloadResourcepackTypeUtility">ユーティリティ</s:String>
+    <s:String x:Key="LangDownloadResourcepackTypeTweaks">微調整</s:String>
+    <s:String x:Key="LangDownloadResourcepackTypeCursed">呪われた</s:String>
+    <s:String x:Key="LangDownloadResourcepackTypeTitleFeature">特徴</s:String>
+    <s:String x:Key="LangDownloadResourcepackTypeEntities">エンティティ</s:String>
+    <s:String x:Key="LangDownloadResourcepackTypeAudio">オーディオ</s:String>
+    <s:String x:Key="LangDownloadResourcepackTypeFonts">フォント</s:String>
+    <s:String x:Key="LangDownloadResourcepackTypeModels">モデル</s:String>
+    <s:String x:Key="LangDownloadResourcepackTypeLocale">ロケール</s:String>
+    <s:String x:Key="LangDownloadResourcepackTypeGUI">GUI</s:String>
+    <s:String x:Key="LangDownloadResourcepackTypeCoreShader">コアシェーダー</s:String>
+    <s:String x:Key="LangDownloadResourcepackTypeDynamic">アニメーション</s:String>
+    <s:String x:Key="LangDownloadResourcepackTypeModed">モッドサポート</s:String>
+    <s:String x:Key="LangDownloadResourcepackTypeTitleResolution">解像度</s:String>
+    <s:String x:Key="LangDownloadResourcepackTypeLowerThan8x">8x 以下</s:String>
+    <s:String x:Key="LangDownloadResourcepackTypeHigherThan512x">512x 以上</s:String>
+    <s:String x:Key="LangDownloadShaderTypeTitleStyle">スタイル</s:String>
+    <s:String x:Key="LangDownloadShaderTypeVanillaLike">バニラ風</s:String>
+    <s:String x:Key="LangDownloadShaderTypeFantasy">ファンタジー</s:String>
+    <s:String x:Key="LangDownloadShaderTypeRealistic">リアル</s:String>
+    <s:String x:Key="LangDownloadShaderTypeSemiRealistic">セミリアル</s:String>
+    <s:String x:Key="LangDownloadShaderTypeCartoon">カートゥーン</s:String>
+    <s:String x:Key="LangDownloadShaderTypeTitleFeature">特徴</s:String>
+    <s:String x:Key="LangDownloadShaderTypeVanilla">バニラ</s:String>
+    <s:String x:Key="LangDownloadShaderTypeVanillaToolTip">リソースパックとして読み込むことができ、バニラゲームで直接使用できます。</s:String>
+    <s:String x:Key="LangDownloadShaderTypeColoredLighting">カラー照明</s:String>
+    <s:String x:Key="LangDownloadShaderTypePathTracing">パストレーシング</s:String>
     <s:String x:Key="LangDownloadShaderTypePBR">PBR</s:String>
     <s:String x:Key="LangDownloadShaderTypeReflections">反射</s:String>
-    <s:String x:Key="LangDownloadShaderTypeTitleLoad">性能负荷</s:String>
-    <s:String x:Key="LangDownloadShaderTypePotato">极低</s:String>
-    <s:String x:Key="LangDownloadShaderTypeLow">低</s:String>
+    <s:String x:Key="LangDownloadShaderTypeTitleLoad">パフォーマンスへの影響</s:String>
+    <s:String x:Key="LangDownloadShaderTypePotato">ポテト</s:String>
+    <s:String x:Key="LangDownloadShaderTypeLow">低い</s:String>
     <s:String x:Key="LangDownloadShaderTypeMedium">中</s:String>
-    <s:String x:Key="LangDownloadShaderTypeHigh">高</s:String>
-    <s:String x:Key="LangDownloadDatapackTypeWorldgen">世界元素</s:String>
-    <s:String x:Key="LangDownloadDatapackTypeTechnology">科技</s:String>
-    <s:String x:Key="LangDownloadDatapackTypeGameMechanics">游戏机制</s:String>
-    <s:String x:Key="LangDownloadDatapackTypeTransportation">运输</s:String>
-    <s:String x:Key="LangDownloadDatapackTypeStorage">仓储</s:String>
+    <s:String x:Key="LangDownloadShaderTypeHigh">高い</s:String>
+    <s:String x:Key="LangDownloadDatapackTypeWorldgen">ワールド生成</s:String>
+    <s:String x:Key="LangDownloadDatapackTypeTechnology">テクノロジー</s:String>
+    <s:String x:Key="LangDownloadDatapackTypeGameMechanics">ゲームメカニクス</s:String>
+    <s:String x:Key="LangDownloadDatapackTypeTransportation">輸送</s:String>
+    <s:String x:Key="LangDownloadDatapackTypeStorage">倉庫</s:String>
     <s:String x:Key="LangDownloadDatapackTypeMagic">魔法</s:String>
-    <s:String x:Key="LangDownloadDatapackTypeAdventure">冒险</s:String>
-    <s:String x:Key="LangDownloadDatapackTypeFantasy">幻想</s:String>
-    <s:String x:Key="LangDownloadDatapackTypeDecoration">装饰</s:String>
-    <s:String x:Key="LangDownloadDatapackTypeMobs">生物</s:String>
-    <s:String x:Key="LangDownloadDatapackTypeUtility">实用</s:String>
-    <s:String x:Key="LangDownloadDatapackTypeEquipment">装备与工具</s:String>
-    <s:String x:Key="LangDownloadDatapackTypeOptimization">性能优化</s:String>
-    <s:String x:Key="LangDownloadDatapackTypeSocial">服务器</s:String>
-    <s:String x:Key="LangDownloadDatapackTypeLibrary">支持库</s:String>
-    <s:String x:Key="LangDownloadDatapackTypeMod">Mod 相关</s:String>
-    <s:String x:Key="LangDownloadModpackConnectModrinthFail">Modrinth に接続できません。現在は CurseForge からのみ内容を表示しています。結果が完全でない可能性があります。
-ネットワーク改善のために VPN やプロキシを使用することを試みてください。</s:String>
-    <s:String x:Key="LangDownloadModpackConnectCurseForge">CurseForge に接続できません。現在は Modrinth からのみ内容を表示しています。結果が完全でない可能性があります。
-ネットワーク改善のために VPN やプロキシを使用することを試みてください。</s:String>
+    <s:String x:Key="LangDownloadDatapackTypeAdventure">冒険</s:String>
+    <s:String x:Key="LangDownloadDatapackTypeFantasy">ファンタジー</s:String>
+    <s:String x:Key="LangDownloadDatapackTypeDecoration">装飾</s:String>
+    <s:String x:Key="LangDownloadDatapackTypeMobs">モブ</s:String>
+    <s:String x:Key="LangDownloadDatapackTypeUtility">ユーティリティ</s:String>
+    <s:String x:Key="LangDownloadDatapackTypeEquipment">装備とツール</s:String>
+    <s:String x:Key="LangDownloadDatapackTypeOptimization">パフォーマンス最適化</s:String>
+    <s:String x:Key="LangDownloadDatapackTypeSocial">サーバー</s:String>
+    <s:String x:Key="LangDownloadDatapackTypeLibrary">ライブラリ</s:String>
+    <s:String x:Key="LangDownloadDatapackTypeMod">モッドサポート</s:String>
+    <s:String x:Key="LangDownloadModpackConnectModrinthFail">Modrinth に接続できませんでした。CurseForge のコンテンツのみが表示されています。検索結果が不完全な可能性があります。
+インターネット接続を確認し、再試行してください。</s:String>
+    <s:String x:Key="LangDownloadModpackConnectCurseForge">CurseForge に接続できませんでした。Modrinth のコンテンツのみが表示されています。検索結果が不完全な可能性があります。
+インターネット接続を確認し、再試行してください。</s:String>
     <s:String x:Key="LangMySkinSave">名前を付けて保存</s:String>
     <s:String x:Key="LangMySkinRefresh">リフレッシュ</s:String>
     <s:String x:Key="LangMySkinChange">スキンを変更</s:String>
@@ -694,6 +689,10 @@
     <s:String x:Key="LangMySkinCapeNameHome">「ホーム」ケープ</s:String>
     <s:String x:Key="LangMySkinCapeNameMenace">「インベージョン」ケープ</s:String>
     <s:String x:Key="LangMySkinCapeNameYearn">渴望披风</s:String>
+    <s:String x:Key="LangMySkinCapeNameCommon">普通披风</s:String>
+    <s:String x:Key="LangMySkinCapeNamePan">薄煎饼披风</s:String>
+    <s:String x:Key="LangMySkinCapeNameFounders">创始人披风</s:String>
+    <s:String x:Key="LangMySkinCapeNameCopper">铜披风</s:String>
     <s:String x:Key="LangMySkinCapeNameNone">カペなし</s:String>
     <s:String x:Key="LangLaunchLeftInstanceChoose">バージョン選択</s:String>
     <s:String x:Key="LangLaunchLeftInstanceConfig">バージョン設定</s:String>
@@ -711,7 +710,6 @@
     <s:String x:Key="LangLaunchLeftStageDownload">ダウンロード速度</s:String>
     <s:String x:Key="LangLaunchLeftTip">知っていますか</s:String>
     <s:String x:Key="LangLaunchLeftInit">初期化</s:String>
-    <s:String x:Key="LangLaunchLeftAccountOfflineLinkLogin">オフラインリンクログイン</s:String>
     <s:String x:Key="LangLaunchLeftAccountOfflineLogin">オフラインログイン</s:String>
     <s:String x:Key="LangLaunchLeftAccountMicrosoftLogin">正規版ログイン</s:String>
     <s:String x:Key="LangLaunchLeftAccountUnifiedPassLogin">統一パスワードログイン</s:String>
@@ -801,7 +799,7 @@
     <s:String x:Key="LangPageOtherHelpLoading">ヘルプリストの読み込み中</s:String>
     <s:String x:Key="LangPageOtherHelpSimpleChineseOnly">申し訳ありませんが、ヘルプライブラリは現在簡体中国語のみサポートしています</s:String>
     <s:String x:Key="LangPageOtherRefreshing">リフレッシュ中……</s:String>
-    <s:String x:Key="LangPageOtherDialogFeedbackContent">フィードバックリストのウェブページを開きますか？</s:String>
+    <s:String x:Key="LangPageOtherDialogFeedbackContent">新しいフィードバックを送信する前に、フィードバックリストで類似の問題がないか確認し、重複した送信を避けてください。</s:String>
     <s:String x:Key="LangPageOtherDialogFeedbackTitle">フィードバックのヒント</s:String>
     <s:String x:Key="LangPageOtherDialogFeedbackBtn1">新しいフィードバックを提出</s:String>
     <s:String x:Key="LangPageOtherDialogFeedbackBtn2">フィードバックリストを表示</s:String>
@@ -810,8 +808,8 @@
     <s:String x:Key="LangPageOtherDialogVoteBtn1">開く</s:String>
     <s:String x:Key="LangPageOtherAboutAbout">について</s:String>
     <s:String x:Key="LangPageOtherAboutAboutAuthor">龍騰猫躍</s:String>
-    <s:String x:Key="LangPageOtherAboutAboutAuthorSubtitle">Plain Craft Launcher の作者です！</s:String>
-    <s:String x:Key="LangPageOtherAboutAboutAuthorBtn">作者をサポート</s:String>
+    <s:String x:Key="LangPageOtherAboutAboutAuthorSubtitle">Plain Craft Launcher の開発者！</s:String>
+    <s:String x:Key="LangPageOtherAboutAboutAuthorBtn">PCL をサポートする</s:String>
     <s:String x:Key="LangPageOtherAboutAboutVersionSubtitle">現在のバージョン：%VERSION%（%VERSIONCODE%.%BRANCH%）</s:String>
     <s:String x:Key="LangPageOtherAboutAboutVersionBtn">オープンソースコード</s:String>
     <s:String x:Key="LangPageOtherAboutThanks">特別感謝</s:String>
@@ -821,8 +819,8 @@
     <s:String x:Key="LangPageOtherAboutThanksMCMod">Mod 名前の中国語訳とより多くの情報を提供しています！</s:String>
     <s:String x:Key="LangPageOtherAboutThanksMCModBtn">百科を開く</s:String>
     <s:String x:Key="LangPageOtherAboutThanks00ll00">Java Launch Wrapper といくつかの重要なサービスサポートを提供しています！</s:String>
-    <s:String x:Key="LangPageOtherAboutThanksz0z0r4">MCIM 中国 Mod ダウンロードミラーソースとヘルプライブラリ図床を提供しています！</s:String>
-    <s:String x:Key="LangPageOtherAboutThanksz0z0r4Detail">MCIM 主页</s:String>
+    <s:String x:Key="LangPageOtherAboutThanksz0z0r4">MCIM コミュニティリソースのミラーソースとヘルプライブラリの画像ホスティングを提供しています！</s:String>
+    <s:String x:Key="LangPageOtherAboutThanksz0z0r4Detail">MCIM ホームページ</s:String>
     <s:String x:Key="LangPageOtherAboutThanksPatrick">PCL アイコンをデザインし、作成しました、アイコン作りの苦しみから解放してくれました……</s:String>
     <s:String x:Key="LangPageOtherAboutThanksHao_Tian">内測中に誰も予想しなかった奇妙なバグを大量に見つけ出し、特別なバグ体質を持っています</s:String>
     <s:String x:Key="LangPageOtherAboutThanksMCBBSTitle">Minecraft 中文論壇</s:String>
@@ -830,7 +828,7 @@
     <s:String x:Key="LangPageOtherAboutThanksUsersTitle">PCL 内群の皆さん</s:String>
     <s:String x:Key="LangPageOtherAboutThanksUsers">内群の皆さんに感謝します、ここまで PCL と私を支えてくれて、応援してくれて！</s:String>
     <s:String x:Key="LangPageOtherAboutSponsors">スポンサー</s:String>
-    <s:String x:Key="LangPageOtherAboutSponsorsSubtitle">2025年3月の上級スポンサーの皆様です！PCLと偉大なる「先延ばし」プロジェクトへのご支援、誠にありがとうございます！</s:String>
+    <s:String x:Key="LangPageOtherAboutSponsorsSubtitle">以下は先月の上級スポンサーです！PCLへのサポートに感謝します！</s:String>
     <s:String x:Key="LangPageOtherAboutSponsorsCreateUnlockCode">アンロックコード生成</s:String>
     <s:String x:Key="LangPageOtherAboutSponsorsDonate">作者をサポート</s:String>
     <s:String x:Key="LangPageOtherAboutSponsorsCopyUUID">識別コードをコピー</s:String>
@@ -840,12 +838,13 @@
     <s:String x:Key="LangPageOtherAboutLicenseDoc">ライセンスドキュメントを閲覧</s:String>
     <s:String x:Key="LangPageOtherAboutLicenseWeb">ソースウェブサイトを閲覧</s:String>
     <s:String x:Key="LangPageOtherAboutLawInfoAgreement">利用規約と免責事項</s:String>
-    <s:String x:Key="LangPageOtherAboutLawInfoTelemetryTitle">匿名数据收集</s:String>
-    <s:String x:Key="LangPageOtherAboutLawInfoTelemetryContent">当下载失败、PCL 出错、游戏崩溃等事件时，PCL 会匿名上报信息，以通知龙猫 “哦吼，出错了”，让龙猫能更好地修 Bug……（PCL 不会上传或收集任何个人信息，包括上报的东西里面也没有！）
-你可以在 设置 → 其他 → 启动器 中关闭上报，不过龙猫就不知道你遇到了什么 Bug 了……</s:String>
-    <s:String x:Key="LangPageOtherAboutLawInfoPrivacyTitle">プライバシーに関する説明</s:String>
-    <s:String x:Key="LangPageOtherAboutLawInfoPrivacyContent">このソフトウェアの User Agent にはランチャーのバージョン番号が含まれており、各バージョンのユーザー数を統計するために使用されます。
-それ以外に、このソフトウェアは開発者にいかなるその他の情報を送信することはありません。</s:String>
+    <s:String x:Key="LangPageOtherAboutLawInfoTelemetryTitle">匿名テレメトリ</s:String>
+    <s:String x:Key="LangPageOtherAboutLawInfoTelemetryContent">ダウンロードに失敗したり、PCLがエラーを投げたり、ゲームがクラッシュした場合、PCLは匿名のテレメトリを送信してLTCatに通知します（「おっと、何かがうまくいかなかった」）。これにより、LTCatはバグをより効果的に修正できます。（PCLは個人情報をアップロードしたり収集したりすることはありません—テレメトリには個人情報は含まれていません。）
+
+「設定 → その他 → ランチャー」の下でテレメトリを無効にすることができますが、その場合、LTCatはどのバグに遭遇したかを知ることができません。</s:String>
+    <s:String x:Key="LangPageOtherAboutLawInfoPrivacyTitle">プライバシーポリシーと個人情報保護方針</s:String>
+    <s:String x:Key="LangPageOtherAboutLawInfoPrivacyContent">PCLは個人情報を収集しないため、ここに含めるべきものは基本的にありません。
+このセクションは、PCLが個人情報を収集しないことをお知らせするためだけに残されています。</s:String>
     <s:String x:Key="LangPageOtherAboutLawInfoOtherTitle">その他の情報</s:String>
     <s:String x:Key="LangPageOtherAboutLawInfoOtherContent">Copyright © 龍騰猫躍 2016. All Rights Reserved.
 コンピュータソフトウェア著作権登録番号：2020SR0875133
@@ -916,7 +915,7 @@ MINECRAFT の公式製品ではありません。MOJANG または MICROSOFT の�
     <s:String x:Key="LangPageSetupLaunchLaunchJavaAutoSearch">自動検索</s:String>
     <s:String x:Key="LangPageSetupLaunchLaunchJavaImport">手動インポート</s:String>
     <s:String x:Key="LangPageSetupLaunchLaunchMem">ゲームメモリ</s:String>
-    <s:String x:Key="LangPageSetupLaunchLaunchMem32BitWarn">32ビットJavaは最大1GBしかメモリを割り当てられません、64ビットJavaのインストールを推奨します！</s:String>
+    <s:String x:Key="LangPageSetupLaunchLaunchMem32BitWarn">32ビットのJavaでは最大で1GBのメモリしか割り当てられません。64ビットのJavaに切り替えることを強くお勧めします！</s:String>
     <s:String x:Key="LangPageSetupLaunchLaunchMemAutoAdjust">自動設定</s:String>
     <s:String x:Key="LangPageSetupLaunchLaunchMemAutoAdjustToolTip">インストールしたModの量とコンピュータの残りメモリに基づいて、ゲームに割り当てるメモリを動的に調整します</s:String>
     <s:String x:Key="LangPageSetupLaunchLaunchMemCustom">カスタム</s:String>
@@ -927,12 +926,14 @@ PCLを--memoryパラメータ付きで起動すると、静かにメモリ最適
     <s:String x:Key="LangPageSetupLaunchLaunchMemUsedMem">使用済みメモリ</s:String>
     <s:String x:Key="LangPageSetupLaunchLaunchMemMemForGame">ゲームに割り当て</s:String>
     <s:String x:Key="LangPageSetupLaunchLaunchAdvanceOptions">高度な起動オプション</s:String>
-    <s:String x:Key="LangPageSetupLaunchLaunchAdvanceOptionsJVMHead">JVM パラメータヘッダー</s:String>
-    <s:String x:Key="LangPageSetupLaunchLaunchAdvanceOptionsJVMHeadTops">Minecraft起動時に使用する追加のJVMパラメータです。自信がない場合は変更しないでください。</s:String>
+    <s:String x:Key="LangPageSetupLaunchLaunchAdvanceOptionsJVMHead">JVM パラメータ</s:String>
+    <s:String x:Key="LangPageSetupLaunchLaunchAdvanceOptionsJVMHeadTops">Minecraftを起動する際に使用する追加のJVMパラメーターは、確信がない限り変更しないでください。
+MinecraftバージョンのJSONにおける文字列置換マーカー（例えば ${library_directory}）をサポートしています。</s:String>
     <s:String x:Key="LangPageSetupLaunchLaunchAdvanceOptionsJVMHeadReset">还原</s:String>
-    <s:String x:Key="LangPageSetupLaunchLaunchAdvanceOptionsJVMTail">JVM パラメータフッター</s:String>
+    <s:String x:Key="LangPageSetupLaunchLaunchAdvanceOptionsJVMTail">ゲームパラメータ</s:String>
     <s:String x:Key="LangPageSetupLaunchLaunchAdvanceOptionsJVMTailTip">このテキストボックスに入力した内容は、起動パラメータの末尾に直接追加されます。
-例えば、--demoと入力すると、デモモードでゲームが起動します。</s:String>
+例えば、--demoと入力すると、デモモードでゲームが起動します。
+MinecraftバージョンのJSONにおける文字列置換マーカー（例えば ${library_directory}）をサポートしています。</s:String>
     <s:String x:Key="LangPageSetupLaunchLaunchAdvanceOptionsCommandBeforeStart">起動前に実行するコマンド</s:String>
     <s:String x:Key="LangPageSetupLaunchLaunchAdvanceOptionsCommandBeforeStartTip">MC起動前に特定のコマンドまたはプログラムを実行します。Windowsのコマンドプロンプトの構文と同じです。
 
@@ -966,12 +967,12 @@ PCLを--memoryパラメータ付きで起動すると、静かにメモリ最適
 
 関連ファイルを変更していない場合、このオプションをチェックしないでください。</s:String>
     <s:String x:Key="LangPageSetupLaunchLaunchAdvanceOptionsDisableJLW">Java Launch Wrapperを無効にする</s:String>
-    <s:String x:Key="LangPageSetupLaunchLaunchAdvanceOptionsDisableJLWToolTip">PCL 会使用 Java Launch Wrapper 来修复老版本 Java 在中文路径下无法启动的问题。
-如果这被反作弊拦截，或遇到其他问题，也可以将其关闭。</s:String>
-    <s:String x:Key="LangPageSetupLaunchLaunchAdvanceOptionsGPUPerfence">要求 Java 使用高性能显卡</s:String>
-    <s:String x:Key="LangPageSetupLaunchLaunchAdvanceOptionsGPUPerfenceToolTip">自动在 Windows 设置 → 系统 → 屏幕 → 显示卡 中将 Java 改为使用高性能显卡。
-如果电脑同时有集显和独显，这能确保 MC 使用独显进行渲染，以大幅提高性能。</s:String>
-    <s:String x:Key="LangPageSetupLaunchGotoVersionSetting">版本独立设置</s:String>
+    <s:String x:Key="LangPageSetupLaunchLaunchAdvanceOptionsDisableJLWToolTip">PCLは、古いバージョンのJavaが中国語のパスで起動できない問題を修正するために、Java Launch Wrapperを使用します。
+もしこれがアンチチートにブロックされるか、他の問題が発生した場合は、無効にすることもできます。</s:String>
+    <s:String x:Key="LangPageSetupLaunchLaunchAdvanceOptionsGPUPerfence">Java に高性能グラフィックカードを使用するように要求する</s:String>
+    <s:String x:Key="LangPageSetupLaunchLaunchAdvanceOptionsGPUPerfenceToolTip">Windows の設定 → システム → ディスプレイ → グラフィックカード の中で、Java が高性能グラフィックカードを使用するように自動的に設定します。
+PC に内蔵グラフィックと専用グラフィックの両方がある場合、これにより Minecraft が専用グラフィックカードを使用してレンダリングを行い、パフォーマンスが大幅に向上します。</s:String>
+    <s:String x:Key="LangPageSetupLaunchGotoVersionSetting">インスタンス独立設定</s:String>
     <s:String x:Key="LangPageSetupLaunchReloadByError">起動設定に異常があり、自動的にリセットされました</s:String>
     <s:String x:Key="LangPageSetupLaunchReloadFail">起動設定のリロードに失敗しました</s:String>
     <s:String x:Key="LangPageSetupLaunchInit">起動設定を初期化しました！</s:String>
@@ -996,15 +997,15 @@ HDDを使用している場合、一時的な重い遅延が発生する可能�
 PCLを起動するたびに、管理者権限の申請が必要です。
 自動的に権限を与えるには、PCLを右クリックし、プロパティ → 兼容性 → 管理者としてこのプログラムを実行するを選択します。</s:String>
     <s:String x:Key="LangPageSetupLaunchMemReduceDialogEnableTitle">注意</s:String>
-    <s:String x:Key="LangPageSetupLeftGame">ゲーム</s:String>
+    <s:String x:Key="LangPageSetupLeftGame">起動</s:String>
     <s:String x:Key="LangPageSetupLeftPersonalize">パーソナライズ</s:String>
-    <s:String x:Key="LangPageSetupLeftLaunch">ランチャー</s:String>
+    <s:String x:Key="LangPageSetupLeftLaunch">その他</s:String>
     <s:String x:Key="LangPageSetupLeftLink">オンライン</s:String>
     <s:String x:Key="LangPageSetupLeftReset">このページの設定を初期化</s:String>
-    <s:String x:Key="LangPageSetupLeftDialogResetGameConfirmContent">ゲームページのすべての設定を初期化してもよろしいですか？この操作は取り消せません。</s:String>
-    <s:String x:Key="LangPageSetupLeftDialogResetLaunchConfirmContent">ランチャーぺージのすべての設定を初期化してもよろしいですか？この操作は取り消せません。</s:String>
+    <s:String x:Key="LangPageSetupLeftDialogResetGameConfirmContent">起動ページのすべての設定を初期化してもよろしいですか？この操作は取り消せません。</s:String>
+    <s:String x:Key="LangPageSetupLeftDialogResetLaunchConfirmContent">その他ぺージのすべての設定を初期化してもよろしいですか？この操作は取り消せません。</s:String>
     <s:String x:Key="LangPageSetupLeftDialogResetPersonalizeConfirmContent">パーソナライズページのすべての設定を初期化してもよろしいですか？この操作は取り消せません。
-（背景画像と音楽、カスタムホームなど外部ファイルは削除されません）</s:String>
+（背景画像と音楽、ホームなど外部ファイルは削除されません）</s:String>
     <s:String x:Key="LangPageSetupLeftDialogResetLinkConfirmContent">オンラインページのすべての設定を初期化してもよろしいですか？この操作は取り消せません。</s:String>
     <s:String x:Key="LangPageSetupLeftDialogResetTitle">初期化を確認</s:String>
     <s:String x:Key="LangPageSetupSystemDownload">ダウンロード</s:String>
@@ -1013,14 +1014,13 @@ PCLを起動するたびに、管理者権限の申請が必要です。
     <s:String x:Key="LangPageSetupSystemDownloadVersionListSourceA">ミラーソースを優先使用（読み込みが速いが、最新ではない可能性がある）</s:String>
     <s:String x:Key="LangPageSetupSystemDownloadVersionListSourceB">公式ソースの読み込みが遅い場合のみミラーソースを使用</s:String>
     <s:String x:Key="LangPageSetupSystemDownloadVersionListSourceC">公式ソースを優先使用（最新バージョンを保証するが、読み込みが遅い）</s:String>
-    <s:String x:Key="LangPageSetupSystemDownloadModFileName">Modファイル名の命名規則</s:String>
-    <s:String x:Key="LangPageSetupSystemDownloadModFileNameToolTip">ダウンロードするModのデフォルトファイル名において、中国語訳の名前をどこに配置するかを決定します。
-このオプションは簡体中国語に設定されている場合にのみ有効です。</s:String>
-    <s:String x:Key="LangPageSetupSystemDownloadModFileNameA">訳名をファイル名の先頭に：[遺物] relics-0.1.14</s:String>
-    <s:String x:Key="LangPageSetupSystemDownloadModFileNameB">訳名をファイル名の先頭に：遺物-relics-0.1.14</s:String>
-    <s:String x:Key="LangPageSetupSystemDownloadModFileNameC">訳名をファイル名の末尾に：relics-0.1.14-遺物</s:String>
-    <s:String x:Key="LangPageSetupSystemDownloadModFileNameD">中国語訳名を追加しない：relics-0.1.14</s:String>
-    <s:String x:Key="LangPageSetupSystemDownloadModFileNameE">【遗物】relics-0.1.14</s:String>
+    <s:String x:Key="LangPageSetupSystemDownloadModFileName">ファイル名の形式</s:String>
+    <s:String x:Key="LangPageSetupSystemDownloadModFileNameToolTip">コミュニティリソースをダウンロードする際のデフォルトのファイル名形式</s:String>
+    <s:String x:Key="LangPageSetupSystemDownloadModFileNameA">[机械动力] create-1.21.1-6.0.4</s:String>
+    <s:String x:Key="LangPageSetupSystemDownloadModFileNameB">机械动力-create-1.21.1-6.0.4</s:String>
+    <s:String x:Key="LangPageSetupSystemDownloadModFileNameC">create-1.21.1-6.0.4-机械动力</s:String>
+    <s:String x:Key="LangPageSetupSystemDownloadModFileNameD">create-1.21.1-6.0.4</s:String>
+    <s:String x:Key="LangPageSetupSystemDownloadModFileNameE">【机械动力】create-1.21.1-6.0.4</s:String>
     <s:String x:Key="LangPageSetupSystemDownloadThread">最大スレッド数</s:String>
     <s:String x:Key="LangPageSetupSystemDownloadThreadToolTip">スレッド数が多いほど、速度制限のあるファイルのダウンロードが速くなりますが、スレッド数が多すぎるとダウンロード時に非常に重くなる可能性があります。
 一般的に、64スレッドで十分なダウンロード速度が確保できます。</s:String>
@@ -1032,8 +1032,9 @@ PCLを起動するたびに、管理者権限の申請が必要です。
     <s:String x:Key="LangPageSetupSystemDownloadKeepModpackArchive">インストール時にオリジナルの圧縮ファイルを保持</s:String>
     <s:String x:Key="LangPageSetupSystemDownloadKeepModpackArchiveToolTip">インストール時に、バージョンフォルダ下にインストール用のオリジナル圧縮ファイルを保持します。</s:String>
     <s:String x:Key="LangPageSetupSystemDownloadIgnoreQuiltDisplay">Modローダーを表示する際にQuiltを無視する。</s:String>
-    <s:String x:Key="LangPageSetupSystemDownloadSSL">SSL証明書の検証</s:String>
-    <s:String x:Key="LangPageSetupSystemDownloadSSLToolTip">検証を有効にすると、セキュリティが向上し、アカウント盗難のリスクが低下します（#2767参照）。ただし、正規版のログインに失敗する可能性もあります（#3018参照）。</s:String>
+    <s:String x:Key="LangPageSetupSystemDownloadSSL">Microsoftログイン用のSSL証明書を検証する</s:String>
+    <s:String x:Key="LangPageSetupSystemDownloadSSLToolTip">検証を有効にするとセキュリティは向上しますが、正規ログインが失敗する可能性があります（#3018を参照）。
+ログインが「SSL/TLS セキュリティ チャネルの信頼関係を確立できませんでした」で失敗する場合は、このオプションを無効にすることを検討してください。</s:String>
     <s:String x:Key="LangPageSetupSystemDownloadAccessibility">アクセシビリティ</s:String>
     <s:String x:Key="LangPageSetupSystemDownloadAccessibilityRemindGameUpdate">ゲーム更新の通知</s:String>
     <s:String x:Key="LangPageSetupSystemDownloadAccessibilityRemindGameUpdateBeta">ベータ版更新の通知</s:String>
@@ -1042,7 +1043,7 @@ PCLを起動するたびに、管理者権限の申請が必要です。
     <s:String x:Key="LangPageSetupSystemDownloadAccessibilityRemindGameUpdateReleaseToolTip">Minecraft正式版の更新時に通知を表示します。</s:String>
     <s:String x:Key="LangPageSetupSystemDownloadAccessibilitySetGameLanguage">ゲーム言語の設定</s:String>
     <s:String x:Key="LangPageSetupSystemDownloadAccessibilityAutoSetGameLanguage">ゲーム言語を自動調整</s:String>
-    <s:String x:Key="LangPageSetupSystemSystem">システム</s:String>
+    <s:String x:Key="LangPageSetupSystemSystem">ランチャー</s:String>
     <s:String x:Key="LangPageSetupSystemSystemLaunchUpdate">ランチャーの更新</s:String>
     <s:String x:Key="LangPageSetupSystemSystemLaunchUpdateA">新バージョンがある場合は自動的にダウンロード</s:String>
     <s:String x:Key="LangPageSetupSystemSystemLaunchUpdateB">新バージョンがある場合は通知を表示</s:String>
@@ -1063,9 +1064,9 @@ PCLを起動するたびに、管理者権限の申請が必要です。
     <s:String x:Key="LangPageSetupSystemLangWarn">翻訳の正確性は100%保証されません。言語を変更した後はPCLを再起動する必要があります。</s:String>
     <s:String x:Key="LangPageSetupSystemDebug">デバッグオプション</s:String>
     <s:String x:Key="LangPageSetupSystemDebugAnimSpeed">アニメーション速度</s:String>
-    <s:String x:Key="LangPageSetupSystemDebugNotCopyExistFileWhenDownload">ダウンロード時に既存のファイルをコピーしない</s:String>
-    <s:String x:Key="LangPageSetupSystemDebugNotCopyExistFileWhenDownloadToolTip">ダウンロード時に既存のファイルを直接コピーせず、ファイルを再ダウンロードします。
-テストダウンロード速度の際にのみ有効にすることをお勧めします。</s:String>
+    <s:String x:Key="LangPageSetupSystemDebugNotCopyExistFileWhenDownload">ダウンロード時に他のフォルダーからファイルをコピーすることを禁止する</s:String>
+    <s:String x:Key="LangPageSetupSystemDebugNotCopyExistFileWhenDownloadToolTip">ダウンロード中に他のMinecraftフォルダーから既存の同一ファイルを直接コピーせず、代わりにファイルを再ダウンロードしてください。
+これはダウンロード速度をテストする場合にのみ有効にすることを推奨します。</s:String>
     <s:String x:Key="LangPageSetupSystemDebugDebugMode">デバッグモード</s:String>
     <s:String x:Key="LangPageSetupSystemDebugDebugModeToolTip">デバッグ情報とより多くのエラーメッセージを表示します。
 ランチャーのパフォーマンスがわずかに低下するため、特別な必要がない限りは有効にしないことをお勧めします。</s:String>
@@ -1094,7 +1095,7 @@ PCLを起動するたびに、管理者権限の申請が必要です。
 サーバーの統合パックを作成している場合や、ランチャーを頻繁に手動更新している場合を除いて、このオプションはお勧めしません！</s:String>
     <s:String x:Key="LangPageSetupSystemSystemLaunchUpdateFail">ランチャーの更新確認に失敗しました</s:String>
     <s:String x:Key="LangPageSetupSystemDownloadModListSource">Mod情報の取得</s:String>
-    <s:String x:Key="LangPageSetupSystemDownloadModListSourceA">ミラーソースを優先使用</s:String>
+    <s:String x:Key="LangPageSetupSystemDownloadModListSourceA">ミラーソースを優先使用（新しいバージョンがまだない場合があります）</s:String>
     <s:String x:Key="LangPageSetupSystemDownloadModListSourceB">公式ソースの読み込みが遅い場合のみミラーソースを使用</s:String>
     <s:String x:Key="LangPageSetupSystemDownloadModListSourceC">公式ソースを優先使用</s:String>
     <s:String x:Key="LangPageSetupSystemDialogContentLanguageRestart">PCLは言語の切り替えを完全に適用するために再起動します</s:String>
@@ -1252,32 +1253,33 @@ Modローダーを既にインストールしている場合は、おそらく�
 本当に現在の設定を上書きする必要がありますか？</s:String>
     <s:String x:Key="LangPageVersionSetupDialogLittleSkinTitle">設定上書き確認</s:String>
     <s:String x:Key="LangPageVersionSetupLittleSkinLogin">LittleSkinログイン</s:String>
-    <s:String x:Key="LangPageVersionSetupTips">このページの設定は現在のバージョンに対してのみ有効です。これは統合パックの作成に役立つはずです。
-また、設定ページで全てのバージョンに適用されるグローバル設定を変更することもできます。</s:String>
-    <s:String x:Key="LangPageVersionSetupUseGlobal">グローバル設定を使用</s:String>
+    <s:String x:Key="LangPageVersionSetupTips">このページの設定は、現在のインスタンスにのみ適用されます。</s:String>
+    <s:String x:Key="LangPageVersionSetupUseGlobal">グローバル設定に従う</s:String>
     <s:String x:Key="LangPageVersionSetupEnable">有効にする</s:String>
     <s:String x:Key="LangPageVersionSetupDisable">無効にする</s:String>
-    <s:String x:Key="LangPageSetupLaunchLaunchWindowTitleInstanceToolTip">自定义StaticResource，若留空则跟随全局设置的值。
-支持以下替换标记：
- · {user}：玩家名字
- · {login}：玩家的登录方式
- · {name}：游戏版本名
- · {date}、{time}：当前的系统时间
- · {version}：游戏对应的原版版本号</s:String>
-    <s:String x:Key="LangPageSetupLaunchLaunchVersionIsolationInstance">版本隔离</s:String>
-    <s:String x:Key="LangPageSetupLaunchLaunchVersionIsolationInstanceEnableToolTip">与其他版本的存档、Mod 等文件相互独立，互不干涉。
-这会使你无法跨版本共享存档，但可以规避 Mod 冲突问题。</s:String>
+    <s:String x:Key="LangPageSetupLaunchLaunchWindowTitleInstanceToolTip">StaticResourceをカスタマイズできます。空欄の場合はグローバル設定の値に従います。
+以下の置換マーカーをサポートしています：
+ · {user}：プレイヤー名
+ · {login}：プレイヤーのログイン方法
+ · {name}：ゲームバージョン名
+ · {date}、{time}：現在のシステム日時
+ · {version}：ゲームに対応する公式バージョン番号</s:String>
+    <s:String x:Key="LangPageSetupLaunchLaunchVersionIsolationInstance">インスタンス分離</s:String>
+    <s:String x:Key="LangPageSetupLaunchLaunchVersionIsolationInstanceEnableToolTip">セーブデータ、MOD、およびその他のファイルは、他のインスタンスから分離され、干渉がありません。
+これによりインスタンス間でのセーブデータ共有は防止されますが、MODの競合を効果的に回避できます。</s:String>
     <s:String x:Key="LangPageVersionSetupIndieDisable">他の未有効化のバージョンと同じアーカイブを使用し、アーカイブ、Modなどは共通です。
 ForgeまたはFabricの異なるバージョンが存在する場合、Modとバージョンの競合により未知の問題が発生する可能性があります。</s:String>
-    <s:String x:Key="LangPageSetupLaunchLaunchVersionIsolationInstanceDisableToolTip">与其余关闭隔离的版本共享存档、Mod 等文件。
-若存在多个安装了 Mod 的版本，可能会由于 Mod 冲突而导致崩溃。</s:String>
+    <s:String x:Key="LangPageSetupLaunchLaunchVersionIsolationInstanceDisableToolTip">セーブデータ、MOD、およびその他のファイルを、非分離の他のインスタンスと共有します。
+複数のMODがインストールされたインスタンスが存在する場合、MODの競合によりクラッシュが発生する可能性があります。</s:String>
     <s:String x:Key="LangPageVersionSetupIndieEnable">このバージョンのアーカイブ、Modなどを他のバージョンから独立させ、互いに干渉しないようにします</s:String>
-    <s:String x:Key="LangPageVersionSetupAdvanceOptionsJVMHeadToolTip">启动 Minecraft 时使用的额外 JVM 参数，在没有确定把握的情况下请不要尝试修改。
-若留空，则跟随全局设置的值。</s:String>
-    <s:String x:Key="LangPageVersionSetupAdvanceOptionsJVMTailToolTip">文本框中的内容将会被直接拼合在启动参数的末尾。
-例如输入 --demo 则会以试玩模式启动游戏。
-若留空，则跟随全局设置的值。</s:String>
-    <s:String x:Key="LangPageVersionSetupGotoGlobalSetting">全局设置</s:String>
+    <s:String x:Key="LangPageVersionSetupAdvanceOptionsJVMHeadToolTip">追加のJVMパラメーターでMinecraftを起動します。自信がない場合は変更しないでください。
+MinecraftバージョンJSONの文字列置換マーカー（例：${library_directory}）をサポートしています。
+空欄の場合は、グローバル設定の値が使用されます。</s:String>
+    <s:String x:Key="LangPageVersionSetupAdvanceOptionsJVMTailToolTip">テキストボックスの内容は、起動引数の末尾に直接追加されます。
+例えば、「--demo」と入力すると、ゲームはデモモードで起動します。
+MinecraftバージョンJSONの文字列置換マーカー（例：${library_directory}）をサポートしています。
+空欄の場合は、グローバル設定の値が使用されます。</s:String>
+    <s:String x:Key="LangPageVersionSetupGotoGlobalSetting">グローバル設定</s:String>
     <s:String x:Key="LangPageVersionSetupServer">サーバー</s:String>
     <s:String x:Key="LangPageVersionSetupServerLogin">ログイン方法</s:String>
     <s:String x:Key="LangPageVersionSetupServerLoginOnlineOrOffline">正規ログインまたはオフラインログイン</s:String>
@@ -1339,12 +1341,11 @@ MC起動前に特定のコマンドまたはプログラムを実行します。
     <s:String x:Key="LangModMainExceptionNoHelpFound">利用可能なヘルプが見つかりませんでした；ヘルプページが必要ない場合は、設定 → パーソナライズ → 機能の非表示 で非表示にできます</s:String>
     <s:String x:Key="LangModMainExceptionNoFileFound">未找到帮助文件：{0}</s:String>
     <s:String x:Key="LangModMainExceptionNoTitleArgFound">未找到 Title 项</s:String>
-    <s:String x:Key="LangModMainExceptionNoEventTypeArgFound">未找到 EventType 项</s:String>
     <s:String x:Key="LangModMainExceptionNoXamlFileFound">未找到帮助条目 .json 对应的 .xaml 文件（{0}）</s:String>
     <s:String x:Key="LangModEventOpeningWeb">開いています、しばらくお待ちください……</s:String>
     <s:String x:Key="LangModEventStartInstance">{0} を起動中です……</s:String>
     <s:String x:Key="LangModEventChoseAnInstance">まず Minecraft のバージョンを選んでください！</s:String>
-    <s:String x:Key="LangModEventHomePageRefreshed">ホームページをリフレッシュしました！</s:String>
+    <s:String x:Key="LangModEventNoRefreshSupport">当前页面不支持刷新操作！</s:String>
     <s:String x:Key="LangModEventDialogDownloadIncorrectContent">EventData は http:// または https:// で始まるURLでなければなりません。
 PCL は他の様々なダウンロードプロトコルをサポートしていません。</s:String>
     <s:String x:Key="LangModEventDialogEventFailTitle">イベント実行失敗</s:String>
@@ -1430,7 +1431,7 @@ PCL は他の様々なダウンロードプロトコルをサポートしてい�
     <s:String x:Key="LangModMinecraftInvalidFabricVersion">無効な Fabric バージョン：{0}</s:String>
     <s:String x:Key="LangModMinecraftInvalidForgeVersion">無効な Neo/Forge バージョン：{0}</s:String>
     <s:String x:Key="LangModMinecraftFoolName24w14potato">毒馬鈴薯はいつも見過ごされ、過小評価されていました。そのため、私たちはそれを大幅に強化しました！</s:String>
-    <s:String x:Key="LangModMinecraftFoolName25w14craftmine">你可以合成任何东西——包括合成你的世界！</s:String>
+    <s:String x:Key="LangModMinecraftFoolName25w14craftmine">あなたは何でもクラフトできます——あなたの世界さえもクラフト可能です！</s:String>
     <s:String x:Key="LangModMinecraftFoolName23w13ab">研究により：プレイヤーは選択することが好きです——より多いほどいい！</s:String>
     <s:String x:Key="LangModMinecraftFoolName22w13oneblockatatime">1個のブロックずつ更新！新しい挖掘、合成、乗馬の遊び方をお楽しみください！</s:String>
     <s:String x:Key="LangModMinecraftFoolName20w14inf">私たちは20億個の新しい次元を追加しました。無限の想像力を現実に変えました！</s:String>
@@ -1458,8 +1459,8 @@ PCL は他の様々なダウンロードプロトコルをサポートしてい�
     <s:String x:Key="LangModCompModGameVersion">ゲームバージョン</s:String>
     <s:String x:Key="LangModCompModUpdateTime">{0}に更新</s:String>
     <s:String x:Key="LangModCompModSaveAs">別名保存</s:String>
-    <s:String x:Key="LangModCompModDependent">先行Mod</s:String>
-    <s:String x:Key="LangModCompModAlternateVersion">オプションバージョン</s:String>
+    <s:String x:Key="LangModCompModDependent">先行リソース</s:String>
+    <s:String x:Key="LangModCompModAlternateVersion">バージョン一覧</s:String>
     <s:String x:Key="LangModCompModStatusDescRelease">正式版</s:String>
     <s:String x:Key="LangModCompModStatusDescBeta">ベータ版</s:String>
     <s:String x:Key="LangModCompModStatusDescAlpha">アルファ版</s:String>
@@ -1503,7 +1504,8 @@ URL：{0}</s:String>
     <s:String x:Key="LangModBaseExceptionUnauthorizedAccessException">PCL の権限が不足しています。PCL を右クリックして、管理者として実行を選択してください。</s:String>
     <s:String x:Key="LangModBaseExceptionOutOfMemoryException">コンピュータのメモリが不足しています。不要なプログラムを閉じてから再試行してください。</s:String>
     <s:String x:Key="LangModBaseExceptionCOMException">オペレーティングシステムまたはグラフィックカードに問題があるため、エラーが発生しました。PCL を再起動してください。</s:String>
-    <s:String x:Key="LangModBaseExceptionBadNetwork">ネットワーク環境が良くないため、サーバーに接続しにくいです。ネットワークを確認し、何度か再試行するか、VPN を使用してください。</s:String>
+    <s:String x:Key="LangModBaseExceptionBadNetwork">ネットワーク接続が不安定なため、サーバーへの接続が困難です。インターネット接続を確認し、何度か再試行してください。</s:String>
+    <s:String x:Key="LangModBaseExceptionWSAStartup">请尝试卸载中国移动云盘，然后再试。</s:String>
     <s:String x:Key="LangModLaunchStartStageGetJava">Java を取得しています</s:String>
     <s:String x:Key="LangModLaunchStartStageCompleteFile">ファイルを補完しています</s:String>
     <s:String x:Key="LangModLaunchStartStageGetParameters">起動パラメータを取得しています</s:String>
@@ -1534,7 +1536,7 @@ URL：{0}</s:String>
     <s:String x:Key="LangModValidateLen">長さは {0} 文字でなければなりません！</s:String>
     <s:String x:Key="LangModValidateLenMax">長さは最大 {0} 文字までです！</s:String>
     <s:String x:Key="LangModValidateLenMin">長さは少なくとも {0} 文字必要です！</s:String>
-    <s:String x:Key="LangModValidateNoContain">入力内容に % を含めることはできません！</s:String>
+    <s:String x:Key="LangModValidateNoContain">入力内容に % を含めることはできません。</s:String>
     <s:String x:Key="LangModValidateNoContent">入力内容に % を設定することはできません！</s:String>
     <s:String x:Key="LangModValidateFileNoStartWithSpace">ファイル名は先頭に空白があってはいけません！</s:String>
     <s:String x:Key="LangModValidateFileNoEndWithSpace">ファイル名は末尾に空白があってはいけません！</s:String>
@@ -1569,7 +1571,7 @@ URL：{0}</s:String>
     <s:String x:Key="LangModCompVersionAny">任意</s:String>
     <s:String x:Key="LangModCompVersionOnly">ただ {0}</s:String>
     <s:String x:Key="LangModCompEdition">{0} 版</s:String>
-    <s:String x:Key="LangModCompSearchInEnglish">現在のリソースは英語での検索のみサポートしています</s:String>
+    <s:String x:Key="LangModCompSearchInEnglish">検索結果がありません。英語での検索を試してください。</s:String>
     <s:String x:Key="LangModCompIncompatibleOptionCurseForge">CurseForge は選択されたタイプと互換性がありません</s:String>
     <s:String x:Key="LangModCompIncompatibleOptionModrinth">Modrinth は選択されたタイプと互換性がありません</s:String>
     <s:String x:Key="LangModCompSearchNoResult">検索結果がありません</s:String>
@@ -1602,6 +1604,7 @@ URL：{0}</s:String>
     <s:String x:Key="LangModJavaManuallyImport">手動インポート</s:String>
     <s:String x:Key="LangModJava32Bit">32 ビット</s:String>
     <s:String x:Key="LangModJavaExceptionFileNotFound">ファイル {0} が見つかりません</s:String>
+    <s:String x:Key="LangModJavaExceptionUnsupportedPDFBookmarkJava">不兼容 PDF Bookmark 的 Java</s:String>
     <s:String x:Key="LangModJavaExceptionTryRunFail">Java の実行に失敗しました</s:String>
     <s:String x:Key="LangModJavaExceptionRunFail">Java を実行できません。/lib/ext フォルダを削除してから再試行してください</s:String>
     <s:String x:Key="LangModJavaExceptionVersionNotFound">Java のバージョン番号が見つかりません</s:String>
@@ -1624,9 +1627,9 @@ URL：{0}</s:String>
     <s:String x:Key="LangModJavaTaskSearchJava">Java を検索する</s:String>
     <s:String x:Key="LangModJavaDialogContentJavaNotFound">PCL は {0} を見つけられませんでした。
 自分で検索して {1} をインストールしてください。インストール後、設定 → 启动选项 → 游戏 Java で再検索またはインポートしてください。</s:String>
-    <s:String x:Key="LangModJavaDialogTitleJavaNotFound">Java が見つかりません</s:String>
-    <s:String x:Key="LangModJavaDialogContentDownloadJava">PCL は {0} を見つけられませんでした。PCL に自動的にダウンロードさせますか？
-{1} を既にインストールしている場合は、設定 → 启动选项 → 游戏 Java で手動インポートしてください。</s:String>
+    <s:String x:Key="LangModJavaDialogTitleJavaNotFound">Java を自動でダウンロードしますか？</s:String>
+    <s:String x:Key="LangModJavaDialogContentDownloadJava">PCL は {0} を見つけられませんでした。PCL に自動でダウンロードさせますか？
+すでに {1} をインストールしている場合は、「設定 → 起動オプション → ゲームJava」で手動でインポートできます。</s:String>
     <s:String x:Key="LangModJavaDialogBtn1DownloadJava">自動ダウンロード</s:String>
     <s:String x:Key="LangModJavaTaskDownloadJavaFile">Java ファイルをダウンロードする</s:String>
     <s:String x:Key="LangModJavaTaskDownloadJava">Java {0} をダウンロードする</s:String>
@@ -1660,8 +1663,8 @@ Minecraft が気に入ったら、正規版を購入して開発者を支援す�
     <s:String x:Key="LangModLaunchHintNoRoleOnlyOne">あなたのアカウントにはキャラクターが一つしかないので、変更できません！</s:String>
     <s:String x:Key="LangModLaunchDialogSelectRole">使用するキャラクターを選択してください</s:String>
     <s:String x:Key="LangModLaunchExceptionLoginFail">ログイン失敗：{0}</s:String>
-    <s:String x:Key="LangModLaunchExceptionTimeout">登录失败：连接登录服务器超时。
-请检查你的网络状况是否良好，或尝试使用 VPN！</s:String>
+    <s:String x:Key="LangModLaunchExceptionTimeout">ログインに失敗しました：ネットワーク接続が不安定なため、サーバーに接続できません。
+インターネット接続を確認してください！</s:String>
     <s:String x:Key="LangModLaunchDialogContentWebLogin">ログインが完了したら、ウェブページが完全に空白になります。その空白ページのURLを下の枠にコピーしてください！</s:String>
     <s:String x:Key="LangModLaunchDialogTitleWebLogin">ウェブページでのログインを待っています</s:String>
     <s:String x:Key="LangModLaunchDialogTipWebLogin">戻り先のURLは で始まる必要があります</s:String>
@@ -1671,8 +1674,8 @@ Minecraft が気に入ったら、正規版を購入して開発者を支援す�
     <s:String x:Key="LangModLaunchDialogBtnISee">わかりました</s:String>
     <s:String x:Key="LangModLaunchDialogContentBanned">このアカウントはマイクロソフトからブロックされているようです。ログインできません。</s:String>
     <s:String x:Key="LangModLaunchDialogContentNoXBoxAccount">まだ Xbox アカウントを登録していないようです。登録後にログインしてください。</s:String>
-    <s:String x:Key="LangModLaunchDialogContentUnableReachMicrosoft">あなたのネットワークのある国や地域では、マイクロソフトアカウントにログインできません。
-VPNや加速器を試してみてください。</s:String>
+    <s:String x:Key="LangModLaunchDialogContentUnableReachMicrosoft">お使いのネットワークが所在する国または地域では、Microsoftアカウントにログインできません。
+VPN をご利用ください。</s:String>
     <s:String x:Key="LangModLaunchDialogBtnIDK">わかりません</s:String>
     <s:String x:Key="LangModLaunchDialogContentAgeLimit">このアカウントの年齢が足りないようです。生年月日を変更してからログインしてください。
 このアカウントが現在設定している年齢は13歳以上ですか？</s:String>
@@ -1689,7 +1692,7 @@ VPNや加速器を使用している場合は、それらをオフにするか�
     <s:String x:Key="LangModLaunchDialogContentNoMc">まだ正規版Minecraftを購入していないか、Xbox Game Passが期限切れです。</s:String>
     <s:String x:Key="LangModLaunchDialogContentCreateRole">まずMinecraftプレイヤープロフィールを作成してから、もう一度ログインしてください。</s:String>
     <s:String x:Key="LangModLaunchDialogBtnCreateRole">プロフィールを作成</s:String>
-    <s:String x:Key="LangModLaunchDialogGetSkinFailHint">皮肤信息获取失败，游戏将以无皮肤的方式启动</s:String>
+    <s:String x:Key="LangModLaunchDialogGetSkinFailHint">スキン情報の取得に失敗しました。ゲームはスキンなしで起動します。</s:String>
     <s:String x:Key="LangModLaunchExceptionOnlineProfileNotFound">正規版プレイヤープロフィールが存在しません（{0}）</s:String>
     <s:String x:Key="LangModLaunchExceptionOnlineUUIDGetFail">公式サイトから正規版UUIDの取得に失敗しました（{0}）</s:String>
     <s:String x:Key="LangModLaunchExceptionOnlineUUIDLenIncorrect">取得した正規版UUIDの長さが足りません（{0}）</s:String>
@@ -1730,8 +1733,6 @@ VPNや加速器を使用している場合は、それらをオフにするか�
     <s:String x:Key="LangModModpackTaskOrganizeFiles">ファイルを最終整理しています</s:String>
     <s:String x:Key="LangModModpackTaskCurseForgeModpackInstall">CurseForge 統合パックのインストール：</s:String>
     <s:String x:Key="LangModModpackHintInstalling">統合パックのインストール中です！</s:String>
-    <s:String x:Key="LangModModpackHintQuiltNotSupport">PCL は現在、Quilt を必要とする統合パックのインストールをサポートしていません！</s:String>
-    <s:String x:Key="LangModModpackHintUnknownModLoader">統合パックのインストール中に未知の Mod ローダー {0} が出現しました！</s:String>
     <s:String x:Key="LangModModpackTaskDownloadExtraFile">追加ファイルをダウンロードしています</s:String>
     <s:String x:Key="LangModModpackTaskModrinthModpackInstall">Modrinth 統合パックのインストール：</s:String>
     <s:String x:Key="LangModModpackTaskRenameInstanceJsonFileSideLoader">バージョン Json をリネームしています（副ローダー用）</s:String>
@@ -1771,7 +1772,6 @@ VPNや加速器を使用している場合は、それらをオフにするか�
     <s:String x:Key="LangModBaseExceptionRenameSubKeyNotSupport">子キーに子キーを含む名前変更はサポートされていません：{0}。</s:String>
     <s:String x:Key="LangModBaseExceptionPathIncorrect">パスが含まれていません：{0}</s:String>
     <s:String x:Key="LangModBaseExceptionFileNameIncorrect">ファイル名が含まれていません：{0}</s:String>
-    <s:String x:Key="LangModBaseExceptionFileNameTooLong">ファイル名が長すぎます：{0}</s:String>
     <s:String x:Key="LangModBaseExceptionCopyFileFail">ファイルのコピーに失敗しました：{0} → {1}</s:String>
     <s:String x:Key="LangModBaseSelectFolder">フォルダを選択してください</s:String>
     <s:String x:Key="LangModBaseExceptionEmptyFolderName">フォルダ名を空にすることはできません！</s:String>
@@ -1790,7 +1790,7 @@ VPNや加速器を使用している場合は、それらをオフにするか�
     <s:String x:Key="LangModMyLoadingLoading">読み込み中</s:String>
     <s:String x:Key="LangModMyLoadingLoadFail">読み込み失敗</s:String>
     <s:String x:Key="LangModMyLoadingUnknownError">不明なエラー</s:String>
-    <s:String x:Key="LangModMyLoadingBadNetwork">ネットワーク環境が良くないため、再試行するか VPN を使用してください</s:String>
+    <s:String x:Key="LangModMyLoadingBadNetwork">ネットワーク接続が不安定です。後でもう一度お試しください。</s:String>
     <s:String x:Key="LangModDownloadLibTaskMcDownload">Minecraft {0} のダウンロード</s:String>
     <s:String x:Key="LangModDownloadLibHintInstanceDownloading">このバージョンは現在ダウンロード中です！</s:String>
     <s:String x:Key="LangModDownloadLibDialogContentRedownloadInstance">バージョン {0} が既に存在します。再ダウンロードしますか？
@@ -1880,7 +1880,7 @@ Modフォルダ内の解凍したModを削除し、再度ゲームを起動し�
 「その他」→「宝箱」で「メモリの最適化」を選択してゲームを開始してみてください。
 それでも動作しない場合は、起動設定でゲームに割り当てられるメモリを増やし、より高い構成要件を持つマテリアル、MOD、ライトとシャドウを削除してください。
 それでも問題が解決しない場合は、ゲームを開始する前に他のソフトウェアを終了してみてください。または...コンピューターを変更しますか? </s:String>
-    <s:String x:Key="LangModCrashCrashReasonReasonAC">Open J9 を使用するとゲームがクラッシュしました。
+    <s:String x:Key="LangModCrashCrashReasonReasonAC">OpenJ9 を使用するとゲームがクラッシュしました。
 起動設定のJava選択でOpenJ9以外のJavaに切り替えてからゲームを起動してください。 </s:String>
     <s:String x:Key="LangModCrashCrashReasonReasonAD">JDK または古い Java バージョンの使用が原因でゲームがクラッシュしたようです。
 ゲームを起動する前に起動設定のJava選択でJRE 8(Java 8)に切り替えてください。
@@ -1961,16 +1961,10 @@ MixinBootstrap をインストールしてみてください。インストー�
     <s:String x:Key="LangModCrashCrashReasonReasonBB">複数の同一の Mod を繰り返しインストールしたため、ゲームの読み込みを続行できなくなった可能性があります。
 
 各 Mod は 1 回しか表示できません。重複した Mod を削除してからゲームを再度開始してください。 </s:String>
-    <s:String x:Key="LangModCrashCrashReasonReasonBC">ゲームにはエンティティ {0} に問題があるようです。
-
-新しいワールドを作成し、このエンティティのインスタンスを生成し、ゲームの実行を観察できます。
- - 正常に実行される場合、エンティティがエラーの原因となっているため、このエンティティを削除するには何らかの方法を使用する必要がある場合があります。
- - エラーが解決しない場合は、他の理由から問題が発生している可能性があります...</s:String>
-    <s:String x:Key="LangModCrashCrashReasonReasonBD">ワールド内のいくつかのエンティティが原因でゲームに問題が発生しているようです。
-
-新しい世界を作成し、さまざまなエンティティを生成して、ゲームの動作を観察できます。
- - 正常に動作する場合は、何らかのエンティティがエラーの原因となっているため、ワールドを削除する必要がある可能性があります。
- - エラーが解決しない場合は、他の理由から問題が発生している可能性があります...</s:String>
+    <s:String x:Key="LangModCrashCrashReasonReasonTargetPlayerEntity">游戏因为位于 {0} 的玩家实体导致了崩溃。</s:String>
+    <s:String x:Key="LangModCrashCrashReasonReasonPlayerEntity">游戏因为玩家实体导致了崩溃。</s:String>
+    <s:String x:Key="LangModCrashCrashReasonReasonTargetEntity">游戏因为实体 {0} 导致了崩溃。</s:String>
+    <s:String x:Key="LangModCrashCrashReasonReasonTargetEntities">游戏因为下列实体导致了崩溃：{0}</s:String>
     <s:String x:Key="LangModCrashCrashReasonReasonBE">OptiFine が現在のバージョンの Forge と互換性がないため、ゲームがクラッシュしました。
 
 OptiFine 公式 Web サイト (https://optifine.net/downloads) にアクセスして、OptiFine と互換性のある Forge バージョンを確認し、対応するバージョンに従って厳密にゲームを再インストールしてください。 </s:String>
@@ -2053,8 +2047,8 @@ JEIDなどの修復MODを導入するか、大きなMODを削除してみてく�
     <s:String x:Key="LangModCrashCrashReasonDialogContentAdditional">さらに</s:String>
     <s:String x:Key="LangModCrashCrashReasonDialogContentViewLogTip">エラー レポートを表示して、エラーがどのように発生したかを確認できます。 </s:String>
     <s:String x:Key="LangModCrashCrashReasonDialogContentAskHelpTip">サポートが必要な場合は、このウィンドウのスクリーンショットではなくバグ レポート ファイルを送信してください。 </s:String>
-    <s:String x:Key="LangModCrashCrashReasonDialogContentUpgradeTip">また、古いバージョンの PCL を使用している場合は、PCL を更新すると、この問題が解決される可能性があります。
-PCL を更新するには、[設定] → [ランチャー] → [アップデートの確認] をクリックします。 </s:String>
+    <s:String x:Key="LangModCrashCrashReasonDialogContentUpgradeTip">さらに、現在使用しているPCLは古いバージョンです。最新バージョンに更新することで、この問題が解決する可能性があります。
+PCLを更新するには、「設定 → その他 → ランチャー → 更新の確認」を開いてください。</s:String>
     <s:String x:Key="LangMyMsgLoginDialogBtnReopenWebPage">Web ページを再度開きます</s:String>
     <s:String x:Key="LangMyMsgLoginDialogBtnCopyCode">コードをコピー</s:String>
     <s:String x:Key="LangMyMsgLoginHintInitFail">ログイン ポップアップ ウィンドウの初期化に失敗しました</s:String>
@@ -2062,8 +2056,8 @@ PCL を更新するには、[設定] → [ランチャー] → [アップデー�
     <s:String x:Key="LangMyMsgLoginDialogContent">ログイン Web ページが自動的に開きます。Web ページに {0} (自動的にコピーされた) を入力してください。
 
 
-ネットワーク環境が悪い場合はWebページが読み込まれない場合がありますので、その場合はVPNをご利用の上、再度お試しください。
-別のデバイスから {1} を開いて上記のコードを入力することもできます。 </s:String>
+ネットワーク接続が不安定な場合、読み込みに失敗することがあります。インターネット接続を確認して、再試行してください。
+または、別のデバイスで {1} にアクセスしてコードを入力することもできます。</s:String>
     <s:String x:Key="LangMyMsgLoginHintLoginSuccess">Web ページのログインに成功しました。 </s:String>
     <s:String x:Key="LangMyMsgLoginExceptionDecline">PCL から要求された権限を拒否しました...</s:String>
     <s:String x:Key="LangMyMsgLoginExceptionTimeout">ログインに時間がかかりすぎました。もう一度お試しください。 </s:String>
@@ -2076,7 +2070,6 @@ PCL を更新するには、[設定] → [ランチャー] → [アップデー�
     <s:String x:Key="LangModExceptionDownloadFail">直接下载文件失败（{0}）</s:String>
     <s:String x:Key="LangModExceptionCreateDirectoryFail">预处理下载文件路径失败（{0}）</s:String>
     <s:String x:Key="LangModExceptionUnknown">未知错误</s:String>
-    <s:String x:Key="LangModExceptionTimeOutAskCheck">连接服务器超时，请检查你的网络环境是否良好（{0}）</s:String>
     <s:String x:Key="LangModExceptionRequestFailed">网络请求失败（{0}）</s:String>
     <s:String x:Key="LangModExceptionReturnErrorCode">服务器返回错误（{0}）</s:String>
     <s:String x:Key="LangModExceptionUnknownFileStatus">文件状态未知：{0}</s:String>
@@ -2117,18 +2110,19 @@ PCL を更新するには、[設定] → [ランチャー] → [アップデー�
     <s:String x:Key="LangPageVersionExportPCLDesc">正式版 PCL をパッケージ化して、起動ツールがないプレイヤーがモッドパックをインストールできるようにする</s:String>
     <s:String x:Key="LangPageVersionExportPCLProfile">PCL のカスタマイズ内容</s:String>
     <s:String x:Key="LangPageVersionExportPCLProfileDesc">機能の非表示設定、ホームページ、バックグラウンドミュージックや画像など</s:String>
-    <s:String x:Key="LangPageVersionExportNoOptifine">Modrinth のモッドパック規格により、エクスポートされたモッドパックには現在 OptiFine は含まれていません。</s:String>
+    <s:String x:Key="LangPageVersionExportNoOptifine">Modrinthのモッドパック仕様により、エクスポートされたモッドパックにはOptiFineが含まれていません。</s:String>
     <s:String x:Key="LangPageVersionExportAdvancedOptions">詳細オプション</s:String>
     <s:String x:Key="LangPageVersionExportArchiveMode">リソースファイルをパッケージ化して、インポート時にダウンロードを避ける</s:String>
     <s:String x:Key="LangPageVersionExportArchiveModeDesc">Mod、リソースパック、シェーダーパックのファイルを直接モッドパックに含めることで、インポート時にインターネットからダウンロードする必要がなくなります。
 CurseForge または Modrinth に安定して接続できない場合のみ、このオプションを選択することをお勧めします。</s:String>
-    <s:String x:Key="LangPageVersionExportArchiveModeHint">リソースファイルをパッケージ化するのは、CurseForge または Modrinth に安定して接続できない場合のみお勧めします。
-二次配布は利用規約に違反する可能性があるため、リソースファイルを含むモッドパックの公開配布は避けるようにしてください！</s:String>
+    <s:String x:Key="LangPageVersionExportArchiveModeHint">CurseForge や Modrinth に安定して接続できない場合にのみ、リソースファイルをパッケージ化することを推奨します。
+リソースファイルを含むモッドパックを公開しないでください。一部のMODの使用規約に違反する可能性があります！</s:String>
     <s:String x:Key="LangPageVersionExportModrinthStandard">Modrinth アップロードモード</s:String>
     <s:String x:Key="LangPageVersionExportModrinthStandardDesc">Modrinth にアップロードしたい場合、このオプションを選択すると、Modrinth の要件に完全に準拠したモッドパックファイルが生成されます。
 Modrinth の要件により、CurseForge からのみダウンロードできるリソースはインターネットからダウンロードできなくなり、直接モッドパックに含まれます。
 さらに、このオプションを選択すると、モッドパックに PCL 起動ツールのファイルを含めることはできません。</s:String>
-    <s:String x:Key="LangPageVersionExportExportConfigDesc">設定ファイルを使用することで、エクスポートする内容の範囲を正確に制御したり、現在の設定を保存して後で使用することができます。</s:String>
+    <s:String x:Key="LangPageVersionExportExportConfigDesc">設定ファイルには、エクスポートするファイルの詳細な制御やモッドパックの保存場所の設定など、より高度なオプションが含まれています。
+これらのオプションを変更するには、「設定を保存」をクリックして設定ファイルを編集し、その後インポートしてください。</s:String>
     <s:String x:Key="LangPageVersionExportExportConfigRead">設定を読み込む</s:String>
     <s:String x:Key="LangPageVersionExportExportConfigSave">設定を保存する</s:String>
     <s:String x:Key="LangPageVersionExportModpackGuide">モッドパック作成ガイド</s:String>

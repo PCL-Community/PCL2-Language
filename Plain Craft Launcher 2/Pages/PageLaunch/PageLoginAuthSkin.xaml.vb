@@ -50,7 +50,7 @@
             If CType(McLoginLoader.Input, McLoginServer).ForceReselectProfile Then
                 Hint(GetLang("LangPageLoginAuthSkinChanging"))
             Else
-                Hint(GetLang("LangPageLoginAuthSkinLogining"), HintType.Critical)
+                Hint(GetLang("LangPageLoginAuthSkinLogining"), HintType.Red)
             End If
             Return
         End If

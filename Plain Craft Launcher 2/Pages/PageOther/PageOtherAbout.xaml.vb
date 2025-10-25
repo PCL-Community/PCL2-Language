@@ -18,8 +18,8 @@
 
     End Sub
 
-    Public Shared Sub CopyUniqueAddress() Handles BtnDonateCopy.Click
-        ClipboardSet(UniqueAddress)
+    Public Shared Sub CopyIdentify() Handles BtnDonateCopy.Click
+        ClipboardSet(Identify)
     End Sub
     Private Sub BtnDonateCodeInput_Click() Handles BtnDonateInput.Click
         DonateCodeInput()

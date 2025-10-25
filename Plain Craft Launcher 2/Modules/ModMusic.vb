@@ -79,7 +79,7 @@
                     If MusicState = MusicStates.Pause Then
                         FrmMain.BtnExtraMusic.Logo = Logo.IconPlay
                         FrmMain.BtnExtraMusic.LogoScale = 0.8
-                        ToolTipText = GetLang("LangModMusicPaused", GetFileNameWithoutExtentionFromPath(MusicCurrent))
+                        ToolTipText = GetLang("LangModMusicPaused", IO.Path.GetFileNameWithoutExtension(MusicCurrent))
                         If MusicAllList.Count > 1 Then
                             ToolTipText += vbCrLf & GetLang("LangModMusicStopClickTipA")
                         Else
@@ -88,7 +88,7 @@
                     Else
                         FrmMain.BtnExtraMusic.Logo = Logo.IconMusic
                         FrmMain.BtnExtraMusic.LogoScale = 1
-                        ToolTipText = GetLang("LangModMusicPlaying", GetFileNameWithoutExtentionFromPath(MusicCurrent))
+                        ToolTipText = GetLang("LangModMusicPlaying", IO.Path.GetFileNameWithoutExtension(MusicCurrent))
                         If MusicAllList.Count > 1 Then
                             ToolTipText += vbCrLf & GetLang("LangModMusicStartClickTipA")
                         Else
@@ -111,7 +111,7 @@
     ''' </summary>
     Public Sub MusicControlPause()
         If MusicNAudio Is Nothing Then
-            Hint(GetLang("LangModMusicNotPlayedYet"), HintType.Critical)
+            Hint(GetLang("LangModMusicNotPlayedYet"), HintType.Red)
         Else
             Select Case MusicState
                 Case MusicStates.Pause
@@ -131,14 +131,14 @@
     Public Sub MusicControlNext()
         If MusicAllList.Count = 1 Then
             MusicStartPlay(MusicCurrent)
-            Hint(GetLang("LangModMusicReplay", GetFileNameFromPath(MusicCurrent)), HintType.Finish)
+            Hint(GetLang("LangModMusicReplay", GetFileNameFromPath(MusicCurrent)), HintType.Green)
         Else
             Dim Address As String = DequeueNextMusicAddress()
             If Address Is Nothing Then
-                Hint(GetLang("LangModMusicNoMusic"), HintType.Critical)
+                Hint(GetLang("LangModMusicNoMusic"), HintType.Red)
             Else
                 MusicStartPlay(Address)
-                Hint(GetLang("LangModMusicPlaying", GetFileNameFromPath(Address)), HintType.Finish)
+                Hint(GetLang("LangModMusicPlaying", GetFileNameFromPath(Address)), HintType.Green)
             End If
         End If
         MusicRefreshUI()
@@ -182,19 +182,19 @@
             MusicListInit(True)
             If Not MusicAllList.Any() Then
                 If MusicNAudio Is Nothing Then
-                    If ShowHint Then Hint(GetLang("LangModMusicNoMusic"), HintType.Critical)
+                    If ShowHint Then Hint(GetLang("LangModMusicNoMusic"), HintType.Red)
                 Else
                     MusicNAudio = Nothing
-                    If ShowHint Then Hint(GetLang("LangModMusicMusicCleared"), HintType.Finish)
+                    If ShowHint Then Hint(GetLang("LangModMusicMusicCleared"), HintType.Green)
                 End If
             Else
                 Dim Address As String = DequeueNextMusicAddress()
                 If Address Is Nothing Then
-                    If ShowHint Then Hint(GetLang("LangModMusicNoMusic"), HintType.Critical)
+                    If ShowHint Then Hint(GetLang("LangModMusicNoMusic"), HintType.Red)
                 Else
                     Try
                         MusicStartPlay(Address, IsFirstLoad)
-                        If ShowHint Then Hint(GetLang("LangModMusicMusicRefreshed", GetFileNameFromPath(Address)), HintType.Finish, False)
+                        If ShowHint Then Hint(GetLang("LangModMusicMusicRefreshed", GetFileNameFromPath(Address)), HintType.Green, False)
                     Catch
                     End Try
                 End If
@@ -303,18 +303,18 @@
         Catch ex As Exception
             Log(ex, "播放音乐出现内部错误（" & MusicCurrent & "）", LogLevel.Developer)
             If TypeOf ex Is NAudio.MmException AndAlso ex.Message.Contains("AlreadyAllocated") Then
-                Hint("你的音频设备正被其他程序占用。请在关闭占用的程序后重启 PCL，才能恢复音乐播放功能！", HintType.Critical)
+                Hint("你的音频设备正被其他程序占用。请在关闭占用的程序后重启 PCL，才能恢复音乐播放功能！", HintType.Red)
                 Thread.Sleep(1000000000)
             End If
             If TypeOf ex Is NAudio.MmException AndAlso (ex.Message.Contains("NoDriver") OrElse ex.Message.Contains("BadDeviceId")) Then
-                Hint(GetLang("LangModMusicDeviceChanged"), HintType.Critical)
+                Hint(GetLang("LangModMusicDeviceChanged"), HintType.Red)
                 Thread.Sleep(1000000000)
             End If
             If ex.Message.Contains("Got a frame at sample rate") OrElse ex.Message.Contains("does not support changes to") Then
-                Hint(GetLang("LangModMusicMusicChanged", GetFileNameFromPath(MusicCurrent)), HintType.Critical)
+                Hint(GetLang("LangModMusicMusicChanged", GetFileNameFromPath(MusicCurrent)), HintType.Red)
             ElseIf Not (MusicCurrent.EndsWithF(".wav", True) OrElse MusicCurrent.EndsWithF(".mp3", True) OrElse MusicCurrent.EndsWithF(".flac", True)) OrElse
                 ex.Message.Contains("0xC00D36C4") Then '#5096：不支持给定的 URL 的字节流类型。 (异常来自 HRESULT:0xC00D36C4)
-                Hint(GetLang("LangModMusicMusicFormatNotSupport", GetFileNameFromPath(MusicCurrent)), HintType.Critical)
+                Hint(GetLang("LangModMusicMusicFormatNotSupport", GetFileNameFromPath(MusicCurrent)), HintType.Red)
             Else
                 Log(ex, "播放音乐失败（" & GetFileNameFromPath(MusicCurrent) & "）", LogLevel.Hint)
             End If

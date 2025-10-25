@@ -149,7 +149,7 @@ End Class
 ''' </summary>
 Public Class ValidateExcept
     Inherits Validate
-    Public Property Excepts As ObjectModel.Collection(Of String) = New ObjectModel.Collection(Of String)
+    Public Property Excepts As New ObjectModel.Collection(Of String)
     Public Property ErrorMessage As String
     Public Sub New()
         ErrorMessage = GetLang("LangModValidateNoContain")
@@ -159,13 +159,15 @@ Public Class ValidateExcept
         Me.Excepts = Excepts
         Me.ErrorMessage = ErrorMessage
     End Sub
-    Public Sub New(Excepts As IEnumerable, Optional ErrorMessage As String = "输入内容不能包含 %")
-        If ErrorMessage.Equals("输入内容不能包含 %") Then ErrorMessage = GetLang("LangModValidateNoContain")
-        Me.Excepts = New ObjectModel.Collection(Of String)
-        Me.ErrorMessage = ErrorMessage
-        For Each Data As String In Excepts
-            Me.Excepts.Add(Data)
-        Next
+    Public Sub New(Excepts As IEnumerable(Of String), Optional ErrorMessage As String = "输入内容不能包含 %")
+        Me.New(
+            New ObjectModel.Collection(Of String)(New List(Of String)(Excepts)),
+            If(ErrorMessage.Equals("输入内容不能包含 %"), GetLang("LangModValidateNoContain"), ErrorMessage))
+    End Sub
+    Public Sub New(Excepts As IEnumerable(Of Char), Optional ErrorMessage As String = "输入内容不能包含 %")
+        Me.New(
+            New ObjectModel.Collection(Of String)(Excepts.Select(Function(c) c.ToString).ToList),
+            ErrorMessage)
     End Sub
     Public Overrides Function Validate(Str As String) As String
         For Each Ch As String In Excepts
@@ -184,7 +186,7 @@ End Class
 ''' </summary>
 Public Class ValidateExceptSame
     Inherits Validate
-    Public Property Excepts As ObjectModel.Collection(Of String) = New ObjectModel.Collection(Of String)
+    Public Property Excepts As New ObjectModel.Collection(Of String)
     Public Property ErrorMessage As String
     Public Property IgnoreCase As Boolean = False
     Public Sub New()
@@ -195,14 +197,15 @@ Public Class ValidateExceptSame
         Me.ErrorMessage = ErrorMessage
         Me.IgnoreCase = IgnoreCase
     End Sub
-    Public Sub New(Excepts As IEnumerable, Optional ErrorMessage As String = "输入内容不能为 %", Optional IgnoreCase As Boolean = False)
-        If ErrorMessage.Equals("输入内容不能为 %") Then ErrorMessage = GetLang("LangModValidateNoContent")
-        Me.Excepts = New ObjectModel.Collection(Of String)
-        For Each Data As String In Excepts
-            Me.Excepts.Add(Data)
-        Next
-        Me.ErrorMessage = ErrorMessage
-        Me.IgnoreCase = IgnoreCase
+    Public Sub New(Excepts As IEnumerable(Of String), Optional ErrorMessage As String = "输入内容不能为 %", Optional IgnoreCase As Boolean = False)
+        Me.New(
+            New ObjectModel.Collection(Of String)(New List(Of String)(Excepts)),
+            If(ErrorMessage.Equals("输入内容不能为 %"), GetLang("LangModValidateNoContent"), ErrorMessage), IgnoreCase)
+    End Sub
+    Public Sub New(Except As String, Optional ErrorMessage As String = "输入内容不能为 %", Optional IgnoreCase As Boolean = False)
+        Me.New(
+            New ObjectModel.Collection(Of String) From {Except},
+            ErrorMessage, IgnoreCase)
     End Sub
     Public Overrides Function Validate(Str As String) As String
         If Str Is Nothing Then Return ErrorMessage.Replace("%", "null")

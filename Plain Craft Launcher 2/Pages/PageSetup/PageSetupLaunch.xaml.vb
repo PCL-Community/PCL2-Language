@@ -71,7 +71,7 @@
         Try
             Setup.Reset("LaunchArgumentTitle")
             Setup.Reset("LaunchArgumentInfo")
-            Setup.Reset("LaunchArgumentIndieV2")
+            Setup.Set("LaunchArgumentIndieV2", Setup.GetDefault("LaunchArgumentIndieV2"))
             Setup.Reset("LaunchArgumentVisible")
             Setup.Reset("LaunchArgumentWindowType")
             Setup.Reset("LaunchArgumentWindowWidth")
@@ -93,7 +93,7 @@
             JavaSearchLoader.Start(IsForceRestart:=True)
 
             Log("[Setup] 已初始化启动设置")
-            Hint(GetLang("LangPageSetupLaunchInit"), HintType.Finish, False)
+            Hint(GetLang("LangPageSetupLaunchInit"), HintType.Green, False)
         Catch ex As Exception
             Log(ex, GetLang("LangPageSetupLaunchInitFail"), LogLevel.Msgbox)
         End Try
@@ -170,7 +170,7 @@
         Try
             File.Delete(PathAppdata & "CustomSkin.png")
             RadioSkinType0.SetChecked(True, True)
-            Hint(GetLang("LangPageSetupLaunchSkinEmptied"), HintType.Finish)
+            Hint(GetLang("LangPageSetupLaunchSkinEmptied"), HintType.Green)
         Catch ex As Exception
             Log(ex, GetLang("LangPageSetupLaunchSkinEmptyFail"), LogLevel.Msgbox)
         End Try
@@ -468,7 +468,7 @@ PreFin:
     '手动选择
     Private Sub BtnArgumentJavaSelect_Click(sender As Object, e As EventArgs) Handles BtnArgumentJavaSelect.Click
         If JavaSearchLoader.State = LoadState.Loading Then
-            Hint(GetLang("LangPageSetupLaunchJavaSearchingJava"), HintType.Critical)
+            Hint(GetLang("LangPageSetupLaunchJavaSearchingJava"), HintType.Red)
             Return
         End If
         '选择 Java
@@ -489,7 +489,7 @@ PreFin:
             Setup.Set("LaunchArgumentJavaAll", JavaNewList.ToString(Newtonsoft.Json.Formatting.None))
             '重新加载列表
             JavaSearchLoader.Start(IsForceRestart:=True)
-            Hint(GetLang("LangPageSetupLaunchJavaAddedJava"), HintType.Finish)
+            Hint(GetLang("LangPageSetupLaunchJavaAddedJava"), HintType.Green)
         Catch ex As Exception
             Log(ex, GetLang("LangPageSetupLaunchJavaIncorrectJava"), LogLevel.Msgbox, "异常的 Java")
             Return
@@ -498,7 +498,7 @@ PreFin:
     '自动查找
     Private Sub BtnArgumentJavaSearch_Click(sender As Object, e As EventArgs) Handles BtnArgumentJavaSearch.Click
         If JavaSearchLoader.State = LoadState.Loading Then
-            Hint(GetLang("LangPageSetupLaunchJavaSearchingJava"), HintType.Critical)
+            Hint(GetLang("LangPageSetupLaunchJavaSearchingJava"), HintType.Red)
             Return
         End If
         RunInThread(
@@ -506,9 +506,9 @@ PreFin:
             Hint(GetLang("LangPageSetupLaunchJavaSearchingJava"))
             JavaSearchLoader.WaitForExit(IsForceRestart:=True)
             If Not JavaList.Any() Then
-                Hint(GetLang("LangPageSetupLaunchJavaNoAvailableJava"), HintType.Critical)
+                Hint(GetLang("LangPageSetupLaunchJavaNoAvailableJava"), HintType.Red)
             Else
-                Hint(GetLang("LangPageSetupLaunchJavaSearchSuccess", JavaList.Count), HintType.Finish)
+                Hint(GetLang("LangPageSetupLaunchJavaSearchSuccess", JavaList.Count), HintType.Green)
             End If
         End Sub)
     End Sub
@@ -582,4 +582,12 @@ PreFin:
         FrmMain.PageChange(FormMain.PageType.VersionSetup, FormMain.PageSubType.VersionSetup)
     End Sub
 
+    '去除参数中的回车
+    Private Sub ReplaceEnter(sender As MyTextBox, e As TextChangedEventArgs) Handles TextAdvanceJvm.TextChanged, TextAdvanceGame.TextChanged
+        Dim NewText = sender.Text.Replace(vbCrLf, vbCr).Replace(vbLf, vbCr).Replace(vbCr, " ")
+        If NewText = sender.Text Then Return
+        Dim CaretIndex = sender.CaretIndex
+        sender.Text = NewText
+        sender.CaretIndex = Math.Max(0, CaretIndex - 1)
+    End Sub
 End Class

@@ -90,7 +90,7 @@
             Catch ex As Exception
                 If ex.Message = "$$" Then
                 ElseIf ex.Message.StartsWith("$") Then
-                    Hint(ex.Message.TrimStart("$"), HintType.Critical)
+                    Hint(ex.Message.TrimStart("$"), HintType.Red)
                 ElseIf TypeOf ex Is Security.Authentication.AuthenticationException AndAlso ex.Message.ContainsF("SSL/TLS") Then
                     Log(ex, GetLang("LangPageLoginMsAddAccountFailA"), LogLevel.Msgbox)
                 Else

@@ -17,18 +17,16 @@
 
     End Sub
     Public Sub Reload()
-        TextLinkName.Text = Setup.Get("LinkName")
-        CheckHiperCertWarn.Checked = Setup.Get("LinkHiperCertWarn")
+        CheckShareMode.Checked = Setup.Get("LinkShareMode")
     End Sub
 
     '初始化
     Public Sub Reset()
         Try
-            Setup.Reset("LinkName")
-            Setup.Reset("LinkHiperCertWarn")
+            Setup.Reset("LinkShareMode")
 
             Log("[Setup] 已初始化联机页设置")
-            Hint("已初始化联机页设置！", HintType.Finish, False)
+            Hint("已初始化联机页设置！", HintType.Green, False)
         Catch ex As Exception
             Log(ex, "初始化联机页设置失败", LogLevel.Msgbox)
         End Try
@@ -37,14 +35,11 @@
     End Sub
 
     '将控件改变路由到设置改变
-    Private Shared Sub TextBoxChange(sender As MyTextBox, e As Object) Handles TextLinkName.ValidatedTextChanged
+    Private Shared Sub TextBoxChange(sender As MyTextBox, e As Object) 'Handles TextLinkName.ValidatedTextChanged
         If AniControlEnabled = 0 Then Setup.Set(sender.Tag, sender.Text)
     End Sub
-    Private Shared Sub CheckBoxChange(sender As MyCheckBox, e As Object) Handles CheckHiperCertWarn.Change
+    Private Shared Sub CheckBoxChange(sender As MyCheckBox, e As Object) Handles CheckShareMode.Change
         If AniControlEnabled = 0 Then Setup.Set(sender.Tag, sender.Checked)
-    End Sub
-
-    Private Sub BtnHiperLog_Click(sender As Object, e As EventArgs) Handles BtnHiperLog.Click
     End Sub
 
 End Class

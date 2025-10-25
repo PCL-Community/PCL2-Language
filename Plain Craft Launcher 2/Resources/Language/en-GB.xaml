@@ -13,14 +13,15 @@
     <s:String x:Key="LangReset">重置</s:String>
     <s:String x:Key="LangRefresh">Refresh</s:String>
     <s:String x:Key="LangRefreshing">Refreshing...</s:String>
+    <s:String x:Key="LangRefreshed">已刷新！</s:String>
     <s:String x:Key="LangApplicationExceptionNoAccessPermission">PCL does not have access permission to {0}</s:String>
     <s:String x:Key="LangApplicationDialogTitleCacheFolderUnavailable">Cache Folder Unavailable</s:String>
     <s:String x:Key="LangApplicationDialogContentCacheFolderUnavailable">PCL is unable to access the cache folder, which may result in a programme error or unusability.
 Error Cause: {0}</s:String>
     <s:String x:Key="LangApplicationDialogContentCustomCacheFolderUnavailable">The manually set cache folder is unavailable, PCL will use the default one instead.
 Error Cause: {0}</s:String>
-    <s:String x:Key="LangApplicationDialogTitleRunInTemp">Environment Warning</s:String>
-    <s:String x:Key="LangApplicationDialogContentRunInTemp">Please extract PCL from the compressed file or change the folder before continuing to use!
+    <s:String x:Key="LangApplicationDialogTitleUnzipLauncher">Environment Warning</s:String>
+    <s:String x:Key="LangApplicationDialogContentUnzipLauncher">Please extract PCL from the compressed file or change the folder before continuing to use!
 The programme is currently running in a temporary folder, which may prevent the saving of settings, game saves, and other data. Also, some functions may not be available.</s:String>
     <s:String x:Key="LangApplicationDialogContent32BitWarn">PCL and newer versions of Minecraft no longer support 32-bit systems, and some features are unavailable.
 We strongly recommended to switch to a 64-bit system.</s:String>
@@ -42,6 +43,8 @@ We strongly recommended to switch to a 64-bit system.</s:String>
     <s:String x:Key="LangDialogBtnUpdateFullLog">Full Changelog</s:String>
     <s:String x:Key="LangDialogUpdateTo">PCL {0} Updated</s:String>
     <s:String x:Key="LangDialogPolicyContent">Before using PCL, please review and agree to the Terms of Service and Disclaimer.</s:String>
+    <s:String x:Key="LangDialogPolicyContentModified">PCL 的用户协议与免责声明已更新。
+请阅读更新后的用户协议与免责声明。</s:String>
     <s:String x:Key="LangDialogPolicyTitle">Agreement Authorisation</s:String>
     <s:String x:Key="LangDialogBtnAgree">Agree</s:String>
     <s:String x:Key="LangDialogBtnDeny">Decline</s:String>
@@ -139,7 +142,6 @@ This operation is irrevocable. Are you sure?</s:String>
     <s:String x:Key="LangDialogCustomPageOverwriteConfirmationContent">A layout file already exists. It will be overridden if you continue to generate the documentation file!</s:String>
     <s:String x:Key="LangDialogCustomPageOverwriteFail">Failed to generate the documentation file</s:String>
     <s:String x:Key="LangHintCustomPageOverwriteSuccess">The documentation file has been generated!</s:String>
-    <s:String x:Key="LangHintCustomPageRefreshed">The homepage has been refreshed!</s:String>
     <s:String x:Key="LangDialogCustomPageTeachContent">1. Click the 'Generate the Documentation' button, which will generate the 'Custom.xaml' layout file in the PCL folder.
 2. Modify the file with tools like Notepad, and remember to save it after the modification.
 3. Click the 'Refresh Home' button to see what the homepage looks like now.
@@ -366,7 +368,6 @@ If there is an existing instance, click the 'Add an Existing Folder' on the list
     <s:String x:Key="LangSelectVersionNoHiddenTip">No instances are hidden. You can select 'Hidden from List' in 'Instance Properties → Personalisation → Category' to hide the instance.
 Press 'F11' again to exit the hidden instance viewing mode.</s:String>
     <s:String x:Key="LangSelectVersionListLoadFail">Failed whilst converting the instance list to display.</s:String>
-    <s:String x:Key="LangSelectVersionListLoadIconFail">Failed to load the instance icon.</s:String>
     <s:String x:Key="LangSelectBtnFavorite">Favourite</s:String>
     <s:String x:Key="LangSelectBtnCancelFavorite">Unfavourite</s:String>
     <s:String x:Key="LangSelectBtnSet">Properties</s:String>
@@ -375,8 +376,8 @@ Press 'F11' again to exit the hidden instance viewing mode.</s:String>
     <s:String x:Key="LangSelectDeleteVersionContentA">Are you sure to delete the instance {0}?</s:String>
     <s:String x:Key="LangSelectDeleteVersionContentB">Are you sure to delete the instance {0} permanently?</s:String>
     <s:String x:Key="LangSelectDeleteVersionContentC">Since the 'Instance Isolation' is enabled for this instance, the corresponding saves, resource packs, mods, and other files of this instance will also be deleted!</s:String>
-    <s:String x:Key="LangSelectVersionDeletedA">The instance {0} has been permanently deleted!</s:String>
-    <s:String x:Key="LangSelectVersionDeletedB">The instance {0} has been deleted to the recycle bin!</s:String>
+    <s:String x:Key="LangSelectVersionDeletedPermanently">The instance {0} has been permanently deleted!</s:String>
+    <s:String x:Key="LangSelectVersionDeletedToRecycleBin">The instance {0} has been deleted to the recycle bin!</s:String>
     <s:String x:Key="LangSelectVersionDeleteCancelled">Deletion of the instance {0} has been manually cancelled.</s:String>
     <s:String x:Key="LangSelectVersionDeleteFail">Failed to delete the instance {0}.</s:String>
     <s:String x:Key="LangSpeedTotalProgress">Progress</s:String>
@@ -486,13 +487,6 @@ PCL recommends to turn on the 'Version Isolation' in 'Settings → Instance Isol
     <s:String x:Key="LangDownloadInstallOptiFabricManually">Incompatible with older versions of Fabric, please download OptiFabric Origins manually.</s:String>
     <s:String x:Key="LangDownloadPageLeftRefresh">Refresh</s:String>
     <s:String x:Key="LangDownloadPageLeftAutoInstall">Download</s:String>
-    <s:String x:Key="LangDownloadPageLeftManualInstall">▼ Packages</s:String>
-    <s:String x:Key="LangDownloadPageLeftDialogManualInstallContent">The 'Packages' allows you to download a JAR installation file for components like OptiFine and Forge, but cannot be installed automatically.
-To install, first select your Minecraft version on the 'Installation' page, then choose OptiFine, Forge, or any other components. PCL will then handle the installation.</s:String>
-    <s:String x:Key="LangDownloadPageLeftDialogManualInstallTitle">Installation Hint</s:String>
-    <s:String x:Key="LangDownloadPageLeftDialogManualInstallBtn1">Installation Page</s:String>
-    <s:String x:Key="LangDownloadPageLeftDialogManualInstallBtn2">Continue</s:String>
-    <s:String x:Key="LangDownloadPageLeftManualInstallFold">Packages</s:String>
     <s:String x:Key="LangDownloadPageLeftResource">Community Resources</s:String>
     <s:String x:Key="LangDownloadPageLeftMods">Mods</s:String>
     <s:String x:Key="LangDownloadPageLeftModsL"> Mod </s:String>
@@ -694,6 +688,10 @@ Please check your internet and try again.</s:String>
     <s:String x:Key="LangMySkinCapeNameHome">Home</s:String>
     <s:String x:Key="LangMySkinCapeNameMenace">Menace</s:String>
     <s:String x:Key="LangMySkinCapeNameYearn">渴望披风</s:String>
+    <s:String x:Key="LangMySkinCapeNameCommon">普通披风</s:String>
+    <s:String x:Key="LangMySkinCapeNamePan">薄煎饼披风</s:String>
+    <s:String x:Key="LangMySkinCapeNameFounders">创始人披风</s:String>
+    <s:String x:Key="LangMySkinCapeNameCopper">铜披风</s:String>
     <s:String x:Key="LangMySkinCapeNameNone">None</s:String>
     <s:String x:Key="LangLaunchLeftInstanceChoose">Selection</s:String>
     <s:String x:Key="LangLaunchLeftInstanceConfig">Properties</s:String>
@@ -711,7 +709,6 @@ Please check your internet and try again.</s:String>
     <s:String x:Key="LangLaunchLeftStageDownload">Speed</s:String>
     <s:String x:Key="LangLaunchLeftTip">Trivia</s:String>
     <s:String x:Key="LangLaunchLeftInit">Initialise</s:String>
-    <s:String x:Key="LangLaunchLeftAccountOfflineLinkLogin">Hosting Offline</s:String>
     <s:String x:Key="LangLaunchLeftAccountOfflineLogin">Offline</s:String>
     <s:String x:Key="LangLaunchLeftAccountMicrosoftLogin">Microsoft</s:String>
     <s:String x:Key="LangLaunchLeftAccountUnifiedPassLogin">Unified Pass</s:String>
@@ -1340,12 +1337,11 @@ Do not enable this unless the relevant files are modified.</s:String>
     <s:String x:Key="LangModMainExceptionNoHelpFound">Available help is not found. You can hide the Help Centre in 'Settings → Personalisation → Feature Hiding' if it is not needed.</s:String>
     <s:String x:Key="LangModMainExceptionNoFileFound">Help file not found: {0}.</s:String>
     <s:String x:Key="LangModMainExceptionNoTitleArgFound">Title item not found.</s:String>
-    <s:String x:Key="LangModMainExceptionNoEventTypeArgFound">EventType item not found.</s:String>
     <s:String x:Key="LangModMainExceptionNoXamlFileFound">Corresponding .xaml file for help entry .json not found. ({0})</s:String>
     <s:String x:Key="LangModEventOpeningWeb">Opening, please wait...</s:String>
     <s:String x:Key="LangModEventStartInstance">Launching {0}...</s:String>
     <s:String x:Key="LangModEventChoseAnInstance">Please select an instance first!</s:String>
-    <s:String x:Key="LangModEventHomePageRefreshed">The homepage has been refreshed!</s:String>
+    <s:String x:Key="LangModEventNoRefreshSupport">当前页面不支持刷新操作！</s:String>
     <s:String x:Key="LangModEventDialogDownloadIncorrectContent">'EventData' must be an URL that starts with 'http://' or 'https://'.
 PCL does not support other topsy-turvy download protocols.</s:String>
     <s:String x:Key="LangModEventDialogEventFailTitle">Event Execution Failed</s:String>
@@ -1502,6 +1498,7 @@ Please confirm that the issue persists in the latest version after updating, and
     <s:String x:Key="LangModBaseExceptionOutOfMemoryException">Your computer is running out of memory, which causes PCL to be unable to run. Please close some unused programmes and try again.</s:String>
     <s:String x:Key="LangModBaseExceptionCOMException">An error occurred due to a problem with the operating system or graphics card. Please try to restart PCL.</s:String>
     <s:String x:Key="LangModBaseExceptionBadNetwork">It is difficult to connect to the server due to the poor network environment. Please check your internet and retry several times.</s:String>
+    <s:String x:Key="LangModBaseExceptionWSAStartup">请尝试卸载中国移动云盘，然后再试。</s:String>
     <s:String x:Key="LangModLaunchStartStageGetJava">Obtaining Java</s:String>
     <s:String x:Key="LangModLaunchStartStageCompleteFile">Repairing Files</s:String>
     <s:String x:Key="LangModLaunchStartStageGetParameters">Obtaining Parameters</s:String>
@@ -1600,6 +1597,7 @@ Latest Version: {2} ({3})</s:String>
     <s:String x:Key="LangModJavaManuallyImport">Manually Import</s:String>
     <s:String x:Key="LangModJava32Bit">32-bit</s:String>
     <s:String x:Key="LangModJavaExceptionFileNotFound">File {0} not found.</s:String>
+    <s:String x:Key="LangModJavaExceptionUnsupportedPDFBookmarkJava">不兼容 PDF Bookmark 的 Java</s:String>
     <s:String x:Key="LangModJavaExceptionTryRunFail">Failed to execute this Java.</s:String>
     <s:String x:Key="LangModJavaExceptionRunFail">Unable to execute this Java. Please delete the '/lib/ext' folder in the Java folder and try again.</s:String>
     <s:String x:Key="LangModJavaExceptionVersionNotFound">Java version number not found.</s:String>
@@ -1728,8 +1726,6 @@ If that option is not available, please select 'Set password', and log in after 
     <s:String x:Key="LangModModpackTaskOrganizeFiles">Final Files Organisation</s:String>
     <s:String x:Key="LangModModpackTaskCurseForgeModpackInstall">CurseForge Modpack Installation: </s:String>
     <s:String x:Key="LangModModpackHintInstalling">This modpack is currently installing!</s:String>
-    <s:String x:Key="LangModModpackHintQuiltNotSupport">PCL currently does not support Quilt modpacks!</s:String>
-    <s:String x:Key="LangModModpackHintUnknownModLoader">Unable to install the modpack due to an unknown mod loader {0}!</s:String>
     <s:String x:Key="LangModModpackTaskDownloadExtraFile">Download Additions</s:String>
     <s:String x:Key="LangModModpackTaskModrinthModpackInstall">Modrinth Modpack Installation: </s:String>
     <s:String x:Key="LangModModpackTaskRenameInstanceJsonFileSideLoader">Rename Instance JSON (Side Loader)</s:String>
@@ -1770,7 +1766,6 @@ About to open: {0}</s:String>
     <s:String x:Key="LangModBaseExceptionRenameSubKeyNotSupport">Renaming a subkey that contains subkeys is unsupported: {0}.</s:String>
     <s:String x:Key="LangModBaseExceptionPathIncorrect">Path not included: {0}</s:String>
     <s:String x:Key="LangModBaseExceptionFileNameIncorrect">File name not included: {0}</s:String>
-    <s:String x:Key="LangModBaseExceptionFileNameTooLong">File name is too long: {0}</s:String>
     <s:String x:Key="LangModBaseExceptionCopyFileFail">Error copying file: {0} → {1}</s:String>
     <s:String x:Key="LangModBaseSelectFolder">Select Folder</s:String>
     <s:String x:Key="LangModBaseExceptionEmptyFolderName">Folder name cannot be empty!</s:String>
@@ -1960,16 +1955,10 @@ Each mod must be unique. Make sure to remove any duplicate mods before relaunchi
     <s:String x:Key="LangModCrashCrashReasonReasonBB">The game crashed due to the duplicate mods.
 
 Each mod must be unique. Make sure to remove any duplicate mods before relaunching the game.</s:String>
-    <s:String x:Key="LangModCrashCrashReasonReasonBC">The game encountered an issue with entity {0}.
-
-Consider creating a new world, spawning the entity, and monitoring the performance of the game:
- - If it operates normally, it is likely that this entity was the source of the error, and you may need to employ a method to remove this entity.
- - If it persists, the issue may originate from other factors...</s:String>
-    <s:String x:Key="LangModCrashCrashReasonReasonBD">The game encountered an issue with some entities in the world.
-
-Consider creating a new world, spawning the entities, and monitoring the performance of the game:
- - If it operates normally, it is likely that some entities were the source of the error, and you may need to delete this world.
- - If it persists, the issue may originate from other factors...</s:String>
+    <s:String x:Key="LangModCrashCrashReasonReasonTargetPlayerEntity">游戏因为位于 {0} 的玩家实体导致了崩溃。</s:String>
+    <s:String x:Key="LangModCrashCrashReasonReasonPlayerEntity">游戏因为玩家实体导致了崩溃。</s:String>
+    <s:String x:Key="LangModCrashCrashReasonReasonTargetEntity">游戏因为实体 {0} 导致了崩溃。</s:String>
+    <s:String x:Key="LangModCrashCrashReasonReasonTargetEntities">游戏因为下列实体导致了崩溃：{0}</s:String>
     <s:String x:Key="LangModCrashCrashReasonReasonBE">The game crashed due to the incompatibility between OptiFine and the current version of Forge.
 
 Consider visiting the OptiFine website (https://optifine.net/downloads) and reinstalling the game using the corresponding compatible version strictly.</s:String>
@@ -2078,7 +2067,6 @@ Alternatively, you can access {1} on another device and enter the code.</s:Strin
     <s:String x:Key="LangModExceptionDownloadFail">Failed to download directly. ({0})</s:String>
     <s:String x:Key="LangModExceptionCreateDirectoryFail">Failed to preprocess download file path. ({0})</s:String>
     <s:String x:Key="LangModExceptionUnknown">Unknown error.</s:String>
-    <s:String x:Key="LangModExceptionTimeOutAskCheck">Server timed out. Please check your internet. ({0})</s:String>
     <s:String x:Key="LangModExceptionRequestFailed">Failed to request network. ({0})</s:String>
     <s:String x:Key="LangModExceptionReturnErrorCode">Error return from server.（{0}）</s:String>
     <s:String x:Key="LangModExceptionUnknownFileStatus">Unknown file status: {0}</s:String>

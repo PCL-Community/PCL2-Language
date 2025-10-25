@@ -3,16 +3,16 @@
     Public PageUuid As Integer = GetUuid()
 
     '“返回顶部” 按钮检测的滚动区域
-    Public Property PanScroll As MyScrollViewer
+    Public Property PanScroll As String '需要在 Loaded 之后才能获取到控件，所以不能用 Binding 直接绑定（#6664）
         Get
             Return GetValue(PanScrollProperty)
         End Get
-        Set(value As MyScrollViewer)
+        Set(value As String)
             SetValue(PanScrollProperty, value)
         End Set
     End Property
     Private Shared ReadOnly PanScrollProperty =
-        DependencyProperty.Register("PanScroll", GetType(MyScrollViewer), GetType(MyPageRight), New PropertyMetadata(Nothing))
+        DependencyProperty.Register("PanScroll", GetType(String), GetType(MyPageRight), New PropertyMetadata(Nothing))
 
     '当前状态
     Public Enum PageStates
@@ -130,7 +130,7 @@
         Select Case PageState
             Case PageStates.Empty
                 If PageLoader Is Nothing OrElse PageLoader.State = LoadState.Finished OrElse PageLoader.State = LoadState.Waiting OrElse PageLoader.State = LoadState.Aborted Then
-                    '如果加载器在进入页面时不启动（例如 HiPer 联机），那么在此时就会有 State = Waiting
+                    '如果加载器在进入页面时不启动（例如联机），那么在此时就会有 State = Waiting
                     PageState = PageStates.ContentEnter
                     TriggerEnterAnimation(PanAlways, If(PanContent, Child))
                 ElseIf PageLoader.State = LoadState.Loading Then
@@ -152,7 +152,8 @@
                     PageState = PageStates.LoaderEnter
                     TriggerEnterAnimation(PanLoader)
                 End If
-            Case PageStates.ContentEnter '重复调用 PageOnEnter，直接忽略
+            Case PageStates.ContentEnter
+                '重复调用 PageOnEnter，直接忽略
             Case Else
                 Throw New Exception("在状态为 " & GetStringFromEnum(PageState) & " 时触发了 PageOnEnter 事件。")
         End Select
@@ -207,8 +208,8 @@
     Public Sub PageOnContentExit()
         If ModeDebug Then Log("[UI] 已触发 PageOnContentExit")
         If PageLoader IsNot Nothing AndAlso PageLoader.State = LoadState.Loading Then
-            Throw New Exception("在调用 PageOnContentExit 时，加载器不能为 Loading 状态")
             'Loading 的加载器可能触发进一步变化，难以预测会触发子页面的动画还是加载器完成的动画
+            Throw New Exception("在调用 PageOnContentExit 时，加载器不能为 Loading 状态")
         End If
         Select Case PageState
             Case PageStates.ContentEnter, PageStates.ContentStay
@@ -219,8 +220,12 @@
             Case PageStates.LoaderEnter, PageStates.LoaderStayForce, PageStates.LoaderStay
                 PageState = PageStates.ContentExit
                 TriggerExitAnimation(PanLoader)
-            Case PageStates.LoaderWait, PageStates.Empty
+            Case PageStates.LoaderWait
                 PageOnEnter()
+            Case PageStates.Empty
+                '可能是在离开页面后，其他后台线程调用了本函数，此时不应触发 PageOnEnter()
+                '例如：在加入联机房间后，切换到其他页面，然后联机房间被解散
+                If IsLoaded Then PageOnEnter()
         End Select
     End Sub
 

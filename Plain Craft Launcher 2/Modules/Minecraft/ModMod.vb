@@ -73,7 +73,7 @@ Public Module ModMod
             Get
                 If _Name Is Nothing Then Load()
                 If _Name Is Nothing Then _Name = _ModId
-                If _Name Is Nothing Then _Name = GetFileNameWithoutExtentionFromPath(Path)
+                If _Name Is Nothing Then _Name = IO.Path.GetFileNameWithoutExtension(Path)
                 Return _Name
             End Get
             Set(value As String)
@@ -688,7 +688,7 @@ Finished:
         ''' </summary>
         Public ReadOnly Property CanUpdate As Boolean
             Get
-                Return Not Setup.Get("UiHiddenFunctionModUpdate") AndAlso ChangelogUrls.Any()
+                Return Not Setup.Get("UiHiddenFunctionModUpdate") AndAlso Not Setup.Get("VersionAdvanceDisableModUpdate", Version:=PageVersionLeft.Version) AndAlso ChangelogUrls.Any()
             End Get
         End Property
 
@@ -1113,8 +1113,8 @@ Finished:
         End Sub, "Mod List Detail Loader CurseForge")
         '等待线程结束
         Do Until EndedThreadCount = 2
-            If Loader.IsAborted Then Return
             Thread.Sleep(10)
+            If Loader.IsAborted Then Return
         Loop
         '保存缓存
         Mods = Mods.Where(Function(m) m.Comp IsNot Nothing).ToList()
@@ -1126,6 +1126,7 @@ Finished:
         Next
         WriteFile(PathTemp & "Cache\LocalMod.json", Cache.ToString(If(ModeDebug, Newtonsoft.Json.Formatting.Indented, Newtonsoft.Json.Formatting.None)))
         '刷新边栏
+        If Loader.IsAborted Then Return
         If FrmVersionMod?.Filter = PageVersionMod.FilterType.CanUpdate Then
             RunInUi(Sub() FrmVersionMod?.RefreshUI()) '同步 “可更新” 列表 (#4677)
         Else
@@ -1212,7 +1213,7 @@ Finished:
                         If ReqVersionHead = ReqVersionTail Then
                             VersionRequire = "应为 " & ReqVersionHead
                         ElseIf ReqVersionHead.Contains(".") AndAlso ReqVersionTail.Contains(".") Then
-                            VersionRequire = "应为 " & ReqVersionHead & " 至 " & ReqVersionTail
+                            VersionRequire = $"应为 {ReqVersionHead} 至 {ReqVersionTail}"
                         ElseIf ReqVersionHead.Contains(".") Then
                             If ReqVersionHeadCanEqual Then
                                 VersionRequire = "最低应为 " & ReqVersionHead
@@ -1230,7 +1231,7 @@ Finished:
                         End If
                         '检查前置 Mod 是否存在，并获取其版本
                         If Not CurrentDependencies.ContainsKey(ReqId) Then
-                            Result.Add("缺少前置 Mod：" & ReqId & If(VersionRequire = "", "", "，其版本" & VersionRequire) & "。" & vbCrLf & " - " & ModEntity.FileName)
+                            Result.Add($"缺少前置 Mod：{ReqId}{If(VersionRequire = "", "", "，其版本" & VersionRequire)}。{vbCrLf} - {ModEntity.FileName}")
                             Continue For
                         End If
                         Dim CurrentVersion As String = If(CurrentDependencies(ReqId)(0), "0.0")
@@ -1239,7 +1240,7 @@ Finished:
                         If ReqVersionHead.Contains(".") Then
                             If VersionSortInteger(ReqVersionHead, CurrentVersion) > If(ReqVersionHeadCanEqual, 0, -1) Then
                                 Result.Add(ReqId.Substring(0, 1).ToUpper & ReqId.Substring(1) & " 版本过低，其版本" & VersionRequire & "，而当前版本为 " & CurrentVersion & "。" & vbCrLf &
-                                           " - " & ModEntity.FileName & If(ReqId <> "minecraft" AndAlso ReqId <> "forge", vbCrLf & " - 前置：" & CurrentDependencies(ReqId)(1), ""))
+                                           " - " & ModEntity.FileName & If(ReqId <> "minecraft" AndAlso ReqId <> "forge", $"{vbCrLf} - 前置：{CurrentDependencies(ReqId)(1)}", ""))
                                 Continue For
                             End If
                         End If
@@ -1247,26 +1248,26 @@ Finished:
                         If ReqVersionTail.Contains(".") Then
                             If VersionSortInteger(CurrentVersion, ReqVersionTail) > If(ReqVersionTailCanEqual, 0, -1) Then
                                 Result.Add(ReqId.Substring(0, 1).ToUpper & ReqId.Substring(1) & " 版本过高，其版本" & VersionRequire & "，而当前版本为 " & CurrentVersion & "。" & vbCrLf &
-                                           " - " & ModEntity.FileName & If(ReqId <> "minecraft" AndAlso ReqId <> "forge", vbCrLf & " - 前置：" & CurrentDependencies(ReqId)(1), ""))
+                                           " - " & ModEntity.FileName & If(ReqId <> "minecraft" AndAlso ReqId <> "forge", $"{vbCrLf} - 前置：{CurrentDependencies(ReqId)(1)}", ""))
                                 Continue For
                             End If
                         End If
                     Else
                         If Not CurrentDependencies.ContainsKey(Dependency.Key) Then
-                            Result.Add("缺少前置 Mod：" & Dependency.Key & "。" & vbCrLf & " - " & ModEntity.FileName)
+                            Result.Add($"缺少前置 Mod：{Dependency.Key}。{vbCrLf} - {ModEntity.FileName}")
                             Continue For
                         End If
                     End If
                 Next
             Catch ex As Exception
-                Result.Add("检查 Mod 时出错：" & GetExceptionSummary(ex) & vbCrLf & " - " & ModEntity.FileName)
+                Result.Add($"检查 Mod 时出错：{ex.GetBrief()}{vbCrLf} - {ModEntity.FileName}")
                 Log(ex, "检查 Mod 时出错")
             End Try
         Next
         If Not Result.Any() Then
             Log("[Minecraft] Mod 检查未发现异常")
         Else
-            Log("[Minecraft] Mod 检查异常结果：" & vbCrLf & Join(Result, vbCrLf))
+            Log($"[Minecraft] Mod 检查异常结果：{vbCrLf}{Join(Result, vbCrLf)}")
         End If
         Return Result
     End Function

@@ -3,7 +3,7 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:local="clr-namespace:PCL" xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
     mc:Ignorable="d" x:Class="PageDownloadPack"
-    PanScroll="{Binding ElementName=Content}">
+    PanScroll="Content">
     <local:PageComp x:Name="Content" PageType="ModPack" TypeName="{StaticResource LangDownloadPageLeftModpack}" TypeNameSpaced="{StaticResource LangDownloadPageLeftModpackL}">
         <local:MyComboBoxItem Tag="" Content="{StaticResource LangDownloadResourceTypeAll}" IsSelected="True" />
         <local:MyComboBoxItem Tag="4484/" Content="{StaticResource LangDownloadModpackTypeMulti}" />
@@ -17,7 +17,7 @@
         <local:MyComboBoxItem Tag="/kitchen-sink" Content="{StaticResource LangDownloadModpackTypeCook}" />
         <local:MyComboBoxItem Tag="4476/" Content="{StaticResource LangDownloadModpackTypeExplore}" />
         <local:MyComboBoxItem Tag="4477/" Content="{StaticResource LangDownloadModpackTypeGame}" />
-        <local:MyComboBoxItem Tag="4471/" Content="{StaticResource LangDownloadModpackTypeScienceFiction}" />
+        <local:MyComboBoxItem Tag="4474/" Content="{StaticResource LangDownloadModpackTypeScienceFiction}" />
         <local:MyComboBoxItem Tag="4736/" Content="{StaticResource LangDownloadModpackTypeSkyblock}" />
         <local:MyComboBoxItem Tag="5128/" Content="{StaticResource LangDownloadModpackTypeImprove}" />
         <local:MyComboBoxItem Tag="4487/" Content="{StaticResource LangDownloadModpackTypeFTB}" ToolTip="{StaticResource LangDownloadModpackTypeFTBToolTip}" ToolTipService.HorizontalOffset="70" />

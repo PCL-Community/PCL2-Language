@@ -13,14 +13,15 @@
     <s:String x:Key="LangReset">重置</s:String>
     <s:String x:Key="LangRefresh">Обновить</s:String>
     <s:String x:Key="LangRefreshing">Обновление...</s:String>
+    <s:String x:Key="LangRefreshed">已刷新！</s:String>
     <s:String x:Key="LangApplicationExceptionNoAccessPermission">PCL не имеет разрешения на доступ к {0}</s:String>
     <s:String x:Key="LangApplicationDialogTitleCacheFolderUnavailable">Каталог кэша недоступен</s:String>
     <s:String x:Key="LangApplicationDialogContentCacheFolderUnavailable">PCL не может получить доступ к каталогу кэша, что может привести к ошибке программы или невозможности использования.
 Причина ошибки: {0}</s:String>
     <s:String x:Key="LangApplicationDialogContentCustomCacheFolderUnavailable">Выбранный вручную каталог кэша недоступен, PCL будет использовать каталог кэша по умолчанию вместо этого.
 Причина ошибки: {0}</s:String>
-    <s:String x:Key="LangApplicationDialogTitleRunInTemp">Предупреждение среды</s:String>
-    <s:String x:Key="LangApplicationDialogContentRunInTemp">Извлеките PCL из сжатого файла или переместите его в другую папку перед продолжением использования!
+    <s:String x:Key="LangApplicationDialogTitleUnzipLauncher">Предупреждение среды</s:String>
+    <s:String x:Key="LangApplicationDialogContentUnzipLauncher">Извлеките PCL из сжатого файла или переместите его в другую папку перед продолжением использования!
 В настоящее время программа запущена во временной папке, настройки, сохранения и т. д. могут не сохраниться, а некоторые функции могут быть недоступны.</s:String>
     <s:String x:Key="LangApplicationDialogContent32BitWarn">PCL и более новая версия Minecraft больше не поддерживают 32-битные системы, некоторые функции будут недоступны.
 Настоятельно рекомендуется переустановить игру после перехода на 64-битную систему!</s:String>
@@ -42,6 +43,8 @@
     <s:String x:Key="LangDialogBtnUpdateFullLog">Полный список изменений</s:String>
     <s:String x:Key="LangDialogUpdateTo">PCL {0} Обновлён</s:String>
     <s:String x:Key="LangDialogPolicyContent">Перед использованием PCL, пожалуйста, согласитесь с Условиями использования и Отказом от ответственности PCL.</s:String>
+    <s:String x:Key="LangDialogPolicyContentModified">PCL 的用户协议与免责声明已更新。
+请阅读更新后的用户协议与免责声明。</s:String>
     <s:String x:Key="LangDialogPolicyTitle">Согласие и авторизация</s:String>
     <s:String x:Key="LangDialogBtnAgree">Согласен</s:String>
     <s:String x:Key="LangDialogBtnDeny">Отклонить</s:String>
@@ -139,7 +142,6 @@
     <s:String x:Key="LangDialogCustomPageOverwriteConfirmationContent">Файл макета уже существует. Продолжение генерации файла документации приведет к перезаписи существующего файла макета!</s:String>
     <s:String x:Key="LangDialogCustomPageOverwriteFail">Не удалось сгенерировать файл документации</s:String>
     <s:String x:Key="LangHintCustomPageOverwriteSuccess">Файл документации сгенерирован!</s:String>
-    <s:String x:Key="LangHintCustomPageRefreshed">Главная страница обновлена!</s:String>
     <s:String x:Key="LangDialogCustomPageTeachContent">1. Нажмите кнопку "Сгенерировать документацию", которая создаст файл макета "Custom.xaml" в папке PCL.
 2. Отредактируйте файл с помощью таких инструментов как Блокнот, не забудьте сохранить изменения после редактирования.
 3. Нажмите кнопку "Обновить главную", чтобы увидеть, как выглядит главная страница сейчас.
@@ -366,7 +368,6 @@
     <s:String x:Key="LangSelectVersionNoHiddenTip">Нет скрытых экземпляров, вы можете выбрать "Скрыть из списка" в "Свойствах экземпляра → Персонализация → Категория", чтобы скрыть экземпляр.
 Нажмите "F11" снова, чтобы выйти из режима просмотра скрытых экземпляров.</s:String>
     <s:String x:Key="LangSelectVersionListLoadFail">Ошибка при преобразовании списка экземпляров для отображения.</s:String>
-    <s:String x:Key="LangSelectVersionListLoadIconFail">Ошибка при загрузке иконки экземпляра.</s:String>
     <s:String x:Key="LangSelectBtnFavorite">Избранные</s:String>
     <s:String x:Key="LangSelectBtnCancelFavorite">Убрать из избранных</s:String>
     <s:String x:Key="LangSelectBtnSet">Свойства</s:String>
@@ -375,8 +376,8 @@
     <s:String x:Key="LangSelectDeleteVersionContentA">Вы уверены, что хотите удалить экземпляр {0}?</s:String>
     <s:String x:Key="LangSelectDeleteVersionContentB">Вы уверены, что хотите удалить экземпляр {0} навсегда?</s:String>
     <s:String x:Key="LangSelectDeleteVersionContentC"> Поскольку для этого экземпляра включена "Изоляция экземпляра", соответствующие сохранения, ресурс-паки, моды и другие файлы этого экземпляра также будут удалены!</s:String>
-    <s:String x:Key="LangSelectVersionDeletedA">Экземпляр {0} был удален навсегда!</s:String>
-    <s:String x:Key="LangSelectVersionDeletedB">Экземпляр {0} был перемещен в корзину!</s:String>
+    <s:String x:Key="LangSelectVersionDeletedPermanently">Экземпляр {0} был удален навсегда!</s:String>
+    <s:String x:Key="LangSelectVersionDeletedToRecycleBin">Экземпляр {0} был перемещен в корзину!</s:String>
     <s:String x:Key="LangSelectVersionDeleteCancelled">Удаление экземпляра {0} было отменено вручную.</s:String>
     <s:String x:Key="LangSelectVersionDeleteFail">Не удалось удалить экземпляр {0}.</s:String>
     <s:String x:Key="LangSpeedTotalProgress">Прогресс</s:String>
@@ -486,13 +487,6 @@ PCL рекомендует включить опцию "Изоляция экз�
     <s:String x:Key="LangDownloadInstallOptiFabricManually">Не совместимо с более ранними версиями Fabric, пожалуйста, скачайте OptiFabric Origins вручную.</s:String>
     <s:String x:Key="LangDownloadPageLeftRefresh">Обновить</s:String>
     <s:String x:Key="LangDownloadPageLeftAutoInstall">Установка</s:String>
-    <s:String x:Key="LangDownloadPageLeftManualInstall">▼ Пакеты</s:String>
-    <s:String x:Key="LangDownloadPageLeftDialogManualInstallContent">Функция "Пакеты" позволяет вам скачать файл установки JAR для загрузчиков, таких как OptiFine и Forge, но установка не может быть выполнена автоматически.
-Сначала выберите версию Minecraft на странице "Установка", затем выберите OptiFine, Forge или любой другой загрузчик, чтобы PCL установил его автоматически.</s:String>
-    <s:String x:Key="LangDownloadPageLeftDialogManualInstallTitle">Подсказка по установке</s:String>
-    <s:String x:Key="LangDownloadPageLeftDialogManualInstallBtn1">Страница установки</s:String>
-    <s:String x:Key="LangDownloadPageLeftDialogManualInstallBtn2">Продолжить</s:String>
-    <s:String x:Key="LangDownloadPageLeftManualInstallFold">Пакеты</s:String>
     <s:String x:Key="LangDownloadPageLeftResource">Ресурсы</s:String>
     <s:String x:Key="LangDownloadPageLeftMods">Моды</s:String>
     <s:String x:Key="LangDownloadPageLeftModsL"> Mod </s:String>
@@ -694,6 +688,10 @@ PCL рекомендует включить опцию "Изоляция экз�
     <s:String x:Key="LangMySkinCapeNameHome">家园披风</s:String>
     <s:String x:Key="LangMySkinCapeNameMenace">入侵披风</s:String>
     <s:String x:Key="LangMySkinCapeNameYearn">渴望披风</s:String>
+    <s:String x:Key="LangMySkinCapeNameCommon">普通披风</s:String>
+    <s:String x:Key="LangMySkinCapeNamePan">薄煎饼披风</s:String>
+    <s:String x:Key="LangMySkinCapeNameFounders">创始人披风</s:String>
+    <s:String x:Key="LangMySkinCapeNameCopper">铜披风</s:String>
     <s:String x:Key="LangMySkinCapeNameNone">Нет</s:String>
     <s:String x:Key="LangLaunchLeftInstanceChoose">Выбор</s:String>
     <s:String x:Key="LangLaunchLeftInstanceConfig">Свойства</s:String>
@@ -711,7 +709,6 @@ PCL рекомендует включить опцию "Изоляция экз�
     <s:String x:Key="LangLaunchLeftStageDownload">Скорость</s:String>
     <s:String x:Key="LangLaunchLeftTip">Разное</s:String>
     <s:String x:Key="LangLaunchLeftInit">Инициализация</s:String>
-    <s:String x:Key="LangLaunchLeftAccountOfflineLinkLogin">Оффлайн-хостинг</s:String>
     <s:String x:Key="LangLaunchLeftAccountOfflineLogin">Оффлайн</s:String>
     <s:String x:Key="LangLaunchLeftAccountMicrosoftLogin">Microsoft</s:String>
     <s:String x:Key="LangLaunchLeftAccountUnifiedPassLogin">Единый пароль</s:String>
@@ -1341,12 +1338,11 @@ PCL рекомендует включить опцию "Изоляция экз�
     <s:String x:Key="LangModMainExceptionNoHelpFound">Не найдено доступных подсказок. Вы можете скрыть Центр помощи в "Настройки → Персонализация → Скрытие функций", если он вам не нужен.</s:String>
     <s:String x:Key="LangModMainExceptionNoFileFound">未找到帮助文件：{0}</s:String>
     <s:String x:Key="LangModMainExceptionNoTitleArgFound">未找到 Title 项</s:String>
-    <s:String x:Key="LangModMainExceptionNoEventTypeArgFound">未找到 EventType 项</s:String>
     <s:String x:Key="LangModMainExceptionNoXamlFileFound">未找到帮助条目 .json 对应的 .xaml 文件（{0}）</s:String>
     <s:String x:Key="LangModEventOpeningWeb">Открытие, пожалуйста, подождите...</s:String>
     <s:String x:Key="LangModEventStartInstance">Запуск {0}...</s:String>
     <s:String x:Key="LangModEventChoseAnInstance">Пожалуйста, сначала выберите экземпляр!</s:String>
-    <s:String x:Key="LangModEventHomePageRefreshed">Главная страница обновлена!</s:String>
+    <s:String x:Key="LangModEventNoRefreshSupport">当前页面不支持刷新操作！</s:String>
     <s:String x:Key="LangModEventDialogDownloadIncorrectContent">"EventData" должно быть URL, начинающимся с "http://" или "https://".
 PCL не поддерживает другие странные протоколы скачивания.</s:String>
     <s:String x:Key="LangModEventDialogEventFailTitle">Неудачное выполнение события</s:String>
@@ -1503,6 +1499,7 @@ URL: {0}</s:String>
     <s:String x:Key="LangModBaseExceptionOutOfMemoryException">Компьютеру не хватает памяти, что приводит к невозможности запуска PCL. Пожалуйста, закройте некоторые ненужные программы и попробуйте снова.</s:String>
     <s:String x:Key="LangModBaseExceptionCOMException">Произошла ошибка из-за проблем с операционной системой или графикой. Пожалуйста, попробуйте перезапустить PCL.</s:String>
     <s:String x:Key="LangModBaseExceptionBadNetwork">Из-за плохого сетевого соединения сложно подключиться к серверу. Пожалуйста, проверьте интернет и попробуйте несколько раз.</s:String>
+    <s:String x:Key="LangModBaseExceptionWSAStartup">请尝试卸载中国移动云盘，然后再试。</s:String>
     <s:String x:Key="LangModLaunchStartStageGetJava">Получение Java</s:String>
     <s:String x:Key="LangModLaunchStartStageCompleteFile">Восстановление файлов</s:String>
     <s:String x:Key="LangModLaunchStartStageGetParameters">Получение параметров</s:String>
@@ -1602,6 +1599,7 @@ URL: {0}</s:String>
     <s:String x:Key="LangModJavaManuallyImport">Импорт вручную</s:String>
     <s:String x:Key="LangModJava32Bit">32-битная версия</s:String>
     <s:String x:Key="LangModJavaExceptionFileNotFound">Файл {0} не найден.</s:String>
+    <s:String x:Key="LangModJavaExceptionUnsupportedPDFBookmarkJava">不兼容 PDF Bookmark 的 Java</s:String>
     <s:String x:Key="LangModJavaExceptionTryRunFail">Не удалось запустить этот Java.</s:String>
     <s:String x:Key="LangModJavaExceptionRunFail">Не удается запустить этот Java, пожалуйста удалите папку "/lib/ext" в папке Java и попробуйте снова.</s:String>
     <s:String x:Key="LangModJavaExceptionVersionNotFound">Не найдена версия Java.</s:String>
@@ -1730,8 +1728,6 @@ URL: {0}</s:String>
     <s:String x:Key="LangModModpackTaskOrganizeFiles">Организация финальных файлов</s:String>
     <s:String x:Key="LangModModpackTaskCurseForgeModpackInstall">Установка модпака CurseForge: </s:String>
     <s:String x:Key="LangModModpackHintInstalling">Этот модпак в настоящее время находится в стадии установки!</s:String>
-    <s:String x:Key="LangModModpackHintQuiltNotSupport">В настоящее время PCL не поддерживает пакеты модов Quilt!</s:String>
-    <s:String x:Key="LangModModpackHintUnknownModLoader">Невозможно установить модпак из-за неизвестного загрузчика модов {0}!</s:String>
     <s:String x:Key="LangModModpackTaskDownloadExtraFile">Загрузить дополнения</s:String>
     <s:String x:Key="LangModModpackTaskModrinthModpackInstall">Установка модпака Modrinth: </s:String>
     <s:String x:Key="LangModModpackTaskRenameInstanceJsonFileSideLoader">Переименовать экземпляр JSON (боковой загрузчик)</s:String>
@@ -1772,7 +1768,6 @@ URL: {0}</s:String>
     <s:String x:Key="LangModBaseExceptionRenameSubKeyNotSupport">Переименование подключаемого ключа, содержащего подключаемые ключи, не поддерживается: {0}.</s:String>
     <s:String x:Key="LangModBaseExceptionPathIncorrect">Путь не включен: {0}</s:String>
     <s:String x:Key="LangModBaseExceptionFileNameIncorrect">Имя файла не включено: {0}</s:String>
-    <s:String x:Key="LangModBaseExceptionFileNameTooLong">Имя файла слишком длинное: {0}</s:String>
     <s:String x:Key="LangModBaseExceptionCopyFileFail">Ошибка копирования файла: {0} → {1}</s:String>
     <s:String x:Key="LangModBaseSelectFolder">Выберите папку</s:String>
     <s:String x:Key="LangModBaseExceptionEmptyFolderName">Имя папки не может быть пустым!</s:String>
@@ -1962,16 +1957,10 @@ URL: {0}</s:String>
     <s:String x:Key="LangModCrashCrashReasonReasonBB">Игра вылетала из-за того, что моды устанавливались повторно.
 
 Каждый мод должен быть уникальным; перед перезапуском игры обязательно удалите все повторяющиеся моды.</s:String>
-    <s:String x:Key="LangModCrashCrashReasonReasonBC">В игре возникла проблема с объектом {0}.
-
-Рассмотрите возможность создания нового мира, создания сущности и мониторинга производительности игры:
- - Если он работает нормально, вполне вероятно, что этот объект был источником ошибки, и вам может потребоваться использовать метод для удаления этого объекта.
- - Если проблема не исчезнет, ​​возможно, проблема связана с другими факторами...</s:String>
-    <s:String x:Key="LangModCrashCrashReasonReasonBD">В игре возникла проблема с некоторыми объектами в мире.
-
-Рассмотрите возможность создания нового мира, создания сущностей и мониторинга производительности игры:
- - Если он работает нормально, вполне вероятно, что источником ошибки были какие-то сущности, и вам, возможно, придется удалить этот мир.
- - Если проблема не исчезнет, ​​возможно, проблема связана с другими факторами...</s:String>
+    <s:String x:Key="LangModCrashCrashReasonReasonTargetPlayerEntity">游戏因为位于 {0} 的玩家实体导致了崩溃。</s:String>
+    <s:String x:Key="LangModCrashCrashReasonReasonPlayerEntity">游戏因为玩家实体导致了崩溃。</s:String>
+    <s:String x:Key="LangModCrashCrashReasonReasonTargetEntity">游戏因为实体 {0} 导致了崩溃。</s:String>
+    <s:String x:Key="LangModCrashCrashReasonReasonTargetEntities">游戏因为下列实体导致了崩溃：{0}</s:String>
     <s:String x:Key="LangModCrashCrashReasonReasonBE">Игра вылетела из-за несовместимости OptiFine и текущей версии Forge.
 
 Рассмотрите возможность посещения веб-сайта OptiFine (https://optifine.net/downloads) и переустановки игры, используя соответствующую совместимую версию.</s:String>
@@ -2079,7 +2068,6 @@ URL: {0}</s:String>
     <s:String x:Key="LangModExceptionDownloadFail">直接下载文件失败（{0}）</s:String>
     <s:String x:Key="LangModExceptionCreateDirectoryFail">预处理下载文件路径失败（{0}）</s:String>
     <s:String x:Key="LangModExceptionUnknown">未知错误</s:String>
-    <s:String x:Key="LangModExceptionTimeOutAskCheck">连接服务器超时，请检查你的网络环境是否良好（{0}）</s:String>
     <s:String x:Key="LangModExceptionRequestFailed">网络请求失败（{0}）</s:String>
     <s:String x:Key="LangModExceptionReturnErrorCode">服务器返回错误（{0}）</s:String>
     <s:String x:Key="LangModExceptionUnknownFileStatus">文件状态未知：{0}</s:String>

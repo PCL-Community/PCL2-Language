@@ -68,7 +68,7 @@ Public Class PageLoginLegacy
     End Sub
     Private Sub Skin_Click() Handles Skin.Click
         If (Setup.Get("UiHiddenPageSetup") OrElse Setup.Get("UiHiddenSetupLaunch")) AndAlso Not PageSetupUI.HiddenForceShow Then
-            Hint(GetLang("LangPageLoginLegacyConfigHidden"), HintType.Critical)
+            Hint(GetLang("LangPageLoginLegacyConfigHidden"), HintType.Red)
         Else
             FrmMain.PageChange(FormMain.PageType.Setup, FormMain.PageSubType.SetupLaunch) '切换到皮肤设置页面
         End If

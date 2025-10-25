@@ -128,7 +128,7 @@
             Setup.Reset("SystemSystemTelemetry")
 
             Log("[Setup] 已初始化启动器页设置")
-            Hint(GetLang("LangPageSetupSystemLaunchResetSuccess"), HintType.Finish, False)
+            Hint(GetLang("LangPageSetupSystemLaunchResetSuccess"), HintType.Green, False)
         Catch ex As Exception
             Log(ex, GetLang("LangPageSetupSystemLaunchResetFail"), LogLevel.Msgbox)
         End Try
@@ -178,7 +178,7 @@
 
     '识别码/解锁码替代入口
     Private Sub BtnSystemIdentify_Click(sender As Object, e As MouseButtonEventArgs) Handles BtnSystemIdentify.Click
-        PageOtherAbout.CopyUniqueAddress()
+        PageOtherAbout.CopyIdentify()
     End Sub
     Private Sub BtnSystemUnlock_Click(sender As Object, e As MouseButtonEventArgs) Handles BtnSystemUnlock.Click
         DonateCodeInput()

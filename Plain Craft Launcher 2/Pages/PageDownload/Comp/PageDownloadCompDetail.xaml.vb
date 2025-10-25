@@ -290,9 +290,9 @@
             Sub(MyLoader)
                 Select Case MyLoader.State
                     Case LoadState.Failed
-                        Hint(MyLoader.Name & "失败：" & GetExceptionSummary(MyLoader.Error), HintType.Critical)
+                        Hint(MyLoader.Name & "失败：" & MyLoader.Error.GetBrief(), HintType.Red)
                     Case LoadState.Aborted
-                        Hint(MyLoader.Name & GetLang("LangTaskAbort"), HintType.Info)
+                        Hint(MyLoader.Name & GetLang("LangTaskAbort"), HintType.Blue)
                     Case LoadState.Loading
                         Return '不重新加载版本列表
                 End Select
@@ -326,7 +326,7 @@
                 Dim DefaultFolder As String = Nothing
                 If File.Type <> CompType.ModPack Then
                     Dim SubFolder As String = Nothing
-                    Select Case Project.Type
+                    Select Case File.Type
                         Case CompType.Mod : SubFolder = "mods\"
                         Case CompType.ResourcePack : SubFolder = "resourcepacks\"
                         Case CompType.Shader : SubFolder = "shaderpacks\"
@@ -346,7 +346,7 @@
                     Function(Version)
                         If Not Version.IsLoaded Then Version.Load()
                         '只对 Mod 和数据包进行版本检测
-                        If Project.Type = CompType.Mod OrElse Project.Type = CompType.DataPack Then
+                        If File.Type = CompType.Mod OrElse File.Type = CompType.DataPack Then
                             If File.GameVersions.Any(Function(v) v.Contains(".")) AndAlso
                                Not File.GameVersions.Any(Function(v) v.Contains(".") AndAlso v = Version.Version.McName) Then Return False
                         End If
@@ -359,8 +359,8 @@
                         Return False
                     End Function
                     '获取常规资源默认下载位置
-                    If CachedFolder.ContainsKey(Project.Type) Then
-                        DefaultFolder = CachedFolder(Project.Type)
+                    If CachedFolder.ContainsKey(File.Type) Then
+                        DefaultFolder = CachedFolder(File.Type)
                         Log($"[Comp] 使用上次下载时的文件夹作为默认下载位置：{DefaultFolder}")
                     ElseIf McVersionCurrent IsNot Nothing AndAlso IsVersionSuitable(McVersionCurrent) Then
                         DefaultFolder = $"{McVersionCurrent.PathIndie}{SubFolder}"
@@ -424,8 +424,8 @@
                             If(File.FileName.EndsWith(".mrpack"), "*.mrpack", "*.zip")), DefaultFolder)
                     If Not Target.Contains("\") Then Return
                     '构造步骤加载器
-                    Dim LoaderName As String = Desc & GetLang("LangDownloadCompTaskDownloadFileDetail") & GetFileNameWithoutExtentionFromPath(Target) & " "
-                    If Target <> DefaultFolder Then CachedFolder(Project.Type) = GetPathFromFullPath(Target)
+                    Dim LoaderName As String = Desc & GetLang("LangDownloadCompTaskDownloadFileDetail") & IO.Path.GetFileNameWithoutExtension(Target) & " "
+                    If Target <> DefaultFolder Then CachedFolder(File.Type) = GetPathFromFullPath(Target)
                     Dim Loaders As New List(Of LoaderBase)
                     Loaders.Add(New LoaderDownload(GetLang("LangDownloadCompTaskDownloadFile"), New List(Of NetFile) From {File.ToNetFile(Target)}) With {.ProgressWeight = 6, .Block = True})
                     '启动

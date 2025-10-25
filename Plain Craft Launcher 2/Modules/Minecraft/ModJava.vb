@@ -10,7 +10,7 @@
 
         '路径
         ''' <summary>
-        ''' Java.exe 文件的完整路径。
+        ''' java.exe 文件的完整路径。
         ''' </summary>
         Public ReadOnly Property PathJava As String
             Get
@@ -18,15 +18,7 @@
             End Get
         End Property
         ''' <summary>
-        ''' Javaw.exe 文件的完整路径。
-        ''' </summary>
-        Public ReadOnly Property PathJavaw As String
-            Get
-                Return PathFolder & "javaw.exe"
-            End Get
-        End Property
-        ''' <summary>
-        ''' Javaw.exe 文件所在文件夹的路径，以 \ 结尾。
+        ''' java.exe 文件所在文件夹的路径，以 \ 结尾。
         ''' </summary>
         Public PathFolder As String
         ''' <summary>
@@ -102,20 +94,13 @@
             Dim Output As String = Nothing
             Try
                 '确定文件存在
-                If Not File.Exists(PathJavaw) Then
-                    Throw New FileNotFoundException(GetLang("LangModJavaExceptionFileNotFound", "javaw.exe"), PathJavaw)
-                End If
-                If Not File.Exists(PathFolder & "java.exe") Then
-                    Throw New FileNotFoundException(GetLang("LangModJavaExceptionFileNotFound", "java.exe"), PathFolder & "java.exe")
-                End If
-                If File.Exists(PathFolder & "pdf-bookmark") Then
-                    Throw New Exception("不兼容 PDF Bookmark 的 Java") '#5326
-                End If
+                If Not File.Exists(PathJava) Then Throw New FileNotFoundException(GetLang("LangModJavaExceptionFileNotFound"), PathJava)
+                If File.Exists(PathFolder & "pdf-bookmark") Then Throw New Exception(GetLang("LangModJavaExceptionUnsupportedPDFBookmarkJava")) '#5326
                 IsJre = Not File.Exists(PathFolder & "javac.exe")
                 '运行 -version
-                Output = ShellAndGetOutput(PathFolder & "java.exe", "-version", 15000).ToLower
+                Output = StartProcessAndGetOutput(PathJava, "-version", 15000).ToLower
                 If Output = "" Then Throw New ApplicationException(GetLang("LangModJavaExceptionTryRunFail"))
-                If ModeDebug Then Log("[Java] Java 检查输出：" & PathFolder & "java.exe" & vbCrLf & Output)
+                If ModeDebug Then Log("[Java] Java 检查输出：" & PathJava & vbCrLf & Output)
                 If Output.Contains("/lib/ext exists") Then Throw New ApplicationException(GetLang("LangModJavaExceptionRunFail"))
                 If Output.Contains("a fatal error") Then Throw New ApplicationException("无法运行该 Java，该 Java 或系统存在问题")
                 '获取详细信息
@@ -136,17 +121,17 @@
                 End If
                 Is64Bit = Output.Contains("64-bit")
                 If Version.Minor <= 4 OrElse Version.Minor >= 100 Then Throw New ApplicationException(GetLang("LangModJavaExceptionGetDetailInfoFail", Version.ToString()))
-                '基于 #3649，在 64 位系统上禁用 32 位 Java
+                '#3649：在 64 位系统上禁用 32 位 Java
                 If Not Is64Bit AndAlso Not Is32BitSystem Then Throw New Exception(GetLang("LangModJavaExceptionNeed64Bit"))
-                '基于 #2249 发现 JRE 17 似乎也导致了 Forge 安装失败，干脆禁用更多版本的 JRE
+                '#2249：JRE 17 似乎会导致 Forge 安装失败，干脆禁用更多版本的 JRE
                 If IsJre AndAlso VersionCode >= 16 Then Throw New Exception(GetLang("LangModJavaExceptionNeedJDK"))
             Catch ex As ApplicationException
                 Throw ex
             Catch ex As ThreadInterruptedException
                 Throw ex
             Catch ex As Exception
-                Log("[Java] 检查失败的 Java 输出：" & PathFolder & "java.exe" & vbCrLf & If(Output, "无程序输出"))
-                Throw New Exception(GetLang("LangModJavaExceptionCheckFail", If(PathJavaw, "Nothing")), ex)
+                Log("[Java] 检查失败的 Java 输出：" & If(PathJava, "Nothing") & vbCrLf & If(Output, "无程序输出"))
+                Throw New Exception(GetLang("LangModJavaExceptionCheckFail", If(PathJava, "Nothing")), ex)
             End Try
             IsChecked = True
         End Sub
@@ -456,8 +441,8 @@ NoUserJava:
     ''' 将 Java 按照适用性排序。
     ''' </summary>
     Public Function JavaSorter(Left As JavaEntry, Right As JavaEntry) As Boolean
-        Dim PathInfo As New DirectoryInfo(ShortenPath(Path))
-        Dim PathMcInfo As New DirectoryInfo(ShortenPath(PathMcFolder))
+        Dim PathInfo As New DirectoryInfo(Path)
+        Dim PathMcInfo As New DirectoryInfo(PathMcFolder)
         '1. 尽量在当前文件夹或当前 Minecraft 文件夹
         Dim ProgramPathParent As String, MinecraftPathParent As String = ""
         ProgramPathParent = If(PathInfo.Parent, PathInfo).FullName
@@ -529,7 +514,7 @@ NoUserJava:
                 JavaSearchFolder(Disk.Name, JavaPreList, False)
             Next
             '查找 .jdks 文件夹中的 Java
-            JavaSearchFolder(Environment.GetFolderPath(Environment.SpecialFolder.UserProfile) & "\.jdks\", JavaPreList, False)
+            JavaSearchFolder(Environment.GetFolderPath(Environment.SpecialFolder.UserProfile) & "\.jdks\", JavaPreList, False, True)
             '查找 APPDATA 文件夹中的 Java
             JavaSearchFolder(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) & "\", JavaPreList, False)
             JavaSearchFolder(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData) & "\", JavaPreList, False)
@@ -657,7 +642,7 @@ Wait:
     Private Sub JavaSearchFolder(OriginalPath As String, ByRef Results As Dictionary(Of String, Boolean), Source As Boolean, Optional IsFullSearch As Boolean = False)
         Try
             Log("[Java] 开始" & If(IsFullSearch, "完全", "部分") & "遍历查找：" & OriginalPath)
-            JavaSearchFolder(New DirectoryInfo(ShortenPath(OriginalPath)), Results, Source, IsFullSearch)
+            JavaSearchFolder(New DirectoryInfo(OriginalPath), Results, Source, IsFullSearch)
         Catch ex As UnauthorizedAccessException
             Log("[Java] 遍历查找 Java 时遭遇无权限的文件夹：" & OriginalPath)
         Catch ex As Exception
@@ -685,7 +670,7 @@ Wait:
                             "应用", "运行", "前置", "mojang", "官启", "新建文件夹", "eclipse", "microsoft", "hotspot",
                             "runtime", "x86", "x64", "forge", "原版", "optifine", "官方", "启动", "hmcl", "mod", "高清",
                             "download", "launch", "程序", "path", "version", "baka", "pcl", "zulu", "local", "packages",
-                            "4297127d64ec6", "1.", "启动"}
+                            "4297127d64ec6", "1.", "启动", "jbr"}
             For Each FolderInfo As DirectoryInfo In OriginalPath.EnumerateDirectories
                 If FolderInfo.Attributes.HasFlag(FileAttributes.ReparsePoint) Then Continue For '跳过符号链接
                 Dim SearchEntry = GetFolderNameFromPath(FolderInfo.Name).ToLower '用于搜索的字符串

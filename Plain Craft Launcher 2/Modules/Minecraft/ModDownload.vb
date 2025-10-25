@@ -198,7 +198,7 @@
     Private IsNewClientVersionHinted As Boolean = False
     Private Sub DlClientListMojangMain(Loader As LoaderTask(Of String, DlClientListResult))
         Dim StartTime As Long = GetTimeTick()
-        Dim Json As JObject = GetJson(NetRequestByClientRetry("https://launchermeta.mojang.com/mc/game/version_manifest.json"))
+        Dim Json As JObject = GetJson(NetRequestByClientRetry("https://launchermeta.mojang.com/mc/game/version_manifest.json", RequireJson:=True))
         Try
             Dim Versions As JArray = Json("versions")
             If Versions.Count < 200 Then Throw New Exception(GetLang("LangModDownloadExceptionShortVersionList", Json.ToString()))
@@ -235,7 +235,7 @@
     ''' </summary>
     Public DlClientListBmclapiLoader As New LoaderTask(Of String, DlClientListResult)("DlClientList Bmclapi", AddressOf DlClientListBmclapiMain)
     Private Sub DlClientListBmclapiMain(Loader As LoaderTask(Of String, DlClientListResult))
-        Dim Json As JObject = GetJson(NetRequestByClientRetry("https://bmclapi2.bangbang93.com/mc/game/version_manifest.json"))
+        Dim Json As JObject = GetJson(NetRequestByClientRetry("https://bmclapi2.bangbang93.com/mc/game/version_manifest.json", RequireJson:=True))
         Try
             Dim Versions As JArray = Json("versions")
             If Versions.Count < 200 Then Throw New Exception(GetLang("LangModDownloadExceptionShortVersionList", Json.ToString()))
@@ -413,7 +413,7 @@
     ''' </summary>
     Public DlOptiFineListBmclapiLoader As New LoaderTask(Of Integer, DlOptiFineListResult)("DlOptiFineList Bmclapi", AddressOf DlOptiFineListBmclapiMain)
     Private Sub DlOptiFineListBmclapiMain(Loader As LoaderTask(Of Integer, DlOptiFineListResult))
-        Dim Json As JArray = GetJson(NetRequestByClientRetry("https://bmclapi2.bangbang93.com/optifine/versionList"))
+        Dim Json As JArray = GetJson(NetRequestByClientRetry("https://bmclapi2.bangbang93.com/optifine/versionList", RequireJson:=True))
         Try
             Dim Versions As New List(Of DlOptiFineListEntry)
             For Each Token As JObject In Json
@@ -483,7 +483,7 @@
     ''' </summary>
     Public DlForgeListOfficialLoader As New LoaderTask(Of Integer, DlForgeListResult)("DlForgeList Official", AddressOf DlForgeListOfficialMain)
     Private Sub DlForgeListOfficialMain(Loader As LoaderTask(Of Integer, DlForgeListResult))
-        Dim Result As String = NetRequestByClientRetry("https://files.minecraftforge.net/maven/net/minecraftforge/forge/index_1.2.4.html", Encoding:=Encoding.Default, Accept:="text/html", UseBrowserUserAgent:=True)
+        Dim Result As String = NetRequestByClientRetry("https://files.minecraftforge.net/maven/net/minecraftforge/forge/index_1.2.4.html", Encoding:=Encoding.Default, Accept:="text/html", SimulateBrowserHeaders:=True)
         If Result.Length < 200 Then Throw New Exception(GetLang("LangModDownloadExceptionShortVersionList", Result))
         '获取所有版本信息
         Dim Names As List(Of String) = RegexSearch(Result, "(?<=a href=""index_)[0-9.]+(_pre[0-9]?)?(?=.html)")
@@ -631,9 +631,9 @@
         Try
             Result = NetRequestByLoader("https://files.minecraftforge.net/maven/net/minecraftforge/forge/index_" &
                                           Loader.Input.Replace("-", "_") & '兼容 Forge 1.7.10-pre4，#4057
-                                          ".html", UseBrowserUserAgent:=True)
+                                          ".html", SimulateBrowserHeaders:=True)
         Catch ex As Exception
-            If GetExceptionSummary(ex).Contains("(404)") Then
+            If ex.GetBrief().Contains("(404)") Then
                 Throw New Exception(GetLang("LangDownloadInstallNoAvailableVersion"))
             Else
                 Throw
@@ -701,7 +701,7 @@
     ''' </summary>
     Public Sub DlForgeVersionBmclapiMain(Loader As LoaderTask(Of String, List(Of DlForgeVersionEntry)))
         Dim Json As JArray = GetJson(NetRequestByClientRetry("https://bmclapi2.bangbang93.com/forge/minecraft/" &
-                                                      Loader.Input.Replace("-", "_"))) '兼容 Forge 1.7.10-pre4，#4057
+                                                      Loader.Input.Replace("-", "_"), RequireJson:=True)) '兼容 Forge 1.7.10-pre4，#4057
         Dim Versions As New List(Of DlForgeVersionEntry)
         Try
             Dim Recommended As String = McDownloadForgeRecommendedGet(Loader.Input)
@@ -835,8 +835,8 @@
     Public DlNeoForgeListOfficialLoader As New LoaderTask(Of Integer, DlNeoForgeListResult)("DlNeoForgeList Official", AddressOf DlNeoForgeListOfficialMain)
     Private Sub DlNeoForgeListOfficialMain(Loader As LoaderTask(Of Integer, DlNeoForgeListResult))
         '获取版本列表 JSON
-        Dim ResultLatest As String = NetRequestByClientRetry("https://maven.neoforged.net/api/maven/versions/releases/net/neoforged/neoforge")
-        Dim ResultLegacy As String = NetRequestByClientRetry("https://maven.neoforged.net/api/maven/versions/releases/net/neoforged/forge")
+        Dim ResultLatest As String = NetRequestByClientRetry("https://maven.neoforged.net/api/maven/versions/releases/net/neoforged/neoforge", RequireJson:=True)
+        Dim ResultLegacy As String = NetRequestByClientRetry("https://maven.neoforged.net/api/maven/versions/releases/net/neoforged/forge", RequireJson:=True)
         If ResultLatest.Length < 100 OrElse ResultLegacy.Length < 100 Then Throw New Exception(GetLang("LangModDownloadExceptionShortVersionList", ResultLatest))
         '解析
         Try
@@ -853,8 +853,8 @@
     Public DlNeoForgeListBmclapiLoader As New LoaderTask(Of Integer, DlNeoForgeListResult)("DlNeoForgeList Bmclapi", AddressOf DlNeoForgeListBmclapiMain)
     Public Sub DlNeoForgeListBmclapiMain(Loader As LoaderTask(Of Integer, DlNeoForgeListResult))
         '获取版本列表 JSON
-        Dim ResultLatest As String = NetRequestByClientRetry("https://bmclapi2.bangbang93.com/neoforge/meta/api/maven/details/releases/net/neoforged/neoforge")
-        Dim ResultLegacy As String = NetRequestByClientRetry("https://bmclapi2.bangbang93.com/neoforge/meta/api/maven/details/releases/net/neoforged/forge")
+        Dim ResultLatest As String = NetRequestByClientRetry("https://bmclapi2.bangbang93.com/neoforge/meta/api/maven/details/releases/net/neoforged/neoforge", RequireJson:=True)
+        Dim ResultLegacy As String = NetRequestByClientRetry("https://bmclapi2.bangbang93.com/neoforge/meta/api/maven/details/releases/net/neoforged/forge", RequireJson:=True)
         If ResultLatest.Length < 100 OrElse ResultLegacy.Length < 100 Then Throw New Exception(GetLang("LangModDownloadExceptionShortVersionList", ResultLatest))
         '解析
         Try
@@ -959,7 +959,7 @@
     ''' </summary>
     Public DlLiteLoaderListOfficialLoader As New LoaderTask(Of Integer, DlLiteLoaderListResult)("DlLiteLoaderList Official", AddressOf DlLiteLoaderListOfficialMain)
     Private Sub DlLiteLoaderListOfficialMain(Loader As LoaderTask(Of Integer, DlLiteLoaderListResult))
-        Dim Result As JObject = GetJson(NetRequestByClientRetry("https://dl.liteloader.com/versions/versions.json"))
+        Dim Result As JObject = GetJson(NetRequestByClientRetry("https://dl.liteloader.com/versions/versions.json", RequireJson:=True))
         Try
             Dim Json As JObject = Result("versions")
             Dim Versions As New List(Of DlLiteLoaderListEntry)
@@ -987,7 +987,7 @@
     ''' </summary>
     Public DlLiteLoaderListBmclapiLoader As New LoaderTask(Of Integer, DlLiteLoaderListResult)("DlLiteLoaderList Bmclapi", AddressOf DlLiteLoaderListBmclapiMain)
     Private Sub DlLiteLoaderListBmclapiMain(Loader As LoaderTask(Of Integer, DlLiteLoaderListResult))
-        Dim Result As JObject = GetJson(NetRequestByClientRetry("https://bmclapi2.bangbang93.com/maven/com/mumfrey/liteloader/versions.json"))
+        Dim Result As JObject = GetJson(NetRequestByClientRetry("https://bmclapi2.bangbang93.com/maven/com/mumfrey/liteloader/versions.json", RequireJson:=True))
         Try
             Dim Json As JObject = Result("versions")
             Dim Versions As New List(Of DlLiteLoaderListEntry)
@@ -1058,7 +1058,7 @@
     ''' </summary>
     Public DlFabricListOfficialLoader As New LoaderTask(Of Integer, DlFabricListResult)("DlFabricList Official", AddressOf DlFabricListOfficialMain)
     Private Sub DlFabricListOfficialMain(Loader As LoaderTask(Of Integer, DlFabricListResult))
-        Dim Result As JObject = GetJson(NetRequestByClientRetry("https://meta.fabricmc.net/v2/versions"))
+        Dim Result As JObject = GetJson(NetRequestByClientRetry("https://meta.fabricmc.net/v2/versions", RequireJson:=True))
         Try
             Dim Output = New DlFabricListResult With {.IsOfficial = True, .SourceName = GetLang("LangModDownloadSourceOfficial", "Fabric"), .Value = Result}
             If Output.Value("game") Is Nothing OrElse Output.Value("loader") Is Nothing OrElse Output.Value("installer") Is Nothing Then Throw New Exception(GetLang("LangModDownloadExceptionMissNecessary"))
@@ -1073,7 +1073,7 @@
     ''' </summary>
     Public DlFabricListBmclapiLoader As New LoaderTask(Of Integer, DlFabricListResult)("DlFabricList Bmclapi", AddressOf DlFabricListBmclapiMain)
     Private Sub DlFabricListBmclapiMain(Loader As LoaderTask(Of Integer, DlFabricListResult))
-        Dim Result As JObject = GetJson(NetRequestByClientRetry("https://bmclapi2.bangbang93.com/fabric-meta/v2/versions"))
+        Dim Result As JObject = GetJson(NetRequestByClientRetry("https://bmclapi2.bangbang93.com/fabric-meta/v2/versions", RequireJson:=True))
         Try
             Dim Output = New DlFabricListResult With {.IsOfficial = False, .SourceName = "BMCLAPI", .Value = Result}
             If Output.Value("game") Is Nothing OrElse Output.Value("loader") Is Nothing OrElse Output.Value("installer") Is Nothing Then Throw New Exception(GetLang("LangModDownloadExceptionMissNecessary"))
@@ -1130,7 +1130,7 @@
         Dim Exs As String = ""
         For Each Source In Urls
             Try
-                Return GetJson(NetRequestByClient(Source.Key, Method, Content, ContentType, Timeout:=Source.Value * 1000, Encoding:=Encoding.UTF8))
+                Return GetJson(NetRequestByClient(Source.Key, Method, Content, ContentType, Timeout:=Source.Value * 1000, Encoding:=Encoding.UTF8, RequireJson:=True))
             Catch ex As Exception
                 Exs += ex.Message + vbCrLf
             End Try

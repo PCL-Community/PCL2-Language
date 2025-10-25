@@ -613,16 +613,16 @@
             PanMinecraft.Children.Clear()
             '添加最新版本
             Dim CardInfo As New MyCard With {.Title = GetLang("LangDownloadLatest"), .Margin = New Thickness(0, 15, 0, 15), .SwapType = 2}
-            Dim TopestVersions As New List(Of JObject)
+            Dim PinnedVersions As New List(Of JObject)
             Dim Release As JObject = Dict("正式版")(0).DeepClone()
             Release("lore") = GetLang("LangDownloadClientReleaseReleaseOn") & " " & GetLocalTimeFormat(Release("releaseTime").Value(Of Date))
-            TopestVersions.Add(Release)
+            PinnedVersions.Add(Release)
             If Dict("正式版")(0)("releaseTime").Value(Of Date) < Dict("预览版")(0)("releaseTime").Value(Of Date) Then
                 Dim Snapshot As JObject = Dict("预览版")(0).DeepClone()
                 Snapshot("lore") = GetLang("LangDownloadClientBetaReleaseOn") & " " & GetLocalTimeFormat(Snapshot("releaseTime").Value(Of Date))
-                TopestVersions.Add(Snapshot)
+                PinnedVersions.Add(Snapshot)
             End If
-            Dim PanInfo As New StackPanel With {.Margin = New Thickness(20, MyCard.SwapedHeight, 18, 0), .VerticalAlignment = VerticalAlignment.Top, .RenderTransform = New TranslateTransform(0, 0), .Tag = TopestVersions}
+            Dim PanInfo As New StackPanel With {.Margin = New Thickness(20, MyCard.SwapedHeight, 18, 0), .VerticalAlignment = VerticalAlignment.Top, .RenderTransform = New TranslateTransform(0, 0), .Tag = PinnedVersions}
             MyCard.StackInstall(PanInfo, 7)
             CardInfo.Children.Add(PanInfo)
             PanMinecraft.Children.Insert(0, CardInfo)
@@ -630,7 +630,7 @@
             For Each Pair As KeyValuePair(Of String, List(Of JObject)) In Dict
                 If Not Pair.Value.Any() Then Continue For
                 '增加卡片
-                Dim NewCard As New MyCard With {.Title = GetLangByWord(Pair.Key) & " (" & Pair.Value.Count & ")", .Margin = New Thickness(0, 0, 0, 15), .SwapType = 7}
+                Dim NewCard As New MyCard With {.Title = GetLangByWord(Pair.Key), .Margin = New Thickness(0, 0, 0, 15), .SwapType = 7}
                 Dim NewStack As New StackPanel With {.Margin = New Thickness(20, MyCard.SwapedHeight, 18, 0), .VerticalAlignment = VerticalAlignment.Top, .RenderTransform = New TranslateTransform(0, 0), .Tag = Pair.Value}
                 NewCard.Children.Add(NewStack)
                 NewCard.SwapControl = NewStack

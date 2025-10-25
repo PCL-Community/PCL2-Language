@@ -7,6 +7,8 @@ Friend Module ModSecret
 
 #Region "杂项"
 
+    '标注 PCL 的不同分支，仅用于替换标记
+    Public Const VersionBranchMain As String = "OpenSource"
     '在开源版的注册表与常规版的注册表隔离，以防数据冲突
     Public Const RegFolder As String = "PCLang"
     '用于微软登录的 ClientId
@@ -49,13 +51,13 @@ Friend Module ModSecret
     ''' <summary>
     ''' 获取设备标识码。
     ''' </summary>
-    Friend Function SecretGetUniqueAddress() As String
+    Friend Function SecretGetIdentify() As String
         Return "0000-0000-0000-0000"
     End Function
 
     Friend Sub SecretLaunchJvmArgs(ByRef DataList As List(Of String))
         Dim DataJvmCustom As String = Setup.Get("VersionAdvanceJvm", Version:=McVersionCurrent)
-        DataList.Insert(0, If(DataJvmCustom = "", Setup.Get("LaunchAdvanceJvm"), DataJvmCustom)) '可变 JVM 参数
+        DataList.Insert(0, ArgumentReplace(If(DataJvmCustom = "", Setup.Get("LaunchAdvanceJvm"), DataJvmCustom))) '可变 JVM 参数
         McLaunchLog("当前剩余内存：" & Math.Round(My.Computer.Info.AvailablePhysicalMemory / 1024 / 1024 / 1024 * 10) / 10 & "G")
         DataList.Add("-Xmn" & Math.Floor(PageVersionSetup.GetRam(McVersionCurrent) * 1024 * 0.15) & "m")
         DataList.Add("-Xmx" & Math.Floor(PageVersionSetup.GetRam(McVersionCurrent) * 1024) & "m")
@@ -73,15 +75,17 @@ Friend Module ModSecret
     ''' <summary>
     ''' 设置 Headers 的 UA、Referer。
     ''' </summary>
-    Friend Sub SecretHeadersSign(Url As String, ByRef Req As HttpRequestMessage, Optional UseBrowserUserAgent As Boolean = False)
-        If Url.Contains("baidupcs.com") OrElse Url.Contains("baidu.com") Then
-            Req.Headers.Add("User-Agent", "LogStatistic")  '#4951
-        ElseIf UseBrowserUserAgent Then
-            Req.Headers.Add("User-Agent", $"PCL2/{VersionStandardCode} Mozilla/5.0 AppleWebKit/537.36 Chrome/63.0.3239.132 Safari/537.36")
-        Else
-            Req.Headers.Add("User-Agent", $"PCL2/{VersionStandardCode}")
+    Friend Sub SecretHeadersSign(Url As String, ByRef Req As HttpRequestMessage, Optional SimulateBrowserHeaders As Boolean = False)
+        If Not Req.Headers.UserAgent.Any Then
+            If Url.Contains("baidupcs.com") OrElse Url.Contains("baidu.com") Then
+                Req.Headers.Add("User-Agent", "LogStatistic")  '#4951
+            ElseIf SimulateBrowserHeaders Then
+                Req.Headers.Add("User-Agent", $"PCL2/{VersionStandardCode} Mozilla/5.0 AppleWebKit/537.36 Chrome/63.0.3239.132 Safari/537.36")
+            Else
+                Req.Headers.Add("User-Agent", $"PCL2/{VersionStandardCode}")
+            End If
         End If
-        Req.Headers.Add("Referer", $"http://{VersionCode}.open.pcl2.server/")
+        If Not SimulateBrowserHeaders Then Req.Headers.Add("Referer", $"http://{VersionCode}.open.pcl2.server/")
         If Url.Contains("api.curseforge.com") Then Req.Headers.Add("x-api-key", CurseForgeAPIKey)
     End Sub
 
@@ -399,9 +403,16 @@ Friend Module ModSecret
 
 #End Region
 
-#Region "联网通知"
+#Region "联网配置"
 
-    Public ServerLoader As New LoaderTask(Of Integer, Integer)("PCL 服务", AddressOf LoadOnlineInfo, Priority:=ThreadPriority.BelowNormal)
+    ''' <summary>
+    ''' 联网获取的配置信息。
+    ''' 若获取失败或仍在获取中，可能为 Nothing。
+    ''' </summary>
+    Public ServerConfig As JObject
+
+    Public ServerLoader As New LoaderTask(Of Integer, Integer)("PCL 配置更新", AddressOf LoadOnlineInfo, Priority:=ThreadPriority.BelowNormal) With
+        {.ReloadTimeout = 1000 * 60 * 60} '超时 1 小时
 
     Private Sub LoadOnlineInfo()
         Select Case Setup.Get("SystemSystemUpdate")
