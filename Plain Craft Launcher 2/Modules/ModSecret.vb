@@ -268,7 +268,7 @@ Friend Module ModSecret
                                NoticeUserUpdate()
                            Catch ex As Exception
                                Log(ex, "[Update] 获取启动器更新信息失败", LogLevel.Hint)
-                               Hint("获取启动器更新信息失败，请检查网络连接", HintType.Critical)
+                               Hint("获取启动器更新信息失败，请检查网络连接", HintType.Red)
                            End Try
                        End Sub)
     End Sub
@@ -283,7 +283,7 @@ Friend Module ModSecret
                 UpdateStart(LatestVersion, False)
             End If
         Else
-            Hint("Latest " + VersionBaseName, HintType.Finish)
+            Hint("Latest " + VersionBaseName, HintType.Green)
         End If
     End Sub
     Public Sub UpdateStart(VersionStr As String, Slient As Boolean, Optional ReceivedKey As String = Nothing, Optional ForceValidated As Boolean = False)
@@ -312,7 +312,7 @@ Friend Module ModSecret
                                End If
                            Catch ex As Exception
                                Log(ex, "[Update] 下载启动器更新文件失败", LogLevel.Hint)
-                               Hint("下载启动器更新文件失败，请检查网络连接", HintType.Critical)
+                               Hint("下载启动器更新文件失败，请检查网络连接", HintType.Red)
                            End Try
                        End Sub)
     End Sub
@@ -334,7 +334,7 @@ Friend Module ModSecret
         Catch ex As Win32Exception
             Log(ex, "自动更新时触发 Win32 错误，疑似被拦截", LogLevel.Debug, "出现错误")
             If MyMsgBox(String.Format("由于被 Windows 安全中心拦截，或者存在权限问题，导致 PCL 无法更新。{0}请将 PCL 所在文件夹加入白名单，或者手动用 {1}PCL\Plain Craft Launcher 2.exe 替换当前文件！", vbCrLf, ModBase.Path), "更新失败", "查看帮助", "确定", "", True, True, False, Nothing, Nothing, Nothing) = 1 Then
-                TryStartEvent("打开帮助", "启动器/Microsoft Defender 添加排除项.json")
+                CustomEvent.Raise(CustomEvent.EventType.打开帮助, "启动器/Microsoft Defender 添加排除项.json")
             End If
         End Try
     End Sub
@@ -367,16 +367,16 @@ Friend Module ModSecret
             Try
                 CopyFile(NewFileName, OldFileName)
             Catch ex4 As UnauthorizedAccessException
-                MsgBox("PCL 更新失败：权限不足。请手动复制 PCL 文件夹下的新版本程序。" & vbCrLf & "若 PCL 位于桌面或 C 盘，你可以尝试将其挪到其他文件夹，这可能可以解决权限问题。" & vbCrLf + GetExceptionSummary(ex4), MsgBoxStyle.Critical, "更新失败")
+                MsgBox("PCL 更新失败：权限不足。请手动复制 PCL 文件夹下的新版本程序。" & vbCrLf & "若 PCL 位于桌面或 C 盘，你可以尝试将其挪到其他文件夹，这可能可以解决权限问题。" & vbCrLf + ex4.GetDetail(), MsgBoxStyle.Critical, "更新失败")
             Catch ex5 As Exception
-                MsgBox("PCL 更新失败：无法复制新文件。请手动复制 PCL 文件夹下的新版本程序。" & vbCrLf + GetExceptionSummary(ex5), MsgBoxStyle.Critical, "更新失败")
+                MsgBox("PCL 更新失败：无法复制新文件。请手动复制 PCL 文件夹下的新版本程序。" & vbCrLf + ex5.GetDetail(), MsgBoxStyle.Critical, "更新失败")
                 Return
             End Try
             If TriggerRestart Then
                 Try
                     Process.Start(OldFileName)
                 Catch ex6 As Exception
-                    MsgBox("PCL 更新失败：无法重新启动。" & vbCrLf + GetExceptionSummary(ex6), MsgBoxStyle.Critical, "更新失败")
+                    MsgBox("PCL 更新失败：无法重新启动。" & vbCrLf + ex6.GetDetail(), MsgBoxStyle.Critical, "更新失败")
                 End Try
             End If
             Return
@@ -388,10 +388,10 @@ Friend Module ModSecret
                                  If(Path.StartsWithF("C", True),
                                  " - 将 PCL 文件移动到 C 盘以外的文件夹（这或许可以一劳永逸地解决权限问题）" & vbCrLf, ""),
                                  " - 右键以管理员身份运行 PCL" & vbCrLf & " - 手动复制已下载到 PCL 文件夹下的新版本程序，覆盖原程序" & vbCrLf & vbCrLf,
-                                 GetExceptionSummary(ex2)}), MsgBoxStyle.Critical, "更新失败")
+                                 ex2.GetDetail()}), MsgBoxStyle.Critical, "更新失败")
             Return
         End If
-        MsgBox("PCL 更新失败：无法删除原文件。请手动复制已下载到 PCL 文件夹下的新版本程序覆盖原程序。" & vbCrLf + GetExceptionSummary(ex2), MsgBoxStyle.Critical, "更新失败")
+        MsgBox("PCL 更新失败：无法删除原文件。请手动复制已下载到 PCL 文件夹下的新版本程序覆盖原程序。" & vbCrLf + ex2.GetDetail(), MsgBoxStyle.Critical, "更新失败")
     End Sub
     ''' <summary>
     ''' 确保 PathTemp 下的 Latest.exe 是最新正式版的 PCL，它会被用于整合包打包。
