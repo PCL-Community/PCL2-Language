@@ -246,12 +246,12 @@ RequestFinished:
                 End If
             Next
             SecretHeadersSign(Url, Request, SimulateBrowserHeaders)
-            'DNS 解析
             CancelToken = New CancellationTokenSource(Timeout)
-            HostIp = DNSLookup(Request, CancelToken)
-            If HostIp IsNot Nothing AndAlso Not IPReliability.ContainsKey(HostIp) Then
-                IPReliability(HostIp) = -0.01 '预先降低一点，这样快速的重复请求会使用不同的 IP 以提高成功率
-            End If
+            'DNS 解析
+            'HostIp = DNSLookup(Request, CancelToken)
+            'If HostIp IsNot Nothing AndAlso Not IPReliability.ContainsKey(HostIp) Then
+            '    IPReliability(HostIp) = -0.01 '预先降低一点，这样快速的重复请求会使用不同的 IP 以提高成功率
+            'End If
             '发送请求
             SyncLock RequestClientLock
                 '延迟初始化，以避免在程序启动前加载 CacheCow 导致 DLL 加载失败
@@ -271,10 +271,10 @@ RequestFinished:
             End Using
             '输出
             If Response.IsSuccessStatusCode Then
-                RecordIPReliability(HostIp, 0.5)
+                'RecordIPReliability(HostIp, 0.5)
                 Return ResponseBytes
             Else
-                RecordIPReliability(HostIp, -0.7)
+                'RecordIPReliability(HostIp, -0.7)
                 Dim ResponseMessage = If(Encoding, Encoding.UTF8).GetString(ResponseBytes)
                 Throw New ResponsedWebException(
                     $"错误码 {Response.StatusCode} ({CInt(Response.StatusCode)})，{Method}，{Url}，{HostIp}" &
@@ -285,11 +285,11 @@ RequestFinished:
         Catch ex As ResponsedWebException
             Throw
         Catch ex As Exception
-            RecordIPReliability(HostIp, -1)
+            'RecordIPReliability(HostIp, -1)
             If TypeOf ex Is OperationCanceledException Then 'CancellationToken 超时
                 Throw New WebException($"连接服务器超时，请稍后再试，或使用 VPN 改善网络环境（{Method}, {Url}，IP：{HostIp}）", WebExceptionStatus.Timeout)
             ElseIf ex.IsNetworkRelated Then
-                Throw New WebException($"网络请求失败，请稍后再试，或使用 VPN 改善网络环境（{Method}, {Url}，IP：{HostIp}）", WebExceptionStatus.Timeout)
+                Throw New WebException($"网络请求失败，请稍后再试，或使用 VPN 改善网络环境（{Method}, {Url}，IP：{HostIp}）{vbCrLf}{ex.GetBrief()}", WebExceptionStatus.Timeout)
             Else
                 Throw New Exception($"网络请求出现意外异常（{Method}, {Url}，{HostIp}）", ex)
             End If

@@ -70,7 +70,8 @@ Friend Module ModSecret
 
     Friend Function SecretCdnSign(UrlWithMark As String) As String
         If Not UrlWithMark.EndsWithF("{CDN}") Then Return UrlWithMark
-        Return UrlWithMark.Replace("{CDN}", "").Replace(" ", "%20")
+        UrlWithMark = Uri.EscapeUriString(UrlWithMark)
+        Return UrlWithMark.Replace("{CDN}", "")
     End Function
     ''' <summary>
     ''' 设置 Headers 的 UA、Referer。
@@ -274,8 +275,9 @@ Friend Module ModSecret
     End Sub
     Public Sub UpdateLatestVersionInfo()
         Dim LatestReleaseInfoJson As JObject = Nothing
-        LatestReleaseInfoJson = GetJson(NetRequestByClientRetry("https://api.github.com/repos/PCL-Community/PCL2-Language/releases/latest", HttpMethod.Get, "", "application/x-www-form-urlencoded"))
+        LatestReleaseInfoJson = GetJson(NetRequestByClientRetry("https://api.github.com/repos/PCL-Community/PCL2-Language/releases/latest", SimulateBrowserHeaders:=True))
         LatestVersion = LatestReleaseInfoJson("tag_name").ToString
+        ServerConfig = GetJson(NetRequestByClientRetry("https://github.com/PCL-Community/PCL2-Language/raw/refs/heads/main/remote_config/ServerConfig.json"))
     End Sub
     Public Sub NoticeUserUpdate()
         If Not LatestVersion = VersionBaseName Then
