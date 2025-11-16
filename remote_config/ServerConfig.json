@@ -1,16 +1,22 @@
 {
-    "Version": 7,
+    "Version": 28,
     "Link": {
         "EasyTierVersion": 1,
         "Downloads": [
-            "https://github.com/EasyTier/EasyTier/releases/download/v2.4.5/easytier-windows-{arch}-v2.4.5.zip"
+            "https://pcl2-server-1253424809.file.myqcloud.com/easytier/easytier-windows-{arch}-v2.4.5.zip{CDN}"
         ],
-        "Argument": "--enable-kcp-proxy --use-smoltcp --encryption-algorithm=chacha20 --no-tun --compression=zstd --multi-thread --latency-first",
+        "Argument": "--enable-kcp-proxy --use-smoltcp --encryption-algorithm=chacha20 --no-tun --compression=zstd --multi-thread",
+        "PeersBlackList": [
+            "udp://43.139.42.188:11010"
+        ],
+        "RandomPeer": 3,
+        "MandatoryPeers": [],
         "Peers": [
-            "tcp://public2.easytier.cn:54321",
-            "tcp://221.7.223.136:11010",
-            "tcp://turn.nmg.629957.xyz:11010",
             "tcp://c.oee.icu:60006"
-        ]
+        ],
+        "DiscoverPeer": "tcp://183.250.239.213:11010",
+        "DiscoverPeerId": 226,
+        "DisableReason": "Hosting service is not available at the moment. Sorry for the inconvenience :(",
+        "DisableReason2": "Hosting service is not available at the moment. Sorry for the inconvenience :("
     }
 }
