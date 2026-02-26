@@ -62,10 +62,10 @@ jobs:
 
     - name: Rename build artifact
       run: |
-        mv "Plain Craft Launcher 2\obj\${{ matrix.configuration }}\Plain Craft Launcher 2.exe" "Plain Craft Launcher 2\obj\${{ matrix.configuration }}\PCL2_Lang.exe"
+        mv "Plain Craft Launcher 2\obj\${{ matrix.configuration }}\Plain Craft Launcher 2.exe" "PCL2_Lang.exe"
 
     - name: Upload binary to Release
       uses: softprops/action-gh-release@v2.5.0
       with:
         files: |
-          Plain Craft Launcher 2\obj\${{ matrix.configuration }}\PCL2_Lang.exe
+          PCL2_Lang.exe
