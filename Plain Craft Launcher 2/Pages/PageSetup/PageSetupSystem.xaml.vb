@@ -35,7 +35,7 @@ Class PageSetupSystem
     End Sub
 
     Private Sub HelpTranslate(sender As Object, e As EventArgs) Handles BtnHelpTranslate.Click
-        OpenWebsite("https://weblate.tangge233.top/engage/PCL/")
+        OpenWebsite("https://translate.pclc.cc/engage/pcl-language/")
     End Sub
 #End Region
 
