@@ -1,4 +1,4 @@
-﻿Public Module ModDownloadLib
+Public Module ModDownloadLib
 
 #Region "Minecraft 下载"
 
@@ -395,7 +395,7 @@ pause"
                 ElseIf Id.StartsWithF("rd-") Then
                     WikiName = "爪哇版" & Id
                 Else
-                    Log("[Error] 未知的版本格式：" & Id & "。", LogLevel.Feedback)
+                    Logger.Info("[Error] 未知的版本格式：" & Id & "。", LogBehavior.Toast)
                     Exit Sub
                 End If
                 Dim keyWord As New Dictionary(Of String, String) From {
@@ -454,7 +454,7 @@ pause"
                 ElseIf Id.StartsWithF("rd-") Then
                     WikiName = "Java_Edition_Pre-classic_" & Id
                 Else
-                    Log("[Error] 未知的版本格式：" & Id & "。", LogLevel.Feedback)
+                    Logger.Info("[Error] 未知的版本格式：" & Id & "。", LogBehavior.Toast)
                     Exit Sub
                 End If
                 Dim keyWord As New Dictionary(Of String, String) From {
@@ -514,7 +514,7 @@ pause"
                 ElseIf Id.StartsWithF("rd-") Then
                     WikiName = "Java_Edition_Pre-classic_" & Id
                 Else
-                    Log("[Error] 未知的版本格式：" & Id & "。", LogLevel.Feedback)
+                    Logger.Info("[Error] 未知的版本格式：" & Id & "。", LogBehavior.Toast)
                     Exit Sub
                 End If
                 Dim keyWord As New Dictionary(Of String, String) From {
@@ -574,7 +574,7 @@ pause"
                 ElseIf Id.StartsWithF("rd-") Then
                     WikiName = "Java_Edition_Pre-classic_" & Id
                 Else
-                    Log("[Error] 未知的版本格式：" & Id & "。", LogLevel.Feedback)
+                    Logger.Info("[Error] 未知的版本格式：" & Id & "。", LogBehavior.Toast)
                     Exit Sub
                 End If
                 Dim keyWord As New Dictionary(Of String, String) From {
@@ -638,7 +638,7 @@ pause"
                 ElseIf Id.StartsWithF("rd-") Then
                     WikiName = "Pre-classic_" & Id & "_(Java_Edition)"
                 Else
-                    Log("[Error] 未知的版本格式：" & Id & "。", LogLevel.Feedback)
+                    Logger.Info("[Error] 未知的版本格式：" & Id & "。", LogBehavior.Toast)
                     Exit Sub
                 End If
                 Dim keyWord As New Dictionary(Of String, String) From {
@@ -700,7 +700,7 @@ pause"
                 ElseIf Id.StartsWithF("rd-") Then
                     WikiName = "Édition_Java_Pre-classic_" & Id
                 Else
-                    Log("[Error] 未知的版本格式：" & Id & "。", LogLevel.Feedback)
+                    Logger.Info("[Error] 未知的版本格式：" & Id & "。", LogBehavior.Toast)
                     Exit Sub
                 End If
                 Dim keyWord As New Dictionary(Of String, String) From {
@@ -764,7 +764,7 @@ pause"
                 ElseIf Id.StartsWithF("rd-") Then
                     WikiName = "Pre-classic_" & Id & "_(Java_Edition)"
                 Else
-                    Log("[Error] 未知的版本格式：" & Id & "。", LogLevel.Feedback)
+                    Logger.Info("[Error] 未知的版本格式：" & Id & "。", LogBehavior.Toast)
                     Exit Sub
                 End If
                 Dim keyWord As New Dictionary(Of String, String) From {

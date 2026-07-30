@@ -1,4 +1,4 @@
-﻿Public Class PageOtherLeft
+Public Class PageOtherLeft
 
     Private IsLoad As Boolean = False
     Private IsPageSwitched As Boolean = False '如果在 Loaded 前切换到其他页面，会导致触发 Loaded 时再次切换一次
@@ -131,7 +131,7 @@
         e.Handled = True
     End Sub
     Public Shared Sub TryFeedback()
-        If Not CanFeedback(True) Then Return
+        If False.Equals(PageSetupSystem.IsLauncherNewest) Then Return
         Select Case MyMsgBox(GetLang("LangPageOtherDialogFeedbackContent"),
                     GetLang("LangPageOtherDialogFeedbackTitle"), GetLang("LangPageOtherDialogFeedbackBtn1"), GetLang("LangPageOtherDialogFeedbackBtn2"), GetLang("LangDialogBtnCancel"))
             Case 1

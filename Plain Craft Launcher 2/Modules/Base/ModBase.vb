@@ -63,7 +63,7 @@ Public Module ModBase
     ''' <summary>
     ''' 当前程序的语言。
     ''' </summary>
-    Public Lang As String = ReadReg("Lang", GetDefaultLang())
+    Public Lang As String = ReadReg("SystemLang", ReadReg("Lang", GetDefaultLang()))
     ''' <summary>
     ''' 程序的打开计时。
     ''' </summary>

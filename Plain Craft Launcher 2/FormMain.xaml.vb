@@ -1,4 +1,4 @@
-﻿Imports System.ComponentModel
+Imports System.ComponentModel
 Imports System.Windows.Interop
 
 Public Class FormMain
@@ -210,7 +210,7 @@ Public Class FormMain
         '输出更新日志
         RunInNewThread(
         Sub()
-            If MyMsgBox(Content, GetLang("LangDialogUpdateTo", VersionDisplayName), GetLang("LangDialogBtnOK"), GetLang("LangDialogBtnUpdateFullLog")) = 2 Then
+            If MyMsgBox(Content, GetLang("LangDialogUpdateTo", VersionBaseName), GetLang("LangDialogBtnOK"), GetLang("LangDialogBtnUpdateFullLog")) = 2 Then
                 OpenWebsite("https://meloong.com/afd/a/LTCat?tab=feed")
             End If
         End Sub, "UpdateLog Output")

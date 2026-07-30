@@ -1,4 +1,4 @@
-﻿Public Class PageInstanceMod
+Public Class PageInstanceMod
     Implements IRefreshable
 
 #Region "初始化"
@@ -731,13 +731,13 @@ Install:
             If Not IsSuccessful Then Return
             If IsShiftPressed Then
                 If ModList.IsSingle Then
-                    Hint(GetLang("LangPageVersionModHintFilePermanentDeleteSuccessA", ModList.Single.FileName), HintType.Green)
+                    Hint(GetLang("LangPageVersionModHintFilePermanentDeleteSuccessA", ModList.Single.File.Name), HintType.Green)
                 Else
                     Hint(GetLang("LangPageVersionModHintFilePermanentDeleteSuccessB", ModList.Count), HintType.Green)
                 End If
             Else
                 If ModList.IsSingle Then
-                    Hint(GetLang("LangPageVersionModHintFileDeleteSuccessA", ModList.Single.FileName), HintType.Green)
+                    Hint(GetLang("LangPageVersionModHintFileDeleteSuccessA", ModList.Single.File.Name), HintType.Green)
                 Else
                     Hint(GetLang("LangPageVersionModHintFileDeleteSuccessB", ModList.Count), HintType.Green)
                 End If

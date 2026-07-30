@@ -2237,7 +2237,7 @@ OnLoaded:
         If ReturnLegacyOnError Then
             '返回 assets 文件名会由于没有下载地址导致全局失败
             'If AssetsName IsNot Nothing AndAlso AssetsName <> "legacy" Then
-            '    Log("[Minecraft] 无法获取资源文件索引下载地址，使用 assets 项提供的资源文件名：" & AssetsName)
+            '    Logger.Info[Minecraft] 无法获取资源文件索引下载地址，使用 assets 项提供的资源文件名：" & AssetsName)
             '    Return GetJson("{""id"": """ & AssetsName & """}")
             'Else
             Logger.Info("无法获取资源文件索引下载地址，使用默认的 legacy 下载地址")

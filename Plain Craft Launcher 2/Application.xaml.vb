@@ -1,4 +1,4 @@
-﻿Imports System.Reflection
+Imports System.Reflection
 Imports System.Windows.Threading
 Imports Microsoft.Win32
 
@@ -6,13 +6,14 @@ Public Class Application
 
     '开始
     Private Sub Application_Startup(sender As Object, e As StartupEventArgs) Handles Me.Startup
+        '同步语言到新配置系统
+        Settings.Set("SystemLang", Lang)
         '刷新语言
         Try
             Application.Current.Resources.MergedDictionaries(1) = New ResourceDictionary With {.Source = New Uri("pack://application:,,,/Resources/Language/" & Lang & ".xaml", UriKind.RelativeOrAbsolute)}
         Catch ex As Exception
             MsgBox("无法找到语言资源：" & Lang & vbCrLf & "Language resource cannot be found:" & Lang, MsgBoxStyle.Critical)
             Lang = GetDefaultLang()
-            WriteReg("Lang", Lang)
         End Try
 
         '依照选择语言切换字体
@@ -31,7 +32,6 @@ Public Class Application
         End Select
         SwitchApplicationFont(LaunchFont)
         Try
-            SecretOnApplicationStart()
             '提升主线程优先级
             Thread.CurrentThread.Priority = ThreadPriority.Highest
             '执行开发版测试
@@ -160,12 +160,6 @@ RetryCacheCheck:
             If Is32BitSystem Then
                 MyMsgBox(GetLang("LangApplicationDialogContent32BitWarn"), GetLang("LangApplicationDialogTitleUnzipLauncher"), GetLang("LangDialogThemeUnlockGameAccept"), IsWarn:=True)
             End If
-            '设置初始化
-            Setup.Load("SystemDebugMode")
-            Setup.Load("SystemDebugAnim")
-            Setup.Load("ToolDownloadThread")
-            Setup.Load("ToolDownloadCert")
-            Setup.Load("ToolDownloadSpeed")
             SetUnmanagedDll()
             '计时
             Logger.Info($"第一阶段加载用时：{GetTimeMs() - ApplicationStartTick} ms")
@@ -255,9 +249,9 @@ RetryCacheCheck:
     Private Shared Sub SetUnmanagedDll()
         SetDllDirectory(PathPure.TrimEnd("\"c))
         Try
-            WriteFile(PathPure & "libwebp.dll", GetResources("libwebp64"))
+            ExtractResources(PathPure & "libwebp.dll", "libwebp64")
         Catch ex As Exception
-            Log(ex, "写入 libwebp.dll 失败") '防止同时加载多个图片时，同时写入文件导致文件占用，进而导致崩溃
+            Logger.Warn(ex, "写入 libwebp.dll 失败") '防止同时加载多个图片时，同时写入文件导致文件占用，进而导致崩溃
         End Try
     End Sub
 

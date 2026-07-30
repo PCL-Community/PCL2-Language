@@ -1,20 +1,19 @@
-﻿Class PageSetupSystem
+Class PageSetupSystem
 
 #Region "语言"
     Private Sub SelectCurrentLanguage()
-        For i As Integer = 0 To ComboBackgroundSuit.Items.Count - 1
-            Dim item As MyComboBoxItem = CType(ComboBackgroundSuit.Items(i), MyComboBoxItem)
+        For i As Integer = 0 To ComboLanguage.Items.Count - 1
+            Dim item As MyComboBoxItem = CType(ComboLanguage.Items(i), MyComboBoxItem)
             If item.Tag.Equals(Lang) Then
-                ComboBackgroundSuit.SelectedIndex = i
+                ComboLanguage.SelectedIndex = i
                 Exit For
             End If
         Next
     End Sub
 
-    Private Sub RefreshLang() Handles ComboBackgroundSuit.SelectionChanged
-        If Not IsLoaded Then Exit Sub
-        If Not ComboBackgroundSuit.IsLoaded Then Exit Sub
-        Dim TargetLang As String = CType(ComboBackgroundSuit.SelectedItem, MyComboBoxItem).Tag
+    Private Sub RefreshLang() Handles ComboLanguage.SelectionChanged
+        If Not IsLoaded Or Not ComboLanguage.IsLoaded Then Exit Sub
+        Dim TargetLang As String = CType(ComboLanguage.SelectedItem, MyComboBoxItem).Tag
         If TargetLang.Equals(Lang) Then Exit Sub
         If HasRunningMinecraft OrElse McLaunchLoader.State = LoadState.Loading Then
             Hint(GetLang("LangPageSetupSystemHintCloseGameBeforeChangeLanguage"))
@@ -27,11 +26,11 @@
             Exit Sub
         End If
         Lang = TargetLang
+        Settings.Set("SystemLang", Lang)
         Application.Current.Resources.MergedDictionaries(1) = New ResourceDictionary With {.Source = New Uri("pack://application:,,,/Resources/Language/" & Lang & ".xaml", UriKind.RelativeOrAbsolute)}
         If Lang.Equals("zh-MEME") Then MyMsgBox($"此语言仅供娱乐，请勿当真{vbCr}此語言僅供娛樂，請勿當真{vbCr}This language is for entertainment only, please don't take it seriously", IsWarn:=True)
-        WriteReg("Lang", Lang)
         MyMsgBox(GetLang("LangPageSetupSystemDialogContentLanguageRestart"), ForceWait:=True)
-        Process.Start(New ProcessStartInfo(PathWithName))
+        Process.Start(New ProcessStartInfo(PathExe))
         FormMain.EndProgramForce()
     End Sub
 
@@ -58,7 +57,6 @@
         SelectCurrentLanguage()
 
         '非重复加载部分
-        Static IsLoaded As Boolean = False
         If IsLoaded Then Return
         IsLoaded = True
 

@@ -252,7 +252,7 @@
                 End If
             End If
         Catch ex As Exception
-            Log(ex, GetLang("LangPageVersionOverallHintExportingCommandFail") & "（" & PageInstanceLeft.Instance.Name & "）", LogBehavior.Alert)
+            Logger.Error(ex, GetLang("LangPageVersionOverallHintExportingCommandFail") & "（" & PageInstanceLeft.Instance.Name & "）", LogBehavior.Alert)
         End Try
     End Sub
 

@@ -1,4 +1,4 @@
-﻿<local:MyPageRight
+<local:MyPageRight
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:local="clr-namespace:PCL" xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
@@ -177,7 +177,7 @@
                         <RowDefinition Height="Auto" />
                     </Grid.RowDefinitions>
                     <TextBlock VerticalAlignment="Center" HorizontalAlignment="Left" Text="{StaticResource LangPageSetupSystemLangLaunchLang}"/>
-                    <local:MyComboBox x:Name="ComboBackgroundSuit" local:SettingService.Key="UiBackgroundSuit" Grid.Row="0" Grid.Column="1">
+                    <local:MyComboBox x:Name="ComboLanguage" Grid.Row="0" Grid.Column="1">
                         <local:MyComboBoxItem Content="Ελληνικά (Ελλάδα)" Tag="el-GR" FontFamily="Segoe UI, Resources/#PCL English, Microsoft YaHei UI"/>
                         <local:MyComboBoxItem Content="English (United Kingdom)" Tag="en-GB" FontFamily="Resources/#PCL English, Segoe UI, Microsoft YaHei UI"/>
                         <local:MyComboBoxItem Content="English (US)" Tag="en-US" FontFamily="Resources/#PCL English, Segoe UI, Microsoft YaHei UI"/>

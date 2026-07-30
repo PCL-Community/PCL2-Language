@@ -1,4 +1,4 @@
-﻿<Grid x:Class="PageLoginMsSkin"
+<Grid x:Class="PageLoginMsSkin"
       Tag="True"
       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
@@ -58,7 +58,7 @@
                             <local:MyMenuItem Click="BtnSkinCape_Click"
                                               Header="{StaticResource LangPageLoginMsSkinCapeChange}"/>
                             <local:MyMenuItem Click="BtnSkinCapeRefresh_Click"
-                                              Header="{StaticResource LangRefresh}披风列表"/>
+                                              Header="{StaticResource LangRefresh}"/>
                         </ContextMenu>
                     </local:MyIconButton.ContextMenu>
                 </local:MyIconButton>

@@ -1,4 +1,4 @@
-﻿Public Class PageDownloadResourceDetail
+Public Class PageDownloadResourceDetail
     Private ResourceItem As MyResourceItem = Nothing
 
     ''' <summary>
@@ -280,7 +280,7 @@ GroupDone:
         PanIntro.Children.Insert(0, ResourceItem)
 
         '决定按钮显示
-        BtnIntroWeb.Text = If(Project.FromCurseForge, GetLang("LangDownloadCompToCurseForge"), GetLang("LangDownloadCompToModrinth"))
+        BtnIntroWeb.Text = If(Project.Platform = ResourcePlatforms.CurseForge, GetLang("LangDownloadCompToCurseForge"), GetLang("LangDownloadCompToModrinth"))
         BtnIntroWiki.Visibility = If(Project.WikiId = 0, Visibility.Collapsed, Visibility.Visible)
 
         AniControlEnabled -= 1
