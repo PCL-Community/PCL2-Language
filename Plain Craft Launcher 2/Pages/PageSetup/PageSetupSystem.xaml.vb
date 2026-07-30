@@ -139,15 +139,14 @@ Class PageSetupSystem
     End Sub
     ''' <summary>
     ''' 启动器是否已经是最新版？
-    ''' 若返回 Nothing，则代表无更新缓存文件或出错。
+    ''' 若返回 Nothing，则代表无更新信息或出错。
     ''' </summary>
     Public Shared Function IsLauncherNewest() As Boolean?
         Try
-            '确认服务器公告是否正常
-            Dim ServerContent As String = If(FileUtils.TryReadAsString(PathTemp & "Cache\Notice.cfg"), "")
-            If ServerContent.Split("|").Count < 3 Then Return Nothing
-            '确认是否为最新
-            Return ServerContent.Split("|")(If(BuildType = BuildTypes.Release, 2, 1)) <= VersionCode
+            If ModSecret.LatestReleaseInfoJson Is Nothing Then Return Nothing
+            Dim tagName = ModSecret.LatestReleaseInfoJson("tag_name").ToString
+            If tagName.StartsWith("v", StringComparison.OrdinalIgnoreCase) Then tagName = tagName.Substring(1)
+            Return tagName = VersionBaseName
         Catch ex As Exception
             Logger.Error(ex, GetLang("LangPageSetupSystemSystemLaunchUpdateFail"))
             Return Nothing

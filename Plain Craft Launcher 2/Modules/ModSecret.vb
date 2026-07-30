@@ -1,4 +1,5 @@
-﻿'由于包含加解密等安全信息，本文件中的部分代码已被删除
+'由于包含加解密等安全信息，本文件中的部分代码已被删除
+Imports System.Threading.Tasks
 
 Friend Module ModSecret
 
@@ -154,6 +155,8 @@ Friend Module ModSecret
     Public IsUpdateStarted As Boolean = False
     Public IsUpdateWaitingRestart As Boolean = False
     Public LatestVersion As String = VersionBaseName
+    Public LatestReleaseInfoJson As JObject = Nothing
+    Private LatestUpdateTime As DateTime? = Nothing
     Public Sub UpdateCheckByButton()
         Hint("Checking...")
         If IsUpdateStarted Then
@@ -165,16 +168,46 @@ Friend Module ModSecret
                                UpdateLatestVersionInfo()
                                NoticeUserUpdate()
                            Catch ex As Exception
-                               Log(ex, "[Update] 获取启动器更新信息失败", LogLevel.Hint)
+                               Logger.Error(ex, "[Update] 获取启动器更新信息失败")
                                Hint("获取启动器更新信息失败，请检查网络连接", HintType.Red)
                            End Try
                        End Sub)
     End Sub
     Public Sub UpdateLatestVersionInfo()
-        Dim LatestReleaseInfoJson As JObject = Nothing
-        LatestReleaseInfoJson = GetJson(NetRequestByClientRetry("https://api.github.com/repos/PCL-Community/PCL2-Language/releases/latest", SimulateBrowserHeaders:=True))
-        LatestVersion = LatestReleaseInfoJson("tag_name").ToString
-        ServerConfig = GetJson(NetRequestByClientRetry("https://github.com/PCL-Community/PCL2-Language/raw/refs/heads/main/remote_config/ServerConfig.json"))
+        'ReloadTimeout 作为缓存过期时间，缓存有效期内不重复获取
+        If LatestUpdateTime IsNot Nothing AndAlso
+           (DateTime.Now - LatestUpdateTime.Value).TotalMilliseconds < ServerLoader.ReloadTimeout Then
+            Return
+        End If
+        '并行获取两个远程资源
+        Dim latestJson As JObject = Nothing
+        Dim configJson As JObject = Nothing
+        Dim releaseEx As Exception = Nothing
+        Dim t1 = Task.Run(Sub()
+                              Try
+                                  latestJson = GetJson(NetRequestByClientRetry("https://api.github.com/repos/PCL-Community/PCL2-Language/releases/latest", SimulateBrowserHeaders:=True))
+                              Catch ex As Exception
+                                  releaseEx = ex
+                              End Try
+                          End Sub)
+        Dim t2 = Task.Run(Sub()
+                              Try
+                                  configJson = GetJson(NetRequestByClientRetry("https://github.com/PCL-Community/PCL2-Language/raw/refs/heads/main/remote_config/ServerConfig.json"))
+                              Catch ex As Exception
+                                  Logger.Warn(ex, "获取 ServerConfig 失败，将使用旧配置")
+                              End Try
+                          End Sub)
+        Task.WaitAll({t1, t2})
+        '写入结果
+        If releaseEx IsNot Nothing Then Throw releaseEx
+        If latestJson IsNot Nothing Then
+            LatestReleaseInfoJson = latestJson
+            LatestVersion = latestJson("tag_name").ToString
+        End If
+        If configJson IsNot Nothing Then
+            ServerConfig = configJson
+        End If
+        LatestUpdateTime = DateTime.Now
     End Sub
     Public Sub NoticeUserUpdate()
         If Not LatestVersion = VersionBaseName Then
@@ -187,7 +220,7 @@ Friend Module ModSecret
     End Sub
     Public Sub UpdateStart(VersionStr As String, Slient As Boolean, Optional ReceivedKey As String = Nothing, Optional ForceValidated As Boolean = False)
         Dim DlLink As String = "https://github.com/PCL-Community/PCL2-Language/releases/download/" + VersionStr + "/PCL2_Lang.exe"
-        Dim DlTargetPath As String = Path + "PCL\Plain Craft Launcher 2.exe"
+        Dim DlTargetPath As String = Path.Combine(PathExeFolder, "PCL\Plain Craft Launcher 2.exe")
         RunInNewThread(Sub()
                            Try
                                '构造步骤加载器
@@ -195,7 +228,20 @@ Friend Module ModSecret
                                '下载
                                Dim Address As New List(Of String)
                                Address.Add(DlLink)
+                               Address.Add($"https://cdn.crashmc.com/{DlLink}")
                                Loaders.Add(New LoaderDownload("Download file", New List(Of NetFile) From {New NetFile(Address.ToArray, DlTargetPath, New FileChecker(MinSize:=1024 * 64))}) With {.ProgressWeight = 15})
+                               '校验 assets[0] digest（如果存在且为 sha256: 开头）
+                               Loaders.Add(New LoaderTask(Of Integer, Integer)("Verify file", Sub()
+                                                                                                  Dim asset = LatestReleaseInfoJson?("assets")?(0)
+                                                                                                  Dim digestStr = If(asset IsNot Nothing, asset("digest")?.ToString, Nothing)
+                                                                                                  If digestStr IsNot Nothing AndAlso digestStr.StartsWith("sha256:", StringComparison.OrdinalIgnoreCase) Then
+                                                                                                      Dim expected = digestStr.Substring(7).Trim().ToLowerInvariant()
+                                                                                                      Dim actual = CryptographyUtils.ComputeFileHash(DlTargetPath, CryptographyUtils.HashMethod.Sha256)
+                                                                                                      If expected <> actual Then
+                                                                                                          Throw New Exception($"文件校验失败，SHA256 不匹配：期望 {expected}，实际 {actual}")
+                                                                                                      End If
+                                                                                                  End If
+                                                                                              End Sub) With {.ProgressWeight = 1})
                                If Not Slient Then
                                    Loaders.Add(New LoaderTask(Of Integer, Integer)("Replace file", Sub() UpdateRestart(True)))
                                End If
@@ -210,29 +256,29 @@ Friend Module ModSecret
                                    FrmMain.BtnExtraDownload.Ribble()
                                End If
                            Catch ex As Exception
-                               Log(ex, "[Update] 下载启动器更新文件失败", LogLevel.Hint)
+                               Logger.Error(ex, "[Update] 下载启动器更新文件失败")
                                Hint("下载启动器更新文件失败，请检查网络连接", HintType.Red)
                            End Try
                        End Sub)
     End Sub
     Public Sub UpdateRestart(TriggerRestartAndByEnd As Boolean)
         Try
-            Dim fileName As String = Path + "PCL\Plain Craft Launcher 2.exe"
+            Dim fileName As String = PathExeFolder + "PCL\Plain Craft Launcher 2.exe"
             If Not File.Exists(fileName) Then
-                Log("[System] 更新失败：未找到更新文件")
+                Logger.Info("[System] 更新失败：未找到更新文件")
                 Exit Sub
             End If
             ' id old new restart
-            Dim text As String = String.Concat(New String() {"--update ", Process.GetCurrentProcess().Id, " """, PathWithName, """ """, fileName, """ ", TriggerRestartAndByEnd})
-            Log("[System] 更新程序启动，参数：" + text, LogLevel.Normal, "出现错误")
+            Dim text As String = String.Concat(New String() {"--update ", Process.GetCurrentProcess().Id, " """, PathExe, """ """, fileName, """ ", TriggerRestartAndByEnd})
+            Logger.Info("[System] 更新程序启动，参数：" + text)
             Process.Start(New ProcessStartInfo(fileName) With {.WindowStyle = ProcessWindowStyle.Hidden, .CreateNoWindow = True, .Arguments = text})
             If TriggerRestartAndByEnd Then
                 FrmMain.EndProgram(False)
-                Log("[System] 已由于更新强制结束程序", LogLevel.Normal, "出现错误")
+                Logger.Info("[System] 已由于更新强制结束程序")
             End If
-        Catch ex As Win32Exception
-            Log(ex, "自动更新时触发 Win32 错误，疑似被拦截", LogLevel.Debug, "出现错误")
-            If MyMsgBox(String.Format("由于被 Windows 安全中心拦截，或者存在权限问题，导致 PCL 无法更新。{0}请将 PCL 所在文件夹加入白名单，或者手动用 {1}PCL\Plain Craft Launcher 2.exe 替换当前文件！", vbCrLf, ModBase.Path), "更新失败", "查看帮助", "确定", "", True, True, False, Nothing, Nothing, Nothing) = 1 Then
+        Catch ex As UnauthorizedAccessException
+            Logger.Trace(ex, "自动更新时触发 Win32 错误，疑似被拦截")
+            If MyMsgBox(String.Format("由于被 Windows 安全中心拦截，或者存在权限问题，导致 PCL 无法更新。{0}请将 PCL 所在文件夹加入白名单，或者手动用 {1}PCL\Plain Craft Launcher 2.exe 替换当前文件！", vbCrLf, ModBase.PathExe), "更新失败", "查看帮助", "确定", "", True, True, False, Nothing, Nothing, Nothing) = 1 Then
                 CustomEvent.Raise(CustomEvent.EventType.打开帮助, "启动器/Microsoft Defender 添加排除项.json")
             End If
         End Try
@@ -264,33 +310,34 @@ Friend Module ModSecret
         Loop While num <= 4
         If (Not File.Exists(OldFileName)) AndAlso File.Exists(NewFileName) Then
             Try
-                CopyFile(NewFileName, OldFileName)
+                FileUtils.Copy(NewFileName, OldFileName)
             Catch ex4 As UnauthorizedAccessException
-                MsgBox("PCL 更新失败：权限不足。请手动复制 PCL 文件夹下的新版本程序。" & vbCrLf & "若 PCL 位于桌面或 C 盘，你可以尝试将其挪到其他文件夹，这可能可以解决权限问题。" & vbCrLf + ex4.GetDetail(), MsgBoxStyle.Critical, "更新失败")
+                MsgBox("PCL 更新失败：权限不足。请手动复制 PCL 文件夹下的新版本程序。" & vbCrLf & "若 PCL 位于桌面或 C 盘，你可以尝试将其挪到其他文件夹，这可能可以解决权限问题。" & vbCrLf + ex4.GetDisplay(True), MsgBoxStyle.Critical, "更新失败")
             Catch ex5 As Exception
-                MsgBox("PCL 更新失败：无法复制新文件。请手动复制 PCL 文件夹下的新版本程序。" & vbCrLf + ex5.GetDetail(), MsgBoxStyle.Critical, "更新失败")
+                MsgBox("PCL 更新失败：无法复制新文件。请手动复制 PCL 文件夹下的新版本程序。" & vbCrLf + ex5.GetDisplay(True), MsgBoxStyle.Critical, "更新失败")
                 Return
             End Try
             If TriggerRestart Then
                 Try
                     Process.Start(OldFileName)
                 Catch ex6 As Exception
-                    MsgBox("PCL 更新失败：无法重新启动。" & vbCrLf + ex6.GetDetail(), MsgBoxStyle.Critical, "更新失败")
+                    MsgBox("PCL 更新失败：无法重新启动。" & vbCrLf + ex6.GetDisplay(True), MsgBoxStyle.Critical, "更新失败")
                 End Try
             End If
             Return
         End If
         If TypeOf ex2 Is UnauthorizedAccessException Then
             MsgBox(String.Concat(New String() {"由于权限不足，PCL 无法完成更新。请尝试：" & vbCrLf,
-                                 If((Path.StartsWithF(Environment.GetFolderPath(Environment.SpecialFolder.Desktop), False) OrElse Path.StartsWithF(Environment.GetFolderPath(Environment.SpecialFolder.Personal), False)),
+                                 If((PathExe.StartsWithF(Environment.GetFolderPath(Environment.SpecialFolder.Desktop), False) OrElse PathExe.StartsWithF(Environment.GetFolderPath(Environment.SpecialFolder.Personal), False)),
                                  " - 将 PCL 文件移动到桌面、文档以外的文件夹（这或许可以一劳永逸地解决权限问题）" & vbCrLf, ""),
-                                 If(Path.StartsWithF("C", True),
+                                 If(PathExe.StartsWithF("C", True),
                                  " - 将 PCL 文件移动到 C 盘以外的文件夹（这或许可以一劳永逸地解决权限问题）" & vbCrLf, ""),
                                  " - 右键以管理员身份运行 PCL" & vbCrLf & " - 手动复制已下载到 PCL 文件夹下的新版本程序，覆盖原程序" & vbCrLf & vbCrLf,
-                                 ex2.GetDetail()}), MsgBoxStyle.Critical, "更新失败")
+                                 ex2.GetDisplay(True)}), MsgBoxStyle.Critical, "更新失败")
             Return
         End If
-        MsgBox("PCL 更新失败：无法删除原文件。请手动复制已下载到 PCL 文件夹下的新版本程序覆盖原程序。" & vbCrLf + ex2.GetDetail(), MsgBoxStyle.Critical, "更新失败")
+        'TODO: fix deletion detect fail
+        'MsgBox("PCL 更新失败：无法删除原文件。请手动复制已下载到 PCL 文件夹下的新版本程序覆盖原程序。" & vbCrLf + ex2.GetDisplay(True), MsgBoxStyle.Critical, "更新失败")
     End Sub
 
     ''' <summary>
@@ -315,7 +362,7 @@ Friend Module ModSecret
         {.ReloadTimeout = 1000 * 60 * 60} '超时 1 小时
 
     Private Sub LoadOnlineInfo()
-        Select Case Setup.Get("SystemSystemUpdate")
+        Select Case Settings.Get(Of Integer)("SystemSystemUpdate")
             Case 0
                 UpdateLatestVersionInfo()
                 If VersionBaseName <> LatestVersion Then
