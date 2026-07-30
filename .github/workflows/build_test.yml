@@ -24,6 +24,7 @@ jobs:
       uses: actions/checkout@v4
       with:
         fetch-depth: 0
+        submodules: true
 
     - name: Setup NuGet
       uses: nuget/setup-nuget@v2
@@ -63,6 +64,9 @@ jobs:
         (gc "Plain Craft Launcher 2\Modules\ModSecret.vb") -replace 'Public Const CurseForgeAPIKey As String = ""', 'Public Const CurseForgeAPIKey As String = "${{ secrets.CURSEFORGE_API_KEY }}"' | Out-File "Plain Craft Launcher 2\Modules\ModSecret.vb"
         (gc "Plain Craft Launcher 2\Modules\Base\ModBase.vb") -replace 'Public Const CommitHash As String = ""', 'Public Const CommitHash As String = "${{ github.sha }}"' | Out-File "Plain Craft Launcher 2\Modules\Base\ModBase.vb"
         
+    - name: Restore NuGet Packages
+      run: dotnet restore PCLCS\PCLCS.csproj
+
     - name: Build
       run: msbuild "Plain Craft Launcher 2\Plain Craft Launcher 2.vbproj" -p:Configuration=${{ matrix.configuration }}
 

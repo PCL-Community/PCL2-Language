@@ -1,4 +1,7 @@
-﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:s="clr-namespace:System;assembly=mscorlib" xml:space="preserve">
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:s="clr-namespace:System;assembly=mscorlib"
+        xml:space="preserve">
     <s:String x:Key="LangTaskAbort">Ακυρώθηκε!</s:String>
     <s:String x:Key="LangDialogBtnOK">Εντάξει</s:String>
     <s:String x:Key="LangDialogBtnCancel">Ακύρωση</s:String>
@@ -8,12 +11,15 @@
     <s:String x:Key="LangDialogBtnContinue">Συνέχεια</s:String>
     <s:String x:Key="LangComma">, </s:String>
     <s:String x:Key="LangColon">: </s:String>
+    <s:String x:Key="LangSeparator">, </s:String>
+    <s:String x:Key="LangConjunctiveCoordinator">και</s:String>
+    <s:String x:Key="LangDisjunctiveCoordinator">ή</s:String>
     <s:String x:Key="LangSaveAs">Επιλέξτε Αποθήκευση Τοποθεσίας</s:String>
-    <s:String x:Key="LangSaveAsFile">文件</s:String>
-    <s:String x:Key="LangReset">重置</s:String>
+    <s:String x:Key="LangSaveAsFile">Έγγραφο</s:String>
+    <s:String x:Key="LangReset">Επαναφορά</s:String>
     <s:String x:Key="LangRefresh">Ανανέωση</s:String>
     <s:String x:Key="LangRefreshing">Ανανέωση...</s:String>
-    <s:String x:Key="LangRefreshed">已刷新！</s:String>
+    <s:String x:Key="LangRefreshed">Ενημερώθηκε!</s:String>
     <s:String x:Key="LangApplicationExceptionNoAccessPermission">PCL δεν έχει δικαιώματα πρόσβασης σε {0}</s:String>
     <s:String x:Key="LangApplicationDialogTitleCacheFolderUnavailable">Μη Διαθέσιμος Φάκελος Προσωρινής Αποθήκευσης</s:String>
     <s:String x:Key="LangApplicationDialogContentCacheFolderUnavailable">PCL δεν μπορεί να προσπελάσει το φάκελο κρυφής μνήμης, το οποίο μπορεί να προκαλέσει σφάλμα προγράμματος ή ανενεργότητα.
@@ -30,7 +36,7 @@
     <s:String x:Key="LangApplicationDialogContentNETWarn">Η έκδοση του .NET Framework που έχετε είναι πολύ χαμηλή ή κατεστραμμένη. Παρακαλούμε κατεβάσετε και εγκαταστήστε ξανά το .NET Framework 4.6.2!</s:String>
     <s:String x:Key="LangApplicationDialogTitleUnknownError">Άγνωστο Σφάλμα</s:String>
     <s:String x:Key="LangApplicationDialogContentUnknownError">Παρουσιάστηκε άγνωστο σφάλμα στο πρόγραμμα.</s:String>
-    <s:String x:Key="LangApplicationDialogContentMemReduceFail">内存优化失败</s:String>
+    <s:String x:Key="LangApplicationDialogContentMemReduceFail">Η βελτιστοποίηση της μνήμης απέτυχε</s:String>
     <s:String x:Key="LangTitleDownload">Λήψη</s:String>
     <s:String x:Key="LangTitleHome">Εκκίνηση</s:String>
     <s:String x:Key="LangTitleSetup">Ρυθμίσεις</s:String>
@@ -43,8 +49,8 @@
     <s:String x:Key="LangDialogBtnUpdateFullLog">Πλήρες Ημερολόγιο Ενημερώσεων</s:String>
     <s:String x:Key="LangDialogUpdateTo">Το PCL έχει ενημερωθεί σε {0}</s:String>
     <s:String x:Key="LangDialogPolicyContent">Πριν χρησιμοποιήσετε το PCL, συμφωνήστε με τη Συμφωνία Χρήστη του PCL και την Αποποίηση ευθυνών.</s:String>
-    <s:String x:Key="LangDialogPolicyContentModified">PCL 的用户协议与免责声明已更新。
-请阅读更新后的用户协议与免责声明。</s:String>
+    <s:String x:Key="LangDialogPolicyContentModified">Οι Όροι Παροχής Υπηρεσιών και η Αποποίηση Ευθύνης έχουν ενημερωθεί.
+Διαβάστε τους ενημερωμένους Όρους Παροχής Υπηρεσιών και την Αποποίηση Ευθύνης πριν συνεχίσετε.</s:String>
     <s:String x:Key="LangDialogPolicyTitle">Έγκριση πρωτοκόλλου</s:String>
     <s:String x:Key="LangDialogBtnAgree">Συμφωνώ</s:String>
     <s:String x:Key="LangDialogBtnDeny">Απόρριψη</s:String>
@@ -92,8 +98,8 @@
     <s:String x:Key="LangPageNameDownloadManagement">Λήψεις</s:String>
     <s:String x:Key="LangPageNameVersionConfiguration">Ιδιότητες</s:String>
     <s:String x:Key="LangPageNameVersionConfigurationUnknownVersion">Άγνωστη Παρουσία</s:String>
-    <s:String x:Key="LangPageNameCompDownload">资源下载</s:String>
-    <s:String x:Key="LangHintDropFileFromRecycleBin">请先将文件从回收站还原，再拖入 PCL！</s:String>
+    <s:String x:Key="LangPageNameCompDownload">Λήψη πόρων</s:String>
+    <s:String x:Key="LangHintDropFileFromRecycleBin">Παρακαλώ επαναφέρετε το αρχείο από τον κάδο ανακύκλωσης και προσπαθήστε ξανά!</s:String>
     <s:String x:Key="LangThemeRealWhite">ΠΡΑΓΜΑΤΙΚΟ ΛΕΥΚΟ</s:String>
     <s:String x:Key="LangThemeRealFunny">ΠΡΑΓΜΑΤΙΚΟ ΑΣΤΕΙΟ ΧΡΩΜΑ</s:String>
     <s:String x:Key="LangThemeUnlockCopyTip8">Αφού η συσσωρευμένη χορηγία φτάσει τα 23,33 ¥, στείλτε μήνυμα με τον όρο «解锁码» (Κωδικός ξεκλειδώματος) στον προγραμματιστή στο Afdian για ξεκλείδωμα.
@@ -108,7 +114,7 @@
     <s:String x:Key="LangHintThemeSetInit">Οι ρυθμίσεις εξατομίκευσης έχουν προετοιμαστεί.</s:String>
     <s:String x:Key="LangHintThemeSetInitFail">Απέτυχε η προετοιμασία των ρυθμίσεων εξατομίκευσης.</s:String>
     <s:String x:Key="LangBackgroundPic">Φόντο</s:String>
-    <s:String x:Key="LangSetupUIBackgroundPicPixel">像素</s:String>
+    <s:String x:Key="LangSetupUIBackgroundPicPixel">Εικονοστοιχεία</s:String>
     <s:String x:Key="LangBackgroundPicCount">Φόντο (Σύνολο: {0})</s:String>
     <s:String x:Key="LangDialogDeleteAllBackgroundPicContent">Όλα τα αρχεία στον φάκελο φόντου θα διαγραφούν.
 Αυτή η πράξη είναι αμετάκλητη. Είστε σίγουροι;</s:String>
@@ -246,7 +252,7 @@
     <s:String x:Key="LangSetHomePageRefresh">Ανανέωση</s:String>
     <s:String x:Key="LangSetHomePageReleaseTeachFile">Δημιουργία Τεκμηρίωσης</s:String>
     <s:String x:Key="LangSetHomePageSeeDoc">Εκπαιδευτικά Προγράμματα</s:String>
-    <s:String x:Key="LangSetHomePageCustomWarn">在使用陌生人提供的主页前请务必谨慎，恶意的主页可能会造成损害！</s:String>
+    <s:String x:Key="LangSetHomePageCustomWarn">Παρακαλούμε να είστε προσεκτικοί όταν χρησιμοποιείτε αρχικές σελίδες που παρέχονται από αγνώστους. Οι κακόβουλες αρχικές σελίδες μπορεί να προκαλέσουν βλάβη!</s:String>
     <s:String x:Key="LangSetHomePageDownload">URL</s:String>
     <s:String x:Key="LangSetHomePagePresetPage">Προεπιλογές Αρχικής Σελίδας</s:String>
     <s:String x:Key="LangSetHomePagePresetPageA">Πρωτότυπα</s:String>
@@ -260,11 +266,11 @@
     <s:String x:Key="LangSetHomePagePresetPageI">Αρχείο Ενημέρωσης PCL (Συγγραφέας: Joker2184)</s:String>
     <s:String x:Key="LangSetHomePagePresetPageJ">Εγχειρίδιο Νέων Χαρακτηριστικών PCL (Συγγραφέας: WForst-Breeze)</s:String>
     <s:String x:Key="LangSetHomePagePresetPageK">Πίνακας Ελέγχου OpenMCIM (Συγγραφέας: SALTWOOD)</s:String>
-    <s:String x:Key="LangSetHomePagePresetPageL">杂志主页（作者：CreeperIsASpy）</s:String>
-    <s:String x:Key="LangSetHomePagePresetPageM">PCL GitHub 仪表盘（作者：Deep-Dark-Forest）</s:String>
-    <s:String x:Key="LangSetHomePagePresetPageN">Minecraft 更新摘要（作者：pynickle，部分由 AI 生成）</s:String>
-    <s:String x:Key="LangSetHomePagePresetPageO">今日新闻热点（作者：EYicheng，部分由 AI 生成）</s:String>
-    <s:String x:Key="LangSetHomePagePresetPageP">Minecraft 芝士站（作者：awaEric233，部分由 AI 生成）</s:String>
+    <s:String x:Key="LangSetHomePagePresetPageL">Αρχική σελίδα περιοδικού (Συγγραφέας: CreeperIsASpy)</s:String>
+    <s:String x:Key="LangSetHomePagePresetPageM">Πίνακας ελέγχου PCL GitHub (Συγγραφέας: Deep-Dark-Forest)</s:String>
+    <s:String x:Key="LangSetHomePagePresetPageN">Σύνοψη ενημέρωσης Minecraft (Συγγραφέας: pynickle, εν μέρει AIGC)</s:String>
+    <s:String x:Key="LangSetHomePagePresetPageO">Κύρια νέα της ημέρας (Συγγραφέας: EYicheng, εν μέρει AIGC)</s:String>
+    <s:String x:Key="LangSetHomePagePresetPageP">Σταθμός γνώσης Minecraft (Συγγραφέας: awaEric233, εν μέρει AIGC)</s:String>
     <s:String x:Key="LangSetFuncHidden">Απόκρυψη Λειτουργιών</s:String>
     <s:String x:Key="LangSetFuncHiddenToolTip">Μπορείτε να αποκρύψετε περιττές σελίδες ή να απενεργοποιήσετε συγκεκριμένες λειτουργίες. Πατήστε «F12» σε οποιαδήποτε διεπαφή για να εμφανιστούν προσωρινά οι κρυφές λειτουργίες.</s:String>
     <s:String x:Key="LangSetFuncHiddenLaunch">Κύρια Διεπαφή</s:String>
@@ -287,10 +293,10 @@
     <s:String x:Key="LangSetFuncHiddenSpecialEmail">Ηλεκτρονικό Ταχυδρομείο</s:String>
     <s:String x:Key="LangSetFuncHiddenSpecialEmailToolTip">Αποκρύψτε την εμφάνιση email των λογαριασμών σύνδεσης τρίτων και προσπαθήστε να βάλετε τον αστερίσκο στο email για να αποφύγετε την αποκάλυψη απορρήτου.
 Πρέπει να επανεκκινήσετε τη λειτουργία εκκίνησης μετά από αυτήν την αλλαγή.</s:String>
-    <s:String x:Key="LangSetFuncHiddenSpecialInstanceSetting">版本管理</s:String>
-    <s:String x:Key="LangSetFuncHiddenSpecialInstanceSettingToolTip">隐藏启动按钮下方的版本选择与版本设置入口。</s:String>
-    <s:String x:Key="LangSetFuncHiddenSpecialModUpdate">Mod 更新</s:String>
-    <s:String x:Key="LangSetFuncHiddenSpecialModUpdateToolTip">禁止在 Mod 管理页面更新 Mod。</s:String>
+    <s:String x:Key="LangSetFuncHiddenSpecialInstanceSetting">Επιλογή</s:String>
+    <s:String x:Key="LangSetFuncHiddenSpecialInstanceSettingToolTip">Απόκρυψη των κουμπιών επιλογής και ιδιοτήτων κάτω από το κουμπί Εκκίνησης.</s:String>
+    <s:String x:Key="LangSetFuncHiddenSpecialModUpdate">Ενημερώσεις Mod</s:String>
+    <s:String x:Key="LangSetFuncHiddenSpecialModUpdateToolTip">Απαγόρευση ενημερώσεων mod στη σελίδα διαχείρισης mod.</s:String>
     <s:String x:Key="LangSetFuncHiddenSpecialFuncHidden">Απόκρυψη Λειτουργιών</s:String>
     <s:String x:Key="LangSetFuncHiddenSpecialFuncHiddenToolTip">Απόκρυψη μόνο αυτής της καρτέλας, το απενεργοποιημένο σύνολο περιεχομένου εξακολουθεί να ισχύει.
 Αποφύγετε την αλλαγή της «Απόκρυψης λειτουργιών» ενώ διατηρείτε τη σελίδα «Εξατομίκευση».</s:String>
@@ -379,7 +385,7 @@
     <s:String x:Key="LangSelectDeleteVersionContentA">Είστε βέβαιοι ότι θα διαγράψετε την παρουσία {0};</s:String>
     <s:String x:Key="LangSelectDeleteVersionContentB">Είστε βέβαιοι ότι θα διαγράψετε οριστικά την παρουσία {0};</s:String>
     <s:String x:Key="LangSelectDeleteVersionContentC">Δεδομένου ότι η «Απομόνωση Παρουσίας είναι ενεργοποιημένη για αυτήν την περίπτωση, οι αντίστοιχες αποθηκευμένες ρυθμίσεις, πακέτα πόρων, mods και άλλα αρχεία αυτής της παρουσίας θα διαγραφούν επίσης!</s:String>
-    <s:String x:Key="LangSelectVersionDeleted">版本 {0} 已删除！</s:String>
+    <s:String x:Key="LangSelectVersionDeleted">Η περίπτωση {0} έχει διαγραφεί!</s:String>
     <s:String x:Key="LangSelectVersionDeleteCancelled">Η διαγραφή της παρουσίας {0} ακυρώθηκε μη αυτόματα.</s:String>
     <s:String x:Key="LangSelectVersionDeleteFail">Απέτυχε η διαγραφή της παρουσίας {0}.</s:String>
     <s:String x:Key="LangSpeedTotalProgress">Πρόοδος</s:String>
@@ -469,7 +475,7 @@
     <s:String x:Key="LangDownloadInstallHintBackTip">Κάντε κλικ στο πλακίδιο Minecraft για να επιστρέψετε!</s:String>
     <s:String x:Key="LangDownloadInstallClickToChose">Κάντε Κλικ για Επιλογή</s:String>
     <s:String x:Key="LangDownloadInstallForgeIncompatible">Μη συμβατό με Forge</s:String>
-    <s:String x:Key="LangDownloadInstallForgeCompatibleTargetVersion">仅兼容特定版本的 Forge</s:String>
+    <s:String x:Key="LangDownloadInstallForgeCompatibleTargetVersion">Συμβατό μόνο με ορισμένες εκδόσεις του Forge</s:String>
     <s:String x:Key="LangDownloadInstallFabricIncompatible">Μη συμβατό με Fabric</s:String>
     <s:String x:Key="LangDownloadInstallOptiFineIncompatible">Μη συμβατό με OptiFine</s:String>
     <s:String x:Key="LangDownloadInstallFabricNeed">Εξαρτάται από το Fabric</s:String>
@@ -490,16 +496,16 @@
     <s:String x:Key="LangDownloadPageLeftRefresh">Ανανέωση</s:String>
     <s:String x:Key="LangDownloadPageLeftAutoInstall">Εγκατάσταση</s:String>
     <s:String x:Key="LangDownloadPageLeftResource">Πόροι</s:String>
-    <s:String x:Key="LangDownloadPageLeftMods">Mods</s:String>
-    <s:String x:Key="LangDownloadPageLeftModsL"> Mod </s:String>
-    <s:String x:Key="LangDownloadPageLeftModpack">Modpacks</s:String>
-    <s:String x:Key="LangDownloadPageLeftModpackL">整合包</s:String>
-    <s:String x:Key="LangDownloadPageLeftResourcepack">资源包</s:String>
-    <s:String x:Key="LangDownloadPageLeftResourcepackL">资源包</s:String>
-    <s:String x:Key="LangDownloadPageLeftShader">光影包</s:String>
-    <s:String x:Key="LangDownloadPageLeftShaderL">光影包</s:String>
-    <s:String x:Key="LangDownloadPageLeftDatapack">数据包</s:String>
-    <s:String x:Key="LangDownloadPageLeftDatapackL">数据包</s:String>
+    <s:String x:Key="LangDownloadPageLeftMods">Μοντς</s:String>
+    <s:String x:Key="LangDownloadPageLeftModsL">Μοντς</s:String>
+    <s:String x:Key="LangDownloadPageLeftModpack">Πακέτα Μοντς</s:String>
+    <s:String x:Key="LangDownloadPageLeftModpackL">πακέτα μοντς</s:String>
+    <s:String x:Key="LangDownloadPageLeftResourcepack">Πακέτα πόρων</s:String>
+    <s:String x:Key="LangDownloadPageLeftResourcepackL">πακέτα πόρων</s:String>
+    <s:String x:Key="LangDownloadPageLeftShader">Σκίαδροι</s:String>
+    <s:String x:Key="LangDownloadPageLeftShaderL">Σκίαδροι</s:String>
+    <s:String x:Key="LangDownloadPageLeftDatapack">Πακέτα δεδομένων</s:String>
+    <s:String x:Key="LangDownloadPageLeftDatapackL">πακέτα δεδομένων</s:String>
     <s:String x:Key="LangDownloadPageLeftMinecraft">Minecraft</s:String>
     <s:String x:Key="LangDownloadPageLeftOptiFine">OptiFine</s:String>
     <s:String x:Key="LangDownloadPageLeftForge">Forge</s:String>
@@ -521,7 +527,7 @@
     <s:String x:Key="LangDownloadCompSearchLoader">Οποιοσδήποτε Mod Φορτωτής</s:String>
     <s:String x:Key="LangDownloadCompSearch">Αναζήτηση</s:String>
     <s:String x:Key="LangDownloadModReset">Επαναφορά</s:String>
-    <s:String x:Key="LangDownloadCompGettingList">正在获取{0}列表</s:String>
+    <s:String x:Key="LangDownloadCompGettingList">Λήψη λίστας {0}...</s:String>
     <s:String x:Key="LangDownloadModType">Τύπος</s:String>
     <s:String x:Key="LangDownloadResourceTypeAll">Όλα</s:String>
     <s:String x:Key="LangDownloadModTypeWorldElement">Παγκόσμια Γενιά</s:String>
@@ -545,7 +551,7 @@
     <s:String x:Key="LangDownloadModTypeMobs">Mobs</s:String>
     <s:String x:Key="LangDownloadModTypeEquipment">Εξοπλισμός</s:String>
     <s:String x:Key="LangDownloadModTypeOptimization">Βελτιστοποίηση</s:String>
-    <s:String x:Key="LangDownloadModTypeCreativeMode">创造模式</s:String>
+    <s:String x:Key="LangDownloadModTypeCreativeMode">Δημιουργική λειτουργία</s:String>
     <s:String x:Key="LangDownloadModTypeDisplay">Οθόνη</s:String>
     <s:String x:Key="LangDownloadModTypeServer">Βοηθητικό Πρόγραμμα Διακομιστή</s:String>
     <s:String x:Key="LangDownloadModTypeUtility">Βοηθητικό &amp; QoL</s:String>
@@ -572,7 +578,7 @@
     <s:String x:Key="LangDownloadModpackTypeTech">Τεχνολογία</s:String>
     <s:String x:Key="LangDownloadModpackTypeMagic">Magic</s:String>
     <s:String x:Key="LangDownloadModpackTypeAdventure">Περιπέτεια</s:String>
-    <s:String x:Key="LangDownloadModpackTypeCook">Νιπτήρας Κουζίνας</s:String>
+    <s:String x:Key="LangDownloadModpackTypeSink">Νιπτήρας Κουζίνας</s:String>
     <s:String x:Key="LangDownloadModpackTypeExplore">Εξερεύνηση</s:String>
     <s:String x:Key="LangDownloadModpackTypeGame">Μίνι Παιχνίδια</s:String>
     <s:String x:Key="LangDownloadModpackTypeScienceFiction">Sci-Fi</s:String>
@@ -583,67 +589,67 @@
     <s:String x:Key="LangDownloadModpackTypeMapBased">Βάσει Χάρτη</s:String>
     <s:String x:Key="LangDownloadModpackTypeLightWeight">Μικρό &amp; Ελαφρύ</s:String>
     <s:String x:Key="LangDownloadModpackTypeHeavyWeight">Εξαιρετικά Μεγάλο</s:String>
-    <s:String x:Key="LangDownloadModpackTypeOther">其它</s:String>
-    <s:String x:Key="LangDownloadResourcepackTypeTitleStyle">风格</s:String>
-    <s:String x:Key="LangDownloadResourcepackTypeVanillaLike">原版风</s:String>
-    <s:String x:Key="LangDownloadResourcepackTypeRealistic">写实风</s:String>
-    <s:String x:Key="LangDownloadResourcepackTypeModern">现代风</s:String>
-    <s:String x:Key="LangDownloadResourcepackTypeMedieval">中世纪</s:String>
-    <s:String x:Key="LangDownloadResourcepackTypeSteampunk">蒸汽朋克</s:String>
-    <s:String x:Key="LangDownloadResourcepackTypeThemed">主题化</s:String>
-    <s:String x:Key="LangDownloadResourcepackTypeSimplistic">简洁</s:String>
-    <s:String x:Key="LangDownloadResourcepackTypeDecoration">装饰</s:String>
-    <s:String x:Key="LangDownloadResourcepackTypeCombat">战斗</s:String>
-    <s:String x:Key="LangDownloadResourcepackTypeUtility">实用</s:String>
-    <s:String x:Key="LangDownloadResourcepackTypeTweaks">改良</s:String>
-    <s:String x:Key="LangDownloadResourcepackTypeCursed">神经病</s:String>
-    <s:String x:Key="LangDownloadResourcepackTypeTitleFeature">特性</s:String>
-    <s:String x:Key="LangDownloadResourcepackTypeEntities">含实体</s:String>
-    <s:String x:Key="LangDownloadResourcepackTypeAudio">含声音</s:String>
-    <s:String x:Key="LangDownloadResourcepackTypeFonts">含字体</s:String>
-    <s:String x:Key="LangDownloadResourcepackTypeModels">含模型</s:String>
-    <s:String x:Key="LangDownloadResourcepackTypeLocale">含语言</s:String>
-    <s:String x:Key="LangDownloadResourcepackTypeGUI">含 UI</s:String>
-    <s:String x:Key="LangDownloadResourcepackTypeCoreShader">核心着色器</s:String>
-    <s:String x:Key="LangDownloadResourcepackTypeDynamic">动态效果</s:String>
-    <s:String x:Key="LangDownloadResourcepackTypeModed">兼容 Mod</s:String>
-    <s:String x:Key="LangDownloadResourcepackTypeTitleResolution">分辨率</s:String>
-    <s:String x:Key="LangDownloadResourcepackTypeLowerThan8x">8x 或更低</s:String>
-    <s:String x:Key="LangDownloadResourcepackTypeHigherThan512x">512x 或更高</s:String>
-    <s:String x:Key="LangDownloadShaderTypeTitleStyle">风格</s:String>
-    <s:String x:Key="LangDownloadShaderTypeVanillaLike">原版风</s:String>
-    <s:String x:Key="LangDownloadShaderTypeFantasy">幻想风</s:String>
-    <s:String x:Key="LangDownloadShaderTypeRealistic">写实风</s:String>
-    <s:String x:Key="LangDownloadShaderTypeSemiRealistic">半写实风</s:String>
-    <s:String x:Key="LangDownloadShaderTypeCartoon">卡通风</s:String>
-    <s:String x:Key="LangDownloadShaderTypeTitleFeature">特性</s:String>
-    <s:String x:Key="LangDownloadShaderTypeVanilla">原版可用</s:String>
-    <s:String x:Key="LangDownloadShaderTypeVanillaToolTip">作为资源包加载，可以直接在原版游戏里使用。</s:String>
-    <s:String x:Key="LangDownloadShaderTypeColoredLighting">彩色光照</s:String>
-    <s:String x:Key="LangDownloadShaderTypePathTracing">路径追踪</s:String>
+    <s:String x:Key="LangDownloadModpackTypeOther">Άλλα</s:String>
+    <s:String x:Key="LangDownloadResourcepackTypeTitleStyle">Στυλ</s:String>
+    <s:String x:Key="LangDownloadResourcepackTypeVanillaLike">Σαν βανίλια</s:String>
+    <s:String x:Key="LangDownloadResourcepackTypeRealistic">Ρεαλιστικό</s:String>
+    <s:String x:Key="LangDownloadResourcepackTypeModern">Μοντέρνο</s:String>
+    <s:String x:Key="LangDownloadResourcepackTypeMedieval">Μεσαιωνικό</s:String>
+    <s:String x:Key="LangDownloadResourcepackTypeSteampunk">Steampunk</s:String>
+    <s:String x:Key="LangDownloadResourcepackTypeThemed">Θεματικό</s:String>
+    <s:String x:Key="LangDownloadResourcepackTypeSimplistic">Απλό</s:String>
+    <s:String x:Key="LangDownloadResourcepackTypeDecoration">Διακόσμηση</s:String>
+    <s:String x:Key="LangDownloadResourcepackTypeCombat">Μάχη</s:String>
+    <s:String x:Key="LangDownloadResourcepackTypeUtility">Βοηθητικό πρόγραμμα</s:String>
+    <s:String x:Key="LangDownloadResourcepackTypeTweaks">Τροποποιήσεις</s:String>
+    <s:String x:Key="LangDownloadResourcepackTypeCursed">Καταραμένο</s:String>
+    <s:String x:Key="LangDownloadResourcepackTypeTitleFeature">Χαρακτηριστικά</s:String>
+    <s:String x:Key="LangDownloadResourcepackTypeEntities">Οντότητες</s:String>
+    <s:String x:Key="LangDownloadResourcepackTypeAudio">Ήχος</s:String>
+    <s:String x:Key="LangDownloadResourcepackTypeFonts">Γραμματοσειρές</s:String>
+    <s:String x:Key="LangDownloadResourcepackTypeModels">Μοντέλα</s:String>
+    <s:String x:Key="LangDownloadResourcepackTypeLocale">Τοπικές ρυθμίσεις</s:String>
+    <s:String x:Key="LangDownloadResourcepackTypeGUI">Γραφικό περιβάλλον χρήστη</s:String>
+    <s:String x:Key="LangDownloadResourcepackTypeCoreShader">Πυρηνικοί σκιαστές</s:String>
+    <s:String x:Key="LangDownloadResourcepackTypeDynamic">Κινούμενα σχέδια</s:String>
+    <s:String x:Key="LangDownloadResourcepackTypeModed">Υποστήριξη τροποποιήσεων</s:String>
+    <s:String x:Key="LangDownloadResourcepackTypeTitleResolution">Ανάλυση</s:String>
+    <s:String x:Key="LangDownloadResourcepackTypeLowerThan8x">8x ή χαμηλότερες</s:String>
+    <s:String x:Key="LangDownloadResourcepackTypeHigherThan512x">512x ή υψηλότερες</s:String>
+    <s:String x:Key="LangDownloadShaderTypeTitleStyle">Στυλ</s:String>
+    <s:String x:Key="LangDownloadShaderTypeVanillaLike">Σαν βανίλια</s:String>
+    <s:String x:Key="LangDownloadShaderTypeFantasy">Φαντασία</s:String>
+    <s:String x:Key="LangDownloadShaderTypeRealistic">Ρεαλιστικές</s:String>
+    <s:String x:Key="LangDownloadShaderTypeSemiRealistic">Ημιρεαλιστικό</s:String>
+    <s:String x:Key="LangDownloadShaderTypeCartoon">Κινούμενα σχέδια</s:String>
+    <s:String x:Key="LangDownloadShaderTypeTitleFeature">Χαρακτηριστικά</s:String>
+    <s:String x:Key="LangDownloadShaderTypeVanilla">Βανίλια</s:String>
+    <s:String x:Key="LangDownloadShaderTypeVanillaToolTip">Μπορεί να φορτωθεί ως πακέτο πόρων και να χρησιμοποιηθεί απευθείας στο βασικό παιχνίδι.</s:String>
+    <s:String x:Key="LangDownloadShaderTypeColoredLighting">Χρωματιστός φωτισμός</s:String>
+    <s:String x:Key="LangDownloadShaderTypePathTracing">Ανίχνευση διαδρομής</s:String>
     <s:String x:Key="LangDownloadShaderTypePBR">PBR</s:String>
-    <s:String x:Key="LangDownloadShaderTypeReflections">反射</s:String>
-    <s:String x:Key="LangDownloadShaderTypeTitleLoad">性能负荷</s:String>
-    <s:String x:Key="LangDownloadShaderTypePotato">极低</s:String>
-    <s:String x:Key="LangDownloadShaderTypeLow">低</s:String>
-    <s:String x:Key="LangDownloadShaderTypeMedium">中</s:String>
-    <s:String x:Key="LangDownloadShaderTypeHigh">高</s:String>
-    <s:String x:Key="LangDownloadDatapackTypeWorldgen">世界元素</s:String>
-    <s:String x:Key="LangDownloadDatapackTypeTechnology">科技</s:String>
-    <s:String x:Key="LangDownloadDatapackTypeGameMechanics">游戏机制</s:String>
-    <s:String x:Key="LangDownloadDatapackTypeTransportation">运输</s:String>
-    <s:String x:Key="LangDownloadDatapackTypeStorage">仓储</s:String>
-    <s:String x:Key="LangDownloadDatapackTypeMagic">魔法</s:String>
-    <s:String x:Key="LangDownloadDatapackTypeAdventure">冒险</s:String>
-    <s:String x:Key="LangDownloadDatapackTypeFantasy">幻想</s:String>
-    <s:String x:Key="LangDownloadDatapackTypeDecoration">装饰</s:String>
-    <s:String x:Key="LangDownloadDatapackTypeMobs">生物</s:String>
-    <s:String x:Key="LangDownloadDatapackTypeUtility">实用</s:String>
-    <s:String x:Key="LangDownloadDatapackTypeEquipment">装备与工具</s:String>
-    <s:String x:Key="LangDownloadDatapackTypeOptimization">性能优化</s:String>
-    <s:String x:Key="LangDownloadDatapackTypeSocial">服务器</s:String>
-    <s:String x:Key="LangDownloadDatapackTypeLibrary">支持库</s:String>
-    <s:String x:Key="LangDownloadDatapackTypeMod">Mod 相关</s:String>
+    <s:String x:Key="LangDownloadShaderTypeReflections">Αντανακλάσεις</s:String>
+    <s:String x:Key="LangDownloadShaderTypeTitleLoad">Επιπτώσεις στην απόδοση</s:String>
+    <s:String x:Key="LangDownloadShaderTypePotato">Πατάτα</s:String>
+    <s:String x:Key="LangDownloadShaderTypeLow">Χαμηλή</s:String>
+    <s:String x:Key="LangDownloadShaderTypeMedium">Μεσαία</s:String>
+    <s:String x:Key="LangDownloadShaderTypeHigh">Υψηλή</s:String>
+    <s:String x:Key="LangDownloadDatapackTypeWorldgen">Παγκόσμια Γενιά</s:String>
+    <s:String x:Key="LangDownloadDatapackTypeTechnology">Τεχνολογία</s:String>
+    <s:String x:Key="LangDownloadDatapackTypeGameMechanics">Μηχανική Παιχνιδιού</s:String>
+    <s:String x:Key="LangDownloadDatapackTypeTransportation">Μεταφορά</s:String>
+    <s:String x:Key="LangDownloadDatapackTypeStorage">Αποθήκευση</s:String>
+    <s:String x:Key="LangDownloadDatapackTypeMagic">Μαγεία</s:String>
+    <s:String x:Key="LangDownloadDatapackTypeAdventure">Περιπέτεια</s:String>
+    <s:String x:Key="LangDownloadDatapackTypeFantasy">Φαντασία</s:String>
+    <s:String x:Key="LangDownloadDatapackTypeDecoration">Διακόσμηση</s:String>
+    <s:String x:Key="LangDownloadDatapackTypeMobs">Mobs</s:String>
+    <s:String x:Key="LangDownloadDatapackTypeUtility">Βοηθητικό Πρόγραμμα</s:String>
+    <s:String x:Key="LangDownloadDatapackTypeEquipment">Εξοπλισμός</s:String>
+    <s:String x:Key="LangDownloadDatapackTypeOptimization">Βελτιστοποίηση</s:String>
+    <s:String x:Key="LangDownloadDatapackTypeSocial">Κοινωνικά Δίκτυα</s:String>
+    <s:String x:Key="LangDownloadDatapackTypeLibrary">Βιβλιοθήκη</s:String>
+    <s:String x:Key="LangDownloadDatapackTypeMod">Υποστήριξη Mod</s:String>
     <s:String x:Key="LangDownloadModpackConnectModrinthFail">Δεν ήταν δυνατή η σύνδεση στο Modrinth, επομένως προς το παρόν εμφανίζεται μόνο περιεχόμενο από το CurseForge, τα αποτελέσματα ενδέχεται να είναι ελλιπή.
 Ελέγξτε το διαδίκτυο και δοκιμάστε ξανά.</s:String>
     <s:String x:Key="LangDownloadModpackConnectCurseForge">Δεν ήταν δυνατή η σύνδεση στο CurseForge, επομένως προς το παρόν εμφανίζεται μόνο περιεχόμενο από το Modrinth, τα αποτελέσματα ενδέχεται να είναι ελλιπή.
@@ -754,7 +760,7 @@
     <s:String x:Key="LangPageLoginLegacyNoEmptyID">Το όνομα χρήστη δεν μπορεί να είναι κενό!</s:String>
     <s:String x:Key="LangPageLoginLegacyNoQuotationInID">Το όνομα χρήστη δεν μπορεί να περιέχει εισαγωγικά!</s:String>
     <s:String x:Key="LangPageLoginLegacyConfigHidden">Οι επιλογές εκκίνησης έχουν απενεργοποιηθεί!</s:String>
-    <s:String x:Key="LangPageLoginLegacyLengthLimit">自 1.20.3 起，玩家名至多只能包含 16 个字符！</s:String>
+    <s:String x:Key="LangPageLoginLegacyLengthLimit">Ξεκινώντας από την έκδοση 1.20.3, το όνομα χρήστη μπορεί να περιέχει έως και 16 χαρακτήρες!</s:String>
     <s:String x:Key="LangPageLoginMsLogin">Σύνδεση</s:String>
     <s:String x:Key="LangPageLoginMsBuy">» Αγορά</s:String>
     <s:String x:Key="LangPageLoginMsWebsite">» Ιστότοπος</s:String>
@@ -808,7 +814,6 @@
     <s:String x:Key="LangPageOtherDialogFeedbackBtn2">Λίστα Σχολίων</s:String>
     <s:String x:Key="LangPageOtherDialogVoteContent">Θέλετε να ανοίξετε τη σελίδα ψηφοφορίας για τη νέα λειτουργία;</s:String>
     <s:String x:Key="LangPageOtherDialogVoteTitle">Συμβουλή</s:String>
-    <s:String x:Key="LangPageOtherDialogVoteBtn1">Άνοιγμα</s:String>
     <s:String x:Key="LangPageOtherAboutAbout">Περίπου</s:String>
     <s:String x:Key="LangPageOtherAboutAboutAuthor">LTCat (龙腾猫跃)</s:String>
     <s:String x:Key="LangPageOtherAboutAboutAuthorSubtitle">Ο προγραμματιστής του Plain Craft Launcher!</s:String>
@@ -843,9 +848,9 @@
     <s:String x:Key="LangPageOtherAboutLicenseDoc">Άδεια Χρήσης</s:String>
     <s:String x:Key="LangPageOtherAboutLicenseWeb">Πηγή</s:String>
     <s:String x:Key="LangPageOtherAboutLawInfoAgreement">ToS &amp; Αρνηση</s:String>
-    <s:String x:Key="LangPageOtherAboutLawInfoTelemetryTitle">匿名数据收集</s:String>
-    <s:String x:Key="LangPageOtherAboutLawInfoTelemetryContent">当下载失败、PCL 出错、游戏崩溃等事件时，PCL 会匿名上报信息，以通知龙猫 “哦吼，出错了”，让龙猫能更好地修 Bug……（PCL 不会上传或收集任何个人信息，包括上报的东西里面也没有！）
-你可以在 设置 → 其他 → 启动器 中关闭上报，不过龙猫就不知道你遇到了什么 Bug 了……</s:String>
+    <s:String x:Key="LangPageOtherAboutLawInfoTelemetryTitle">Ανώνυμη τηλεμετρία</s:String>
+    <s:String x:Key="LangPageOtherAboutLawInfoTelemetryContent">Όταν μια λήψη αποτύχει, το PCL εμφανίζει ένα σφάλμα ή το παιχνίδι καταρρέει, το PCL θα στείλει ανώνυμα τηλεμετρικά μηνύματα για να ειδοποιήσει το LTCat ("ωχ, κάτι πήγε στραβά"), ώστε το LTCat να μπορεί να διορθώσει σφάλματα πιο αποτελεσματικά. (Το PCL δεν ανεβάζει ούτε συλλέγει προσωπικά στοιχεία—καμία από τις τηλεμετρίες δεν περιέχει καμία.)
+Μπορείτε να απενεργοποιήσετε την τηλεμετρία στις "Ρυθμίσεις → Διάφορα → Εκκίνηση", αλλά στη συνέχεια το LTCat δεν θα γνωρίζει ποια σφάλματα έχετε αντιμετωπίσει.</s:String>
     <s:String x:Key="LangPageOtherAboutLawInfoPrivacyTitle">Δήλωση Απορρήτου</s:String>
     <s:String x:Key="LangPageOtherAboutLawInfoPrivacyContent">Ο παράγοντας χρήστη του λογισμικού περιλαμβάνει τον αριθμό έκδοσης για σκοπούς ποσοτικών στατιστικών.
 Επιπλέον, το λογισμικό δεν θα ανεβάσει άλλες πληροφορίες.</s:String>
@@ -961,6 +966,8 @@ Email για Αναφορά Παράνομης και Παράτυπης Συμ�
 Είναι καλύτερο να βάζετε εισαγωγικά (") γύρω από λειτουργίες που περιλαμβάνουν μονοπάτια για να αποφύγετε αστοχίες λόγω διαστημάτων στη διαδρομή.
 Κατά την εκτέλεση μιας εντολής, ο κατάλογος όπου βρίσκεται η Γραμμή εντολών είναι ο τρέχων φάκελος .minecraft.</s:String>
     <s:String x:Key="LangPageSetupLaunchLaunchAdvanceOptionsCommandStartWaitForCommand">Περιμένετε να ολοκληρωθεί</s:String>
+    <s:String x:Key="LangPageSetupLaunchLaunchAdvanceOptionsPreventUpdateMod">禁止更新 Mod</s:String>
+    <s:String x:Key="LangPageSetupLaunchLaunchAdvanceOptionsPreventUpdateModToolTip">禁止为此版本更新 Mod，以防止整合包玩家误操作</s:String>
     <s:String x:Key="LangPageSetupLaunchLaunchAdvanceOptionsIgnoreJavaCompatibility">Αγνοήστε τη Συμβατότητα Java</s:String>
     <s:String x:Key="LangPageSetupLaunchLaunchAdvanceOptionsIgnoreJavaCompatibilityToolTip">Προειδοποίηση: Συνιστάται ιδιαίτερα η απενεργοποίηση των προειδοποιήσεων μεμονωμένα αντί καθολικά!
 Εάν η Java που δεν είναι συμβατή με την τρέχουσα έκδοση επιλεγεί χειροκίνητα στις ρυθμίσεις, τότε η προειδοποίηση συμβατότητας θα παραλειφθεί αυτόματα και θα αναγκαστεί να χρησιμοποιηθεί η επιλεγμένη Java.</s:String>
@@ -974,6 +981,7 @@ Email για Αναφορά Παράνομης και Παράτυπης Συμ�
     <s:String x:Key="LangPageSetupLaunchLaunchAdvanceOptionsGPUPerfence">要求 Java 使用高性能显卡</s:String>
     <s:String x:Key="LangPageSetupLaunchLaunchAdvanceOptionsGPUPerfenceToolTip">自动在 Windows 设置 → 系统 → 屏幕 → 显示卡 中将 Java 改为使用高性能显卡。
 如果电脑同时有集显和独显，这能确保 MC 使用独显进行渲染，以大幅提高性能。</s:String>
+    <s:String x:Key="LangPageSetupLaunchLaunchAdvanceOptionsMoreTips">版本独立设置中还有更多高级选项可供调整。</s:String>
     <s:String x:Key="LangPageSetupLaunchGotoVersionSetting">版本独立设置</s:String>
     <s:String x:Key="LangPageSetupLaunchReloadByError">Υπάρχει εξαίρεση στις επιλογές εκκίνησης και έχει γίνει αυτόματη επαναφορά.</s:String>
     <s:String x:Key="LangPageSetupLaunchReloadFail">Παρουσιάστηκε σφάλμα κατά την επαναφόρτωση των επιλογών εκκίνησης.</s:String>
@@ -1060,6 +1068,11 @@ Email για Αναφορά Παράνομης και Παράτυπης Συμ�
     <s:String x:Key="LangPageSetupSystemSystemCacheFolderToolTip">Τοποθεσία της προσωρινής μνήμης, όπως τα αρχεία λήψης και τα skins που αποθηκεύονται από το PCL.
 Δεν συνιστώνται θέσεις σε μονοπάτια.
 Αφήστε κενό ως προεπιλογή, απαιτείται επανεκκίνηση του προγράμματος εκκίνησης για εφαρμογή.</s:String>
+    <s:String x:Key="LangPageSetupSystemSystemTelemetry">匿名数据收集</s:String>
+    <s:String x:Key="LangPageSetupSystemSystemTelemetryToolTip">当下载失败、PCL 出错、游戏崩溃等事件时，PCL 会匿名上报情况，以通知龙猫 “哦吼，出错了”，让龙猫能更好地修 Bug……
+你可以关闭上报，不过龙猫就不知道你遇到了什么 Bug 了……
+PCL 不会上传或收集任何个人信息，包括上报的东西里面也没有！
+详情：https://github.com/Meloong-Git/PCL/discussions/7036</s:String>
     <s:String x:Key="LangPageSetupSystemSystemCheckUpdate">Ελέγξτε για Ενημερώσεις</s:String>
     <s:String x:Key="LangPageSetupSystemLang">Γλώσσα</s:String>
     <s:String x:Key="LangPageSetupSystemLangLaunchLang">Γλώσσα</s:String>
@@ -2144,7 +2157,7 @@ URL: {0}</s:String>
 
 {1}</s:String>
     <s:String x:Key="LangPageVersionExportSelectExportPath">选择导出位置</s:String>
-    <s:String x:Key="LangPageVersionExportSelectExportPathSaveAsFormat">整合包文件(*{0})|*{1}</s:String>
+    <s:String x:Key="LangPageVersionExportSelectExportModpackFile">整合包文件(*{0})|*{1}</s:String>
     <s:String x:Key="LangPageVersionExportTaskDownloadPCL">下载 PCL 正式版</s:String>
     <s:String x:Key="LangPageVersionExportTaskCopyFiles">复制导出内容</s:String>
     <s:String x:Key="LangPageVersionExportHintFolderInConfigNotFound">未找到配置文件中指定的文件夹：{0}</s:String>

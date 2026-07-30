@@ -1,5 +1,6 @@
 ﻿Public Class MyComboBox
     Inherits ComboBox
+    Implements ISettingControl
     Public Event TextChanged(sender As Object, e As TextChangedEventArgs)
 
     '基础
@@ -30,7 +31,7 @@
             End If
             If HintText.Length > 0 Then TextBox.HintText = HintText
         Catch ex As Exception
-            Log(ex, "初始化可编辑文本框失败（" & If(Name, "") & "）", LogLevel.Feedback)
+            Logger.Error(ex, $"初始化可编辑文本框失败（{If(Name, "")}）")
         End Try
     End Sub
     Private _Text As String = SelectedItem
@@ -115,7 +116,7 @@
         Try
             CType(Template.FindName("PanPopup", Me), Grid).Opacity = FrmMain.Opacity
         Catch ex As Exception
-            Log(ex, "设置下拉框透明度失败", LogLevel.Feedback)
+            Logger.Error(ex, "设置下拉框透明度失败")
         End Try
     End Sub
     Private Sub MyComboBox_DropDownClosed(sender As Object, e As EventArgs) Handles Me.DropDownClosed
@@ -145,5 +146,36 @@
     Private Sub MyComboBox_SelectionChanged(sender As Object, e As SelectionChangedEventArgs) Handles Me.SelectionChanged
         If IsLoaded AndAlso AniControlEnabled = 0 Then RaiseCustomEvent()
     End Sub
+
+#Region "设置"
+
+    Private Sub RefreshSetting(NewValue As String) Implements ISettingControl.RefreshSetting
+        Dim TargetItem = Items.OfType(Of DependencyObject)().FirstOrDefault(Function(i) Val(If(SettingService.GetValue(i), -1)) = NewValue)
+        If TargetItem IsNot Nothing Then
+            SelectedItem = TargetItem
+        ElseIf Items.Count > NewValue Then
+            SelectedIndex = NewValue
+        Else
+            Logger.Warn($"尝试显示设置 {SettingService.GetKey(Me)}，但没有找到设置值 {NewValue} 的对应项")
+            SelectedIndex = -1
+            SelectedItem = Nothing
+        End If
+    End Sub
+
+    Private Function GetCurrentSetting() As String Implements ISettingControl.GetCurrentSetting
+        If SelectedItem Is Nothing Then Return Nothing
+        If TypeOf SelectedItem Is DependencyObject Then
+            Return If(SettingService.GetValue(SelectedItem), SelectedIndex)
+        Else
+            Return SelectedIndex
+        End If
+    End Function
+
+    Private Sub SaveSetting() Handles Me.SelectionChanged
+        If SelectedItem Is Nothing Then Return
+        SettingService.SaveSetting(Me)
+    End Sub
+
+#End Region
 
 End Class

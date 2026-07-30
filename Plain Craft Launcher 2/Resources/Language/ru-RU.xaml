@@ -1,4 +1,7 @@
-﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:s="clr-namespace:System;assembly=mscorlib" xml:space="preserve">
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:s="clr-namespace:System;assembly=mscorlib"
+        xml:space="preserve">
     <s:String x:Key="LangTaskAbort">Отменено!</s:String>
     <s:String x:Key="LangDialogBtnOK">ОК</s:String>
     <s:String x:Key="LangDialogBtnCancel">Отмена</s:String>
@@ -8,6 +11,9 @@
     <s:String x:Key="LangDialogBtnContinue">Продолжить</s:String>
     <s:String x:Key="LangComma">, </s:String>
     <s:String x:Key="LangColon">: </s:String>
+    <s:String x:Key="LangSeparator">, </s:String>
+    <s:String x:Key="LangConjunctiveCoordinator">и</s:String>
+    <s:String x:Key="LangDisjunctiveCoordinator">или</s:String>
     <s:String x:Key="LangSaveAs">Выбрать место сохранения</s:String>
     <s:String x:Key="LangSaveAsFile">文件</s:String>
     <s:String x:Key="LangReset">重置</s:String>
@@ -572,7 +578,7 @@ PCL рекомендует включить опцию "Изоляция экз�
     <s:String x:Key="LangDownloadModpackTypeTech">Технологии</s:String>
     <s:String x:Key="LangDownloadModpackTypeMagic">Магия</s:String>
     <s:String x:Key="LangDownloadModpackTypeAdventure">Приключение</s:String>
-    <s:String x:Key="LangDownloadModpackTypeCook">Кухонный унитаз</s:String>
+    <s:String x:Key="LangDownloadModpackTypeSink">Кухонный унитаз</s:String>
     <s:String x:Key="LangDownloadModpackTypeExplore">Исследование</s:String>
     <s:String x:Key="LangDownloadModpackTypeGame">Мини-игры</s:String>
     <s:String x:Key="LangDownloadModpackTypeScienceFiction">Научная фантастика</s:String>
@@ -808,7 +814,6 @@ PCL рекомендует включить опцию "Изоляция экз�
     <s:String x:Key="LangPageOtherDialogFeedbackBtn2">Список обратной связи</s:String>
     <s:String x:Key="LangPageOtherDialogVoteContent">Хотите открыть страницу голосования за новые функции?</s:String>
     <s:String x:Key="LangPageOtherDialogVoteTitle">Подсказка</s:String>
-    <s:String x:Key="LangPageOtherDialogVoteBtn1">Открыть</s:String>
     <s:String x:Key="LangPageOtherAboutAbout">О нас</s:String>
     <s:String x:Key="LangPageOtherAboutAboutAuthor">LTCat (龙腾猫跃)</s:String>
     <s:String x:Key="LangPageOtherAboutAboutAuthorSubtitle">Разработчик Plain Craft Launcher!</s:String>
@@ -961,6 +966,8 @@ PCL рекомендует включить опцию "Изоляция экз�
 Лучше всего заключать в кавычки (") операции с путями, чтобы избежать сбоев из-за пробелов в пути.
 При выполнении команды текущей папкой является папка .minecraft, в которой находится Командная строка.</s:String>
     <s:String x:Key="LangPageSetupLaunchLaunchAdvanceOptionsCommandStartWaitForCommand">Ожидать завершения</s:String>
+    <s:String x:Key="LangPageSetupLaunchLaunchAdvanceOptionsPreventUpdateMod">禁止更新 Mod</s:String>
+    <s:String x:Key="LangPageSetupLaunchLaunchAdvanceOptionsPreventUpdateModToolTip">禁止为此版本更新 Mod，以防止整合包玩家误操作</s:String>
     <s:String x:Key="LangPageSetupLaunchLaunchAdvanceOptionsIgnoreJavaCompatibility">Игнорировать предупреждения совместимости Java</s:String>
     <s:String x:Key="LangPageSetupLaunchLaunchAdvanceOptionsIgnoreJavaCompatibilityToolTip">Предупреждение: Рекомендуется отключать предупреждения индивидуально, а не глобально!
 Если в настройках вручную выбрана Java, несовместимая с текущей версией, то предупреждение о совместимости будет пропущено автоматически и будет использоваться выбранная Java.</s:String>
@@ -974,6 +981,7 @@ PCL рекомендует включить опцию "Изоляция экз�
     <s:String x:Key="LangPageSetupLaunchLaunchAdvanceOptionsGPUPerfence">要求 Java 使用高性能显卡</s:String>
     <s:String x:Key="LangPageSetupLaunchLaunchAdvanceOptionsGPUPerfenceToolTip">自动在 Windows 设置 → 系统 → 屏幕 → 显示卡 中将 Java 改为使用高性能显卡。
 如果电脑同时有集显和独显，这能确保 MC 使用独显进行渲染，以大幅提高性能。</s:String>
+    <s:String x:Key="LangPageSetupLaunchLaunchAdvanceOptionsMoreTips">版本独立设置中还有更多高级选项可供调整。</s:String>
     <s:String x:Key="LangPageSetupLaunchGotoVersionSetting">版本独立设置</s:String>
     <s:String x:Key="LangPageSetupLaunchReloadByError">В параметрах запуска произошла ошибка, и они были автоматически сброшены.</s:String>
     <s:String x:Key="LangPageSetupLaunchReloadFail">Произошла ошибка при перезагрузке параметров запуска.</s:String>
@@ -1060,6 +1068,11 @@ PCL рекомендует включить опцию "Изоляция экз�
     <s:String x:Key="LangPageSetupSystemSystemCacheFolderToolTip">Расположение кэша, например, файлов загрузки и скинов, хранимых PCL.
 Не рекомендуется использовать пути с пробелами.
 По умолчанию оставить пустым, требуется перезапуск запускателя для применения.</s:String>
+    <s:String x:Key="LangPageSetupSystemSystemTelemetry">匿名数据收集</s:String>
+    <s:String x:Key="LangPageSetupSystemSystemTelemetryToolTip">当下载失败、PCL 出错、游戏崩溃等事件时，PCL 会匿名上报情况，以通知龙猫 “哦吼，出错了”，让龙猫能更好地修 Bug……
+你可以关闭上报，不过龙猫就不知道你遇到了什么 Bug 了……
+PCL 不会上传或收集任何个人信息，包括上报的东西里面也没有！
+详情：https://github.com/Meloong-Git/PCL/discussions/7036</s:String>
     <s:String x:Key="LangPageSetupSystemSystemCheckUpdate">Проверить обновления</s:String>
     <s:String x:Key="LangPageSetupSystemLang">Язык</s:String>
     <s:String x:Key="LangPageSetupSystemLangLaunchLang">Язык</s:String>
@@ -2144,7 +2157,7 @@ URL: {0}</s:String>
 
 {1}</s:String>
     <s:String x:Key="LangPageVersionExportSelectExportPath">选择导出位置</s:String>
-    <s:String x:Key="LangPageVersionExportSelectExportPathSaveAsFormat">整合包文件(*{0})|*{1}</s:String>
+    <s:String x:Key="LangPageVersionExportSelectExportModpackFile">整合包文件(*{0})|*{1}</s:String>
     <s:String x:Key="LangPageVersionExportTaskDownloadPCL">下载 PCL 正式版</s:String>
     <s:String x:Key="LangPageVersionExportTaskCopyFiles">复制导出内容</s:String>
     <s:String x:Key="LangPageVersionExportHintFolderInConfigNotFound">未找到配置文件中指定的文件夹：{0}</s:String>

@@ -5,23 +5,12 @@ Public Class PageLaunchRight
 
     Private Sub Init() Handles Me.Loaded
         PanBack.ScrollToHome()
-        PanLog.Visibility = If(ModeDebug, Visibility.Visible, Visibility.Collapsed)
+        PanLog.Visibility = ModeDebug.ToVisibility
         '快照版提示
-#If BETA Then
-        PanHint.Visibility = Visibility.Collapsed
-#Else
-        PanHint.Visibility = If(ThemeCheckGold(), Visibility.Collapsed, Visibility.Visible)
-        LabHint1.Text = GetLang("LangLaunchRightLabHint1")
-        LabHint2.Text = GetLang("LangLaunchRightLabHint2")
-#End If
+        PanHint.Visibility =
+            (BuildType <> BuildTypes.Release AndAlso VersionBranchMain = "Official" AndAlso
+             CurrentRank < DonationRank.Rank23 AndAlso Not Settings.Get(Of Boolean)("HintSnapshot")).ToVisibility
     End Sub
-
-    '暂时关闭快照版提示
-#If Not BETA Then
-    Private Sub BtnHintClose_Click(sender As Object, e As EventArgs) Handles BtnHintClose.Click
-        AniDispose(PanHint, True)
-    End Sub
-#End If
 
 #Region "主页"
 
@@ -36,25 +25,25 @@ Public Class PageLaunchRight
                     RefreshReal()
                 End SyncLock
             Catch ex As Exception
-                Log(ex, "加载 PCL 主页自定义信息失败", If(ModeDebug, LogLevel.Msgbox, LogLevel.Hint))
+                Logger.Error(ex, "加载 PCL 主页自定义信息失败", If(ModeDebug, LogBehavior.Alert, LogBehavior.Toast))
             End Try
         End Sub)
     End Sub
     Private Sub RefreshReal()
         Dim Content As String = Nothing, Url As String = Nothing
-        Select Case Setup.Get("UiCustomType")
+        Select Case Settings.Get(Of Integer)("UiCustomType")
             Case 1
                 '加载本地文件
-                Log("[Page] 主页自定义数据来源：本地文件")
-                Content = ReadFile(Path & "PCL\Custom.xaml") 'ReadFile 会进行存在检测
+                Logger.Info("主页自定义数据来源：本地文件")
+                Content = FileUtils.TryReadAsString(PathExeFolder & "PCL\Custom.xaml")
             Case 2
                 '联网下载
-                Url = Setup.Get("UiCustomNet")
+                Url = Settings.Get(Of String)("UiCustomNet")
             Case 3
                 '预设
-                Select Case Setup.Get("UiCustomPreset")
+                Select Case Settings.Get(Of Integer)("UiCustomPreset")
                     Case 0
-                        Log("[Page] 主页预设：你知道吗")
+                        Logger.Info("主页预设：你知道吗")
                         Content = "
                             <local:MyCard Title=""{StaticResource LangLaunchRightPageTips}"" Margin=""0,0,0,15"">
                                 <TextBlock Margin=""25,38,23,15"" FontSize=""13.5"" IsHitTestVisible=""False"" Text=""{hint}"" TextWrapping=""Wrap"" Foreground=""{DynamicResource ColorBrush1}"" />
@@ -63,7 +52,7 @@ Public Class PageLaunchRight
                                     Logo=""M875.52 148.48C783.36 56.32 655.36 0 512 0 291.84 0 107.52 138.24 30.72 332.8l122.88 46.08C204.8 230.4 348.16 128 512 128c107.52 0 199.68 40.96 271.36 112.64L640 384h384V0L875.52 148.48zM512 896c-107.52 0-199.68-40.96-271.36-112.64L384 640H0v384l148.48-148.48C240.64 967.68 368.64 1024 512 1024c220.16 0 404.48-138.24 481.28-332.8L870.4 645.12C819.2 793.6 675.84 896 512 896z"" />
                             </local:MyCard>"
                     Case 1
-                        Log("[Page] 主页预设：回声洞")
+                        Logger.Info("主页预设：回声洞")
                         Content = "
                             <local:MyCard Title=""{StaticResource LangLaunchRightPageEcho}"" Margin=""0,0,0,15"">
                                 <TextBlock Margin=""25,38,23,15"" FontSize=""13.5"" IsHitTestVisible=""False"" Text=""{cave}"" TextWrapping=""Wrap"" Foreground=""{DynamicResource ColorBrush1}"" />
@@ -72,64 +61,67 @@ Public Class PageLaunchRight
                                     Logo=""M875.52 148.48C783.36 56.32 655.36 0 512 0 291.84 0 107.52 138.24 30.72 332.8l122.88 46.08C204.8 230.4 348.16 128 512 128c107.52 0 199.68 40.96 271.36 112.64L640 384h384V0L875.52 148.48zM512 896c-107.52 0-199.68-40.96-271.36-112.64L384 640H0v384l148.48-148.48C240.64 967.68 368.64 1024 512 1024c220.16 0 404.48-138.24 481.28-332.8L870.4 645.12C819.2 793.6 675.84 896 512 896z"" />
                             </local:MyCard>"
                     Case 2
-                        Log("[Page] 主页预设：Minecraft 新闻")
+                        Logger.Info("主页预设：Minecraft 新闻")
                         Url = "https://mcnews.meloong.com"
                     Case 3
-                        Log("[Page] 主页预设：简单主页")
+                        Logger.Info("主页预设：简单主页")
                         Url = "https://pclhomeplazaoss.lingyunawa.top:26994/d/Homepages/MFn233/Custom.xaml"
                     Case 4
-                        Log("[Page] 主页预设：每日整合包推荐")
+                        Logger.Info("主页预设：每日整合包推荐")
                         Url = "https://pclsub.sodamc.com/"
                     Case 5
-                        Log("[Page] 主页预设：Minecraft 皮肤推荐")
+                        Logger.Info("主页预设：Minecraft 皮肤推荐")
                         Url = "https://forgepixel.com/pcl_sub_file"
                     Case 6
-                        Log("[Page] 主页预设：OpenBMCLAPI 仪表盘 Lite")
+                        Logger.Info("主页预设：OpenBMCLAPI 仪表盘 Lite")
                         Url = "https://pcl-bmcl.milu.ink/"
                     Case 7
-                        Log("[Page] 主页预设：主页市场")
-                        Url = "https://pclhomeplazaoss.lingyunawa.top:26994/d/Homepages/JingHai-Lingyun/Custom.xaml"
+                        Logger.Info("主页预设：主页市场")
+                        Url = "https://pclhomeplazaoss.lingyunawa.top:26994/p/Homepages/Homepage.Market/Custom.xaml"
                     Case 8
-                        Log("[Page] 主页预设：更新日志")
+                        Logger.Info("主页预设：更新日志")
                         Url = "https://pclhomeplazaoss.lingyunawa.top:26994/d/Homepages/Joker2184/UpdateHomepage.xaml"
                     Case 9
-                        Log("[Page] 主页预设：PCL 新功能说明书")
+                        Logger.Info("主页预设：PCL 新功能说明书")
                         Url = "https://raw.gitcode.com/WForst-Breeze/WhatsNewPCL/raw/main/Custom.xaml"
                     Case 10
-                        Log("[Page] 主页预设：OpenMCIM Dashboard")
+                        Logger.Info("主页预设：OpenMCIM Dashboard")
                         Url = "https://files.mcimirror.top/PCL"
                     Case 11
-                        Log("[Page] 主页预设：杂志主页")
-                        Url = "https://pclhomeplazaoss.lingyunawa.top:26994/d/Homepages/Ext1nguisher/Custom.xaml"
+                        Logger.Info("主页预设：杂志主页")
+                        Url = "http://118.195.192.193:26995/d/magazine-homepage-pcl/Custom.xaml"
                     Case 12
-                        Log("[Page] 主页预设：PCL GitHub 仪表盘")
-                        Url = "https://ddf.pcl-community.org/Custom.xaml"
+                        Logger.Info("主页预设：PCL GitHub 仪表盘")
+                        Url = "https://ddf.pcl-community.top/Custom.xaml"
                     Case 13
-                        Log("[Page] 主页预设：PCL 更新摘要")
+                        Logger.Info("主页预设：PCL 更新摘要")
                         Url = "https://raw.gitcode.com/ENC_Euphony/PCL-AI-Summary-HomePage/raw/master/Custom.xaml"
                     Case 14
-                        Log("[Page] 主页预设：今日新闻热点")
+                        Logger.Info("主页预设：今日新闻热点")
                         Url = "https://pcl.wyc-w.top/index.xaml"
                     Case 15
-                        Log("[Page] 主页预设：Minecraft 芝士站")
+                        Logger.Info("主页预设：Minecraft 芝士站")
                         Url = "https://www.xxag.top/mkss"
+                    Case 16
+                        Logger.Info("主页预设：整合包推荐引擎")
+                        Url = "https://qawsedrftgyhujiko.fun/pcl2/Custom.xaml"
                 End Select
         End Select
         '联网下载
         If Not String.IsNullOrWhiteSpace(Url) Then
-            If Url = Setup.Get("CacheSavedPageUrl") AndAlso File.Exists(PathTemp & "Cache\Custom.xaml") Then
+            If Url = Settings.Get(Of String)("CacheSavedPageUrl") AndAlso FileUtils.Exists(PathTemp & "Cache\Custom.xaml") Then
                 '缓存可用
-                Log("[Page] 主页自定义数据来源：联网缓存文件")
-                Content = ReadFile(PathTemp & "Cache\Custom.xaml")
+                Logger.Info("主页自定义数据来源：联网缓存文件")
+                Content = FileUtils.TryReadAsString(PathTemp & "Cache\Custom.xaml")
                 '后台更新缓存
-                OnlineLoader.Start(New Tuple(Of String, Boolean)(Url, False))
+                OnlineLoader.Start((Url, False))
             Else
                 '缓存不可用
-                Log("[Page] 主页自定义数据来源：联网全新下载")
+                Logger.Info("主页自定义数据来源：联网全新下载")
                 Hint("正在加载主页……")
                 RunInUiWait(Sub() LoadContent(Nothing)) '在加载结束前清空页面
-                Setup.Set("CacheSavedPageVersion", "")
-                OnlineLoader.Start(New Tuple(Of String, Boolean)(Url, True)) '下载完成后将会再次触发更新
+                Settings.Set("CacheSavedPageVersion", "")
+                OnlineLoader.Start((Url, True)) '下载完成后将会再次触发更新
                 Return
             End If
         End If
@@ -139,10 +131,10 @@ Public Class PageLaunchRight
     Private RefreshLock As New Object
 
     '联网获取主页文件
-    Private OnlineLoader As New LoaderTask(Of Tuple(Of String, Boolean), Integer)("下载主页", AddressOf OnlineLoaderSub) With {.ReloadTimeout = 10 * 60 * 1000}
-    Private Sub OnlineLoaderSub(Task As LoaderTask(Of Tuple(Of String, Boolean), Integer))
-        Dim Address As String = Task.Input.Item1 '#3721 中连续触发两次导致内容变化
-        Dim ShouldRefresh As Boolean = Task.Input.Item2
+    Private OnlineLoader As New LoaderTask(Of (Address As String, ShouldRefresh As Boolean), Integer)("下载主页", AddressOf OnlineLoaderSub) With {.ReloadTimeout = 10 * 60 * 1000}
+    Private Sub OnlineLoaderSub(Task As LoaderTask(Of (Address As String, ShouldRefresh As Boolean), Integer))
+        Dim Address As String = Task.Input.Address '#3721 中连续触发两次导致内容变化
+        Dim ShouldRefresh As Boolean = Task.Input.ShouldRefresh
         Try
             '替换自定义变量与设置
             Address = ArgumentReplace(Address, AddressOf WebUtility.HtmlEncode)
@@ -152,7 +144,7 @@ Public Class PageLaunchRight
                 VersionAddress = Address.Replace(".xaml", ".xaml.ini")
             Else
                 VersionAddress = Address.BeforeFirst("?")
-                If Not VersionAddress.EndsWith("/") Then VersionAddress += "/"
+                If Not VersionAddress.EndsWithF("/") Then VersionAddress += "/"
                 VersionAddress += "version"
                 If Address.Contains("?") Then VersionAddress += "?" & Address.AfterFirst("?")
             End If
@@ -161,26 +153,26 @@ Public Class PageLaunchRight
             Try
                 Version = NetRequestByClientRetry(VersionAddress)
                 If Version.Length > 1000 Then Throw New Exception($"获取的主页版本过长（{Version.Length} 字符）")
-                Dim CurrentVersion As String = Setup.Get("CacheSavedPageVersion")
+                Dim CurrentVersion As String = Settings.Get(Of String)("CacheSavedPageVersion")
                 If Version <> "" AndAlso CurrentVersion <> "" AndAlso Version = CurrentVersion Then
-                    Log($"[Page] 当前缓存的主页已为最新，当前版本：{Version}，检查源：{VersionAddress}")
+                    Logger.Info($"当前缓存的主页已为最新，当前版本：{Version}，检查源：{VersionAddress}")
                     Return
                 End If
-                Log($"[Page] 需要下载联网主页，当前版本：{Version}，检查源：{VersionAddress}")
+                Logger.Info($"需要下载联网主页，当前版本：{Version}，检查源：{VersionAddress}")
             Catch exx As Exception
-                Log(exx, $"联网获取主页版本失败", LogLevel.Developer)
-                Log($"[Page] 无法检查联网主页版本，将直接下载，检查源：{VersionAddress}")
+                Logger.Warn(exx, $"联网获取主页版本失败")
+                Logger.Info($"无法检查联网主页版本，将直接下载，检查源：{VersionAddress}")
             End Try
             '实际下载
             Dim FileContent As String = NetRequestByClientRetry(Address)
-            Log($"[Page] 已联网下载主页，内容长度：{FileContent.Length}，来源：{Address}")
-            Setup.Set("CacheSavedPageUrl", Address)
-            Setup.Set("CacheSavedPageVersion", Version)
-            WriteFile(PathTemp & "Cache\Custom.xaml", FileContent)
+            Logger.Info($"已联网下载主页，内容长度：{FileContent.Length}，来源：{Address}")
+            Settings.Set("CacheSavedPageUrl", Address)
+            Settings.Set("CacheSavedPageVersion", Version)
+            FileUtils.Write(PathTemp & "Cache\Custom.xaml", FileContent)
             '若内容变更则要求刷新
-            If LoadedContentHash <> FileContent.GetHashCode() AndAlso ShouldRefresh Then Refresh()
+            If LoadedContentHash <> FileContent.GetStableHashCode() AndAlso ShouldRefresh Then Refresh()
         Catch ex As Exception
-            Log(ex, $"下载主页失败（{Address}）", If(ModeDebug, LogLevel.Msgbox, LogLevel.Hint))
+            Logger.Error(ex, $"下载主页失败（{Address}）", If(ModeDebug, LogBehavior.Alert, LogBehavior.Toast))
         End Try
     End Sub
 
@@ -189,7 +181,7 @@ Public Class PageLaunchRight
     ''' 必须在 UI 线程调用。
     ''' </summary>
     Public Sub ForceRefresh() Implements IRefreshable.Refresh
-        Log("[Page] 要求强制刷新主页")
+        Logger.Info("要求强制刷新主页")
         ClearCache()
         '实际的刷新
         If FrmMain.PageCurrent.Page = FormMain.PageType.Launch Then
@@ -204,11 +196,11 @@ Public Class PageLaunchRight
     ''' 清空主页缓存信息。
     ''' </summary>
     Private Sub ClearCache()
-        LoadedContentHash = -1
-        OnlineLoader.Input = New Tuple(Of String, Boolean)("", True)
-        Setup.Set("CacheSavedPageUrl", "")
-        Setup.Set("CacheSavedPageVersion", "")
-        Log("[Page] 已清空主页缓存")
+        LoadedContentHash = Nothing
+        OnlineLoader.Input = ("", True)
+        Settings.Set("CacheSavedPageUrl", "")
+        Settings.Set("CacheSavedPageVersion", "")
+        Logger.Info("已清空主页缓存")
     End Sub
 
     ''' <summary>
@@ -219,31 +211,31 @@ Public Class PageLaunchRight
         Try
             SyncLock LoadContentLock
                 '如果加载目标内容一致则不加载
-                Dim Hash = If(Content, "").GetHashCode()
+                Dim Hash = If(Content, "").GetStableHashCode()
                 If Hash = LoadedContentHash Then Return
                 LoadedContentHash = Hash
                 '实际加载内容
                 PanCustom.Children.Clear()
                 If String.IsNullOrWhiteSpace(Content) Then
-                    Log($"[Page] 实例化：清空主页 UI，来源为空")
+                    Logger.Info($"实例化：清空主页 UI，来源为空")
                     Return
                 End If
                 Dim LoadStartTime As Date = Date.Now
                 '修改时应同时修改 PageOtherHelpDetail.Init
-                Content = ArgumentReplace(Content, AddressOf EscapeXML)
+                Content = ArgumentReplace(Content, AddressOf EscapeUtils.XmlEscape)
                 Do While Content.Contains("xmlns")
                     Content = Content.RegexReplace("xmlns[^""']*(""|')[^""']*(""|')", "").Replace("xmlns", "") '禁止声明命名空间
                 Loop
-                Content = "<StackPanel xmlns=""http://schemas.microsoft.com/winfx/2006/xaml/presentation"" xmlns:sys=""clr-namespace:System;assembly=mscorlib"" xmlns:x=""http://schemas.microsoft.com/winfx/2006/xaml"" xmlns:local=""clr-namespace:PCL;assembly=Plain Craft Launcher 2"">" & Content & "</StackPanel>"
-                Log($"[Page] 实例化：加载主页 UI 开始，最终内容长度：{Content.Count}")
+                Content = "<StackPanel xmlns=""http://schemas.microsoft.com/winfx/2006/xaml/presentation"" xmlns:sys=""clr-namespace:System;assembly=mscorlib"" xmlns:x=""http://schemas.microsoft.com/winfx/2006/xaml"" xmlns:local=""clr-namespace:PCL;assembly=Plain Craft Launcher 2"" xmlns:core=""clr-namespace:MeloongCore;assembly=MeloongCore"" xmlns:corewpf=""clr-namespace:MeloongCore.Wpf;assembly=MeloongCore.Wpf"">" & Content & "</StackPanel>"
+                Logger.Info($"实例化：加载主页 UI 开始，最终内容长度：{Content.Count}")
                 PanCustom.Children.Add(GetObjectFromXML(Content))
                 '加载计时
                 Dim LoadCostTime = (Date.Now - LoadStartTime).Milliseconds
-                Log($"[Page] 实例化：加载主页 UI 完成，耗时 {LoadCostTime}ms")
+                Logger.Info($"实例化：加载主页 UI 完成，耗时 {LoadCostTime}ms")
                 If LoadCostTime > 3000 Then Hint($"主页加载过于缓慢（花费了 {Math.Round(LoadCostTime / 1000, 1)} 秒），请向主页作者反馈此问题，或暂时停止使用该主页")
             End SyncLock
         Catch ex As Exception
-            Log(ex, "加载失败的主页内容：" & vbCrLf & Content)
+            Logger.Warn(ex, $"加载失败的主页内容：{vbCrLf}{Content}")
             OnLoadContentFailed(ex)
         End Try
     End Sub
@@ -251,12 +243,12 @@ Public Class PageLaunchRight
     ''' 加载主页失败时调用。
     ''' </summary>
     Private Sub OnLoadContentFailed(ex As Exception)
-        If ModeDebug OrElse Setup.Get("UiCustomType") = 1 Then
-            Log(ex, "加载主页失败")
-            If MyMsgBox(If(TypeOf ex Is UnauthorizedAccessException, ex.Message, $"主页内容编写有误，请根据下列错误信息进行检查：{vbCrLf}{ex.GetBrief}"),
+        If ModeDebug OrElse Settings.Get(Of Integer)("UiCustomType") = 1 Then
+            Logger.Warn(ex, "加载主页失败")
+            If MyMsgBox(If(TypeOf ex Is UnauthorizedAccessException, ex.Message, $"主页内容编写有误，请根据下列错误信息进行检查：{vbCrLf}{ex.GetDisplay(False)}"),
                         "加载主页失败", "重试", "取消") = 1 Then ForceRefresh()
         Else
-            Log(ex, "加载主页失败", LogLevel.Hint)
+            Logger.Error(ex, "加载主页失败", LogBehavior.Toast)
         End If
     End Sub
     ''' <summary>
@@ -269,7 +261,7 @@ Public Class PageLaunchRight
         OnLoadContentFailed(e.Exception)
     End Sub
 
-    Private LoadedContentHash As Integer = -1
+    Private LoadedContentHash As ULong? = Nothing
     Private LoadContentLock As New Object
 
 #End Region

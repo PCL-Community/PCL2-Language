@@ -1,4 +1,7 @@
-﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:s="clr-namespace:System;assembly=mscorlib" xml:space="preserve">
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:s="clr-namespace:System;assembly=mscorlib"
+        xml:space="preserve">
     <s:String x:Key="LangTaskAbort">작업이 취소되었습니다!</s:String>
     <s:String x:Key="LangDialogBtnOK">확인</s:String>
     <s:String x:Key="LangDialogBtnCancel">취소</s:String>
@@ -6,8 +9,11 @@
     <s:String x:Key="LangDialogBtnYes">예</s:String>
     <s:String x:Key="LangDialogBtnNo">아니오</s:String>
     <s:String x:Key="LangDialogBtnContinue">계속</s:String>
-    <s:String x:Key="LangComma">，</s:String>
-    <s:String x:Key="LangColon">：</s:String>
+    <s:String x:Key="LangComma">, </s:String>
+    <s:String x:Key="LangColon">: </s:String>
+    <s:String x:Key="LangSeparator">, </s:String>
+    <s:String x:Key="LangConjunctiveCoordinator">및</s:String>
+    <s:String x:Key="LangDisjunctiveCoordinator">또는</s:String>
     <s:String x:Key="LangSaveAs">저장 위치 선택</s:String>
     <s:String x:Key="LangSaveAsFile">文件</s:String>
     <s:String x:Key="LangReset">重置</s:String>
@@ -568,7 +574,7 @@ PCL은 다운로드를 시작하기 전에 설정 → 버전 격리에서 버전
     <s:String x:Key="LangDownloadModpackTypeTech">기술</s:String>
     <s:String x:Key="LangDownloadModpackTypeMagic">마법</s:String>
     <s:String x:Key="LangDownloadModpackTypeAdventure">모험</s:String>
-    <s:String x:Key="LangDownloadModpackTypeCook">잡탕</s:String>
+    <s:String x:Key="LangDownloadModpackTypeSink">잡탕</s:String>
     <s:String x:Key="LangDownloadModpackTypeExplore">탐험</s:String>
     <s:String x:Key="LangDownloadModpackTypeGame">미니게임</s:String>
     <s:String x:Key="LangDownloadModpackTypeScienceFiction">공상과학</s:String>
@@ -804,7 +810,6 @@ PCL은 다운로드를 시작하기 전에 설정 → 버전 격리에서 버전
     <s:String x:Key="LangPageOtherDialogVoteContent">새 기능 투표 웹페이지를 열겠습니까?
 웹페이지를 열 수 없는 경우, 가속기나 VPN을 사용해 보십시오.</s:String>
     <s:String x:Key="LangPageOtherDialogVoteTitle">알림</s:String>
-    <s:String x:Key="LangPageOtherDialogVoteBtn1">열기</s:String>
     <s:String x:Key="LangPageOtherAboutAbout">정보</s:String>
     <s:String x:Key="LangPageOtherAboutAboutAuthor">LTCat（龙腾猫越）</s:String>
     <s:String x:Key="LangPageOtherAboutAboutAuthorSubtitle">Plain Craft Launcher의 저자!</s:String>
@@ -957,6 +962,8 @@ PCL은 다운로드를 시작하기 전에 설정 → 버전 격리에서 버전
 경로와 관련된 작업은 공백으로 인해 실행 실패를 방지하기 위해 항상 큰따옴표로 묶는 것이 좋습니다. 
 명령을 실행할 때 명령 프롬프트의 현재 디렉토리는 현재의 .minecraft 폴더입니다.</s:String>
     <s:String x:Key="LangPageSetupLaunchLaunchAdvanceOptionsCommandStartWaitForCommand">명령 실행이 완료될 때까지 계속 시작하지 않음</s:String>
+    <s:String x:Key="LangPageSetupLaunchLaunchAdvanceOptionsPreventUpdateMod">禁止更新 Mod</s:String>
+    <s:String x:Key="LangPageSetupLaunchLaunchAdvanceOptionsPreventUpdateModToolTip">禁止为此版本更新 Mod，以防止整合包玩家误操作</s:String>
     <s:String x:Key="LangPageSetupLaunchLaunchAdvanceOptionsIgnoreJavaCompatibility">Java 호환성 경고 무시</s:String>
     <s:String x:Key="LangPageSetupLaunchLaunchAdvanceOptionsIgnoreJavaCompatibilityToolTip">경고: 특정 버전의 경고를 여기서 모두 끄는 것보다 버전 설정에서 끄는 것이 강력히 권장됩니다! 
 설정에서 현재 버전과 호환되지 않는 Java를 수동으로 선택한 경우, 호환성 경고 팝업을 자동으로 건너뛰고 수동으로 선택한 Java를 강제로 사용합니다.</s:String>
@@ -970,6 +977,7 @@ assets를 완전히 변경하지 않으며, libraries, 제3자 로그인 라이�
     <s:String x:Key="LangPageSetupLaunchLaunchAdvanceOptionsGPUPerfence">要求 Java 使用高性能显卡</s:String>
     <s:String x:Key="LangPageSetupLaunchLaunchAdvanceOptionsGPUPerfenceToolTip">自动在 Windows 设置 → 系统 → 屏幕 → 显示卡 中将 Java 改为使用高性能显卡。
 如果电脑同时有集显和独显，这能确保 MC 使用独显进行渲染，以大幅提高性能。</s:String>
+    <s:String x:Key="LangPageSetupLaunchLaunchAdvanceOptionsMoreTips">版本独立设置中还有更多高级选项可供调整。</s:String>
     <s:String x:Key="LangPageSetupLaunchGotoVersionSetting">版本独立设置</s:String>
     <s:String x:Key="LangPageSetupLaunchReloadByError">시작 설정 항목에 예외가 발생하여 자동으로 재설정되었습니다.</s:String>
     <s:String x:Key="LangPageSetupLaunchReloadFail">시작 설정을 다시 로드하는 중 오류가 발생했습니다.</s:String>
@@ -1054,6 +1062,11 @@ assets를 완전히 변경하지 않으며, libraries, 제3자 로그인 라이�
     <s:String x:Key="LangPageSetupSystemSystemLaunchAnnouncementC">모든 공지 끄기</s:String>
     <s:String x:Key="LangPageSetupSystemSystemCacheFolder">캐시 폴더</s:String>
     <s:String x:Key="LangPageSetupSystemSystemCacheFolderToolTip">PCL의 다운로드, 스킨 등 캐시 파일 저장 위치입니다. 경로에 공백이 포함되지 않도록 권장합니다. 비워두면 기본값이 적용되며, PCL을 재시작한 후에 적용됩니다.</s:String>
+    <s:String x:Key="LangPageSetupSystemSystemTelemetry">匿名数据收集</s:String>
+    <s:String x:Key="LangPageSetupSystemSystemTelemetryToolTip">当下载失败、PCL 出错、游戏崩溃等事件时，PCL 会匿名上报情况，以通知龙猫 “哦吼，出错了”，让龙猫能更好地修 Bug……
+你可以关闭上报，不过龙猫就不知道你遇到了什么 Bug 了……
+PCL 不会上传或收集任何个人信息，包括上报的东西里面也没有！
+详情：https://github.com/Meloong-Git/PCL/discussions/7036</s:String>
     <s:String x:Key="LangPageSetupSystemSystemCheckUpdate">업데이트 확인</s:String>
     <s:String x:Key="LangPageSetupSystemLang">언어</s:String>
     <s:String x:Key="LangPageSetupSystemLangLaunchLang">런처 언어</s:String>
@@ -2133,7 +2146,7 @@ Forge를 다시 설치해 보세요. </s:String>
 
 {1}</s:String>
     <s:String x:Key="LangPageVersionExportSelectExportPath">选择导出位置</s:String>
-    <s:String x:Key="LangPageVersionExportSelectExportPathSaveAsFormat">整合包文件(*{0})|*{1}</s:String>
+    <s:String x:Key="LangPageVersionExportSelectExportModpackFile">整合包文件(*{0})|*{1}</s:String>
     <s:String x:Key="LangPageVersionExportTaskDownloadPCL">下载 PCL 正式版</s:String>
     <s:String x:Key="LangPageVersionExportTaskCopyFiles">复制导出内容</s:String>
     <s:String x:Key="LangPageVersionExportHintFolderInConfigNotFound">未找到配置文件中指定的文件夹：{0}</s:String>

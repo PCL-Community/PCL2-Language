@@ -1,4 +1,4 @@
-﻿Imports System.Globalization
+Imports System.Globalization
 Imports System.Windows.Forms
 
 Module Modi18n
@@ -15,13 +15,13 @@ Module Modi18n
             If String.IsNullOrWhiteSpace(Key) Then Throw New Exception("Key 值未提供;No key value provided")
             Return String.Format(Application.Current.FindResource(Key), Param)
         Catch ex As FormatException
-            Log(ex, $"[Location] 格式化文本失败：{Key};传入参数：{Param.Join(",")}", LogLevel.Hint)
+            Logger.Error(ex, $"[Location] 格式化文本失败：{Key};传入参数：{Param.Join(",")}", LogBehavior.Alert)
             Return Application.Current.FindResource(Key)
         Catch ex As ResourceReferenceKeyNotFoundException
-            Log(ex, $"[Location] 找不到对应的语言资源：{Key}")
+            Logger.Error(ex, $"[Location] 找不到对应的语言资源：{Key}")
             Return Key
         Catch ex As Exception
-            Log(ex, $"[Location] 获取语言资源失败：{Key}（{ex.Message}）", LogLevel.Hint)
+            Logger.Error(ex, $"[Location] 获取语言资源失败：{Key}（{ex.Message}）", LogBehavior.Alert)
             Return Key
         End Try
     End Function
@@ -74,7 +74,7 @@ Module Modi18n
         Try
             Application.Current.Resources("LaunchFontFamily") = Font
         Catch ex As Exception
-            Log(ex, "[Location] 切换字体失败，这可能导致界面显示异常", LogLevel.Msgbox)
+            Logger.Error(ex, "[Location] 切换字体失败，这可能导致界面显示异常", LogBehavior.Alert)
         End Try
     End Sub
 
@@ -169,6 +169,34 @@ Module Modi18n
             Return GetLang(Key, Param)
         Else
             Return GetLang(Key & "P", Param)
+        End If
+    End Function
+    
+    ''' <summary>
+    ''' 获取本地化的枚举列表
+    ''' </summary>
+    ''' <param name="Items">要格式化的文本集合</param>
+    ''' <param name="IsConjunctive">是否要使用合取连词（Conjunctive Coordinator，如：和、and），否则为析取连词（Disjunctive Coordinator，如：或、or）</param>
+    ''' <returns>格式化后的文本</returns>
+    Public Function GetLocalizedEnum(Items As IEnumerable(Of String), IsConjunctive As Boolean) As String
+        If Items Is Nothing Then Return ""
+
+        Dim arr = Items.Where(Function(x) x IsNot Nothing).ToArray()
+        Dim cnt = arr.Length
+
+        Dim coordinator As String = If(IsConjunctive, GetLang("LangConjunctiveCoordinator"), GetLang("LangDisjunctiveCoordinator"))
+        Dim separator As String = GetLang("LangSeparator")
+        Dim useSerialSeparator As Boolean = (Lang = "en-US" OrElse Lang = "en-UK")
+
+        If cnt = 0 Then Return ""
+        If cnt = 1 Then Return arr(0)
+        If cnt = 2 Then Return $"{arr(0)} {coordinator} {arr(1)}"
+
+        Dim head As String = String.Join(separator, arr.Take(cnt - 1))
+        If useSerialSeparator Then
+            Return head & separator & coordinator & " " & arr(cnt - 1)
+        Else
+            Return head & " " & coordinator & " " & arr(cnt - 1)
         End If
     End Function
 

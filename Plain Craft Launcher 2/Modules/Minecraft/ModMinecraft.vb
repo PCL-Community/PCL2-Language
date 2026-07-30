@@ -1,13 +1,27 @@
-﻿Imports System.IO.Compression
-
-Public Module ModMinecraft
+﻿Public Module ModMinecraft
 
 #Region "文件夹"
 
     ''' <summary>
-    ''' 当前的 Minecraft 文件夹路径，以“\”结尾。
+    ''' 当前的 Minecraft 文件夹路径，以 \ 结尾。
     ''' </summary>
-    Public McFolderSelected As String
+    Public Property McFolderSelected As String
+        Get
+            If _McFolderSelected Is Nothing Then SetMcFolder(Settings.Get(Of String)("LaunchFolderSelect")) '不能使用 McFolderSelected 触发 Set，这会被视为为 Get 设置返回值
+            Return _McFolderSelected
+        End Get
+        Set(Value As String)
+            SetMcFolder(Value)
+        End Set
+    End Property
+    Private Sub SetMcFolder(Value As String) '等同 McFolderSelected.Set
+        If _McFolderSelected = Value Then Return
+        _McFolderSelected = Value.Replace("$", PathExeFolder)
+        _McFolderSelected = PathUtils.AddSlashSuffix(PathUtils.ForCompare(_McFolderSelected))
+        Settings.Set("LaunchFolderSelect", Value.Replace(PathExeFolder, "$"))
+        Logger.Info($"当前选择的 Minecraft 文件夹：{_McFolderSelected}")
+    End Sub
+    Private _McFolderSelected As String
     ''' <summary>
     ''' 当前的 Minecraft 文件夹列表。
     ''' </summary>
@@ -22,15 +36,15 @@ Public Module ModMinecraft
         Public Location As String
         Public Type As Types
         Public Enum Types
-            Original
-            RenamedOriginal
+            Vanilla
+            RenamedVanilla
             Custom
         End Enum
 
         Public Overrides Function Equals(obj As Object) As Boolean
             If Not (TypeOf obj Is McFolder) Then Return False
-            Dim folder = DirectCast(obj, McFolder)
-            Return Name = folder.Name AndAlso Location = folder.Location AndAlso Type = folder.Type
+            Dim Folder = DirectCast(obj, McFolder)
+            Return Name = Folder.Name AndAlso Location = Folder.Location AndAlso Type = Folder.Type
         End Function
         Public Overrides Function ToString() As String
             Return Location
@@ -50,19 +64,21 @@ Public Module ModMinecraft
 
             '扫描当前文件夹
             Try
-                If Directory.Exists(Path & "versions\") Then CacheMcFolderList.Add(New McFolder With {.Name = GetLang("LangModMinecraftCurrentFolder"), .Location = Path, .Type = McFolder.Types.Original})
-                For Each Folder As DirectoryInfo In New DirectoryInfo(Path).GetDirectories
-                    If Directory.Exists(Folder.FullName & "versions\") OrElse Folder.Name = ".minecraft" Then CacheMcFolderList.Add(New McFolder With {.Name = GetLang("LangModMinecraftCurrentFolder"), .Location = Folder.FullName & "\", .Type = McFolder.Types.Original})
+                If DirectoryUtils.Exists(PathExeFolder & "versions\") Then CacheMcFolderList.Add(New McFolder With {.Name = GetLang("LangModMinecraftCurrentFolder"), .Location = PathExeFolder, .Type = McFolder.Types.Vanilla})
+                For Each Folder As DirectoryInfo In DirectoryUtils.GetInfo(PathExeFolder).GetDirectories
+                    If DirectoryUtils.Exists(Folder.FullName & "versions\") OrElse Folder.Name = ".minecraft" Then
+                        CacheMcFolderList.Add(New McFolder With {.Name = GetLang("LangModMinecraftCurrentFolder"), .Location = PathUtils.AddSlashSuffix(PathUtils.ForCompare(Folder.FullName)), .Type = McFolder.Types.Vanilla})
+                    End If
                 Next
             Catch ex As Exception
-                Log(ex, "扫描 PCL 所在文件夹中是否有 MC 文件夹失败")
+                Logger.Warn(ex, "扫描 PCL 所在文件夹中是否有 MC 文件夹失败")
             End Try
 
             '扫描官启文件夹
             Dim MojangPath As String = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) & "\.minecraft\"
             If (Not CacheMcFolderList.Any OrElse MojangPath <> CacheMcFolderList(0).Location) AndAlso '当前文件夹不是官启文件夹
-                Directory.Exists(MojangPath & "versions\") Then '具有权限且存在 versions 文件夹
-                CacheMcFolderList.Add(New McFolder With {.Name = GetLang("LangModMinecraftOfficialFolder"), .Location = MojangPath, .Type = McFolder.Types.Original})
+                DirectoryUtils.Exists(MojangPath & "versions\") Then '具有权限且存在 versions 文件夹
+                CacheMcFolderList.Add(New McFolder With {.Name = GetLang("LangModMinecraftOfficialFolder"), .Location = MojangPath, .Type = McFolder.Types.Vanilla})
             End If
 
 #End Region
@@ -70,60 +86,57 @@ Public Module ModMinecraft
 #Region "读取自定义（Custom）文件夹，可能没有结果"
 
             '格式：TMZ 12>C://xxx/xx/|Test>D://xxx/xx/|名称>路径
-            For Each Folder As String In Setup.Get("LaunchFolders").Split("|")
+            For Each Folder As String In Settings.Get(Of String)("LaunchFolders").ToString.Split("|"c, True)
                 If Folder = "" Then Continue For
                 If Not Folder.Contains(">") OrElse Not Folder.EndsWithF("\") Then
                     Hint(GetLang("LangModMinecraftInvalidMcFolder", Folder), HintType.Red)
                     Continue For
                 End If
-                Dim Name As String = Folder.Split(">")(0)
-                Dim Path As String = Folder.Split(">")(1)
+                Dim FolderName As String = Folder.BeforeFirst(">"), FolderPath As String = Folder.AfterFirst(">")
                 Try
-                    CheckPermissionWithException(Path)
+                    CheckPermissionWithException(FolderPath)
                     '若已有该文件夹，则直接重命名；没有则添加
                     Dim Renamed As Boolean = False
                     For Each OriginalFolder As McFolder In CacheMcFolderList
-                        If OriginalFolder.Location = Path Then
-                            OriginalFolder.Name = Name
-                            OriginalFolder.Type = McFolder.Types.RenamedOriginal
+                        If OriginalFolder.Location = FolderPath Then
+                            OriginalFolder.Name = FolderName
+                            OriginalFolder.Type = McFolder.Types.RenamedVanilla
                             Renamed = True
                         End If
                     Next
-                    If Not Renamed Then CacheMcFolderList.Add(New McFolder With {.Name = Name, .Location = Path, .Type = McFolder.Types.Custom})
+                    If Not Renamed Then CacheMcFolderList.Add(New McFolder With {.Name = FolderName, .Location = PathUtils.AddSlashSuffix(PathUtils.ForCompare(FolderPath)), .Type = McFolder.Types.Custom})
                 Catch ex As Exception
-                    MyMsgBox(GetLang("LangModMinecraftInvalidMcFolder", Path, ex.GetBrief()), GetLang("LangModMinecraftDialogTitleInvalidMcFolder"), IsWarn:=True)
-                    Log(ex, $"无法访问 Minecraft 文件夹 {Path}")
+                    MyMsgBox(GetLang("LangModMinecraftInvalidMcFolder", FolderPath, ex.GetDisplay(False)), GetLang("LangModMinecraftDialogTitleInvalidMcFolder"), IsWarn:=True)
+                    Logger.Warn(ex, $"无法访问 Minecraft 文件夹 {FolderPath}")
                 End Try
             Next
 
             '将自定义文件夹情况同步到设置
             Dim NewSetup As New List(Of String)
             For Each Folder As McFolder In CacheMcFolderList
-                If Not Folder.Type = McFolder.Types.Original Then NewSetup.Add(Folder.Name & ">" & Folder.Location)
+                If Not Folder.Type = McFolder.Types.Vanilla Then NewSetup.Add(Folder.Name & ">" & Folder.Location)
             Next
             If Not NewSetup.Any() Then NewSetup.Add("") '防止 0 元素 Join 返回 Nothing
-            Setup.Set("LaunchFolders", Join(NewSetup, "|"))
+            Settings.Set("LaunchFolders", NewSetup.Join("|"c))
 
 #End Region
 
             '若没有可用文件夹，则创建 .minecraft
             If Not CacheMcFolderList.Any() Then
-                Directory.CreateDirectory(Path & ".minecraft\versions\")
-                CacheMcFolderList.Add(New McFolder With {.Name = GetLang("LangModMinecraftCurrentFolder"), .Location = Path & ".minecraft\", .Type = McFolder.Types.Original})
+                DirectoryUtils.Create(PathExeFolder & ".minecraft\versions\")
+                CacheMcFolderList.Add(New McFolder With {.Name = GetLang("LangModMinecraftCurrentFolder"), .Location = PathExeFolder & ".minecraft\", .Type = McFolder.Types.Vanilla})
             End If
 
             For Each Folder As McFolder In CacheMcFolderList
-#Region "更新 launcher_profiles.json"
                 McFolderLauncherProfilesJsonCreate(Folder.Location)
-#End Region
             Next
-            If Setup.Get("SystemDebugDelay") Then Thread.Sleep(RandomInteger(200, 2000))
+            If Settings.Get(Of Boolean)("SystemDebugDelay") Then Thread.Sleep(RandomInteger(200, 2000))
 
             '回设
             McFolderList = CacheMcFolderList
 
         Catch ex As Exception
-            Log(ex, "加载 Minecraft 文件夹列表失败", LogLevel.Feedback)
+            Logger.Error(ex, "加载 Minecraft 文件夹列表失败")
         End Try
     End Sub
 
@@ -132,7 +145,7 @@ Public Module ModMinecraft
     ''' </summary>
     Public Sub McFolderLauncherProfilesJsonCreate(Folder As String)
         Try
-            If File.Exists(Folder & "launcher_profiles.json") Then Return
+            If FileUtils.Exists(Folder & "launcher_profiles.json") Then Return
             Dim ResultJson As String =
 "{
     ""profiles"":  {
@@ -147,18 +160,16 @@ Public Module ModMinecraft
     ""selectedProfile"": ""PCL"",
     ""clientToken"": ""23323323323323323323323323323333""
 }"
-            WriteFile(Folder & "launcher_profiles.json", ResultJson, Encoding:=Encoding.GetEncoding("GB18030"))
-            Log("[Minecraft] 已创建 launcher_profiles.json：" & Folder)
+            FileUtils.Write(Folder & "launcher_profiles.json", ResultJson, encoding:=Encoding.GetEncoding("GB18030"))
+            Logger.Info($"已创建 launcher_profiles.json：{Folder}")
         Catch ex As Exception
-            Log(ex, "创建 launcher_profiles.json 失败（" & Folder & "）", LogLevel.Feedback)
+            Logger.Error(ex, $"创建 launcher_profiles.json 失败（{Folder}）")
         End Try
     End Sub
 
 #End Region
 
 #Region "版本处理"
-
-    Public Const McInstanceCacheVersion As Integer = 33
 
     Private _McInstanceSelected As McInstance
     ''' <summary>
@@ -169,34 +180,37 @@ Public Module ModMinecraft
             Return _McInstanceSelected
         End Get
         Set(value As McInstance)
-            Static _McInstanceSelectedLast = 0 '为 0 以保证与 Nothing 不相同，使得 UI 显示可以正常初始化
+            Static _McInstanceSelectedLast As Object = 0 '为 0 以保证与 Nothing 不相同，使得 UI 显示可以正常初始化
             If ReferenceEquals(_McInstanceSelectedLast, value) Then Return
             _McInstanceSelected = value '由于有可能是 Nothing，导致无法初始化，才得这样弄一圈
             _McInstanceSelectedLast = value
+            '更新 MC 文件夹所选取的 Minecraft 版本
+            Logger.Info($"当前选择的 Minecraft 版本：{If(value?.PathVersion, "无")}")
+            WriteIni(McFolderSelected & "PCL.ini", "Version", If(value?.Name, ""))
             If value Is Nothing Then Return
             '重置缓存的下载文件夹
-            PageDownloadCompDetail.CachedFolder.Clear()
+            PageDownloadResourceDetail.CachedFolder.Clear()
             '统一通行证重判
             If AniControlEnabled = 0 AndAlso
-               Setup.Get("VersionServerNide", Instance:=value) <> Setup.Get("CacheNideServer") AndAlso
-               Setup.Get("VersionServerLogin", Instance:=value) = 3 Then
-                Setup.Set("CacheNideAccess", "")
-                Log("[Launch] 服务器改变，要求重新登录统一通行证")
+               Settings.Get(Of String)("VersionServerNide", Instance:=value) <> Settings.Get(Of String)("CacheNideServer") AndAlso
+               Settings.Get(Of Integer)("VersionServerLogin", Instance:=value) = 3 Then
+                Settings.Set("CacheNideAccess", "")
+                Logger.Info("服务器改变，要求重新登录统一通行证")
             End If
-            If Setup.Get("VersionServerLogin", Instance:=value) = 3 Then
-                Setup.Set("CacheNideServer", Setup.Get("VersionServerNide", Instance:=value))
+            If Settings.Get(Of Integer)("VersionServerLogin", Instance:=value) = 3 Then
+                Settings.Set("CacheNideServer", Settings.Get(Of String)("VersionServerNide", Instance:=value))
             End If
             'Authlib-Injector 重判
             If AniControlEnabled = 0 AndAlso
-               Setup.Get("VersionServerAuthServer", Instance:=value) <> Setup.Get("CacheAuthServerServer") AndAlso
-               Setup.Get("VersionServerLogin", Instance:=value) = 4 Then
-                Setup.Set("CacheAuthAccess", "")
-                Log("[Launch] 服务器改变，要求重新登录 Authlib-Injector")
+               Settings.Get(Of String)("VersionServerAuthServer", Instance:=value) <> Settings.Get(Of String)("CacheAuthServerServer") AndAlso
+               Settings.Get(Of Integer)("VersionServerLogin", Instance:=value) = 4 Then
+                Settings.Set("CacheAuthAccess", "")
+                Logger.Info("服务器改变，要求重新登录 Authlib-Injector")
             End If
-            If Setup.Get("VersionServerLogin", Instance:=value) = 4 Then
-                Setup.Set("CacheAuthServerServer", Setup.Get("VersionServerAuthServer", Instance:=value))
-                Setup.Set("CacheAuthServerName", Setup.Get("VersionServerAuthName", Instance:=value))
-                Setup.Set("CacheAuthServerRegister", Setup.Get("VersionServerAuthRegister", Instance:=value))
+            If Settings.Get(Of Integer)("VersionServerLogin", Instance:=value) = 4 Then
+                Settings.Set("CacheAuthServerServer", Settings.Get(Of String)("VersionServerAuthServer", Instance:=value))
+                Settings.Set("CacheAuthServerName", Settings.Get(Of String)("VersionServerAuthName", Instance:=value))
+                Settings.Set("CacheAuthServerRegister", Settings.Get(Of String)("VersionServerAuthRegister", Instance:=value))
             End If
         End Set
     End Property
@@ -212,27 +226,27 @@ Public Module ModMinecraft
         ''' </summary>
         Public ReadOnly Property PathIndie As String
             Get
-                If Setup.IsUnset("VersionArgumentIndieV2", Instance:=Me) Then
+                If Not Settings.HasSaved("VersionArgumentIndieV2", Instance:=Me) Then
                     If Not IsLoaded Then Load()
                     '决定该版本是否应该被隔离
                     Dim ShouldBeIndie =
                     Function() As Boolean
                         '从老的版本独立设置中迁移：-1 未决定，0 使用全局设置，1 手动开启，2 手动关闭
-                        If Not Setup.IsUnset("VersionArgumentIndie", Instance:=Me) AndAlso Setup.Get("VersionArgumentIndie", Instance:=Me) > 0 Then
-                            Log($"[Minecraft] 版本隔离初始化（{Name}）：从老的版本独立设置中迁移")
-                            Return Setup.Get("VersionArgumentIndie", Instance:=Me) = 1
+                        If Settings.HasSaved("VersionArgumentIndie", Instance:=Me) AndAlso Settings.Get(Of Integer)("VersionArgumentIndie", Instance:=Me) > 0 Then
+                            Logger.Info($"版本隔离初始化（{Name}）：从老的版本独立设置中迁移")
+                            Return Settings.Get(Of Integer)("VersionArgumentIndie", Instance:=Me) = 1
                         End If
                         '若版本文件夹下包含 mods 或 saves 文件夹，则自动开启版本隔离
-                        Dim ModFolder As New DirectoryInfo(PathVersion & "mods\")
-                        Dim SaveFolder As New DirectoryInfo(PathVersion & "saves\")
+                        Dim ModFolder = DirectoryUtils.GetInfo(PathVersion & "mods\")
+                        Dim SaveFolder = DirectoryUtils.GetInfo(PathVersion & "saves\")
                         If (ModFolder.Exists AndAlso ModFolder.EnumerateFiles.Any) OrElse (SaveFolder.Exists AndAlso SaveFolder.EnumerateDirectories.Any) Then
-                            Log($"[Minecraft] 版本隔离初始化（{Name}）：版本文件夹下存在 mods 或 saves 文件夹，自动开启")
+                            Logger.Info($"版本隔离初始化（{Name}）：版本文件夹下存在 mods 或 saves 文件夹，自动开启")
                             Return True
                         End If
                         '根据全局的默认设置决定是否隔离
                         Dim IsRelease As Boolean = State <> McInstanceState.Fool AndAlso State <> McInstanceState.Old AndAlso State <> McInstanceState.Snapshot
-                        Log($"[Minecraft] 版本隔离初始化（{Name}）：从全局默认设置中（{Setup.Get("LaunchArgumentIndieV2")}）判断，State {GetStringFromEnum(State)}，IsRelease {IsRelease}，Modable {Modable}")
-                        Select Case Setup.Get("LaunchArgumentIndieV2")
+                        Logger.Info($"版本隔离初始化（{Name}）：从全局默认设置中（{Settings.Get(Of Integer)("LaunchArgumentIndieV2")}）判断，State {State}，IsRelease {IsRelease}，Modable {Modable}")
+                        Select Case Settings.Get(Of Integer)("LaunchArgumentIndieV2")
                             Case 0 '关闭
                                 Return False
                             Case 1 '仅隔离可安装 Mod 的版本
@@ -245,9 +259,9 @@ Public Module ModMinecraft
                                 Return True
                         End Select
                     End Function
-                    Setup.Set("VersionArgumentIndieV2", ShouldBeIndie(), Instance:=Me)
+                    Settings.Set("VersionArgumentIndieV2", ShouldBeIndie(), Instance:=Me)
                 End If
-                Return If(Setup.Get("VersionArgumentIndieV2", Instance:=Me), PathVersion, McFolderSelected)
+                Return If(Settings.Get(Of Boolean)("VersionArgumentIndieV2", Instance:=Me), PathVersion, McFolderSelected)
             End Get
         End Property
 
@@ -256,7 +270,7 @@ Public Module ModMinecraft
         ''' </summary>
         Public ReadOnly Property Name As String
             Get
-                If _Name Is Nothing AndAlso Not PathVersion = "" Then _Name = GetFolderNameFromPath(PathVersion)
+                If _Name Is Nothing AndAlso Not PathVersion = "" Then _Name = PathUtils.GetLastPart(PathVersion)
                 Return _Name
             End Get
         End Property
@@ -353,26 +367,26 @@ Public Module ModMinecraft
                         GoTo VersionSearchFinish
                     End If
                     '从下载地址中获取版本号
-                    Dim Regex As String = RegexSeek(If(JsonObject("downloads"), "").ToString, "(?<=launcher.mojang.com/mc/game/)[^/]*")
+                    Dim Regex As String = If(JsonObject("downloads"), "").ToString.RegexSeek("(?<=launcher.mojang.com/mc/game/)[^/]*")
                     If Regex IsNot Nothing Then
                         _Version.VanillaName = Regex
                         GoTo VersionSearchFinish
                     End If
                     '从 Forge 版本中获取版本号
                     Dim LibrariesString As String = JsonObject("libraries").ToString
-                    Regex = If(RegexSeek(LibrariesString, "(?<=net.minecraftforge:forge:)[0-9]{1,2}.[0-9+.]+"), RegexSeek(LibrariesString, "(?<=net.minecraftforge:fmlloader:)[0-9]{1,2}.[0-9+.]+"))
+                    Regex = If(LibrariesString.RegexSeek("(?<=net.minecraftforge:forge:)[0-9]{1,2}.[0-9+.]+"), LibrariesString.RegexSeek("(?<=net.minecraftforge:fmlloader:)[0-9]{1,2}.[0-9+.]+"))
                     If Regex IsNot Nothing Then
                         _Version.VanillaName = Regex
                         GoTo VersionSearchFinish
                     End If
                     '从 OptiFine 版本中获取版本号
-                    Regex = RegexSeek(LibrariesString, "(?<=optifine:OptiFine:)[0-9]{1,2}.[0-9+.]+")
+                    Regex = LibrariesString.RegexSeek("(?<=optifine:OptiFine:)[0-9]{1,2}.[0-9+.]+")
                     If Regex IsNot Nothing Then
                         _Version.VanillaName = Regex
                         GoTo VersionSearchFinish
                     End If
                     '从 Fabric 版本中获取版本号
-                    Regex = RegexSeek(LibrariesString, "(?<=((fabricmc)|(quiltmc)):intermediary:)[^""]*")
+                    Regex = LibrariesString.RegexSeek("(?<=((fabricmc)|(quiltmc)):intermediary:)[^""]*")
                     If Regex IsNot Nothing Then
                         _Version.VanillaName = Regex
                         GoTo VersionSearchFinish
@@ -387,22 +401,22 @@ Public Module ModMinecraft
                         Dim JsonVerName As String = JsonVersion("name").ToString
                         If JsonVerName.Length < 32 Then '因为 wiki 说这玩意儿可能是个 hash，虽然我没发现
                             _Version.VanillaName = JsonVerName
-                            Log("[Minecraft] 从版本 jar 中的 version.json 获取到版本号：" & JsonVerName)
+                            Logger.Info($"从版本 jar 中的 version.json 获取到版本号：{JsonVerName}")
                             GoTo VersionSearchFinish
                         End If
                     End If
                     '从 JSON 的 ID 中获取
                     Static Pattern = "(([1-9][0-9]w[0-9]{2}[a-g])|((1|[2-9][0-9])\.[0-9]+(\.[0-9]+)?(-(pre|rc|snapshot-?)[1-9]*| Pre-Release( [1-9])?)?))(_unobfuscated)?"
-                    Regex = RegexSeek(JsonObject("id"), Pattern, RegularExpressions.RegexOptions.IgnoreCase)
+                    Regex = JsonObject("id").ToString.RegexSeek(Pattern, RegularExpressions.RegexOptions.IgnoreCase)
                     If Regex IsNot Nothing Then
                         _Version.VanillaName = Regex
                         GoTo VersionSearchFinish
                     End If
                     '非准确的版本判断警告
-                    Log("[Minecraft] 无法完全确认 MC 版本号的版本：" & Name)
+                    Logger.Info($"无法完全确认 MC 版本号的版本：{Name}")
                     _Version.Reliable = False
                     '从文件夹名中获取
-                    Regex = RegexSeek(Name, Pattern, RegularExpressions.RegexOptions.IgnoreCase)
+                    Regex = Name.RegexSeek(Pattern, RegularExpressions.RegexOptions.IgnoreCase)
                     If Regex IsNot Nothing Then
                         _Version.VanillaName = Regex
                         GoTo VersionSearchFinish
@@ -411,7 +425,7 @@ Public Module ModMinecraft
                     Dim JsonRaw As JObject = JsonObject.DeepClone()
                     JsonRaw.Remove("libraries")
                     Dim JsonRawText As String = JsonRaw.ToString
-                    Regex = RegexSeek(JsonRawText, Pattern, RegularExpressions.RegexOptions.IgnoreCase)
+                    Regex = JsonRawText.RegexSeek(Pattern, RegularExpressions.RegexOptions.IgnoreCase)
                     If Regex IsNot Nothing Then
                         _Version.VanillaName = Regex
                         GoTo VersionSearchFinish
@@ -420,7 +434,7 @@ Public Module ModMinecraft
                     _Version.VanillaName = "Unknown"
                     Info = GetLang("LangModMinecraftUnableGetVersion")
                 Catch ex As Exception
-                    Log(ex, "识别 Minecraft 版本时出错")
+                    Logger.Warn(ex, "识别 Minecraft 版本时出错")
                     _Version.VanillaName = "Unknown"
                     Info = GetLang("LangModMinecraftGetVersionFail", ex.Message)
                 End Try
@@ -428,21 +442,6 @@ Public Module ModMinecraft
 VersionSearchFinish:
                 '获取版本号
                 _Version.VanillaName = _Version.VanillaName.Replace("_unobfuscated", "").Replace(" Unobfuscated", "")
-                If _Version.VanillaName.StartsWithF("1.") Then
-                    Dim Segments = _Version.VanillaName.Split(" _-.".ToCharArray)
-                    _Version.Vanilla = New Version(
-                        Val(If(Segments.Count >= 2, Segments(1), "0")),
-                        0,
-                        Val(If(Segments.Count >= 3, Segments(2), "0")))
-                ElseIf RegexCheck(_Version.VanillaName, "^[2-9][0-9]\.") Then
-                    Dim Segments = _Version.VanillaName.Split(" _-.".ToCharArray)
-                    _Version.Vanilla = New Version(
-                        Val(Segments(0)),
-                        Val(If(Segments.Count >= 2, Segments(1), "0")),
-                        Val(If(Segments.Count >= 3, Segments(2), "0")))
-                Else
-                    _Version.Vanilla = New Version(9999, 0, 0)
-                End If
                 Return _Version
             End Get
             Set(value As McVersion)
@@ -461,16 +460,17 @@ VersionSearchFinish:
         ''' </summary>
         Public Function GetJsonPath() As String
             Dim JsonPath As String = PathVersion & Name & ".json"
-            If Not File.Exists(JsonPath) Then
+            If Not FileUtils.Exists(JsonPath) Then
                 '尝试寻找 JSON 文件
                 JsonPath = Nothing
-                For Each JsonCandidatePath In Directory.GetFiles(PathVersion, "*.json")
+                For Each JsonCandidatePath In DirectoryUtils.GetFiles(PathVersion, True, "*.json")
                     Try
-                        Dim JsonCandidate As JObject = GetJson(ReadFile(JsonCandidatePath))
+                        Dim JsonCandidate As JObject = GetJson(FileUtils.ReadAsString(JsonCandidatePath))
                         If Not JsonCandidate.ContainsKey("mainClass") Then Continue For
                         If Not JsonCandidate.ContainsKey("type") Then Continue For
                         If Not JsonCandidate.ContainsKey("id") Then Continue For
                     Catch
+                        Continue For
                     End Try
                     JsonPath = JsonCandidatePath
                     Exit For
@@ -478,7 +478,7 @@ VersionSearchFinish:
                 If JsonPath Is Nothing Then
                     Throw New Exception($"未找到版本 JSON 文件：{PathVersion}{Name}.json")
                 Else
-                    Log("[Minecraft] 未找到同名版本 JSON，自动换用 " & JsonPath, LogLevel.Debug)
+                    Logger.Warn($"未找到同名版本 JSON，自动换用 {JsonPath}")
                 End If
             End If
             Return JsonPath
@@ -496,16 +496,16 @@ VersionSearchFinish:
                 End Function
                 If _JsonText Is Nothing Then
                     Dim JsonPath As String = GetJsonPath()
-                    _JsonText = ReadFile(JsonPath)
+                    _JsonText = If(FileUtils.TryReadAsString(JsonPath), "")
                     '如果 ReadFile 失败会返回空字符串；这可能是由于文件被临时占用，故延时后重试
                     If Not FastJsonCheck(_JsonText) Then
                         If RunInUi() Then
-                            Log("[Minecraft] 版本 JSON 文件为空或有误，由于代码在主线程运行，将不再进行重试", LogLevel.Debug)
+                            Logger.Warn("版本 JSON 文件为空或有误，由于代码在主线程运行，将不再进行重试")
                             GetJson(_JsonText) '触发异常
                         Else
-                            Log($"[Minecraft] 版本 JSON 文件为空或有误，将在 2s 后重试读取（{JsonPath}）", LogLevel.Debug)
+                            Logger.Warn($"版本 JSON 文件为空或有误，将在 2s 后重试读取（{JsonPath}）")
                             Thread.Sleep(2000)
-                            _JsonText = ReadFile(JsonPath)
+                            _JsonText = FileUtils.ReadAsString(JsonPath)
                             If Not FastJsonCheck(_JsonText) Then GetJson(_JsonText) '触发异常
                         End If
                     End If
@@ -543,14 +543,14 @@ VersionSearchFinish:
                                 Dim Id As String = Subjson("id")
                                 If Id IsNot Nothing Then
                                     '合并 Json
-                                    Log("[Minecraft] 合并 HMCL 分支项：" & Id)
+                                    Logger.Info($"合并 HMCL 分支项：{Id}")
                                     If CurrentObject IsNot Nothing Then
                                         CurrentObject.Merge(Subjson)
                                     Else
                                         CurrentObject = Subjson
                                     End If
                                 Else
-                                    Log("[Minecraft] 存在为空的 HMCL 分支项")
+                                    Logger.Info("存在为空的 HMCL 分支项")
                                 End If
                             Next
                             _JsonObject = CurrentObject
@@ -563,7 +563,7 @@ VersionSearchFinish:
                         Try
                             InstanceNameInheritFrom = If(_JsonObject("inheritsFrom") Is Nothing, "", _JsonObject("inheritsFrom").ToString)
                             If InstanceNameInheritFrom = Name Then
-                                Log("[Minecraft] 自引用的继承版本：" & Name, LogLevel.Debug)
+                                Logger.Warn($"自引用的继承版本：{Name}")
                                 InstanceNameInheritFrom = ""
                                 Exit Try
                             End If
@@ -585,7 +585,7 @@ Recheck:
                                 GoTo Recheck
                             End If
                         Catch ex As Exception
-                            Log(ex, "合并版本依赖项 JSON 失败（" & If(InstanceNameInheritFrom, "null").ToString & "）")
+                            Logger.Warn(ex, $"合并版本依赖项 JSON 失败（{If(InstanceNameInheritFrom, "null")}）")
                         End Try
                     Catch ex As Exception
                         Throw New Exception("初始化版本 JSON 时失败（" & If(Name, "null") & "）", ex)
@@ -621,8 +621,8 @@ Recheck:
                 If Not JsonVersionInited Then
                     JsonVersionInited = True
                     Try
-                        If Not File.Exists($"{PathVersion}{Name}.jar") Then Exit Try
-                        Using JarArchive As New ZipArchive(New FileStream(PathVersion & Name & ".jar", FileMode.Open, FileAccess.Read, FileShare.ReadWrite))
+                        If Not FileUtils.Exists($"{PathVersion}{Name}.jar") Then Exit Try
+                        Using JarArchive = FileUtils.OpenZip(PathVersion & Name & ".jar")
                             Dim VersionJson As ZipArchiveEntry = JarArchive.GetEntry("version.json")
                             If VersionJson Is Nothing Then Exit Try
                             Using VersionJsonStream As New StreamReader(VersionJson.Open)
@@ -630,7 +630,7 @@ Recheck:
                             End Using
                         End Using
                     Catch ex As Exception
-                        Log(ex, $"从版本 jar 中读取 version.json 失败（{PathVersion}{Name}.jar）")
+                        Logger.Warn(ex, $"从版本 jar 中读取 version.json 失败（{PathVersion}{Name}.jar）")
                     End Try
                 End If
                 Return _JsonVersion
@@ -659,10 +659,19 @@ Recheck:
         End Property
         Private _InheritName As String = Nothing
 
+        Public Sub ResetIniCache()
+            IniClearCache(PathIndie & "options.txt")
+            IniClearCache(PathVersion & "PCL\Setup.ini")
+            For Each Entry In Settings.Entries.Values
+                If Entry.Source = Settings.Sources.Instance Then Entry.ValueCache.Remove(PathVersion)
+            Next
+        End Sub
+
         ''' <summary>
         ''' 从版本名，或版本文件夹的完整路径初始化（不规定是否以 \ 结尾）。
         ''' </summary>
         Public Sub New(Name As String)
+            Name = PathUtils.RemoveExtendedPrefix(Name)
             PathVersion = If(Name.Contains(":"), "", McFolderSelected & "versions\") & '补全完整路径
                       Name &
                       If(Name.EndsWithF("\"), "", "\") '补全右划线
@@ -674,26 +683,16 @@ Recheck:
         Public Function Check() As Boolean
 
             '检查文件夹
-            If Not Directory.Exists(PathVersion) Then
+            If Not DirectoryUtils.Exists(PathVersion) Then
                 State = McInstanceState.Error
                 Info = GetLang("LangModMinecraftCheckStatusInstanceNotFound") & " " & Name
                 Return False
             End If
-            '检查权限
-            Try
-                Directory.CreateDirectory(PathVersion & "PCL\")
-                CheckPermissionWithException(PathVersion & "PCL\")
-            Catch ex As Exception
-                State = McInstanceState.Error
-                Info = GetLang("LangModMinecraftCheckStatusNoPermission")
-                Log(ex, "没有访问版本文件夹的权限")
-                Return False
-            End Try
             '确认 Json 可用性
             Try
-                Dim JsonObjCheck = JsonObject
+                If JsonObject("mainClass") Is Nothing Then Throw New Exception("版本 JSON 中没有 mainClass 项！") '这里也会触发 JsonObject 的 Get 事件
             Catch ex As Exception
-                Log(ex, "版本 JSON 可用性检查失败（" & PathVersion & "）")
+                Logger.Warn(ex, $"版本 JSON 可用性检查失败（{PathVersion}）")
                 JsonText = ""
                 JsonObject = Nothing
                 Info = ex.Message
@@ -704,24 +703,24 @@ Recheck:
             Try
                 If String.IsNullOrEmpty(Version.VanillaName) Then Throw New Exception("无法获取版本号，结果为空")
             Catch ex As Exception
-                Log(ex, "版本号获取失败（" & Name & "）")
+                Logger.Warn(ex, $"版本号获取失败（{Name}）")
                 State = McInstanceState.Error
-                Info = "版本号获取失败：" & ex.GetBrief()
+                Info = "版本号获取失败：" & ex.GetDisplay(False)
                 Return False
             End Try
             '检查依赖版本
             Try
                 If Not InheritName = "" Then
-                    If Not File.Exists(GetPathFromFullPath(PathVersion) & InheritName & "\" & InheritName & ".json") Then
+                    If Not FileUtils.Exists($"{PathUtils.RemoveLastPart(PathVersion)}\{InheritName}\{InheritName}.json") Then
                         State = McInstanceState.Error
                         Info = GetLang("LangModMinecraftCheckStatusNeedDependency") & InheritName
                         Return False
                     End If
                 End If
             Catch ex As Exception
-                Log(ex, "依赖版本检查出错（" & Name & "）")
+                Logger.Warn(ex, $"依赖版本检查出错（{Name}）")
                 State = McInstanceState.Error
-                Info = GetLang("LangModMinecraftCheckStatusUnknownError") & ex.GetBrief()
+                Info = GetLang("LangModMinecraftCheckStatusUnknownError") & ex.GetDisplay(False)
                 Return False
             End Try
 
@@ -744,7 +743,11 @@ Recheck:
                     Case Else '根据 API 进行筛选
                         Dim RealJson As String = If(JsonObject, JsonText).ToString
                         '愚人节与快照版本
-                        If If(JsonObject("type"), "").ToString = "fool" OrElse GetMcFoolName(Version.VanillaName) <> "" Then
+                        Dim FixedReleaseTime = ReleaseTime.ToUniversalTime().AddHours(2)
+                        Dim JsonType = If(JsonObject("type"), "").ToString
+                        If JsonType = "fool" OrElse
+                           (FixedReleaseTime.Month = 4 AndAlso FixedReleaseTime.Day = 1 AndAlso JsonType = "snapshot") OrElse
+                           GetMcFoolName(Version.VanillaName) <> "" Then
                             State = McInstanceState.Fool
                         ElseIf IsSnapshot() Then
                             State = McInstanceState.Snapshot
@@ -752,8 +755,7 @@ Recheck:
                         'OptiFine
                         If RealJson.Contains("optifine") Then
                             State = McInstanceState.OptiFine
-                            Version.HasOptiFine = True
-                            Version.OptiFine = If(RegexSeek(RealJson, "(?<=HD_U_)[^"":/]+"), "未知版本")
+                            Version.OptiFine = If(RealJson.RegexSeek("(?<=HD_U_)[^"":/]+"), "未知版本")
                         End If
                         'LiteLoader
                         If RealJson.Contains("liteloader") Then
@@ -763,20 +765,17 @@ Recheck:
                         'Fabric、Forge
                         If RealJson.Contains("net.fabricmc:fabric-loader") OrElse RealJson.Contains("org.quiltmc:quilt-loader") Then
                             State = McInstanceState.Fabric
-                            Version.HasFabric = True
-                            Version.Fabric = If(RegexSeek(RealJson, "(?<=(net.fabricmc:fabric-loader:)|(org.quiltmc:quilt-loader:))[0-9\.]+(\+build.[0-9]+)?"), "未知版本").Replace("+build", "")
+                            Version.Fabric = If(RealJson.RegexSeek("(?<=(net.fabricmc:fabric-loader:)|(org.quiltmc:quilt-loader:))[0-9\.]+(\+build.[0-9]+)?"), "未知版本").Replace("+build", "")
                         ElseIf RealJson.Contains("minecraftforge") AndAlso Not RealJson.Contains("net.neoforge") Then
                             State = McInstanceState.Forge
-                            Version.HasForge = True
-                            Version.Forge = RegexSeek(RealJson, "(?<=forge:[0-9\.]+(_pre[0-9]*)?\-)[0-9\.]+")
-                            If Version.Forge Is Nothing Then Version.Forge = RegexSeek(RealJson, "(?<=net\.minecraftforge:minecraftforge:)[0-9\.]+")
-                            If Version.Forge Is Nothing Then Version.Forge = If(RegexSeek(RealJson, "(?<=net\.minecraftforge:fmlloader:[0-9\.]+-)[0-9\.]+"), "未知版本")
+                            Version.Forge = RealJson.RegexSeek("(?<=forge:[0-9\.]+(_pre[0-9]*)?\-)[0-9\.]+")
+                            If Version.Forge Is Nothing Then Version.Forge = RealJson.RegexSeek("(?<=net\.minecraftforge:minecraftforge:)[0-9\.]+")
+                            If Version.Forge Is Nothing Then Version.Forge = If(RealJson.RegexSeek("(?<=net\.minecraftforge:fmlloader:[0-9\.]+-)[0-9\.]+"), "未知版本")
                         ElseIf RealJson.Contains("net.neoforge") Then
                             '1.20.1 JSON 范例："--fml.forgeVersion", "47.1.99"
                             '1.20.2+ JSON 范例："--fml.neoForgeVersion", "20.6.119-beta"
                             State = McInstanceState.NeoForge
-                            Version.HasNeoForge = True
-                            Version.NeoForge = If(RegexSeek(RealJson, "(?<=orgeVersion"",[^""]*?"")[^""]+(?="",)"), "未知版本")
+                            Version.NeoForge = If(RealJson.RegexSeek("(?<=orgeVersion"",[^""]*?"")[^""]+(?="",)"), "未知版本")
                         End If
                 End Select
 #End Region
@@ -816,8 +815,8 @@ ExitDataLoad:
                     If State = McInstanceState.Fool Then
                         Info = GetMcFoolName(Version.VanillaName)
                     ElseIf State <> McInstanceState.Error Then
-                        If Setup.Get("VersionServerLogin", Instance:=Me) = 3 Then Info += ", 统一通行证验证"
-                        If Setup.Get("VersionServerLogin", Instance:=Me) = 4 Then Info += ", Authlib 验证"
+                        If Settings.Get(Of Integer)("VersionServerLogin", Instance:=Me) = 3 Then Info += ", 统一通行证验证"
+                        If Settings.Get(Of Integer)("VersionServerLogin", Instance:=Me) = 4 Then Info += ", Authlib 验证"
                     End If
                 End If
                 '确定版本收藏状态
@@ -825,7 +824,7 @@ ExitDataLoad:
                 '确定版本显示种类
                 DisplayType = ReadIni(PathVersion & "PCL\Setup.ini", "DisplayType", McInstanceCardType.Auto)
                 '写入缓存
-                If Directory.Exists(PathVersion) Then
+                If DirectoryUtils.Exists(PathVersion) Then
                     WriteIni(PathVersion & "PCL\Setup.ini", "State", State)
                     WriteIni(PathVersion & "PCL\Setup.ini", "Info", Info)
                     WriteIni(PathVersion & "PCL\Setup.ini", "Logo", Logo)
@@ -841,19 +840,20 @@ ExitDataLoad:
                     WriteIni(PathVersion & "PCL\Setup.ini", "VersionVanilla", Version.Vanilla.ToString)
                 End If
             Catch ex As Exception
-                Info = GetLang("LangModMinecraftCheckStatusUnknownError") & ex.GetBrief()
+                Info = ex.GetDisplay(False)
                 Logo = PathImage & "Blocks/RedstoneBlock.png"
                 State = McInstanceState.Error
-                Log(ex, "加载版本失败（" & Name & "）", LogLevel.Feedback)
+                Logger.Warn(ex, $"加载版本失败（{Name}）")
             Finally
                 IsLoaded = True
             End Try
             Return Me
         End Function
         Private Function IsSnapshot() As Boolean
-            Return {"w", "snapshot", "rc", "pre", "experimental", "-"}.Any(Function(s) Version.VanillaName.ContainsF(s, True)) OrElse
-                Name.ContainsF("combat", True) OrElse
-                If(JsonObject("type"), "").ToString = "snapshot" OrElse If(JsonObject("type"), "").ToString = "pending"
+            Dim jsonType As String = If(JsonObject("type"), "").ToString
+            Return {"w", "snapshot", "rc", "pre", "experimental", "-"}.Any(Function(s) Version.VanillaName.ContainsIgnoreCase(s)) OrElse
+                Name.ContainsIgnoreCase("combat") OrElse
+                jsonType = "snapshot" OrElse jsonType = "pending" OrElse jsonType = "fool"
         End Function
 
         Public IsLoaded As Boolean = False
@@ -873,15 +873,15 @@ ExitDataLoad:
             Dim Info As String
             Select Case State
                 Case McInstanceState.Snapshot, McInstanceState.Original, McInstanceState.Forge, McInstanceState.NeoForge, McInstanceState.Fabric, McInstanceState.OptiFine, McInstanceState.LiteLoader
-                    If Version.VanillaName.ContainsF("pre", True) Then
+                    If Version.VanillaName.ContainsIgnoreCase("pre") Then
                         Info = GetLang("LangModMinecraftVersionPre") & " " & Version.VanillaName
-                    ElseIf Version.VanillaName.ContainsF("rc", True) Then
+                    ElseIf Version.VanillaName.ContainsIgnoreCase("rc") Then
                         Info = GetLang("LangModMinecraftVersionRC") & " " & Version.VanillaName
-                    ElseIf Version.VanillaName.Contains("experimental") Then
+                    ElseIf Version.VanillaName.ContainsIgnoreCase("experimental") Then
                         Info = "实验性快照" & Version.VanillaName
                     ElseIf Version.VanillaName = "pending" Then
                         Info = GetLang("LangModMinecraftVersionExperimental")
-                    ElseIf IsSnapshot Then
+                    ElseIf IsSnapshot() Then
                         Info = If(Version.Reliable, GetLang("LangModMinecraftVersionSnapshot") & " " & Version.VanillaName.Replace("-snapshot", ""), GetLang("LangModMinecraftVersionSnapshot"))
                     Else
                         Info = If(Version.Reliable,  GetLang("LangModMinecraftVersionStable") & " " & Version.VanillaName, GetLang("LangModMinecraftVersionStable"))
@@ -913,13 +913,13 @@ ExitDataLoad:
                 End If
                 'Logo
                 Try
-                    If Logo.EndsWith("PCL\Logo.png") Then
+                    If Logo.EndsWithF("PCL\Logo.png") Then
                         NewItem.Logo = PathVersion & "PCL\Logo.png" '修复老版本中，存储的自定义 Logo 使用完整路径，导致移动后无法加载的 Bug
                     Else
                         NewItem.Logo = Logo
                     End If
                 Catch ex As Exception
-                    Log(ex, "加载版本图标失败", LogLevel.Hint)
+                    Logger.Error(ex, "加载版本图标失败", LogBehavior.Toast)
                     NewItem.Logo = "pack://application:,,,/images/Blocks/RedstoneBlock.png"
                 End Try
                 Return NewItem
@@ -964,10 +964,20 @@ ExitDataLoad:
         ''' 原版版本名。
         ''' 如 26.1，26.1-snapshot-1，1.12.2，16w01a。
         ''' </summary>
-        Public VanillaName As String
+        Public Property VanillaName As String
+            Get
+                Return _VanillaName
+            End Get
+            Set(value As String)
+                If _VanillaName = value Then Return
+                _VanillaName = value
+                Vanilla = NameToVersion(_VanillaName)
+            End Set
+        End Property
+        Private _VanillaName As String
         ''' <summary>
         ''' 可比较的三段式原版版本号。
-        ''' 对老版本格式，例如 1.20.3，会被转换为 20.0.3。
+        ''' 对老版本格式，例如 1.20.1，会被转换为 20.0.1。
         ''' 若没有版本号，例如旧快照，则为 9999.0.0。
         ''' </summary>
         Public Vanilla As Version
@@ -999,30 +1009,34 @@ ExitDataLoad:
         ''' <summary>
         ''' 该版本是否通过 JSON 安装了 OptiFine。
         ''' </summary>
-        Public HasOptiFine As Boolean = False
+        Public ReadOnly Property HasOptiFine As Boolean
+            Get
+                Return OptiFine IsNot Nothing
+            End Get
+        End Property
         ''' <summary>
         ''' OptiFine 版本名，如 C8、C9_pre10。
         ''' </summary>
-        Public OptiFine As String = ""
+        Public OptiFine As String = Nothing
         ''' <summary>
         ''' 可供比较的 OptiFine 版本序数。
         ''' </summary>
         Public ReadOnly Property OptiFineCode As Integer
             Get
-                If String.IsNullOrEmpty(OptiFine) OrElse OptiFine = "未知版本" Then Return 0
+                If OptiFine Is Nothing OrElse OptiFine = "未知版本" Then Return 0
                 '字母编号，如 G2 中的 G（7）
-                Dim Result As Integer = Asc(OptiFine.ToUpper.First) - Asc("A"c) + 1
+                Dim Result As Integer = Asc(OptiFine.Upper.First) - Asc("A"c) + 1
                 '末尾数字，如 C5 beta4 中的 5
                 Result *= 100
-                Result += Val(RegexSeek(Right(OptiFine, OptiFine.Length - 1), "[0-9]+"))
+                Result += Val(Right(OptiFine, OptiFine.Length - 1).RegexSeek("[0-9]+"))
                 '测试标记（正式版为 99，Pre[x] 为 50+x，Beta[x] 为 x）
                 Result *= 100
-                If OptiFine.ContainsF("pre", True) Then Result += 50
-                If OptiFine.ContainsF("pre", True) OrElse OptiFine.ContainsF("beta", True) Then
+                If OptiFine.ContainsIgnoreCase("pre") Then Result += 50
+                If OptiFine.ContainsIgnoreCase("pre") OrElse OptiFine.ContainsIgnoreCase("beta") Then
                     If Val(Right(OptiFine, 1)) = 0 AndAlso Right(OptiFine, 1) <> "0" Then
                         Result += 1 '为 pre 或 beta 结尾，视作 1
                     Else
-                        Result += Val(RegexSeek(OptiFine.ToLower, "(?<=((pre)|(beta)))[0-9]+"))
+                        Result += Val(OptiFine.Lower.RegexSeek("(?<=((pre)|(beta)))[0-9]+"))
                     End If
                 Else
                     Result += 99
@@ -1036,11 +1050,19 @@ ExitDataLoad:
         ''' <summary>
         ''' 该版本是否安装了 Forge。
         ''' </summary>
-        Public HasForge As Boolean = False
+        Public ReadOnly Property HasForge As Boolean
+            Get
+                Return Forge IsNot Nothing
+            End Get
+        End Property
         ''' <summary>
         ''' 该版本是否安装了 NeoForge。
         ''' </summary>
-        Public HasNeoForge As Boolean = False
+        Public ReadOnly Property HasNeoForge As Boolean
+            Get
+                Return NeoForge IsNot Nothing
+            End Get
+        End Property
         ''' <summary>
         ''' 该版本是否安装了 Forge 或 NeoForge。
         ''' </summary>
@@ -1052,20 +1074,20 @@ ExitDataLoad:
         ''' <summary>
         ''' Forge 版本名，如 31.1.2、14.23.5.2847。
         ''' </summary>
-        Public Forge As String = ""
+        Public Forge As String = Nothing
         ''' <summary>
-        ''' NeoForge 版本名，如 21.0.2-beta、47.1.79。
+        ''' NeoForge 版本名，如 47.1.79、21.0.2-beta、26.1.0.0-alpha.14+snapshot-11。
         ''' </summary>
-        Public NeoForge As String = ""
+        Public NeoForge As String = Nothing
         ''' <summary>
         ''' 可供比较的类 Forge 版本序数。
         ''' </summary>
         Public ReadOnly Property ForgelikeCode As Integer
             Get
                 If Not HasForgelike Then Return 0
-                If (String.IsNullOrEmpty(Forge) OrElse Forge = "未知版本") AndAlso
-                   (String.IsNullOrEmpty(NeoForge) OrElse NeoForge = "未知版本") Then Return 0
-                Dim Segments = RegexSearch(If(HasForge, Forge, NeoForge), "\d+")
+                If (Forge Is Nothing OrElse Forge = "未知版本") AndAlso
+                   (NeoForge Is Nothing OrElse NeoForge = "未知版本") Then Return 0
+                Dim Segments = If(HasForge, Forge, NeoForge).RegexSearch("\d+").ToList
                 Select Case Segments.Count
                     Case Is > 4
                         Return Val(Segments(0)) * 1000000 + Val(Segments(1)) * 10000 + Val(Segments(3))
@@ -1084,11 +1106,15 @@ ExitDataLoad:
         ''' <summary>
         ''' 该版本是否安装了 Fabric。
         ''' </summary>
-        Public HasFabric As Boolean = False
+        Public ReadOnly Property HasFabric As Boolean
+            Get
+                Return Fabric IsNot Nothing
+            End Get
+        End Property
         ''' <summary>
         ''' Fabric 版本名，如 0.7.2.175。
         ''' </summary>
-        Public Fabric As String = ""
+        Public Fabric As String = Nothing
 
         'LiteLoader
 
@@ -1100,32 +1126,36 @@ ExitDataLoad:
         'Helpers
 
         ''' <summary>
+        ''' 获取该版本包含的 Mod Loader。
+        ''' </summary>
+        Public ReadOnly Property ModLoaders As ModLoaders
+            Get
+                Dim Result As ModLoaders = ModLoaders.None
+                If HasForge Then Result = Result Or ModLoaders.Forge
+                If HasNeoForge Then Result = Result Or ModLoaders.NeoForge
+                If HasFabric Then Result = Result Or ModLoaders.Fabric
+                If HasLiteLoader Then Result = Result Or ModLoaders.LiteLoader
+                Return Result
+            End Get
+        End Property
+        ''' <summary>
         ''' 版本字符串是否符合 Minecraft 原版格式，例如 1.x、26.x。
         ''' </summary>
         Public Shared Function IsFormatFit(Version As String) As Boolean
             If Version Is Nothing Then Return False
-            If RegexCheck(Version, "^1\.\d") Then Return True
-            If Val(RegexSeek(Version, "^[2-9]\d\.\d+")) > 25 Then Return True
+            If Version.RegexCheck("^1\.\d") Then Return True
+            If Val(Version.RegexSeek("^[2-9]\d\.\d+")) >= 26 Then Return True
             Return False
         End Function
         ''' <summary>
-        ''' 尝试将版本字符串转换为 Drop 序数。
-        ''' 若无法转换则返回 0。
+        ''' 将版本名转换为 Drop 序数。
+        ''' 若无法转换则返回 209。
         ''' </summary>
-        Public Shared Function VersionToDrop(Version As String, Optional AllowSnapshot As Boolean = False) As Integer
-            If Not AllowSnapshot AndAlso Version.Contains("-") Then Return 0
-            If Version Is Nothing Then Return 0
-            Dim Segments = Version.BeforeFirst("-").Split(".")
-            If Segments.Length < 2 Then Return 0
-            Dim Major As Integer = Val(Segments(0))
-            Dim Minor As Integer = Val(Segments(1))
-            If Major = 1 Then
-                Return Minor * 10
-            ElseIf Major < 25 Then
-                Return 0
-            Else
-                Return Major * 10 + Minor
-            End If
+        Public Shared Function VersionToDrop(VanillaName As String) As Integer
+            If VanillaName Is Nothing Then Return 209
+            Dim Version = NameToVersion(VanillaName)
+            If Version.Major >= 1000 Then Return 209
+            Return Version.Major * 10 + Version.Minor
         End Function
         ''' <summary>
         ''' 将 Drop 序数转换为版本字符串。
@@ -1133,8 +1163,47 @@ ExitDataLoad:
         Public Shared Function DropToVersion(Drop As Integer) As String
             If Drop >= 250 Then
                 Return $"{Drop \ 10}.{Drop Mod 10}"
+            ElseIf Drop = 209 Then
+                Logger.Warn(New Exception("尝试将旧快照版 Drop 序数转换为版本字符串，这不应该发生！"))
+                Return "1.20"
             Else
                 Return $"1.{Drop \ 10}"
+            End If
+        End Function
+        ''' <summary>
+        ''' 将版本名转换为可比较的三段式原版版本号。
+        ''' 对老版本格式，例如 1.20.3，会被转换为 20.0.3。
+        ''' 对愚人节版本，返回其基于的正式版版本号。
+        ''' 若没有版本号，例如旧快照，则为 9999.0.0。
+        ''' </summary>
+        Public Shared Function NameToVersion(Name As String) As Version
+            Name = Name.Lower.Replace("_unobfuscated", "").Replace(" Unobfuscated", "")
+            '愚人节版本
+            If Name.StartsWithF("2.0") Then Return NameToVersion("1.5.1")
+            If Name = "15w14a" Then Return NameToVersion("1.8.3")
+            If Name.Contains(".rv-pre") Then Return NameToVersion("1.9.2")
+            If Name.Contains("shareware") Then Return NameToVersion("1.13.2")
+            If Name.StartsWithF("20w14") AndAlso Name <> "20w14a" Then Return NameToVersion("1.15.2")
+            If Name.Contains("oneblockatatime") Then Return NameToVersion("1.18.2")
+            If Name.Contains("23w13a") AndAlso Name <> "20w13a" Then Return NameToVersion("1.19.4")
+            If Name = "24w14potato" Then Return NameToVersion("1.20.4")
+            If Name = "25w14craftmine" Then Return NameToVersion("1.21.4")
+            If Name = "26w14a" Then Return NameToVersion("26.1.1")
+            '其余版本
+            If Name.StartsWithF("1.") Then
+                Dim Segments = Name.Split(" _-.".ToCharArray)
+                Return New Version(
+                    Val(If(Segments.Count >= 2, Segments(1), "0")),
+                    0,
+                    Val(If(Segments.Count >= 3, Segments(2), "0")))
+            ElseIf Name.RegexCheck("^[2-9][0-9]\.") Then
+                Dim Segments = Name.Split(" _-.".ToCharArray)
+                Return New Version(
+                    Val(Segments(0)),
+                    Val(If(Segments.Count >= 2, Segments(1), "0")),
+                    Val(If(Segments.Count >= 3, Segments(2), "0")))
+            Else
+                Return New Version(9999, 0, 0)
             End If
         End Function
 
@@ -1144,7 +1213,7 @@ ExitDataLoad:
     ''' 根据版本名获取对应的愚人节版本描述。非愚人节版本会返回空字符串。
     ''' </summary>
     Public Function GetMcFoolName(Name As String) As String
-        Name = Name.ToLower
+        Name = Name.Lower
         If Name.StartsWithF("2.0") Then
             Return "2013 | " & GetLang("LangModMinecraftFoolName2.0")
         ElseIf Name = "15w14a" Then
@@ -1163,6 +1232,8 @@ ExitDataLoad:
             Return "2024 | " & GetLang("LangModMinecraftFoolName24w14potato")
         ElseIf Name = "25w14craftmine" Then
             Return "2025 | " & GetLang("LangModMinecraftFoolName25w14craftmine")
+        ElseIf Name = "26w14a" Then
+            Return "2026 | " & GetLang("LangModMinecraftFoolName26w14a")
         Else
             Return ""
         End If
@@ -1200,9 +1271,9 @@ ExitDataLoad:
 
             '检测缓存是否需要更新
             Dim FolderList As New List(Of String)
-            If Directory.Exists(PathMc & "versions") Then '不要使用 CheckPermission，会导致写入时间改变，从而使得文件夹被强制刷新
+            If DirectoryUtils.Exists(PathMc & "versions") Then '不要使用 CheckPermission，会导致写入时间改变，从而使得文件夹被强制刷新
                 Try
-                    For Each Folder As DirectoryInfo In New DirectoryInfo(PathMc & "versions").GetDirectories
+                    For Each Folder As DirectoryInfo In DirectoryUtils.GetInfo(PathMc & "versions").GetDirectories
                         FolderList.Add(Folder.Name)
                     Next
                 Catch ex As Exception
@@ -1215,7 +1286,7 @@ ExitDataLoad:
                 GoTo OnLoaded
             End If
             '有可用版本
-            Dim FolderListCheck As Integer = GetHash(McInstanceCacheVersion & "#" & Join(FolderList.ToArray, "#")) Mod (Integer.MaxValue - 1) '根据文件夹名列表生成辨识码
+            Dim FolderListCheck As Integer = (Versions.MCINSTANCE_CACHE_VERSION & "#" & FolderList.Join("#"c)).GetStableHashCode() Mod (Integer.MaxValue - 1) '根据文件夹名列表生成辨识码
             If Not McInstanceListForceRefresh AndAlso Val(ReadIni(PathMc & "PCL.ini", "InstanceCache")) = FolderListCheck Then
                 '可以使用缓存
                 Dim Result = InitMcInstanceListWithCache(PathMc)
@@ -1228,7 +1299,7 @@ ExitDataLoad:
                 '文件夹列表不符
 Reload:
                 McInstanceListForceRefresh = False
-                Log("[Minecraft] 文件夹列表变更，重载所有版本")
+                Logger.Info("文件夹列表变更，重载所有版本")
                 WriteIni(PathMc & "PCL.ini", "InstanceCache", FolderListCheck)
                 McInstanceList = InitMcInstanceListWithoutCache(PathMc)
             End If
@@ -1236,7 +1307,7 @@ Reload:
 
             '改变当前选择的版本
 OnLoaded:
-            If Loader.IsAborted Then Return
+            If Loader.IsInterrupted Then Return
             If McInstanceList.Any(Function(v) v.Key <> McInstanceCardType.Error) Then
                 '尝试读取已储存的选择
                 Dim SavedSelection As String = ReadIni(PathMc & "PCL.ini", "Version")
@@ -1246,8 +1317,7 @@ OnLoaded:
                             If Instance.Name = SavedSelection AndAlso Not Instance.State = McInstanceState.Error Then
                                 '使用已储存的选择
                                 McInstanceSelected = Instance
-                                Setup.Set("LaunchVersionSelect", McInstanceSelected.Name)
-                                Log("[Minecraft] 选择该文件夹储存的 Minecraft 版本：" & McInstanceSelected.PathVersion)
+                                Logger.Info($"选择该文件夹储存的 Minecraft 版本：{McInstanceSelected.PathVersion}")
                                 Return
                             End If
                         Next
@@ -1256,43 +1326,41 @@ OnLoaded:
                 If Not McInstanceList.First.Value(0).State = McInstanceState.Error Then
                     '自动选择第一项
                     McInstanceSelected = McInstanceList.First.Value(0)
-                    Setup.Set("LaunchVersionSelect", McInstanceSelected.Name)
-                    Log("[Launch] 自动选择 Minecraft 版本：" & McInstanceSelected.PathVersion)
+                    Logger.Info($"自动选择 Minecraft 版本：{McInstanceSelected.PathVersion}")
                 End If
             Else
                 McInstanceSelected = Nothing
-                Setup.Set("LaunchVersionSelect", "")
-                Log("[Minecraft] 未找到可用 Minecraft 版本")
+                Logger.Info("未找到可用 Minecraft 版本")
             End If
-            If Setup.Get("SystemDebugDelay") Then Thread.Sleep(RandomInteger(200, 3000))
+            If Settings.Get(Of Boolean)("SystemDebugDelay") Then Thread.Sleep(RandomInteger(200, 3000))
         Catch ex As ThreadInterruptedException
         Catch ex As Exception
-            If Loader.IsAborted Then Return '#5617
+            If Loader.IsInterrupted Then Return '#5617
             WriteIni(PathMc & "PCL.ini", "InstanceCache", "") '要求下次重新加载
-            Log(ex, "加载 .minecraft 版本列表失败", LogLevel.Feedback)
+            Logger.Error(ex, "加载 .minecraft 版本列表失败")
         End Try
     End Sub
 
     '获取版本列表
-    Private Function InitMcInstanceListWithCache(Path As String) As Dictionary(Of McInstanceCardType, List(Of McInstance))
+    Private Function InitMcInstanceListWithCache(Folder As String) As Dictionary(Of McInstanceCardType, List(Of McInstance))
         Dim Results As New Dictionary(Of McInstanceCardType, List(Of McInstance))
         Try
-            Dim CardCount As Integer = ReadIni(Path & "PCL.ini", "CardCount", -1)
+            Dim CardCount As Integer = ReadIni(Folder & "PCL.ini", "CardCount", -1)
             If CardCount = -1 Then Return Nothing
             For i = 0 To CardCount - 1
-                Dim CardType As McInstanceCardType = ReadIni(Path & "PCL.ini", "CardKey" & (i + 1), ":")
+                Dim CardType As McInstanceCardType = ReadIni(Folder & "PCL.ini", "CardKey" & (i + 1), ":")
                 Dim InstanceList As New List(Of McInstance)
 
                 '循环读取版本
-                For Each Folder As String In ReadIni(Path & "PCL.ini", "CardValue" & (i + 1), ":").Split(":")
-                    If Folder = "" Then Continue For
-                    Dim FolderVersions As String = $"{Path}versions\{Folder}\"
-                    If File.Exists(FolderVersions & ".pclignore") Then
+                For Each VersionName As String In ReadIni(Folder & "PCL.ini", "CardValue" & (i + 1), ":").Split(":")
+                    If VersionName = "" Then Continue For
+                    Dim FolderVersions As String = $"{Folder}versions\{VersionName}\"
+                    If FileUtils.Exists(FolderVersions & ".pclignore") Then
                         If IsFirstMcInstanceListLoad Then
-                            Log("[Minecraft] 清理残留的忽略项目：" & FolderVersions) '#2781
-                            File.Delete(FolderVersions & ".pclignore")
+                            Logger.Info($"清理残留的忽略项目：{FolderVersions}") '#2781
+                            FileUtils.Delete(FolderVersions & ".pclignore")
                         Else
-                            Log("[Minecraft] 跳过要求忽略的项目：" & FolderVersions)
+                            Logger.Info($"跳过要求忽略的项目：{FolderVersions}")
                             Continue For
                         End If
                     End If
@@ -1307,23 +1375,18 @@ OnLoaded:
                         Instance.ReleaseTime = ReadIni(Instance.PathVersion & "PCL\Setup.ini", "ReleaseTime", Instance.ReleaseTime)
                         Instance.State = ReadIni(Instance.PathVersion & "PCL\Setup.ini", "State", Instance.State)
                         Instance.IsStar = ReadIni(Instance.PathVersion & "PCL\Setup.ini", "IsStar", False)
-                        Instance.DisplayType = ReadIni(Path & "PCL\Setup.ini", "DisplayType", McInstanceCardType.Auto)
+                        Instance.DisplayType = ReadIni(Folder & "PCL\Setup.ini", "DisplayType", McInstanceCardType.Auto)
                         If Instance.State <> McInstanceState.Error AndAlso
                            ReadIni(Instance.PathVersion & "PCL\Setup.ini", "VersionVanillaName", "Unknown") <> "Unknown" Then
                             '读取版本信息
                             Dim VersionInfo As New McVersion With {
-                                .Fabric = ReadIni(Instance.PathVersion & "PCL\Setup.ini", "VersionFabric", ""),
-                                .Forge = ReadIni(Instance.PathVersion & "PCL\Setup.ini", "VersionForge", ""),
-                                .NeoForge = ReadIni(Instance.PathVersion & "PCL\Setup.ini", "VersionNeoForge", ""),
-                                .OptiFine = ReadIni(Instance.PathVersion & "PCL\Setup.ini", "VersionOptiFine", ""),
+                                .Fabric = ReadIni(Instance.PathVersion & "PCL\Setup.ini", "VersionFabric", Nothing),
+                                .Forge = ReadIni(Instance.PathVersion & "PCL\Setup.ini", "VersionForge", Nothing),
+                                .NeoForge = ReadIni(Instance.PathVersion & "PCL\Setup.ini", "VersionNeoForge", Nothing),
+                                .OptiFine = ReadIni(Instance.PathVersion & "PCL\Setup.ini", "VersionOptiFine", Nothing),
                                 .HasLiteLoader = ReadIni(Instance.PathVersion & "PCL\Setup.ini", "VersionLiteLoader", False),
-                                .VanillaName = ReadIni(Instance.PathVersion & "PCL\Setup.ini", "VersionVanillaName", "Unknown"),
-                                .Vanilla = New Version(ReadIni(Instance.PathVersion & "PCL\Setup.ini", "VersionVanilla", "0.0.0"))
+                                .VanillaName = ReadIni(Instance.PathVersion & "PCL\Setup.ini", "VersionVanillaName", "Unknown")
                             }
-                            VersionInfo.HasFabric = VersionInfo.Fabric.Any()
-                            VersionInfo.HasForge = VersionInfo.Forge.Any()
-                            VersionInfo.HasNeoForge = VersionInfo.NeoForge.Any()
-                            VersionInfo.HasOptiFine = VersionInfo.OptiFine.Any()
                             Instance.Version = VersionInfo
                         Else
                             Instance.Load()
@@ -1338,19 +1401,19 @@ OnLoaded:
                             '校验错误原因是否改变
                             Dim CustomInfo As String = ReadIni(Instance.PathVersion & "PCL\Setup.ini", "CustomInfo")
                             If Instance.State = McInstanceState.Original OrElse (CustomInfo = "" AndAlso Not OldDesc = Instance.Info) Then
-                                Log("[Minecraft] 版本 " & Instance.Name & " 的错误状态已变更，新的状态为：" & Instance.Info)
+                                Logger.Info($"版本 {Instance.Name} 的错误状态已变更，新的状态为：{Instance.Info}")
                                 Return Nothing
                             End If
                         End If
 
                         '校验未加载的版本
                         If Instance.Logo = "" Then
-                            Log("[Minecraft] 版本 " & Instance.Name & " 未被加载")
+                            Logger.Info($"版本 {Instance.Name} 未被加载")
                             Return Nothing
                         End If
 
                     Catch ex As Exception
-                        Log(ex, "读取版本加载缓存失败（" & Folder & "）", LogLevel.Debug)
+                        Logger.Warn(ex, $"读取版本加载缓存失败（{VersionName}）")
                         Return Nothing
                     End Try
                 Next
@@ -1359,30 +1422,31 @@ OnLoaded:
             Next
             Return Results
         Catch ex As Exception
-            Log(ex, "读取版本缓存失败")
+            Logger.Warn(ex, "读取版本缓存失败")
             Return Nothing
         End Try
     End Function
-    Private Function InitMcInstanceListWithoutCache(Path As String) As Dictionary(Of McInstanceCardType, List(Of McInstance))
+    Private Function InitMcInstanceListWithoutCache(Folder As String) As Dictionary(Of McInstanceCardType, List(Of McInstance))
         Dim InstanceList As New List(Of McInstance)
 
 #Region "循环加载每个版本的信息"
-        For Each Folder As DirectoryInfo In New DirectoryInfo(Path & "versions").GetDirectories
-            If Not Folder.Exists OrElse Not Folder.EnumerateFiles.Any Then
-                Log("[Minecraft] 跳过空文件夹：" & Folder.FullName)
+        For Each VersionFolderInfo As DirectoryInfo In DirectoryUtils.GetInfo(Folder & "versions").GetDirectories
+            If Not VersionFolderInfo.Exists OrElse Not VersionFolderInfo.EnumerateFiles.Any Then
+                Logger.Info($"跳过空文件夹：{VersionFolderInfo.FullName}")
                 Continue For
             End If
-            If (Folder.Name = "cache" OrElse Folder.Name = "BLClient" OrElse Folder.Name = "PCL") AndAlso Not File.Exists(Folder.FullName & "\" & Folder.Name & ".json") Then
-                Log("[Minecraft] 跳过可能不是版本文件夹的项目：" & Folder.FullName)
+            If (VersionFolderInfo.Name = "cache" OrElse VersionFolderInfo.Name = "BLClient" OrElse VersionFolderInfo.Name = "PCL") AndAlso
+                Not FileUtils.Exists(VersionFolderInfo.FullName & "\" & VersionFolderInfo.Name & ".json") Then
+                Logger.Info($"跳过可能不是版本文件夹的项目：{VersionFolderInfo.FullName}")
                 Continue For
             End If
-            Dim VersionFolder As String = Folder.FullName & "\"
-            If File.Exists(VersionFolder & ".pclignore") Then
+            Dim VersionFolder As String = VersionFolderInfo.FullName & "\"
+            If FileUtils.Exists(VersionFolder & ".pclignore") Then
                 If IsFirstMcInstanceListLoad Then
-                    Log("[Minecraft] 清理残留的忽略项目：" & VersionFolder) '#2781
-                    File.Delete(VersionFolder & ".pclignore")
+                    Logger.Info($"清理残留的忽略项目：{VersionFolder}") '#2781
+                    FileUtils.Delete(VersionFolder & ".pclignore")
                 Else
-                    Log("[Minecraft] 跳过要求忽略的项目：" & VersionFolder)
+                    Logger.Info($"跳过要求忽略的项目：{VersionFolder}")
                     Continue For
                 End If
             End If
@@ -1425,7 +1489,7 @@ OnLoaded:
             '确认最新版本，若为快照则加入常用列表
             Dim LargestInstance As McInstance = InstanceList.
                 Where(Function(v) v.State = McInstanceState.Original OrElse v.State = McInstanceState.Snapshot).
-                MaxOf(Function(v) v.ReleaseTime)
+                MaxBy(Function(v) v.ReleaseTime)
             If LargestInstance IsNot Nothing AndAlso LargestInstance.State = McInstanceState.Snapshot Then
                 InstanceUseful.Add(LargestInstance)
                 InstanceList.Remove(LargestInstance)
@@ -1492,7 +1556,7 @@ OnLoaded:
 
         Catch ex As Exception
             Results.Clear()
-            Log(ex, "分类版本列表失败", LogLevel.Feedback)
+            Logger.Error(ex, "分类版本列表失败")
         End Try
 #End Region
 #Region "对卡片与版本进行排序"
@@ -1533,14 +1597,14 @@ OnLoaded:
 
 #End Region
 #Region "保存卡片缓存"
-        WriteIni(Path & "PCL.ini", "CardCount", Results.Count)
+        WriteIni(Folder & "PCL.ini", "CardCount", Results.Count)
         For i = 0 To Results.Count - 1
-            WriteIni(Path & "PCL.ini", "CardKey" & (i + 1), Results.Keys(i))
+            WriteIni(Folder & "PCL.ini", "CardKey" & (i + 1), Results.Keys(i))
             Dim Value As String = ""
             For Each Instance As McInstance In Results.Values(i)
                 Value += Instance.Name & ":"
             Next
-            WriteIni(Path & "PCL.ini", "CardValue" & (i + 1), Value)
+            WriteIni(Folder & "PCL.ini", "CardValue" & (i + 1), Value)
         Next
 #End Region
         Return Results
@@ -1596,23 +1660,23 @@ OnLoaded:
     ''' 要求玩家选择一个皮肤文件，并进行相关校验。
     ''' </summary>
     Public Function McSkinSelect() As McSkinInfo
-        Dim FileName As String = SelectFile(GetLang("LangModMinecraftSelectTypeSkin") & "(*.png;*.jpg;*.jpeg;*.webp)|*.png;*.jpg;*.jpeg;*.webp", GetLang("LangModMinecraftSelectTitleSkin"))
+        Dim FileName As String = Dialogs.SelectFile(GetLang("LangModMinecraftSelectTitleSkin"), False, filter:={({"png", "jpg", "jpeg", "webp"}, GetLang("LangModMinecraftSelectTypeSkin"))}).FirstOrDefault()
 
         '验证有效性
-        If FileName = "" Then Return New McSkinInfo With {.IsVaild = False}
+        If String.IsNullOrEmpty(FileName) Then Return New McSkinInfo With {.IsVaild = False}
         Try
             Dim Image As New MyBitmap(FileName)
             If Image.Pic.Width <> 64 OrElse Not (Image.Pic.Height = 32 OrElse Image.Pic.Height = 64) Then
                 Hint(GetLang("LangModMinecraftSkinSizeErrorA"), HintType.Red)
                 Return New McSkinInfo With {.IsVaild = False}
             End If
-            Dim FileInfo As New FileInfo(FileName)
+            Dim FileInfo = FileUtils.GetInfo(FileName)
             If FileInfo.Length > 24 * 1024 Then
                 Hint(GetLang("LangModMinecraftSkinSizeErrorB") & " " & Math.Round(FileInfo.Length / 1024, 2) & " KB", HintType.Red)
                 Return New McSkinInfo With {.IsVaild = False}
             End If
         Catch ex As Exception
-            Log(ex, GetLang("LangModMinecraftSkinErrorFile"), LogLevel.Hint)
+            Logger.Error(ex, GetLang("LangModMinecraftSkinErrorFile"), LogBehavior.Toast)
             Return New McSkinInfo With {.IsVaild = False}
         End Try
 
@@ -1641,9 +1705,9 @@ OnLoaded:
             Case "Mojang", "Ms"
                 Url = "https://sessionserver.mojang.com/session/minecraft/profile/"
             Case "Nide"
-                Url = "https://auth.mc-user.com:233/" & If(McInstanceSelected Is Nothing, Setup.Get("CacheNideServer"), Setup.Get("VersionServerNide", Instance:=McInstanceSelected)) & "/sessionserver/session/minecraft/profile/"
+                Url = "https://auth.mc-user.com:233/" & If(McInstanceSelected Is Nothing, Settings.Get(Of String)("CacheNideServer"), Settings.Get(Of String)("VersionServerNide", Instance:=McInstanceSelected)) & "/sessionserver/session/minecraft/profile/"
             Case "Auth"
-                Url = If(McInstanceSelected Is Nothing, Setup.Get("CacheAuthServerServer"), Setup.Get("VersionServerAuthServer", Instance:=McInstanceSelected)) & "/sessionserver/session/minecraft/profile/"
+                Url = If(McInstanceSelected Is Nothing, Settings.Get(Of String)("CacheAuthServerServer"), Settings.Get(Of String)("VersionServerAuthServer", Instance:=McInstanceSelected)) & "/sessionserver/session/minecraft/profile/"
             Case Else
                 Throw New ArgumentException(GetLang("LangModMinecraftExceptionSkinTypeInvalid", If(Type, "null")))
         End Select
@@ -1660,11 +1724,11 @@ OnLoaded:
             Next
             Throw New Exception(GetLang("LangModMinecraftExceptionSkinPropertyNotFound"))
         Catch ex As Exception
-            Log(ex, "无法完成解析的皮肤返回值，可能是未设置自定义皮肤的用户：" & SkinString, LogLevel.Developer)
+            Logger.Warn(ex, $"无法完成解析的皮肤返回值，可能是未设置自定义皮肤的用户：{SkinString}")
             Throw New Exception(GetLang("LangModMinecraftExceptionSkinNoData"), ex)
         End Try
-        SkinString = Encoding.GetEncoding("utf-8").GetString(Convert.FromBase64String(SkinValue))
-        Dim SkinJson As JObject = GetJson(SkinString.ToLower)
+        SkinString = Encoding.UTF8.GetString(Convert.FromBase64String(SkinValue))
+        Dim SkinJson As JObject = GetJson(SkinString.Lower)
         If SkinJson("textures") Is Nothing OrElse SkinJson("textures")("skin") Is Nothing OrElse SkinJson("textures")("skin")("url") Is Nothing Then
             Throw New Exception(GetLang("LangModMinecraftExceptionSkinNotSet"))
         Else
@@ -1673,23 +1737,23 @@ OnLoaded:
         End If
         '保存缓存
         WriteIni(PathTemp & "Cache\Skin\Index" & Type & ".ini", UUID, SkinValue)
-        Log("[Skin] UUID " & UUID & " 对应的皮肤文件为 " & SkinValue)
+        Logger.Info($"UUID {UUID} 对应的皮肤文件为 {SkinValue}")
         Return SkinValue
     End Function
 
     Private ReadOnly McSkinDownloadLock As New Object
     ''' <summary>
-    ''' 从 Url 下载皮肤。返回本地文件路径，失败将抛出异常。
+    ''' 从 Url 下载皮肤，可能会使用缓存。返回本地文件路径，失败将抛出异常。
     ''' </summary>
     Public Function McSkinDownload(Address As String) As String
-        Dim SkinName As String = GetFileNameFromPath(Address)
-        Dim FileAddress As String = PathTemp & "Cache\Skin\" & GetHash(Address) & ".png"
+        Dim SkinName As String = PathUtils.GetLastPart(Address)
+        Dim FileAddress As String = PathTemp & "Cache\Skin\" & Address.GetStableHashCode() & ".png"
         SyncLock McSkinDownloadLock
-            If Not File.Exists(FileAddress) Then
+            If Not FileUtils.Exists(FileAddress) Then
                 NetDownloadByClient(Address, FileAddress & ".PCLDownloading")
-                File.Delete(FileAddress)
-                FileSystem.Rename(FileAddress & ".PCLDownloading", FileAddress)
-                Log("[Minecraft] 皮肤下载成功：" & FileAddress)
+                FileUtils.Delete(FileAddress)
+                FileUtils.Move(FileAddress & ".PCLDownloading", FileAddress)
+                Logger.Info($"皮肤下载成功：{FileAddress}")
             End If
             Return FileAddress
         End SyncLock
@@ -1724,7 +1788,7 @@ OnLoaded:
 
 #Region "支持库文件（Library）"
 
-    Public Class McLibToken
+    Public Class McLibEntry
         ''' <summary>
         ''' 文件的完整本地路径。
         ''' </summary>
@@ -1762,7 +1826,7 @@ OnLoaded:
                 If OriginalName Is Nothing Then Return Nothing
                 Dim Splited As New List(Of String)(OriginalName.Split(":"))
                 Splited.RemoveAt(2) 'Java 的此格式下版本号固定为第三段，第四段可能包含架构、分包等其他信息
-                Return Join(Splited, ":")
+                Return Splited.Join(":"c)
             End Get
         End Property
         ''' <summary>
@@ -1771,7 +1835,7 @@ OnLoaded:
         Public OriginalName As String
 
         Public Overrides Function ToString() As String
-            Return If(IsNatives, "[Native] ", "") & GetString(Size) & " | " & LocalPath
+            Return If(IsNatives, "[Native] ", "") & FormatFileSize(Size) & " | " & LocalPath
         End Function
     End Class
 
@@ -1794,8 +1858,7 @@ OnLoaded:
                     If OsName = "unknown" Then
                     ElseIf OsName = "windows" Then
                         If Rule("os")("version") IsNot Nothing Then '操作系统版本
-                            Dim Cr As String = Rule("os")("version").ToString
-                            IsRightRule = IsRightRule AndAlso RegexCheck(OSVersion, Cr)
+                            IsRightRule = IsRightRule AndAlso OSVersion.RegexCheck(Rule("os")("version").ToString)
                         End If
                     Else
                         IsRightRule = False
@@ -1827,10 +1890,10 @@ OnLoaded:
     ''' <summary>
     ''' 递归获取 Minecraft 某一版本的完整支持库列表。
     ''' </summary>
-    Public Function McLibListGet(Instance As McInstance, IncludeMainJar As Boolean) As List(Of McLibToken)
+    Public Function McLibListGet(Instance As McInstance, IncludeMainJar As Boolean) As List(Of McLibEntry)
 
         '获取当前支持库列表
-        Log("[Minecraft] 获取支持库列表：" & Instance.Name)
+        Logger.Info($"获取支持库列表：{Instance.Name}")
         Dim Result = McLibListGetWithJson(Instance.JsonObject)
 
         '需要添加原版 Jar
@@ -1858,9 +1921,9 @@ OnLoaded:
             Dim ClientUrl As String, ClientSHA1 As String
             '判断需求的版本是否存在
             '不能调用 RealVersion.Check()，可能会莫名其妙地触发 CheckPermission 正被另一进程使用，导致误判前置不存在
-            If Not File.Exists(RealInstance.PathVersion & RealInstance.Name & ".json") Then
+            If Not FileUtils.Exists(RealInstance.PathVersion & RealInstance.Name & ".json") Then
                 RealInstance = Instance
-                Log("[Minecraft] 可能缺少前置版本 " & RealInstance.Name & "，找不到对应的 json 文件", LogLevel.Debug)
+                Logger.Warn($"可能缺少前置版本 {RealInstance.Name}，找不到对应的 json 文件")
             End If
             '获取详细下载信息
             If RealInstance.JsonObject("downloads") IsNot Nothing AndAlso RealInstance.JsonObject("downloads")("client") IsNot Nothing Then
@@ -1871,7 +1934,7 @@ OnLoaded:
                 ClientSHA1 = Nothing
             End If
             '把所需的原版 Jar 添加进去
-            Result.Add(New McLibToken With {.LocalPath = RealInstance.PathVersion & RealInstance.Name & ".jar", .Size = 0, .IsNatives = False, .Url = ClientUrl, .SHA1 = ClientSHA1})
+            Result.Add(New McLibEntry With {.LocalPath = RealInstance.PathVersion & RealInstance.Name & ".jar", .Size = 0, .IsNatives = False, .Url = ClientUrl, .SHA1 = ClientSHA1})
         End If
 
         Return Result
@@ -1879,11 +1942,11 @@ OnLoaded:
     ''' <summary>
     ''' 获取 Minecraft 某一版本忽视继承的支持库列表，即结果中没有继承项。
     ''' </summary>
-    Public Function McLibListGetWithJson(JsonObject As JObject, Optional KeepSameNameDifferentVersionResult As Boolean = False, Optional CustomMcFolder As String = Nothing) As List(Of McLibToken)
+    Public Function McLibListGetWithJson(JsonObject As JObject, Optional KeepSameNameDifferentVersionResult As Boolean = False, Optional CustomMcFolder As String = Nothing) As List(Of McLibEntry)
         CustomMcFolder = If(CustomMcFolder, McFolderSelected)
 
         '转换为 LibToken
-        Dim BasicArray As New List(Of McLibToken)
+        Dim BasicArray As New List(Of McLibEntry)
         For Each Library As JObject In CType(JsonObject("libraries"), JArray).Children
 
             '清理 null 项（BakaXL 会把没有的项序列化为 null，但会被 Newtonsoft 转换为 JValue，导致 Is Nothing = false；这导致了 #409）
@@ -1906,49 +1969,51 @@ OnLoaded:
                 LocalPath = McLibGet(Library("name"), CustomMcFolder:=CustomMcFolder)
                 Try
                     If Library("downloads") IsNot Nothing AndAlso Library("downloads")("artifact") IsNot Nothing Then
-                        BasicArray.Add(New McLibToken With {
+                        BasicArray.Add(New McLibEntry With {
                             .OriginalName = Library("name"),
-                            .Url = If(RootUrl, Library("downloads")("artifact")("url")),
+                            .Url = If(Library("downloads")("artifact")("url"), RootUrl),
                             .LocalPath = If(Library("downloads")("artifact")("path") Is Nothing, McLibGet(Library("name"),
                                 CustomMcFolder:=CustomMcFolder), CustomMcFolder & "libraries\" & Library("downloads")("artifact")("path").ToString.Replace("/", "\")),
                             .Size = Val(Library("downloads")("artifact")("size").ToString),
                             .IsNatives = False,
                             .SHA1 = Library("downloads")("artifact")("sha1")?.ToString})
                     Else
-                        BasicArray.Add(New McLibToken With {.OriginalName = Library("name"), .Url = RootUrl, .LocalPath = LocalPath, .Size = 0, .IsNatives = False, .SHA1 = Nothing})
+                        BasicArray.Add(New McLibEntry With {.OriginalName = Library("name"), .Url = RootUrl, .LocalPath = LocalPath, .Size = 0, .IsNatives = False, .SHA1 = Nothing})
                     End If
                 Catch ex As Exception
-                    Log(ex, "处理实际支持库列表失败（无 Natives，" & If(Library("name"), "Nothing").ToString & "）")
-                    BasicArray.Add(New McLibToken With {.OriginalName = Library("name"), .Url = RootUrl, .LocalPath = LocalPath, .Size = 0, .IsNatives = False, .SHA1 = Nothing})
+                    Logger.Warn(ex, $"处理实际支持库列表失败（无 Natives，{If(Library("name"), "Nothing")}）")
+                    BasicArray.Add(New McLibEntry With {.OriginalName = Library("name"), .Url = RootUrl, .LocalPath = LocalPath, .Size = 0, .IsNatives = False, .SHA1 = Nothing})
                 End Try
             ElseIf Library("natives")("windows") IsNot Nothing Then '有 Windows Natives
+                Dim NativeName As String = Library("natives")("windows")
                 Try
-                    If Library("downloads") IsNot Nothing AndAlso Library("downloads")("classifiers") IsNot Nothing AndAlso Library("downloads")("classifiers")("natives-windows") IsNot Nothing Then
-                        BasicArray.Add(New McLibToken With {
+                    If Library("downloads") IsNot Nothing AndAlso Library("downloads")("classifiers") IsNot Nothing AndAlso Library("downloads")("classifiers")(NativeName) IsNot Nothing Then
+                        Dim NativeData = Library("downloads")("classifiers")(NativeName)
+                        BasicArray.Add(New McLibEntry With {
                              .OriginalName = Library("name"),
-                             .Url = If(RootUrl, Library("downloads")("classifiers")("natives-windows")("url")),
-                             .LocalPath = If(Library("downloads")("classifiers")("natives-windows")("path") Is Nothing,
+                             .Url = If(NativeData("url"), RootUrl),
+                             .LocalPath = If(NativeData("path") Is Nothing,
                                  McLibGet(Library("name"), CustomMcFolder:=CustomMcFolder).
-                                    Replace(".jar", "-" & Library("natives")("windows").ToString & ".jar").
+                                    Replace(".jar", "-" & NativeName & ".jar").
                                     Replace("${arch}", If(Environment.Is64BitOperatingSystem, "64", "32")),
-                                    $"{CustomMcFolder}libraries\{Library("downloads")("classifiers")("natives-windows")("path").ToString.Replace("/", "\")}"),
-                             .Size = Val(Library("downloads")("classifiers")("natives-windows")("size").ToString),
+                                    $"{CustomMcFolder}libraries\{NativeData("path").ToString.Replace("/", "\")}"),
+                             .Size = Val(NativeData("size").ToString),
                              .IsNatives = True,
-                             .SHA1 = Library("downloads")("classifiers")("natives-windows")("sha1").ToString})
+                             .SHA1 = NativeData("sha1").ToString})
                     Else
                         BasicArray.Add(
-                        New McLibToken With {.OriginalName = Library("name"), .Url = RootUrl, .Size = 0, .IsNatives = True, .SHA1 = Nothing,
+                        New McLibEntry With {.OriginalName = Library("name"), .Url = RootUrl, .Size = 0, .IsNatives = True, .SHA1 = Nothing,
                             .LocalPath = McLibGet(Library("name"), CustomMcFolder:=CustomMcFolder).
-                                 Replace(".jar", $"-{Library("natives")("windows")}.jar").
+                                 Replace(".jar", $"-{NativeName}.jar").
                                  Replace("${arch}", If(Environment.Is64BitOperatingSystem, "64", "32"))
                         })
                     End If
                 Catch ex As Exception
-                    Log(ex, "处理实际支持库列表失败（有 Natives，" & If(Library("name"), "Nothing").ToString & "）")
+                    Logger.Warn(ex, $"处理实际支持库列表失败（有 Natives，{If(Library("name"), "Nothing")}）")
                     BasicArray.Add(
-                        New McLibToken With {.OriginalName = Library("name"), .Url = RootUrl, .Size = 0, .IsNatives = True, .SHA1 = Nothing,
+                        New McLibEntry With {.OriginalName = Library("name"), .Url = RootUrl, .Size = 0, .IsNatives = True, .SHA1 = Nothing,
                              .LocalPath = McLibGet(Library("name"), CustomMcFolder:=CustomMcFolder).
-                                 Replace(".jar", $"-{Library("natives")("windows")}.jar").
+                                 Replace(".jar", $"-{NativeName}.jar").
                                  Replace("${arch}", If(Environment.Is64BitOperatingSystem, "64", "32"))
                         })
                 End Try
@@ -1957,14 +2022,14 @@ OnLoaded:
         Next
 
         '去重
-        Dim ResultArray As New Dictionary(Of String, McLibToken)
+        Dim ResultArray As New Dictionary(Of String, McLibEntry)
         Dim GetVersion =
-        Function(Token As McLibToken) As String
+        Function(Token As McLibEntry) As String
             '测试例：
             'D:\Minecraft\test\libraries\net\neoforged\mergetool\2.0.0\mergetool-2.0.0-api.jar
             'D:\Minecraft\test\libraries\org\apache\commons\commons-collections4\4.2\commons-collections4-4.2.jar
             'D:\Minecraft\test\libraries\com\google\guava\guava\31.1-jre\guava-31.1-jre.jar
-            Return GetFolderNameFromPath(GetPathFromFullPath(Token.LocalPath))
+            Return PathUtils.GetLastPart(PathUtils.RemoveLastPart(Token.LocalPath))
         End Function
         For i = 0 To BasicArray.Count - 1
             Dim Key As String = BasicArray(i).Name & BasicArray(i).IsNatives.ToString
@@ -1972,10 +2037,10 @@ OnLoaded:
                 Dim BasicArrayVersion As String = GetVersion(BasicArray(i))
                 Dim ResultArrayVersion As String = GetVersion(ResultArray(Key))
                 If BasicArrayVersion <> ResultArrayVersion AndAlso KeepSameNameDifferentVersionResult Then
-                    Log($"[Minecraft] 发现疑似重复的支持库：{BasicArray(i)} ({BasicArrayVersion}) 与 {ResultArray(Key)} ({ResultArrayVersion})")
+                    Logger.Info($"发现疑似重复的支持库：{BasicArray(i)} ({BasicArrayVersion}) 与 {ResultArray(Key)} ({ResultArrayVersion})")
                     ResultArray.Add(Key & GetUuid(), BasicArray(i))
                 Else
-                    Log($"[Minecraft] 发现重复的支持库：{BasicArray(i)} ({BasicArrayVersion}) 与 {ResultArray(Key)} ({ResultArrayVersion})，已忽略其中之一")
+                    Logger.Info($"发现重复的支持库：{BasicArray(i)} ({BasicArrayVersion}) 与 {ResultArray(Key)} ({ResultArrayVersion})，已忽略其中之一")
                     If CompareVersionGE(BasicArrayVersion, ResultArrayVersion) Then
                         ResultArray(Key) = BasicArray(i)
                     End If
@@ -2001,26 +2066,26 @@ OnLoaded:
             Dim MainJar As NetFile = DlClientJarGet(Instance, True)
             If MainJar IsNot Nothing Then Result.Add(MainJar)
         Catch ex As Exception
-            Log(ex, "版本缺失主 jar 文件所必须的信息", LogLevel.Developer)
+            Logger.Warn(ex, "版本缺失主 jar 文件所必须的信息")
         End Try
 
         'Library 文件
         Result.AddRange(McLibNetFilesFromTokens(McLibListGet(Instance, False)))
 
         '统一通行证文件
-        If Setup.Get("VersionServerLogin", Instance:=Instance) = 3 Then
-            Dim TargetFile As String = PathAppdata & "nide8auth.jar"
+        If Settings.Get(Of Integer)("VersionServerLogin", Instance:=Instance) = 3 Then
+            Dim TargetFile As String = PathPure & "nide8auth.jar"
             Try
                 '测试链接：https://auth.mc-user.com:233/00000000000000000000000000000000/
-                Log("[Minecraft] 开始获取统一通行证下载信息")
-                Dim DownloadInfo = GetJson(NetRequestByClientRetry("https://auth.mc-user.com:233/" & Setup.Get("VersionServerNide", Instance:=Instance), RequireJson:=True))
+                Logger.Info("开始获取统一通行证下载信息")
+                Dim DownloadInfo = GetJson(NetRequestByClientRetry("https://auth.mc-user.com:233/" & Settings.Get(Of String)("VersionServerNide", Instance:=Instance), RequireJson:=True))
                 Result.Add(New NetFile(
                     Urls:={"https://login.mc-user.com:233/index/jar"},
                     LocalPath:=TargetFile,
                     Checker:=New FileChecker(Hash:=DownloadInfo("jarHash").ToString)))
             Catch ex As Exception
-                If File.Exists(TargetFile) Then
-                    Log(ex, "获取统一通行证下载信息失败")
+                If FileUtils.Exists(TargetFile) Then
+                    Logger.Warn(ex, "获取统一通行证下载信息失败")
                 Else
                     Throw New Exception("获取统一通行证下载信息失败", ex)
                 End If
@@ -2028,10 +2093,10 @@ OnLoaded:
         End If
 
         'Authlib-Injector 文件
-        If Setup.Get("VersionServerLogin", Instance:=Instance) = 4 Then
+        If Settings.Get(Of Integer)("VersionServerLogin", Instance:=Instance) = 4 Then
             Dim TargetFile = PathPure & "authlib-injector.jar"
             Try
-                Log("[Minecraft] 开始获取 Authlib-Injector 下载信息")
+                Logger.Info("开始获取 Authlib-Injector 下载信息")
                 Dim DownloadInfo = GetJson(NetRequestByClientRetry(
                         "https://authlib-injector.yushi.moe/artifact/latest.json",
                         BackupUrl:="https://bmclapi2.bangbang93.com/mirrors/authlib-injector/artifact/latest.json", RequireJson:=True))
@@ -2042,8 +2107,8 @@ OnLoaded:
                     DownloadAddress.Replace("authlib-injector.yushi.moe", "bmclapi2.bangbang93.com/mirrors/authlib-injector")
                 }, TargetFile, New FileChecker(Hash:=DownloadInfo("checksums")("sha256").ToString)))
             Catch ex As Exception
-                If File.Exists(TargetFile) Then
-                    Log(ex, "获取 Authlib-Injector 下载信息失败")
+                If FileUtils.Exists(TargetFile) Then
+                    Logger.Warn(ex, "获取 Authlib-Injector 下载信息失败")
                 Else
                     Throw New Exception("获取 Authlib-Injector 下载信息失败", ex)
                 End If
@@ -2052,11 +2117,11 @@ OnLoaded:
 
         '跳过校验
         If ShouldIgnoreFileCheck(Instance) Then
-            Log("[Minecraft] 设置要求尽量忽略文件检查，这可能会保留有误的文件", LogLevel.Debug)
+            Logger.Warn("设置要求尽量忽略文件检查，这可能会保留有误的文件")
             Result = Result.Where(
             Function(f)
-                If File.Exists(f.LocalPath) Then
-                    Log("[Minecraft] 跳过下载的支持库文件：" & f.LocalPath, LogLevel.Debug)
+                If FileUtils.Exists(f.LocalPath) Then
+                    Logger.Warn($"跳过下载的支持库文件：{f.LocalPath}")
                     Return False
                 Else
                     Return True
@@ -2069,14 +2134,14 @@ OnLoaded:
     ''' <summary>
     ''' 将 McLibToken 列表转换为 NetFile。
     ''' </summary>
-    Public Function McLibNetFilesFromTokens(Libs As List(Of McLibToken), Optional CustomMcFolder As String = Nothing) As List(Of NetFile)
+    Public Function McLibNetFilesFromTokens(Libs As List(Of McLibEntry), Optional CustomMcFolder As String = Nothing) As List(Of NetFile)
         CustomMcFolder = If(CustomMcFolder, McFolderSelected)
         Dim Result As New List(Of NetFile)
         '获取
-        For Each Token As McLibToken In Libs
+        For Each Token As McLibEntry In Libs
             '检查器
             Dim Checker As FileChecker
-            If Token.Name.ContainsF("labymod") Then
+            If Token.Name.ContainsIgnoreCase("labymod") Then
                 Checker = New FileChecker '不检查 LabyMod 的文件，它们提供的文件校验信息是错的（#3225）
             Else
                 Checker = New FileChecker(ActualSize:=If(Token.Size = 0, -1, Token.Size), Hash:=Token.SHA1)
@@ -2095,7 +2160,7 @@ OnLoaded:
                 End If
                 If Token.Url.Contains("maven") Then
                     Dim BmclapiUrl As String =
-                        Token.Url.Replace(Mid(Token.Url, 1, Token.Url.IndexOfF("maven")), "https://bmclapi2.bangbang93.com/").Replace("maven.fabricmc.net", "maven").Replace("maven.minecraftforge.net", "maven").Replace("maven.neoforged.net/releases", "maven")
+                        Token.Url.Replace(Token.Url.Substring(0, Token.Url.IndexOfF("maven")), "https://bmclapi2.bangbang93.com/").Replace("maven.fabricmc.net", "maven").Replace("maven.minecraftforge.net", "maven").Replace("maven.neoforged.net/releases", "maven")
                     If DlSourcePreferMojang Then
                         Urls.Add(BmclapiUrl) '官方源优先
                     Else
@@ -2105,12 +2170,12 @@ OnLoaded:
             End If
             If Token.LocalPath.Contains("transformer-discovery-service") Then
                 'Transformer 文件释放
-                If Not File.Exists(Token.LocalPath) Then WriteFile(Token.LocalPath, GetResources("Transformer"))
-                Log("[Download] 已自动释放 Transformer Discovery Service", LogLevel.Developer)
+                If Not FileUtils.Exists(Token.LocalPath) Then ExtractResources(Token.LocalPath, "Transformer")
+                Logger.Warn("已自动释放 Transformer Discovery Service")
                 Continue For
             ElseIf Token.LocalPath.Contains("optifine\OptiFine") Then
                 'OptiFine 主 Jar
-                Dim OptiFineBase As String = Token.LocalPath.Replace(CustomMcFolder & "libraries\optifine\OptiFine\", "").Split("_")(0) & "/" & GetFileNameFromPath(Token.LocalPath).Replace("-", "_")
+                Dim OptiFineBase As String = Token.LocalPath.Replace(CustomMcFolder & "libraries\optifine\OptiFine\", "").Split("_")(0) & "/" & PathUtils.GetLastPart(Token.LocalPath).Replace("-", "_")
                 OptiFineBase = "/maven/com/optifine/" & OptiFineBase
                 If OptiFineBase.Contains("_pre") Then OptiFineBase = OptiFineBase.Replace("com/optifine/", "com/optifine/preview_")
                 Urls.Add("https://bmclapi2.bangbang93.com" & OptiFineBase)
@@ -2121,7 +2186,7 @@ OnLoaded:
             Result.Add(New NetFile(Urls.Distinct, Token.LocalPath, Checker))
         Next
         '去重并返回
-        Return Result.Distinct(Function(a, b) a.LocalPath = b.LocalPath)
+        Return Result.DistinctBy(Function(a) a.LocalPath).ToList
     End Function
     ''' <summary>
     ''' 获取对应的支持库文件地址。
@@ -2134,15 +2199,16 @@ OnLoaded:
         '文件夹名应该忽略最后一段（client），但文件名需要保留
         '参见 #7306（以及 #5376 也是因为这里没有处理好导致的）
         Dim Splited = Original.Split(":")
-        McLibGet = If(WithHead, CustomMcFolder & "libraries\", "") &
+        Dim Result = If(WithHead, CustomMcFolder & "libraries\", "") &
             $"{Splited(0).Replace(".", "\")}\{Splited(1)}\{Splited(2)}\{Splited.Skip(1).Join("-")}.jar"
+        Return Result
     End Function
 
     ''' <summary>
     ''' 检查设置，是否应当忽略文件检查？
     ''' </summary>
     Public Function ShouldIgnoreFileCheck(Instance As McInstance)
-        Return Setup.Get("VersionAdvanceAssetsV2", Instance:=Instance) OrElse (Setup.Get("VersionAdvanceAssets", Instance:=Instance) = 2)
+        Return Settings.Get(Of Boolean)("VersionAdvanceAssetsV2", Instance:=Instance) OrElse (Settings.Get(Of Integer)("VersionAdvanceAssets", Instance:=Instance) = 2)
     End Function
 
 #End Region
@@ -2171,10 +2237,10 @@ OnLoaded:
         If ReturnLegacyOnError Then
             '返回 assets 文件名会由于没有下载地址导致全局失败
             'If AssetsName IsNot Nothing AndAlso AssetsName <> "legacy" Then
-            '    Log("[Minecraft] 无法获取资源文件索引下载地址，使用 assets 项提供的资源文件名：" & AssetsName)
+            '    Logger.Info[Minecraft] 无法获取资源文件索引下载地址，使用 assets 项提供的资源文件名：" & AssetsName)
             '    Return GetJson("{""id"": """ & AssetsName & """}")
             'Else
-            Log("[Minecraft] 无法获取资源文件索引下载地址，使用默认的 legacy 下载地址")
+            Logger.Info("无法获取资源文件索引下载地址，使用默认的 legacy 下载地址")
             Return GetJson("{
                 ""id"": ""legacy"",
                 ""sha1"": ""c0fd82e8ce9fbc93119e40d96d5a4e62cfa3f729"",
@@ -2203,7 +2269,7 @@ OnLoaded:
                 Instance = New McInstance(McFolderSelected & "versions\" & Instance.InheritName)
             Loop
         Catch ex As Exception
-            Log(ex, "获取资源文件索引名失败")
+            Logger.Warn(ex, "获取资源文件索引名失败")
         End Try
         Return "legacy"
     End Function
@@ -2228,7 +2294,7 @@ OnLoaded:
         Public Hash As String
 
         Public Overrides Function ToString() As String
-            Return GetString(Size) & " | " & LocalPath
+            Return FormatFileSize(Size) & " | " & LocalPath
         End Function
     End Structure
     ''' <summary>
@@ -2239,9 +2305,9 @@ OnLoaded:
         Try
 
             '初始化
-            If Not File.Exists($"{McFolderSelected}assets\indexes\{IndexName}.json") Then Throw New FileNotFoundException(GetLang("LangModMinecraftExceptionAssetsIndexFileNotFound"), McFolderSelected & "assets\indexes\" & IndexName & ".json")
+            If Not FileUtils.Exists($"{McFolderSelected}assets\indexes\{IndexName}.json") Then Throw New FileNotFoundException(GetLang("LangModMinecraftExceptionAssetsIndexFileNotFound"), McFolderSelected & "assets\indexes\" & IndexName & ".json")
             Dim Result As New List(Of McAssetsToken)
-            Dim Json As JObject = GetJson(ReadFile($"{McFolderSelected}assets\indexes\{IndexName}.json"))
+            Dim Json As JObject = GetJson(FileUtils.ReadAsString($"{McFolderSelected}assets\indexes\{IndexName}.json"))
 
             '读取列表
             For Each File As JProperty In Json("objects").Children
@@ -2254,19 +2320,19 @@ OnLoaded:
                     LocalPath = $"{McFolderSelected}assets\virtual\legacy\{File.Name}"
                 Else
                     '正常
-                    LocalPath = $"{McFolderSelected}assets\objects\{Left(File.Value("hash").ToString, 2)}\{File.Value("hash")}"
+                    LocalPath = $"{McFolderSelected}assets\objects\{Left(File.Value()("hash").ToString, 2)}\{File.Value()("hash")}"
                 End If
                 Result.Add(New McAssetsToken With {
                     .LocalPath = LocalPath.Replace("/", "\"),
                     .SourcePath = File.Name,
-                    .Hash = File.Value("hash").ToString,
-                    .Size = File.Value("size").ToString
+                    .Hash = File.Value()("hash").ToString,
+                    .Size = File.Value()("size").ToString
                 })
             Next
             Return Result
 
         Catch ex As Exception
-            Log(ex, "获取资源文件列表失败：" & IndexName)
+            Logger.Warn(ex, $"获取资源文件列表失败：{IndexName}")
             Throw
         End Try
     End Function
@@ -2296,13 +2362,13 @@ OnLoaded:
                 Token = AssetsList(i)
                 If ProgressFeed IsNot Nothing Then ProgressFeed.Progress = 0.05 + 0.94 * i / AssetsList.Count
                 '检查文件是否存在
-                Dim File As New FileInfo(Token.LocalPath)
+                Dim File = FileUtils.GetInfo(Token.LocalPath)
                 If File.Exists AndAlso (Token.Size = 0 OrElse Token.Size = File.Length) Then Continue For
                 '文件不存在，添加下载
                 Result.Add(New NetFile(DlSourceAssetsGet($"https://resources.download.minecraft.net/{Left(Token.Hash, 2)}/{Token.Hash}"), Token.LocalPath, New FileChecker(ActualSize:=If(Token.Size = 0, -1, Token.Size), Hash:=Token.Hash)))
             Next
         Catch ex As Exception
-            Log(ex, "获取版本缺失的资源文件下载列表失败")
+            Logger.Warn(ex, "获取版本缺失的资源文件下载列表失败")
         End Try
         If ProgressFeed IsNot Nothing Then ProgressFeed.Progress = 0.99
         Return Result
@@ -2342,7 +2408,7 @@ OnLoaded:
             End If
 
         Catch ex As Exception
-            Log(ex, "Minecraft 更新提示发送失败（" & If(VersionName, "Nothing") & "）", LogLevel.Feedback)
+            Logger.Error(ex, $"Minecraft 更新提示发送失败（{If(VersionName, "Nothing")}）")
         End Try
     End Sub
 
@@ -2365,10 +2431,10 @@ OnLoaded:
             If Left = "未知版本" AndAlso Right = "未知版本" Then Return 0
             If Left <> "未知版本" AndAlso Right = "未知版本" Then Return -1
         End If
-        Left = Left.ToLowerInvariant
-        Right = Right.ToLowerInvariant
-        Dim Lefts = RegexSearch(Left.Replace("快照", "snapshot").Replace("预览版", "pre"), "[a-z]+|[0-9]+")
-        Dim Rights = RegexSearch(Right.Replace("快照", "snapshot").Replace("预览版", "pre"), "[a-z]+|[0-9]+")
+        Left = Left.Lower
+        Right = Right.Lower
+        Dim Lefts = Left.Replace("快照", "snapshot").Replace("预览版", "pre").RegexSearch("[a-z]+|[0-9]+").ToList
+        Dim Rights = Right.Replace("快照", "snapshot").Replace("预览版", "pre").RegexSearch("[a-z]+|[0-9]+").ToList
         Dim i As Integer = 0
         While True
             '两边均缺失，感觉是一个东西
@@ -2428,13 +2494,13 @@ NextEntry:
     Public Function FilterAccessToken(Raw As String, FilterChar As Char) As String
         '打码 "accessToken " 后的内容
         If Raw.Contains("accessToken ") Then
-            For Each Token In RegexSearch(Raw, "(?<=accessToken ([^ ]{5}))[^ ]+(?=[^ ]{5})")
+            For Each Token In Raw.RegexSearch("(?<=accessToken ([^ ]{5}))[^ ]+(?=[^ ]{5})")
                 Raw = Raw.Replace(Token, New String(FilterChar, Token.Count))
             Next
         End If
         '打码当前登录的结果
         Dim AccessToken As String = McLoginLoader.Output.AccessToken
-        If AccessToken IsNot Nothing AndAlso AccessToken.Length >= 10 AndAlso Raw.ContainsF(AccessToken, True) AndAlso
+        If AccessToken IsNot Nothing AndAlso AccessToken.Length >= 10 AndAlso Raw.ContainsIgnoreCase(AccessToken) AndAlso
             McLoginLoader.Output.Uuid <> McLoginLoader.Output.AccessToken Then 'UUID 和 AccessToken 一样则不打码
             Raw = Raw.Replace(AccessToken, Left(AccessToken, 5) & New String(FilterChar, AccessToken.Length - 10) & Right(AccessToken, 5))
         End If
@@ -2445,12 +2511,12 @@ NextEntry:
     ''' </summary>
     Public Function FilterUserName(Raw As String, FilterChar As Char) As String
         If Raw.Contains(":\Users\") Then
-            For Each Token In RegexSearch(Raw, "(?<=:\\Users\\)[^\\]+")
+            For Each Token In Raw.RegexSearch("(?<=:\\Users\\)[^\\]+")
                 Raw = Raw.Replace("\Users\" & Token, "\Users\" & New String(FilterChar, Token.Count))
             Next
         End If
         If Raw.Contains(":/Users/") Then
-            For Each Token In RegexSearch(Raw, "(?<=:/Users/)[^/]+")
+            For Each Token In Raw.RegexSearch("(?<=:/Users/)[^/]+")
                 Raw = Raw.Replace("/Users/" & Token, "/Users/" & New String(FilterChar, Token.Count))
             Next
         End If

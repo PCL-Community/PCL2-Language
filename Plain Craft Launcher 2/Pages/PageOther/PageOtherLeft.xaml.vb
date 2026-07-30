@@ -1,13 +1,13 @@
-﻿Public Class PageOtherLeft
+Public Class PageOtherLeft
 
     Private IsLoad As Boolean = False
     Private IsPageSwitched As Boolean = False '如果在 Loaded 前切换到其他页面，会导致触发 Loaded 时再次切换一次
     Private Sub PageOtherLeft_Loaded(sender As Object, e As RoutedEventArgs) Handles Me.Loaded
         '是否处于隐藏的子页面
         Dim IsHiddenPage As Boolean = False
-        If ItemHelp.Checked AndAlso Setup.Get("UiHiddenOtherHelp") Then IsHiddenPage = True
-        If ItemAbout.Checked AndAlso Setup.Get("UiHiddenOtherAbout") Then IsHiddenPage = True
-        If ItemTest.Checked AndAlso Setup.Get("UiHiddenOtherTest") Then IsHiddenPage = True
+        If ItemHelp.Checked AndAlso Settings.Get(Of Boolean)("UiHiddenOtherHelp") Then IsHiddenPage = True
+        If ItemAbout.Checked AndAlso Settings.Get(Of Boolean)("UiHiddenOtherAbout") Then IsHiddenPage = True
+        If ItemTest.Checked AndAlso Settings.Get(Of Boolean)("UiHiddenOtherTest") Then IsHiddenPage = True
         If PageSetupUI.HiddenForceShow Then IsHiddenPage = False
         '若页面错误，或尚未加载，则继续
         If IsLoad AndAlso Not IsHiddenPage Then Return
@@ -16,9 +16,9 @@
         PageSetupUI.HiddenRefresh()
         '选择第一个未被禁用的子页面
         If IsPageSwitched Then Return
-        If Not Setup.Get("UiHiddenOtherHelp") Then
+        If Not Settings.Get(Of Boolean)("UiHiddenOtherHelp") Then
             ItemHelp.SetChecked(True, False, False)
-        ElseIf Not Setup.Get("UiHiddenOtherAbout") Then
+        ElseIf Not Settings.Get(Of Boolean)("UiHiddenOtherAbout") Then
             ItemAbout.SetChecked(True, False, False)
         Else
             ItemTest.SetChecked(True, False, False)
@@ -37,9 +37,9 @@
     Public Sub New()
         InitializeComponent()
         '选择第一个未被禁用的子页面
-        If Not Setup.Get("UiHiddenOtherHelp") Then
+        If Not Settings.Get(Of Boolean)("UiHiddenOtherHelp") Then
             PageID = FormMain.PageSubType.OtherHelp
-        ElseIf Not Setup.Get("UiHiddenOtherAbout") Then
+        ElseIf Not Settings.Get(Of Boolean)("UiHiddenOtherAbout") Then
             PageID = FormMain.PageSubType.OtherAbout
         Else
             PageID = FormMain.PageSubType.OtherTest
@@ -83,7 +83,7 @@
             PageChangeRun(PageGet(ID))
             PageID = ID
         Catch ex As Exception
-            Log(ex, "切换分页面失败（ID " & ID & "）", LogLevel.Feedback)
+            Logger.Error(ex, $"切换分页面失败（ID {ID}）")
         Finally
             AniControlEnabled -= 1
         End Try
@@ -119,7 +119,7 @@
         Hint(GetLang("LangPageOtherRefreshing"), Log:=False)
     End Sub
     Public Shared Sub RefreshHelp()
-        Setup.Set("SystemHelpVersion", 0) '强制重新解压文件
+        Settings.Set("SystemHelpVersion", 0) '强制重新解压文件
         FrmOtherHelp.PageLoaderRestart()
         FrmOtherHelp.SearchBox.Text = ""
     End Sub
@@ -131,7 +131,7 @@
         e.Handled = True
     End Sub
     Public Shared Sub TryFeedback()
-        If Not CanFeedback(True) Then Return
+        If False.Equals(PageSetupSystem.IsLauncherNewest) Then Return
         Select Case MyMsgBox(GetLang("LangPageOtherDialogFeedbackContent"),
                     GetLang("LangPageOtherDialogFeedbackTitle"), GetLang("LangPageOtherDialogFeedbackBtn1"), GetLang("LangPageOtherDialogFeedbackBtn2"), GetLang("LangDialogBtnCancel"))
             Case 1
@@ -146,8 +146,8 @@
         e.Handled = True
     End Sub
     Public Shared Sub TryVote()
-        If MyMsgBox("是否要打开新功能投票网页？" & vbCrLf & "如果无法打开该网页，请使用 VPN 改善网络环境。",
-                    "新功能投票", "打开", "取消") = 2 Then Return
+        If MyMsgBox(GetLang("LangPageOtherDialogVoteContent"),
+                    GetLang("LangPageOtherDialogVoteTitle"), GetLang("LangSelectOpen"), GetLang("LangDialogBtnCancel")) = 2 Then Return
         OpenWebsite("https://github.com/Meloong-Git/PCL/discussions/categories/%E5%8A%9F%E8%83%BD%E6%8A%95%E7%A5%A8?discussions_q=category%3A%E5%8A%9F%E8%83%BD%E6%8A%95%E7%A5%A8+sort%3Adate_created")
     End Sub
 

@@ -44,7 +44,7 @@
             End If
 
         Catch ex As Exception
-            Log(ex, "滚动条颜色改变出错")
+            Logger.Warn(ex, "滚动条颜色改变出错")
         End Try
     End Sub
 

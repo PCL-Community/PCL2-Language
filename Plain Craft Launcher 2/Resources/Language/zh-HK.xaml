@@ -1,4 +1,7 @@
-﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:s="clr-namespace:System;assembly=mscorlib" xml:space="preserve">
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:s="clr-namespace:System;assembly=mscorlib"
+        xml:space="preserve">
     <s:String x:Key="LangTaskAbort">已取消！</s:String>
     <s:String x:Key="LangDialogBtnOK">確認</s:String>
     <s:String x:Key="LangDialogBtnCancel">取消</s:String>
@@ -8,6 +11,9 @@
     <s:String x:Key="LangDialogBtnContinue">繼續</s:String>
     <s:String x:Key="LangComma">，</s:String>
     <s:String x:Key="LangColon">：</s:String>
+    <s:String x:Key="LangSeparator">、</s:String>
+    <s:String x:Key="LangConjunctiveCoordinator">和</s:String>
+    <s:String x:Key="LangDisjunctiveCoordinator">或</s:String>
     <s:String x:Key="LangSaveAs">選擇儲存位置</s:String>
     <s:String x:Key="LangSaveAsFile">文件</s:String>
     <s:String x:Key="LangReset">重置</s:String>
@@ -572,7 +578,7 @@ PCL 推薦你在開始下載前，在「設定 → 實例隔離」中開啟實�
     <s:String x:Key="LangDownloadModpackTypeTech">科技</s:String>
     <s:String x:Key="LangDownloadModpackTypeMagic">魔法</s:String>
     <s:String x:Key="LangDownloadModpackTypeAdventure">冒險</s:String>
-    <s:String x:Key="LangDownloadModpackTypeCook">大雜燴</s:String>
+    <s:String x:Key="LangDownloadModpackTypeSink">大雜燴</s:String>
     <s:String x:Key="LangDownloadModpackTypeExplore">探索</s:String>
     <s:String x:Key="LangDownloadModpackTypeGame">小遊戲</s:String>
     <s:String x:Key="LangDownloadModpackTypeScienceFiction">科幻</s:String>
@@ -810,7 +816,6 @@ PCL 推薦你在開始下載前，在「設定 → 實例隔離」中開啟實�
     <s:String x:Key="LangPageOtherDialogVoteContent">是否要開啟新功能投票網頁？
 如果無法開啟該網頁，請嘗試使用 VPN 或 Proxy。</s:String>
     <s:String x:Key="LangPageOtherDialogVoteTitle">新功能投票</s:String>
-    <s:String x:Key="LangPageOtherDialogVoteBtn1">開啟</s:String>
     <s:String x:Key="LangPageOtherAboutAbout">關於</s:String>
     <s:String x:Key="LangPageOtherAboutAboutAuthor">龍騰貓躍</s:String>
     <s:String x:Key="LangPageOtherAboutAboutAuthorSubtitle">Plain Craft Launcher 的開發者！</s:String>
@@ -963,6 +968,8 @@ PCL 推薦你在開始下載前，在「設定 → 實例隔離」中開啟實�
 涉及路徑的操作最好都打上雙引號，以避免路徑中的空格導致執行失敗。
 執行命令時，命令列所在的目錄是目前的 .minecraft 資料夾。</s:String>
     <s:String x:Key="LangPageSetupLaunchLaunchAdvanceOptionsCommandStartWaitForCommand">等待命令執行完成後再繼續啟動</s:String>
+    <s:String x:Key="LangPageSetupLaunchLaunchAdvanceOptionsPreventUpdateMod">禁止更新 Mod</s:String>
+    <s:String x:Key="LangPageSetupLaunchLaunchAdvanceOptionsPreventUpdateModToolTip">禁止为此版本更新 Mod，以防止整合包玩家误操作</s:String>
     <s:String x:Key="LangPageSetupLaunchLaunchAdvanceOptionsIgnoreJavaCompatibility">忽略 Java 相容性警吿</s:String>
     <s:String x:Key="LangPageSetupLaunchLaunchAdvanceOptionsIgnoreJavaCompatibilityToolTip">警吿：強烈推薦在實例設定中關閉特定實例的警吿，而不是在這裏關閉所有實例的警吿！
 如果在設定中手動選擇了與目前實例不相容的 Java，則自動跳過相容性警吿彈出視窗，強制使用手動選擇的 Java。</s:String>
@@ -976,6 +983,7 @@ PCL 推薦你在開始下載前，在「設定 → 實例隔離」中開啟實�
     <s:String x:Key="LangPageSetupLaunchLaunchAdvanceOptionsGPUPerfence">要求 Java 使用高性能显卡</s:String>
     <s:String x:Key="LangPageSetupLaunchLaunchAdvanceOptionsGPUPerfenceToolTip">自动在 Windows 设置 → 系统 → 屏幕 → 显示卡 中将 Java 改为使用高性能显卡。
 如果电脑同时有集显和独显，这能确保 MC 使用独显进行渲染，以大幅提高性能。</s:String>
+    <s:String x:Key="LangPageSetupLaunchLaunchAdvanceOptionsMoreTips">版本独立设置中还有更多高级选项可供调整。</s:String>
     <s:String x:Key="LangPageSetupLaunchGotoVersionSetting">版本独立设置</s:String>
     <s:String x:Key="LangPageSetupLaunchReloadByError">啟動設定項存在異常，已被自動重設</s:String>
     <s:String x:Key="LangPageSetupLaunchReloadFail">重載啟動設定時出錯</s:String>
@@ -1062,6 +1070,11 @@ PCL 推薦你在開始下載前，在「設定 → 實例隔離」中開啟實�
     <s:String x:Key="LangPageSetupSystemSystemCacheFolderToolTip">PCL 的下載、皮膚等緩衝檔案的儲存位置。
 不推薦路徑中帶有空格。
 留空即為預設值，重啟 PCL 後生效。</s:String>
+    <s:String x:Key="LangPageSetupSystemSystemTelemetry">匿名数据收集</s:String>
+    <s:String x:Key="LangPageSetupSystemSystemTelemetryToolTip">当下载失败、PCL 出错、游戏崩溃等事件时，PCL 会匿名上报情况，以通知龙猫 “哦吼，出错了”，让龙猫能更好地修 Bug……
+你可以关闭上报，不过龙猫就不知道你遇到了什么 Bug 了……
+PCL 不会上传或收集任何个人信息，包括上报的东西里面也没有！
+详情：https://github.com/Meloong-Git/PCL/discussions/7036</s:String>
     <s:String x:Key="LangPageSetupSystemSystemCheckUpdate">檢查更新</s:String>
     <s:String x:Key="LangPageSetupSystemLang">語言</s:String>
     <s:String x:Key="LangPageSetupSystemLangLaunchLang">啟動器語言</s:String>
@@ -2147,7 +2160,7 @@ PCL 不支援其他亂七八糟的下載協議。</s:String>
 
 {1}</s:String>
     <s:String x:Key="LangPageVersionExportSelectExportPath">选择导出位置</s:String>
-    <s:String x:Key="LangPageVersionExportSelectExportPathSaveAsFormat">整合包文件(*{0})|*{1}</s:String>
+    <s:String x:Key="LangPageVersionExportSelectExportModpackFile">整合包文件(*{0})|*{1}</s:String>
     <s:String x:Key="LangPageVersionExportTaskDownloadPCL">下载 PCL 正式版</s:String>
     <s:String x:Key="LangPageVersionExportTaskCopyFiles">复制导出内容</s:String>
     <s:String x:Key="LangPageVersionExportHintFolderInConfigNotFound">未找到配置文件中指定的文件夹：{0}</s:String>

@@ -59,7 +59,7 @@
                 If AniControlEnabled = 0 Then RaiseEvent Change(Me, False)
 
             Catch ex As Exception
-                Log(ex, "滑动条进度改变出错", LogLevel.Hint)
+                Logger.Warning(ex, "滑动条进度改变出错", LogBehavior.Alert)
             End Try
         End Set
     End Property
@@ -130,7 +130,7 @@
         '    End If
 
         'Catch ex As Exception
-        '    Log(ex, "滑动条颜色改变出错")
+        '    Logger.Error(ex, "滑动条颜色改变出错")
         'End Try
     End Sub
 

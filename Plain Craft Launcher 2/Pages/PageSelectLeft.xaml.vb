@@ -34,7 +34,7 @@
                 '添加控件
                 Dim ContMenu As ContextMenu = Nothing
                 Select Case Folder.Type
-                    Case McFolder.Types.Original
+                    Case McFolder.Types.Vanilla
                         ContMenu = GetObjectFromXML(
                                 <ContextMenu xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:local="clr-namespace:PCL;assembly=Plain Craft Launcher 2">
                                     <local:MyMenuItem x:Name="Rename" Header="{StaticResource LangSelectRename}" Padding="0,2,0,0" Icon="F1 M 53.2929,21.2929L 54.7071,22.7071C 56.4645,24.4645 56.4645,27.3137 54.7071,29.0711L 52.2323,31.5459L 44.4541,23.7677L 46.9289,21.2929C 48.6863,19.5355 51.5355,19.5355 53.2929,21.2929 Z M 31.7262,52.052L 23.948,44.2738L 43.0399,25.182L 50.818,32.9601L 31.7262,52.052 Z M 23.2409,47.1023L 28.8977,52.7591L 21.0463,54.9537L 23.2409,47.1023 Z"/>
@@ -43,7 +43,7 @@
                                     <local:MyMenuItem x:Name="Delete" Header="{StaticResource LangSelectDelete}" Padding="0,0,0,2" Icon="F1 M 26.9166,22.1667L 37.9999,33.25L 49.0832,22.1668L 53.8332,26.9168L 42.7499,38L 53.8332,49.0834L 49.0833,53.8334L 37.9999,42.75L 26.9166,53.8334L 22.1666,49.0833L 33.25,38L 22.1667,26.9167L 26.9166,22.1667 Z "/>
                                 </ContextMenu>
                         )
-                    Case McFolder.Types.RenamedOriginal
+                    Case McFolder.Types.RenamedVanilla
                         ContMenu = GetObjectFromXML(
                                 <ContextMenu xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:local="clr-namespace:PCL;assembly=Plain Craft Launcher 2">
                                     <local:MyMenuItem x:Name="Remove" Header="{StaticResource LangSelectRestoreName}" Padding="0,2,0,0" Icon="F1 M 53.2929,21.2929L 54.7071,22.7071C 56.4645,24.4645 56.4645,27.3137 54.7071,29.0711L 52.2323,31.5459L 44.4541,23.7677L 46.9289,21.2929C 48.6863,19.5355 51.5355,19.5355 53.2929,21.2929 Z M 31.7262,52.052L 23.948,44.2738L 43.0399,25.182L 50.818,32.9601L 31.7262,52.052 Z M 23.2409,47.1023L 28.8977,52.7591L 21.0463,54.9537L 23.2409,47.1023 Z"/>
@@ -64,9 +64,9 @@
                                 </ContextMenu>
                         )
                 End Select
-                If (Folder.Type = McFolder.Types.Original OrElse Folder.Type = McFolder.Types.RenamedOriginal) AndAlso Folder.Location = Path & ".minecraft\" AndAlso McFolderList.Count = 1 Then CType(ContMenu.FindName("Delete"), MyMenuItem).Header = GetLang("LangSelectEmpty")
+                If (Folder.Type = McFolder.Types.Vanilla OrElse Folder.Type = McFolder.Types.RenamedVanilla) AndAlso Folder.Location = PathExeFolder & ".minecraft\" AndAlso McFolderList.IsSingle Then CType(ContMenu.FindName("Delete"), MyMenuItem).Header = GetLang("LangSelectEmpty")
                 '注册事件
-                If Not Folder.Type = McFolder.Types.Original Then CType(ContMenu.FindName("Remove"), MyMenuItem).AddHandler(MyMenuItem.ClickEvent, New RoutedEventHandler(AddressOf FrmSelectLeft.Remove_Click))
+                If Not Folder.Type = McFolder.Types.Vanilla Then CType(ContMenu.FindName("Remove"), MyMenuItem).AddHandler(MyMenuItem.ClickEvent, New RoutedEventHandler(AddressOf FrmSelectLeft.Remove_Click))
                 CType(ContMenu.FindName("Open"), MyMenuItem).AddHandler(MyMenuItem.ClickEvent, New RoutedEventHandler(AddressOf FrmSelectLeft.Open_Click))
                 CType(ContMenu.FindName("Delete"), MyMenuItem).AddHandler(MyMenuItem.ClickEvent, New RoutedEventHandler(AddressOf FrmSelectLeft.Delete_Click))
                 CType(ContMenu.FindName("Rename"), MyMenuItem).AddHandler(MyMenuItem.ClickEvent, New RoutedEventHandler(AddressOf FrmSelectLeft.Rename_Click))
@@ -81,14 +81,14 @@
                                                 End Sub
                 NewItem.Buttons = {NewIconButton}
                 FrmSelectLeft.PanList.Children.Add(NewItem)
-                Log("[Minecraft] 有效的 Minecraft 文件夹：" & Folder.Name & " > " & Folder.Location)
+                Logger.Info($"有效的 Minecraft 文件夹：{Folder.Name} > {Folder.Location}")
             Next
 
             '标题文本
             FrmSelectLeft.PanList.Children.Add(New TextBlock With {.Text = GetLang("LangSelectAddFolder"), .Margin = New Thickness(13, 18, 5, 4), .Opacity = 0.6, .FontSize = 12})
 
             '确认创建按钮状态
-            If Not Directory.Exists(Path & ".minecraft\") Then
+            If Not DirectoryUtils.Exists(PathExeFolder & ".minecraft\") Then
                 Dim ItemCreate As New MyListItem With {.IsScaleAnimationEnabled = False, .Type = MyListItem.CheckType.Clickable, .Title = GetLang("LangSelectCreateFolder"), .Height = 34,
                     .ToolTip = GetLang("LangSelectCreateFolderToolTip"),
                     .LogoScale = 0.9,
@@ -133,12 +133,12 @@
             If Not McFolderList.Any() Then
                 Throw New ArgumentNullException(GetLang("LangSelectNoMCFolder"))
             Else
-                Setup.Set("LaunchFolderSelect", McFolderList(0).Location.Replace(Path, "$"))
+                McFolderSelected = McFolderList.First.Location
                 CType(FrmSelectLeft.PanList.Children(1), MyListItem).Checked = True
             End If
 
         Catch ex As Exception
-            Log(ex, GetLang("LangSelectUIError"), LogLevel.Feedback)
+            Logger.Error(ex, GetLang("LangSelectUIError"))
         Finally
             LoaderFolderRun(McInstanceListLoader, McFolderSelected, LoaderFolderRunType.RunOnUpdated, MaxDepth:=1, ExtraPath:="versions\") '刷新版本列表
         End Try
@@ -155,8 +155,8 @@
         End If
         Try
             '获取输入
-            NewFolder = SelectFolder()
-            If NewFolder = "" Then Return
+            NewFolder = Dialogs.SelectFolder("选择 Minecraft 文件夹", False).FirstOrDefault
+            If NewFolder Is Nothing Then Return
             If NewFolder.Contains("!") OrElse NewFolder.Contains(";") Then Hint(GetLang("LangSelectNoSpecialSymbol"), HintType.Red) : Return
             '要求输入显示名称
             Dim SplitedNames As String() = NewFolder.TrimEnd("\").Split("\")
@@ -168,7 +168,7 @@
             '添加文件夹
             AddFolder(NewFolder, NewName, True)
         Catch ex As Exception
-            Log(ex, GetLang("LangSelectFailToAddFolder", NewFolder), LogLevel.Feedback)
+            Logger.Error(ex, GetLang("LangSelectFailToAddFolder", NewFolder))
         End Try
     End Sub
     ''' <summary>
@@ -178,7 +178,7 @@
         RunInThread(
         Sub()
             Try
-                If Not FolderPath.EndsWith("\") Then FolderPath &= "\" '加上斜杠……
+                If Not FolderPath.EndsWithF("\") Then FolderPath &= "\"
                 '检查文件夹权限
                 If Not CheckPermission(FolderPath) Then
                     If ShowHint Then
@@ -190,15 +190,15 @@
                 End If
                 '检查实际的 Minecraft 文件夹位置（没有问题，或是在子文件夹中）
                 If Not CheckPermission(FolderPath & "versions\") Then
-                    For Each Folder As DirectoryInfo In New DirectoryInfo(FolderPath).GetDirectories
-                        If CheckPermission(Folder.FullName & "\versions\") Then
-                            FolderPath = Folder.FullName & "\"
+                    For Each Folder In DirectoryUtils.GetDirectories(FolderPath)
+                        If CheckPermission(Folder & "\versions\") Then
+                            FolderPath = Folder & "\"
                             Exit For
                         End If
                     Next
                 End If
                 '判断是否已经添加过，若添加过则直接修改自定义名
-                Dim Folders As New List(Of String)(Setup.Get("LaunchFolders").ToString.Split("|"))
+                Dim Folders As New List(Of String)(Settings.Get(Of String)("LaunchFolders").Split("|"))
                 Dim IsAdded As Boolean = False
                 Dim IsReplace As Boolean = False
                 For i = 0 To Folders.Count - 1
@@ -220,19 +220,19 @@
                 '如果没有添加过，则添加进去
                 If Not IsAdded Then Folders.Add(DisplayName & ">" & FolderPath)
                 '保存
-                Setup.Set("LaunchFolders", Join(Folders.ToArray, "|"))
+                Settings.Set("LaunchFolders", Folders.Join("|"))
                 '切换选择并更新列表
-                Setup.Set("LaunchFolderSelect", FolderPath.Replace(Path, "$"))
+                McFolderSelected = FolderPath
                 McFolderListLoader.Start(IsForceRestart:=True)
                 '提示
                 If IsReplace Then Return
                 If ShowHint Then Hint(GetLang("LangSelectFolderAdded", DisplayName), HintType.Green)
                 '检查是否为根目录整合包，自动关闭版本隔离
                 '1. 根目录中存在数个 Mod
-                Dim ModFolder As New DirectoryInfo(FolderPath & "mods\")
+                Dim ModFolder = DirectoryUtils.GetInfo(FolderPath & "mods\")
                 If Not (ModFolder.Exists AndAlso ModFolder.EnumerateFiles.Count >= 3) Then Return
                 '2. 版本数较少，可能为整合包
-                Dim VersionFolderInfo As New DirectoryInfo(FolderPath & "versions\")
+                Dim VersionFolderInfo = DirectoryUtils.GetInfo(FolderPath & "versions\")
                 If Not (VersionFolderInfo.Exists AndAlso VersionFolderInfo.EnumerateDirectories.Count <= 3) Then Return
                 '3. 能够找到可安装 Mod 的版本
                 For Each VersionFolder In VersionFolderInfo.EnumerateDirectories
@@ -240,15 +240,15 @@
                     Instance.Load()
                     If Not Instance.Modable Then Continue For
                     '4. 该版本的隔离文件夹下不存在 mods
-                    Dim ModIndieFolder As New DirectoryInfo(Instance.PathVersion & "mods\")
+                    Dim ModIndieFolder = DirectoryUtils.GetInfo(Instance.PathVersion & "mods\")
                     If ModIndieFolder.Exists AndAlso ModIndieFolder.EnumerateFiles.Any Then Return
                     '满足以上全部条件则视为根目录整合包
-                    Setup.Set("VersionArgumentIndie", 2, Instance:=Instance)
-                    Setup.Set("VersionArgumentIndieV2", False, Instance:=Instance)
-                    Log("[Setup] 已自动关闭单版本隔离：" & Instance.Name, LogLevel.Debug)
+                    Settings.Set("VersionArgumentIndie", 2, Instance:=Instance)
+                    Settings.Set("VersionArgumentIndieV2", False, Instance:=Instance)
+                    Logger.Warn($"已自动关闭单版本隔离：{Instance.Name}")
                 Next
             Catch ex As Exception
-                Log(ex, GetLang("LangSelectFailToAddFolderLog"), LogLevel.Feedback)
+                Logger.Error(ex, GetLang("LangSelectFailToAddFolderLog"))
             End Try
         End Sub)
     End Sub
@@ -260,94 +260,92 @@
             Hint(GetLang("LangSelectDownloadingTaskExistsNoCreate"), HintType.Red)
             Return
         End If
-        If Not Directory.Exists(Path & ".minecraft\") Then
-            Directory.CreateDirectory(Path & ".minecraft\")
-            Directory.CreateDirectory(Path & ".minecraft\versions\")
-            Setup.Set("LaunchFolderSelect", "$.minecraft\")
-            McFolderLauncherProfilesJsonCreate(Path & ".minecraft\")
-            Hint(GetLang("LangSelectFolderCreateSuccess"), HintType.Green)
+        CreateMcFolderInCurrentPath()
+        Hint(GetLang("LangSelectFolderCreateSuccess"), HintType.Green)
+    End Sub
+    Public Shared Sub CreateMcFolderInCurrentPath()
+        McFolderSelected = PathExeFolder & ".minecraft\"
+        If Not DirectoryUtils.Exists(McFolderSelected) Then
+            DirectoryUtils.Create(McFolderSelected & "versions\")
+            McFolderLauncherProfilesJsonCreate(McFolderSelected)
         End If
-        McFolderListLoader.Start(IsForceRestart:=True)
+        AddFolder(McFolderSelected, PathUtils.GetLastPart(PathExeFolder), False)
     End Sub
 
     '右键菜单
     Public Sub Remove_Click(sender As Object, e As RoutedEventArgs)
         Try
 
-            Dim Folder As McFolder = CType(CType(CType(sender.Parent, ContextMenu).Parent, Primitives.Popup).PlacementTarget, MyListItem).Tag
+            Dim Target As McFolder = CType(CType(CType(sender.Parent, ContextMenu).Parent, Primitives.Popup).PlacementTarget, MyListItem).Tag
             '若为 “移除”，则提醒是否删除 PCL 的配置文件
-            If Folder.Type = McFolder.Types.Custom Then
+            If Target.Type = McFolder.Types.Custom Then
                 Select Case MyMsgBox(GetLang("LangSelectDialogCleanCacheContent"), GetLang("LangSelectDialogCleanCacheTitle"), GetLang("LangDialogBtnDelete"), GetLang("LangDialogBtnKeep"), GetLang("LangDialogBtnCancel"))
                     Case 1
                         '删除配置文件
-                        If File.Exists(Folder.Location & "PCL.ini") Then File.Delete(Folder.Location & "PCL.ini")
-                        If Directory.Exists(Folder.Location & "versions\") Then
-                            For Each InstanceInfo In New DirectoryInfo(Folder.Location & "versions\").EnumerateDirectories
-                                If Directory.Exists(InstanceInfo.FullName & "\PCL\") Then Directory.Delete(InstanceInfo.FullName & "\PCL\", True)
-                            Next
-                        End If
+                        FileUtils.Delete(Target.Location & "PCL.ini")
+                        For Each Instance In DirectoryUtils.GetDirectories(Target.Location & "versions\", True)
+                            DirectoryUtils.Delete(Path.Combine(Instance, "PCL"), True)
+                        Next
                     Case 2
-                    '不删除
+                        '不删除
                     Case 3
                         '取消
                         Return
                 End Select
             End If
-            '若修改了本部分代码，应对应修改 Delete_Click 中的代码
-            '获取并删除列表项
-            Dim Folders As New List(Of String)(Setup.Get("LaunchFolders").ToString.Split("|"))
-            Dim Name As String = ""
-            For i = 0 To Folders.Count - 1
-                If Folders(i) = "" Then Exit For
-                If Folders(i).ToString.EndsWith(Folder.Location) Then
-                    Name = Folders(i).ToString.BeforeFirst(">")
-                    Folders.RemoveAt(i)
-                    Exit For
-                End If
-            Next
-            '保存
-            Setup.Set("LaunchFolders", If(Not Folders.Any(), "", Join(Folders.ToArray, "|")))
-            Hint(If(Folder.Type = McFolder.Types.Custom, GetLang("LangSelectHintFolderRemoved", Name), GetLang("LangSelectHintFolderNameRestored")), HintType.Green)
+            Dim DeletedName As String = RemoveFolderFromSetup(Target)
+            Hint(If(Target.Type = McFolder.Types.Custom, GetLang("LangSelectHintFolderRemoved", DeletedName), GetLang("LangSelectHintFolderNameRestored")), HintType.Green)
             McFolderListLoader.Start(IsForceRestart:=True)
-
         Catch ex As Exception
-            Log(ex, GetLang("LangSelectRemoveFolderFail"), LogLevel.Feedback)
+            Logger.Error(ex, GetLang("LangSelectRemoveFolderFail"))
         End Try
     End Sub
     Public Sub Delete_Click(sender As Object, e As RoutedEventArgs)
-        Dim Folder As McFolder = CType(CType(CType(sender.Parent, ContextMenu).Parent, Primitives.Popup).PlacementTarget, MyListItem).Tag
-        Dim DeleteText As String = If((Folder.Type = McFolder.Types.Original OrElse Folder.Type = McFolder.Types.RenamedOriginal) AndAlso Folder.Location = Path & ".minecraft\" AndAlso McFolderList.Count = 1, "清空", "删除")
-        If MyMsgBox("你确定要" & DeleteText & "这个文件夹吗？" & vbCrLf & "目标文件夹：" & Folder.Location & vbCrLf & vbCrLf & "这会导致该文件夹中的所有存档与其他文件永久丢失，且不可恢复！", "删除警告", "取消", "确认", "取消") <> 2 Then Return
-        If MyMsgBox("如果你在该文件夹中存放了除 MC 以外的其他文件，这些文件也会被一同删除！" & vbCrLf & "继续删除会导致该文件夹中的所有文件永久丢失，请在仔细确认后再继续！" & vbCrLf & "目标文件夹：" & Folder.Location & vbCrLf & vbCrLf & "这是最后一次警告！", "删除警告", "确认" & DeleteText, "取消", IsWarn:=True) <> 1 Then Return
-        '移出列表
-        If Folder.Type = McFolder.Types.Custom Then
-            Dim Folders As New List(Of String)(Setup.Get("LaunchFolders").ToString.Split("|"))
-            For i = 0 To Folders.Count - 1
-                If Folders(i) = "" Then Exit For
-                If Folders(i).ToString.EndsWith(Folder.Location) Then
-                    'Name = Folders(i).ToString.Before(">")
-                    Folders.RemoveAt(i)
-                    Exit For
-                End If
-            Next
-            Setup.Set("LaunchFolders", If(Not Folders.Any(), "", Join(Folders.ToArray, "|")))
-        End If
+        Dim Target As McFolder = CType(CType(CType(sender.Parent, ContextMenu).Parent, Primitives.Popup).PlacementTarget, MyListItem).Tag
+        Dim DeleteText As String = If((Target.Type = McFolder.Types.Vanilla OrElse Target.Type = McFolder.Types.RenamedVanilla) AndAlso Target.Location = PathExeFolder & ".minecraft\" AndAlso McFolderList.IsSingle, "清空", "删除")
+        If MyMsgBox("你确定要" & DeleteText & "这个文件夹吗？" & vbCrLf &
+                    "目标文件夹：" & Target.Location & vbCrLf & vbCrLf &
+                    "该文件夹中的游戏存档、游戏版本，以及 MC 之外的其他文件，都会永久丢失，不可恢复！", "警告", "取消", "确认", "取消") <> 2 Then Return
+        If MyMsgBoxInput("删除确认",
+                         "该文件夹中的游戏存档、游戏版本，以及 MC 之外的其他文件，都会永久丢失，不可恢复！" & vbCrLf &
+                         "目标文件夹：" & Target.Location & vbCrLf & vbCrLf &
+                         "如果确实要删除，请在下面输入【Potato】以继续。",
+                         ValidateRules:=New ObjectModel.Collection(Of Validate) From {New ValidateSame("Potato", $"请输入 {vbLQ}Potato{vbRQ}", IgnoreCase:=True)},
+                         Button1:="永久删除文件夹", Button2:="取消", IsWarn:=True) Is Nothing Then Return
+        RemoveFolderFromSetup(Target)
         RunInNewThread(
         Sub()
             '删除文件夹
             Try
-                Hint("正在" & DeleteText & "文件夹 " & Folder.Name & "！", HintType.Blue)
-                DeleteDirectory(Folder.Location)
-                If DeleteText = "清空" Then Directory.CreateDirectory(Folder.Location)
-                Hint("已" & DeleteText & "文件夹 " & Folder.Name & "！", HintType.Green)
+                Hint("正在" & DeleteText & "文件夹 " & Target.Name & "！", HintType.Blue)
+                DirectoryUtils.Delete(Target.Location)
+                If DeleteText = "清空" Then DirectoryUtils.Create(Target.Location)
+                Hint("已" & DeleteText & "文件夹 " & Target.Name & "！", HintType.Green)
             Catch ex As Exception
-                Log(ex, DeleteText & "文件夹 " & Folder.Name & " 失败", LogLevel.Hint)
+                Logger.Error(ex, $"{DeleteText}文件夹 {Target.Name} 失败", LogBehavior.Toast)
             Finally
                 '刷新列表
                 McFolderListLoader.Start(IsForceRestart:=True)
             End Try
         End Sub, "Folder Delete " & GetUuid(), ThreadPriority.BelowNormal)
     End Sub
+    ''' <summary>
+    ''' 从设置的文件夹列表中删除指定的文件夹。
+    ''' 返回被删除的文件夹的显示名称。如果没有，返回 Nothing。
+    ''' </summary>
+    Private Shared Function RemoveFolderFromSetup(Target As McFolder) As String
+        Dim DeletedName As String = Nothing
+        Dim Folders = Settings.Get(Of String)("LaunchFolders").Split("|"c, True).ToList
+        For Each Folder In Folders.ToList
+            If Not Folder.EndsWithF(Target.Location) Then Continue For
+            DeletedName = Folder.BeforeFirst(">")
+            Folders.Remove(Folder)
+            Exit For
+        Next
+        Settings.Set("LaunchFolders", Folders.Join("|"))
+        Return DeletedName
+    End Function
+
     Public Sub Open_Click(sender As Object, e As RoutedEventArgs)
         OpenExplorer(CType(CType(CType(sender.Parent, ContextMenu).Parent, Primitives.Popup).PlacementTarget, MyListItem).Info)
     End Sub
@@ -371,7 +369,7 @@
                               New ObjectModel.Collection(Of Validate) From {New ValidateNullOrWhiteSpace, New ValidateLength(1, 30), New ValidateExcept({">", "|"})})
             If String.IsNullOrWhiteSpace(NewName) Then Return
             '修改自定义名
-            Dim Folders As New List(Of String)(Setup.Get("LaunchFolders").ToString.Split("|"))
+            Dim Folders As New List(Of String)(Settings.Get(Of String)("LaunchFolders").Split("|"))
             Dim IsAdded As Boolean = False
             For i = 0 To Folders.Count - 1
                 Dim FolderCurrent As String = Folders(i)
@@ -391,10 +389,10 @@
             If Not IsAdded Then Folders.Add(NewName & ">" & Folder.Location)
             Hint("文件夹名称已更新为 " & NewName & " ！", HintType.Green)
             '保存
-            Setup.Set("LaunchFolders", Join(Folders.ToArray, "|"))
+            Settings.Set("LaunchFolders", Folders.Join("|"))
             McFolderListLoader.Start(IsForceRestart:=True)
         Catch ex As Exception
-            Log(ex, GetLang("LangSelectFailToRename"), LogLevel.Feedback)
+            Logger.Error(ex, GetLang("LangSelectFailToRename"))
         End Try
     End Sub
 
@@ -408,7 +406,7 @@
             Return
         End If
         '更换
-        Setup.Set("LaunchFolderSelect", CType(sender.Tag, McFolder).Location.Replace(Path, "$"))
+        McFolderSelected = CType(sender.Tag, McFolder).Location
         McFolderListLoader.Start(IsForceRestart:=True)
         LoaderFolderRun(McInstanceListLoader, McFolderSelected, LoaderFolderRunType.RunOnUpdated, MaxDepth:=1, ExtraPath:="versions\") '刷新版本列表
     End Sub

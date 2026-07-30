@@ -14,7 +14,7 @@
             ToolTip = If(_Address = "", GetLang("LangMySkinLoading"), GetLang("LangMySkinClickToChange"))
         End Set
     End Property
-    Public Loader As LoaderTask(Of EqualableList(Of String), String)
+    Public Loader As LoaderTask(Of (String, String), String)
 
     '控件动画
     Private Sub PanSkin_MouseEnter(sender As Object, e As MouseEventArgs) Handles Me.MouseEnter
@@ -44,7 +44,7 @@
     Public Sub BtnSkinSave_Click() Handles BtnSkinSave.Click
         Save(Loader)
     End Sub
-    Public Shared Sub Save(Loader As LoaderTask(Of EqualableList(Of String), String))
+    Public Shared Sub Save(Loader As LoaderTask(Of (String, String), String))
         Dim Address = Loader.Output
         If Not Loader.State = LoadState.Finished Then
             Hint(GetLang("LangMySkinHintLoading"), HintType.Red)
@@ -52,19 +52,20 @@
             Return
         End If
         Try
-            Dim FileAddress As String = SelectSaveFile(GetLang("LangMySkinDialogChoseSavePath"), GetFileNameFromPath(Address), "皮肤图片文件(*.png)|*.png")
+            Dim FileAddress As String = Dialogs.SaveFile(GetLang("LangMySkinDialogChoseSavePath"), PathUtils.GetLastPart(Address), filter:={("png", "皮肤图片文件")})
+            If FileAddress Is Nothing Then Return
             If FileAddress.Contains("\") Then
-                File.Delete(FileAddress)
-                If Address.StartsWith(PathImage) Then
+                FileUtils.Delete(FileAddress)
+                If Address.StartsWithF(PathImage) Then
                     Dim Image As New MyBitmap(Address)
                     Image.Save(FileAddress)
                 Else
-                    CopyFile(Address, FileAddress)
+                    FileUtils.Copy(Address, FileAddress)
                 End If
                 Hint(GetLang("LangMySkinHintSaveSuccess"), HintType.Green)
             End If
         Catch ex As Exception
-            Log(ex, GetLang("LangMySkinHintSaveFail"), LogLevel.Hint)
+            Logger.Error(ex, GetLang("LangMySkinHintSaveFail"), LogBehavior.Toast)
         End Try
     End Sub
     Private Sub BtnSkinSave_Checked(sender As MyMenuItem, e As RoutedEventArgs) Handles BtnSkinSave.Checked
@@ -79,14 +80,14 @@
             '检查文件存在
             Address = Loader.Output
             If String.IsNullOrEmpty(Address) Then Throw New Exception("皮肤加载器 " & Loader.Name & " 没有输出")
-            If Not Address.StartsWith(PathImage) AndAlso Not File.Exists(Address) Then Throw New FileNotFoundException("皮肤文件未找到", Address)
+            If Not Address.StartsWithF(PathImage) AndAlso Not FileUtils.Exists(Address) Then Throw New FileNotFoundException("皮肤文件未找到", Address)
             '加载
             Dim Image As MyBitmap
             Try
                 Image = New MyBitmap(Address)
             Catch ex As Exception '#2272
-                Log(ex, GetLang("LangMySkinHintSkinFileCorruption") & Address, LogLevel.Hint)
-                File.Delete(Address)
+                Logger.Error(ex, GetLang("LangMySkinHintSkinFileCorruption") & Address, LogBehavior.Toast)
+                FileUtils.Delete(Address)
                 Return
             End Try
             ImgBack.Tag = Address
@@ -113,9 +114,9 @@
             End If
             '脸层
             ImgBack.Source = Image.Clip(Scale * 8, Scale * 8, Scale * 8, Scale * 8)
-            Log("[Skin] 载入头像成功：" & Loader.Name)
+            Logger.Info($"载入头像成功：{Loader.Name}")
         Catch ex As Exception
-            Log(ex, "载入头像失败（" & If(Address, "null") & "," & Loader.Name & "）", LogLevel.Hint)
+            Logger.Error(ex, $"载入头像失败（{If(Address, "null")},{Loader.Name}）", LogBehavior.Toast)
         End Try
     End Sub
     ''' <summary>
@@ -134,7 +135,7 @@
     ''' <summary>
     ''' 刷新皮肤缓存。
     ''' </summary>
-    Public Shared Sub RefreshCache(Optional sender As LoaderTask(Of EqualableList(Of String), String) = Nothing)
+    Public Shared Sub RefreshCache(Optional sender As LoaderTask(Of (String, String), String) = Nothing)
         Dim HasLoaderRunning As Boolean = False
         For Each SkinLoader In PageLaunchLeft.SkinLoaders
             If SkinLoader.State = LoadState.Loading Then
@@ -142,7 +143,7 @@
             End If
         Next
         If FrmLaunchLeft IsNot Nothing AndAlso HasLoaderRunning Then
-            '由于 Abort 不是实时的，暂时不会释放文件，会导致删除报错，故只能取消执行
+            '由于 Interrupt 不是实时的，暂时不会释放文件，会导致删除报错，故只能取消执行
             Hint(GetLang("LangMySkinHintExistSkinFileGetTask"), HintType.Blue)
         Else
             RunInThread(
@@ -150,9 +151,9 @@
                 Try
                     Hint(GetLang("LangMySkinHintRefreshing"))
                     '清空缓存
-                    Log("[Skin] 正在清空皮肤缓存")
-                    If Directory.Exists(PathTemp & "Cache\Skin") Then DeleteDirectory(PathTemp & "Cache\Skin")
-                    If Directory.Exists(PathTemp & "Cache\Uuid") Then DeleteDirectory(PathTemp & "Cache\Uuid")
+                    Logger.Info("正在清空皮肤缓存")
+                    If DirectoryUtils.Exists(PathTemp & "Cache\Skin") Then DirectoryUtils.Delete(PathTemp & "Cache\Skin")
+                    If DirectoryUtils.Exists(PathTemp & "Cache\Uuid") Then DirectoryUtils.Delete(PathTemp & "Cache\Uuid")
                     IniClearCache(PathTemp & "Cache\Skin\IndexMs.ini")
                     IniClearCache(PathTemp & "Cache\Skin\IndexNide.ini")
                     IniClearCache(PathTemp & "Cache\Skin\IndexAuth.ini")
@@ -163,7 +164,7 @@
                     Next
                     Hint(GetLang("LangMySkinHintRefreshed"), HintType.Green)
                 Catch ex As Exception
-                    Log(ex, GetLang("LangMySkinHintRefreshFail"), LogLevel.Msgbox)
+                    Logger.Error(ex, GetLang("LangMySkinHintRefreshFail"), LogBehavior.Alert)
                 End Try
             End Sub)
         End If
@@ -177,8 +178,8 @@
         Sub()
             Try
                 '更新缓存
-                WriteIni(PathTemp & "Cache\Skin\IndexMs.ini", Setup.Get("CacheMsV2Uuid"), SkinAddress)
-                Log($"[Skin] 已写入皮肤地址缓存 {Setup.Get("CacheMsV2Uuid")} -> {SkinAddress}")
+                WriteIni(PathTemp & "Cache\Skin\IndexMs.ini", Settings.Get(Of String)("CacheMsV2Uuid"), SkinAddress)
+                Logger.Info($"已写入皮肤地址缓存 {Settings.Get(Of String)("CacheMsV2Uuid")} -> {SkinAddress}")
                 '刷新控件
                 For Each SkinLoader In {PageLaunchLeft.SkinMs, PageLaunchLeft.SkinLegacy}
                     SkinLoader.WaitForExit(IsForceRestart:=True)
@@ -186,7 +187,7 @@
                 '完成提示
                 Hint(GetLang("LangMySkinHintChangeSuccess"), HintType.Green)
             Catch ex As Exception
-                Log(ex, "更改正版皮肤后刷新皮肤失败", LogLevel.Feedback)
+                Logger.Error(ex, "更改正版皮肤后刷新皮肤失败")
             End Try
         End Sub)
     End Sub
@@ -215,13 +216,13 @@
             Hint(GetLang("LangMySkinHintChangFailByLoginFail"), HintType.Red)
             Return
         End If
-        Hint(GetLang("LangMySkinHintGettingCape"))
+        If McLoginMsLoader.State <> LoadState.Finished Then Hint(GetLang("LangMySkinHintGettingCape"))
         IsChanging = True
         '开始实际获取
         RunInNewThread(
         Sub()
-            Try
 Retry:
+            Try
                 '获取登录信息
                 If McLoginMsLoader.State <> LoadState.Finished Then McLoginMsLoader.WaitForExit(PageLoginMsSkin.GetLoginData())
                 If McLoginMsLoader.State <> LoadState.Finished Then
@@ -255,7 +256,7 @@ Retry:
                         Next
                         SelectedIndex = MyMsgBoxSelect(SelectionControl, GetLang("LangMySkinDialogChooseCape"), GetLang("LangDialogBtnOK"), GetLang("LangDialogBtnCancel"))
                     Catch ex As Exception
-                        Log(ex, "获取玩家皮肤列表失败", LogLevel.Feedback)
+                        Logger.Error(ex, "获取玩家皮肤列表失败")
                     End Try
                 End Sub)
                 If SelectedIndex Is Nothing Then Return
@@ -278,7 +279,29 @@ Retry:
                     McLoginMsLoader.Output.ProfileJson = SkinData.ToString()
                 End If
             Catch ex As Exception
-                Log(ex, GetLang("LangMySkinHintChangeCapeFail"), LogLevel.Hint)
+                If TypeOf ex Is HttpRequestCodeException Then
+                    Dim requestException As HttpRequestCodeException = CType(ex, HttpRequestCodeException)
+                    Select Case requestException.StatusCode
+                        Case HttpStatusCode.BadRequest
+                            Logger.Warn(ex, "更改披风时遭遇 400 错误")
+                            If requestException.Response?.Contains("""error""") Then
+                                Hint(GetLang("LangMySkinHintChangeCapeFail") & ": " & GetJson(requestException.Response)("error").ToString, HintType.Red)
+                                Return
+                            ElseIf requestException.Response?.Contains("""errorMessage""") Then
+                                Hint(GetLang("LangMySkinHintChangeCapeFail") & ": " & GetJson(requestException.Response)("errorMessage").ToString, HintType.Red)
+                                Return
+                            End If
+                        Case HttpStatusCode.Unauthorized
+                            Logger.Warn(ex, "更改披风时遭遇 401 错误")
+                            Hint(GetLang("LangMySkinHintLoading"))
+                            McLoginMsLoader.Start(PageLoginMsSkin.GetLoginData(), IsForceRestart:=True)
+                            GoTo Retry
+                    End Select
+                ElseIf ex.IsBadNetwork Then
+                    Hint(GetLang("LangMySkinHintChangeCapeFailTimeout"), HintType.Red)
+                Else
+                    Logger.Error(ex, GetLang("LangMySkinHintChangeCapeFail"), LogBehavior.Toast)
+                End If
             Finally
                 IsChanging = False
             End Try

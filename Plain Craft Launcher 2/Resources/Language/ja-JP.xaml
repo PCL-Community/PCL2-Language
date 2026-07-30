@@ -1,4 +1,7 @@
-﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:s="clr-namespace:System;assembly=mscorlib" xml:space="preserve">
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:s="clr-namespace:System;assembly=mscorlib"
+        xml:space="preserve">
     <s:String x:Key="LangTaskAbort">キャンセルされました！</s:String>
     <s:String x:Key="LangDialogBtnOK">確認</s:String>
     <s:String x:Key="LangDialogBtnCancel">キャンセル</s:String>
@@ -8,6 +11,9 @@
     <s:String x:Key="LangDialogBtnContinue">続行</s:String>
     <s:String x:Key="LangComma">、</s:String>
     <s:String x:Key="LangColon">：</s:String>
+    <s:String x:Key="LangSeparator">、</s:String>
+    <s:String x:Key="LangConjunctiveCoordinator">及び</s:String>
+    <s:String x:Key="LangDisjunctiveCoordinator">又は</s:String>
     <s:String x:Key="LangSaveAs">保存先を選択してください</s:String>
     <s:String x:Key="LangSaveAsFile">文件</s:String>
     <s:String x:Key="LangReset">リセット</s:String>
@@ -573,7 +579,7 @@
     <s:String x:Key="LangDownloadModpackTypeTech">テクノロジー</s:String>
     <s:String x:Key="LangDownloadModpackTypeMagic">魔法</s:String>
     <s:String x:Key="LangDownloadModpackTypeAdventure">冒険</s:String>
-    <s:String x:Key="LangDownloadModpackTypeCook">キッチンシンク</s:String>
+    <s:String x:Key="LangDownloadModpackTypeSink">キッチンシンク</s:String>
     <s:String x:Key="LangDownloadModpackTypeExplore">探検</s:String>
     <s:String x:Key="LangDownloadModpackTypeGame">ゲーム</s:String>
     <s:String x:Key="LangDownloadModpackTypeScienceFiction">SF</s:String>
@@ -809,7 +815,6 @@
     <s:String x:Key="LangPageOtherDialogFeedbackBtn2">フィードバックリストを表示</s:String>
     <s:String x:Key="LangPageOtherDialogVoteContent">新機能投票のウェブページを開きますか？</s:String>
     <s:String x:Key="LangPageOtherDialogVoteTitle">リマインダー</s:String>
-    <s:String x:Key="LangPageOtherDialogVoteBtn1">開く</s:String>
     <s:String x:Key="LangPageOtherAboutAbout">について</s:String>
     <s:String x:Key="LangPageOtherAboutAboutAuthor">龍騰猫躍</s:String>
     <s:String x:Key="LangPageOtherAboutAboutAuthorSubtitle">Plain Craft Launcher の開発者！</s:String>
@@ -966,6 +971,8 @@ MinecraftバージョンのJSONにおける文字列置換マーカー（例え�
 パス操作は、パス内のスペースを避けるために、すべてダブルクォーテーションで囲むことをお勧めします。
 コマンド実行時は、コマンドラインの現在のディレクトリは.minecraftフォルダです。</s:String>
     <s:String x:Key="LangPageSetupLaunchLaunchAdvanceOptionsCommandStartWaitForCommand">コマンド実行完了まで待機してから起動を続行</s:String>
+    <s:String x:Key="LangPageSetupLaunchLaunchAdvanceOptionsPreventUpdateMod">禁止更新 Mod</s:String>
+    <s:String x:Key="LangPageSetupLaunchLaunchAdvanceOptionsPreventUpdateModToolTip">禁止为此版本更新 Mod，以防止整合包玩家误操作</s:String>
     <s:String x:Key="LangPageSetupLaunchLaunchAdvanceOptionsIgnoreJavaCompatibility">Java互換性警告を無視</s:String>
     <s:String x:Key="LangPageSetupLaunchLaunchAdvanceOptionsIgnoreJavaCompatibilityToolTip">現在のバージョンと互換性のないJavaを手動で選択した場合、互換性警告のポップアップを自動的にスキップし、手動で選択したJavaを強制的に使用します。</s:String>
     <s:String x:Key="LangPageSetupLaunchLaunchAdvanceOptionsDisableFileVerification">ファイル検証を無効にする</s:String>
@@ -978,6 +985,7 @@ MinecraftバージョンのJSONにおける文字列置換マーカー（例え�
     <s:String x:Key="LangPageSetupLaunchLaunchAdvanceOptionsGPUPerfence">Java に高性能グラフィックカードを使用するように要求する</s:String>
     <s:String x:Key="LangPageSetupLaunchLaunchAdvanceOptionsGPUPerfenceToolTip">Windows の設定 → システム → ディスプレイ → グラフィックカード の中で、Java が高性能グラフィックカードを使用するように自動的に設定します。
 PC に内蔵グラフィックと専用グラフィックの両方がある場合、これにより Minecraft が専用グラフィックカードを使用してレンダリングを行い、パフォーマンスが大幅に向上します。</s:String>
+    <s:String x:Key="LangPageSetupLaunchLaunchAdvanceOptionsMoreTips">版本独立设置中还有更多高级选项可供调整。</s:String>
     <s:String x:Key="LangPageSetupLaunchGotoVersionSetting">インスタンス独立設定</s:String>
     <s:String x:Key="LangPageSetupLaunchReloadByError">起動設定に異常があり、自動的にリセットされました</s:String>
     <s:String x:Key="LangPageSetupLaunchReloadFail">起動設定のリロードに失敗しました</s:String>
@@ -1064,6 +1072,11 @@ PCLを起動するたびに、管理者権限の申請が必要です。
     <s:String x:Key="LangPageSetupSystemSystemCacheFolderToolTip">PCLのダウンロード、スキンなどのキャッシュファイルの保存場所です。
 パスにスペースが含まれているのは推奨しません。
 空欄のままにしておくとデフォルト値が適用され、PCLを再起動した後に有効になります。</s:String>
+    <s:String x:Key="LangPageSetupSystemSystemTelemetry">匿名数据收集</s:String>
+    <s:String x:Key="LangPageSetupSystemSystemTelemetryToolTip">当下载失败、PCL 出错、游戏崩溃等事件时，PCL 会匿名上报情况，以通知龙猫 “哦吼，出错了”，让龙猫能更好地修 Bug……
+你可以关闭上报，不过龙猫就不知道你遇到了什么 Bug 了……
+PCL 不会上传或收集任何个人信息，包括上报的东西里面也没有！
+详情：https://github.com/Meloong-Git/PCL/discussions/7036</s:String>
     <s:String x:Key="LangPageSetupSystemSystemCheckUpdate">更新の確認</s:String>
     <s:String x:Key="LangPageSetupSystemLang">言語</s:String>
     <s:String x:Key="LangPageSetupSystemLangLaunchLang">ランチャー言語</s:String>
@@ -2147,7 +2160,7 @@ Modrinth の要件により、CurseForge からのみダウンロードできる
 
 {1}</s:String>
     <s:String x:Key="LangPageVersionExportSelectExportPath">エクスポート先を選択する</s:String>
-    <s:String x:Key="LangPageVersionExportSelectExportPathSaveAsFormat">モッドパックファイル(*{0})|*{1}</s:String>
+    <s:String x:Key="LangPageVersionExportSelectExportModpackFile">モッドパックファイル(*{0})|*{1}</s:String>
     <s:String x:Key="LangPageVersionExportTaskDownloadPCL">PCL 正式版をダウンロード</s:String>
     <s:String x:Key="LangPageVersionExportTaskCopyFiles">エクスポート内容をコピー</s:String>
     <s:String x:Key="LangPageVersionExportHintFolderInConfigNotFound">設定ファイルで指定されたフォルダーが見つかりませんでした：{0}</s:String>

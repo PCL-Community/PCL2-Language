@@ -1,4 +1,6 @@
-﻿Public Module ModMusic
+﻿Imports NAudio.Wave
+
+Public Module ModMusic
 
 #Region "播放列表"
 
@@ -21,23 +23,22 @@
             '初始化全部可用音乐列表
             If MusicAllList Is Nothing Then
                 MusicAllList = New List(Of String)
-                Directory.CreateDirectory(Path & "PCL\Musics\")
-                For Each File In EnumerateFiles(Path & "PCL\Musics\")
+                DirectoryUtils.Create(PathExeFolder & "PCL\Musics\")
+                For Each File In DirectoryUtils.GetFiles(PathExeFolder & "PCL\Musics\")
                     '文件夹可能会被加入 .ini 文件夹配置文件、一些乱七八糟的 .jpg 文件啥的
-                    Dim Ext As String = File.Extension.ToLower
-                    If {".ini", ".jpg", ".txt", ".cfg", ".lrc", ".db", ".png"}.Contains(Ext) Then Continue For
-                    MusicAllList.Add(File.FullName)
+                    If {"ini", "jpg", "txt", "cfg", "lrc", "db", "png"}.Contains(PathUtils.GetExtension(File)) Then Continue For
+                    MusicAllList.Add(File)
                 Next
             End If
             '打乱顺序播放
-            MusicWaitingList = If(Setup.Get("UiMusicRandom"), New List(Of String)(MusicAllList).Shuffle().ToList, New List(Of String)(MusicAllList))
+            MusicWaitingList = If(Settings.Get(Of Boolean)("UiMusicRandom"), New List(Of String)(MusicAllList).Shuffle().ToList, New List(Of String)(MusicAllList))
             If PreventFirst IsNot Nothing AndAlso MusicWaitingList.FirstOrDefault = PreventFirst Then
                 '若需要避免成为第一项的为第一项，则将它放在最后
                 MusicWaitingList.RemoveAt(0)
                 MusicWaitingList.Add(PreventFirst)
             End If
         Catch ex As Exception
-            Log(ex, GetLang("LangModMusicExceptionInitFail"), LogLevel.Feedback)
+            Logger.Error(ex, GetLang("LangModMusicExceptionInitFail"))
         End Try
     End Sub
     ''' <summary>
@@ -45,16 +46,18 @@
     ''' 如果没有，可能会返回 Nothing。
     ''' </summary>
     Private Function DequeueNextMusicAddress() As String
+        Dim Result As String
         '初始化，确保存在音乐
         If MusicAllList Is Nothing OrElse Not MusicAllList.Any() OrElse Not MusicWaitingList.Any() Then MusicListInit(False)
         '出列下一个音乐，如果出列结束则生成新列表
         If MusicWaitingList.Any() Then
-            DequeueNextMusicAddress = MusicWaitingList(0)
+            Result = MusicWaitingList(0)
             MusicWaitingList.RemoveAt(0)
         Else
-            DequeueNextMusicAddress = Nothing
+            Result = Nothing
         End If
-        If Not MusicWaitingList.Any() Then MusicListInit(False, DequeueNextMusicAddress)
+        If Not MusicWaitingList.Any() Then MusicListInit(False, Result)
+        Return Result
     End Function
 
 #End Region
@@ -79,7 +82,7 @@
                     If MusicState = MusicStates.Pause Then
                         FrmMain.BtnExtraMusic.Logo = Logo.IconPlay
                         FrmMain.BtnExtraMusic.LogoScale = 0.8
-                        ToolTipText = GetLang("LangModMusicPaused", IO.Path.GetFileNameWithoutExtension(MusicCurrent))
+                        ToolTipText = GetLang("LangModMusicPaused", PathUtils.GetFileNameWithoutExtension(MusicCurrent))
                         If MusicAllList.Count > 1 Then
                             ToolTipText += vbCrLf & GetLang("LangModMusicStopClickTipA")
                         Else
@@ -88,7 +91,7 @@
                     Else
                         FrmMain.BtnExtraMusic.Logo = Logo.IconMusic
                         FrmMain.BtnExtraMusic.LogoScale = 1
-                        ToolTipText = GetLang("LangModMusicPlaying", IO.Path.GetFileNameWithoutExtension(MusicCurrent))
+                        ToolTipText = GetLang("LangModMusicPlaying", PathUtils.GetFileNameWithoutExtension(MusicCurrent))
                         If MusicAllList.Count > 1 Then
                             ToolTipText += vbCrLf & GetLang("LangModMusicStartClickTipA")
                         Else
@@ -101,7 +104,7 @@
                 If FrmSetupUI IsNot Nothing Then FrmSetupUI.MusicRefreshUI()
 
             Catch ex As Exception
-                Log(ex, GetLang("LangModMusicExceptionUIRefreshFail"), LogLevel.Feedback)
+                Logger.Error(ex, GetLang("LangModMusicExceptionUIRefreshFail"))
             End Try
         End Sub)
     End Sub
@@ -119,7 +122,7 @@
                 Case MusicStates.Play
                     MusicPause()
                 Case Else
-                    Log("[Music] 音乐目前为停止状态，已强制尝试开始播放", LogLevel.Debug)
+                    Logger.Warn("音乐目前为停止状态，已强制尝试开始播放")
                     MusicRefreshPlay(False)
             End Select
         End If
@@ -129,16 +132,16 @@
     ''' 播放下一曲，并显示提示文本。
     ''' </summary>
     Public Sub MusicControlNext()
-        If MusicAllList.Count = 1 Then
+        If MusicAllList.IsSingle Then
             MusicStartPlay(MusicCurrent)
-            Hint(GetLang("LangModMusicReplay", GetFileNameFromPath(MusicCurrent)), HintType.Green)
+            Hint(GetLang("LangModMusicReplay", PathUtils.GetLastPart(MusicCurrent)), HintType.Green)
         Else
             Dim Address As String = DequeueNextMusicAddress()
             If Address Is Nothing Then
                 Hint(GetLang("LangModMusicNoMusic"), HintType.Red)
             Else
                 MusicStartPlay(Address)
-                Hint(GetLang("LangModMusicPlaying", GetFileNameFromPath(Address)), HintType.Green)
+                Hint(GetLang("LangModMusicPlaying", PathUtils.GetLastPart(Address)), HintType.Green)
             End If
         End If
         MusicRefreshUI()
@@ -155,9 +158,9 @@
         Get
             If MusicNAudio Is Nothing Then Return MusicStates.Stop
             Select Case MusicNAudio.PlaybackState
-                Case 0 'NAudio.Wave.PlaybackState.Stopped
+                Case 0 'PlaybackState.Stopped
                     Return MusicStates.Stop
-                Case 2 'NAudio.Wave.PlaybackState.Paused
+                Case 2 'PlaybackState.Paused
                     Return MusicStates.Pause
                 Case Else
                     Return MusicStates.Play
@@ -194,7 +197,7 @@
                 Else
                     Try
                         MusicStartPlay(Address, IsFirstLoad)
-                        If ShowHint Then Hint(GetLang("LangModMusicMusicRefreshed", GetFileNameFromPath(Address)), HintType.Green, False)
+                        If ShowHint Then Hint(GetLang("LangModMusicMusicRefreshed", PathUtils.GetLastPart(Address)), HintType.Green, False)
                     Catch
                     End Try
                 End If
@@ -202,7 +205,7 @@
             MusicRefreshUI()
 
         Catch ex As Exception
-            Log(ex, GetLang("LangModMusicExceptionMusicRefreshFail"), LogLevel.Feedback)
+            Logger.Error(ex, GetLang("LangModMusicExceptionMusicRefreshFail"))
         End Try
     End Sub
     ''' <summary>
@@ -210,7 +213,7 @@
     ''' </summary>
     Private Sub MusicStartPlay(Address As String, Optional IsFirstLoad As Boolean = False)
         If Address Is Nothing Then Return
-        Log("[Music] 播放开始：" & Address)
+        Logger.Info($"播放开始：{Address}")
         MusicCurrent = Address
         RunInNewThread(Sub() MusicLoop(IsFirstLoad), "Music", ThreadPriority.BelowNormal)
     End Sub
@@ -224,13 +227,13 @@
         If MusicState = MusicStates.Play Then
             RunInThread(
             Sub()
-                Log("[Music] 已暂停播放")
+                Logger.Info("已暂停播放")
                 MusicNAudio?.Pause()
                 MusicRefreshUI()
             End Sub)
             Return True
         Else
-            Log($"[Music] 无需暂停播放，当前状态为 {MusicState}")
+            Logger.Info($"无需暂停播放，当前状态为 {MusicState}")
             Return False
         End If
     End Function
@@ -239,12 +242,12 @@
     ''' </summary>
     Public Function MusicResume() As Boolean
         If MusicState = MusicStates.Play OrElse Not MusicAllList.Any() Then
-            Log($"[Music] 无需继续播放，当前状态为 {MusicState}")
+            Logger.Info($"无需继续播放，当前状态为 {MusicState}")
             Return False
         Else
             RunInThread(
             Sub()
-                Log("[Music] 已恢复播放")
+                Logger.Info("已恢复播放")
                 Try
                     MusicNAudio?.Play()
                 Catch 'https://github.com/Meloong-Git/PCL/pull/5415#issuecomment-2751135223
@@ -260,7 +263,7 @@
 #End Region
 
     ''' <summary>
-    ''' 当前正在播放的 NAudio.Wave.WaveOutEvent。
+    ''' 当前正在播放的 WaveOutEvent。
     ''' 如果为它赋了类别，则会没有必要地加载 NAudio.dll。
     ''' </summary>
     Public MusicNAudio = Nothing
@@ -273,26 +276,33 @@
     ''' 在 MusicUuid 不变的前提下，持续播放某地址的音乐，且在播放结束后随机播放下一曲。
     ''' </summary>
     Private Sub MusicLoop(Optional IsFirstLoad As Boolean = False)
-        Dim CurrentWave As NAudio.Wave.WaveOutEvent = Nothing
-        Dim Reader As NAudio.Wave.WaveStream = Nothing
+        Dim CurrentWave As WaveOutEvent = Nothing
+        Dim Reader As WaveStream = Nothing
         Try
             '开始播放
-            CurrentWave = New NAudio.Wave.WaveOutEvent()
+            CurrentWave = New WaveOutEvent()
             MusicNAudio = CurrentWave
             CurrentWave.DeviceNumber = -1
-            Reader = New NAudio.Wave.AudioFileReader(MusicCurrent)
+            Try
+                Reader = New AudioFileReader(MusicCurrent)
+            Catch ex As Exception
+                Logger.Warn(ex, "使用 AudioFileReader 加载音频文件失败，换用 MediaFoundationReader 重试")
+                Reader = New MediaFoundationReader(MusicCurrent)
+            End Try
             CurrentWave.Init(Reader)
             CurrentWave.Play()
             '第一次打开的暂停
-            If IsFirstLoad AndAlso Not Setup.Get("UiMusicAuto") Then CurrentWave.Pause()
+            If IsFirstLoad AndAlso Not Settings.Get(Of Boolean)("UiMusicAuto") Then CurrentWave.Pause()
             MusicRefreshUI()
             '停止条件：播放完毕或变化
             Dim PreviousVolume = 0
-            While CurrentWave.Equals(MusicNAudio) AndAlso Not CurrentWave.PlaybackState = NAudio.Wave.PlaybackState.Stopped
-                If Setup.Get("UiMusicVolume") <> PreviousVolume Then
+            While CurrentWave.Equals(MusicNAudio) AndAlso Not CurrentWave.PlaybackState = PlaybackState.Stopped
+                If Settings.Get(Of Integer)("UiMusicVolume") <> PreviousVolume Then
                     '更新音量
-                    PreviousVolume = Setup.Get("UiMusicVolume")
+                    PreviousVolume = Settings.Get(Of Integer)("UiMusicVolume")
+#Disable Warning BC40008 '类型或成员已过时
                     CurrentWave.Volume = PreviousVolume / 1000
+#Enable Warning BC40008 '类型或成员已过时
                 End If
                 '更新进度条
                 Dim Percent = Reader.CurrentTime.TotalMilliseconds / Reader.TotalTime.TotalMilliseconds
@@ -300,9 +310,9 @@
                 Thread.Sleep(100)
             End While
             '当前音乐已播放结束，继续下一曲
-            If CurrentWave.PlaybackState = NAudio.Wave.PlaybackState.Stopped AndAlso MusicAllList.Any Then MusicStartPlay(DequeueNextMusicAddress)
+            If CurrentWave.PlaybackState = PlaybackState.Stopped AndAlso MusicAllList.Any Then MusicStartPlay(DequeueNextMusicAddress)
         Catch ex As Exception
-            Log(ex, "播放音乐出现内部错误（" & MusicCurrent & "）", LogLevel.Developer)
+            Logger.Warn(ex, $"播放音乐出现内部错误（{MusicCurrent}）")
             If TypeOf ex Is NAudio.MmException AndAlso ex.Message.Contains("AlreadyAllocated") Then
                 Hint("你的音频设备正被其他程序占用。请在关闭占用的程序后重启 PCL，才能恢复音乐播放功能！", HintType.Red)
                 Thread.Sleep(1000000000)
@@ -311,13 +321,11 @@
                 Hint(GetLang("LangModMusicDeviceChanged"), HintType.Red)
                 Thread.Sleep(1000000000)
             End If
-            If ex.Message.Contains("Got a frame at sample rate") OrElse ex.Message.Contains("does not support changes to") Then
-                Hint(GetLang("LangModMusicMusicChanged", GetFileNameFromPath(MusicCurrent)), HintType.Red)
-            ElseIf Not (MusicCurrent.EndsWithF(".wav", True) OrElse MusicCurrent.EndsWithF(".mp3", True) OrElse MusicCurrent.EndsWithF(".flac", True)) OrElse
+            If Not (MusicCurrent.EndsWithF(".wav", True) OrElse MusicCurrent.EndsWithF(".mp3", True) OrElse MusicCurrent.EndsWithF(".flac", True)) OrElse
                 ex.Message.Contains("0xC00D36C4") Then '#5096：不支持给定的 URL 的字节流类型。 (异常来自 HRESULT:0xC00D36C4)
-                Hint(GetLang("LangModMusicMusicFormatNotSupport", GetFileNameFromPath(MusicCurrent)), HintType.Red)
+                Hint(GetLang("LangModMusicMusicFormatNotSupport", PathUtils.GetLastPart(MusicCurrent)), HintType.Red)
             Else
-                Log(ex, "播放音乐失败（" & GetFileNameFromPath(MusicCurrent) & "）", LogLevel.Hint)
+                Logger.Error(ex, $"播放音乐失败（{PathUtils.GetLastPart(MusicCurrent)}）", LogBehavior.Toast)
             End If
             '将播放错误的音乐从列表中移除
             MusicAllList.Remove(MusicCurrent)

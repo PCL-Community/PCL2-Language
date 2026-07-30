@@ -102,7 +102,7 @@
                 Else
                     LabEmptyTitle.Text = GetLang("LangSelectNoAvailableVersion")
                     LabEmptyContent.Text = GetLang("LangSelectNoAvailableVersionTip")
-                    BtnEmptyDownload.Visibility = If(Setup.Get("UiHiddenPageDownload") AndAlso Not PageSetupUI.HiddenForceShow, Visibility.Collapsed, Visibility.Visible)
+                    BtnEmptyDownload.Visibility = If(Settings.Get(Of Boolean)("UiHiddenPageDownload") AndAlso Not PageSetupUI.HiddenForceShow, Visibility.Collapsed, Visibility.Visible)
                 End If
             Else
                 PanBack.Visibility = Visibility.Visible
@@ -110,7 +110,7 @@
             End If
 
         Catch ex As Exception
-            Log(ex, GetLang("LangSelectVersionListLoadFail"), LogLevel.Feedback)
+            Logger.Error(ex, GetLang("LangSelectVersionListLoadFail"))
         End Try
     End Sub
     Public Shared Sub McInstanceListContent(sender As MyListItem, e As EventArgs)
@@ -184,7 +184,6 @@
         If New McInstance(Instance.PathVersion).Check Then
             '正常版本
             McInstanceSelected = Instance
-            Setup.Set("LaunchVersionSelect", McInstanceSelected.Name)
             FrmMain.PageBack()
         Else
             '错误版本
@@ -205,13 +204,8 @@
             Select Case MyMsgBox(MsgBoxContent, GetLang("LangSelectDeleteVersionTitle"), GetLang("LangDialogBtnContinue"), GetLang("LangDialogBtnCancel"),, True)
 
                 Case 1
-                    IniClearCache(Instance.PathIndie & "options.txt")
-                    IniClearCache(Instance.PathVersion & "PCL\Setup.ini")
-                    If IsShiftPressed Then
-                        DeleteDirectory(Instance.PathVersion)
-                    Else
-                        FileIO.FileSystem.DeleteDirectory(Instance.PathVersion, FileIO.UIOption.AllDialogs, FileIO.RecycleOption.SendToRecycleBin)
-                    End If
+                    Instance.ResetIniCache()
+                    DirectoryUtils.Delete(Instance.PathVersion, Not IsShiftPressed)
                     Hint( GetLang("LangSelectVersionDeleted", Instance.Name), HintType.Green)
                 Case 2
                     Return
@@ -241,14 +235,14 @@
                 LoaderFolderRun(McInstanceListLoader, McFolderSelected, LoaderFolderRunType.ForceRun, MaxDepth:=1, ExtraPath:="versions\")
             End If
         Catch ex As OperationCanceledException
-            Log(ex, GetLang("LangSelectVersionDeleteCancelled", Instance.Name))
+            Logger.Warn(ex, GetLang("LangSelectVersionDeleteCancelled", Instance.Name))
         Catch ex As Exception
-            Log(ex, GetLang("LangSelectVersionDeleteFail", Instance.Name), LogLevel.Msgbox)
+            Logger.Error(ex, GetLang("LangSelectVersionDeleteFail", Instance.Name), LogBehavior.Alert)
         End Try
     End Sub
 
     Public Sub BtnEmptyDownload_Loaded() Handles BtnEmptyDownload.Loaded
-        Dim NewVisibility = If((Setup.Get("UiHiddenPageDownload") AndAlso Not PageSetupUI.HiddenForceShow) OrElse ShowHidden, Visibility.Collapsed, Visibility.Visible)
+        Dim NewVisibility = If((Settings.Get(Of Boolean)("UiHiddenPageDownload") AndAlso Not PageSetupUI.HiddenForceShow) OrElse ShowHidden, Visibility.Collapsed, Visibility.Visible)
         If BtnEmptyDownload.Visibility <> NewVisibility Then
             BtnEmptyDownload.Visibility = NewVisibility
             PanLoad.TriggerForceResize()
