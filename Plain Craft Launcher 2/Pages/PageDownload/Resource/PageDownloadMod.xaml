@@ -7,10 +7,10 @@
     mc:Ignorable="d"
     x:Class="PageDownloadMod"
     PanScroll="Content">
-    <local:PageComp x:Name="Content"
-                    PageType="Mod"
-                    TypeName="{StaticResource LangDownloadPageLeftMods}"
-                    TypeNameSpaced="{StaticResource LangDownloadPageLeftModsL}">
+    <local:PageResource x:Name="Content"
+                        PageType="Mod"
+                        TypeName="{StaticResource LangDownloadPageLeftMods}"
+                        TypeNameSpaced="{StaticResource LangDownloadPageLeftModsL}">
         <local:MyComboBoxItem Content="{StaticResource LangDownloadResourceTypeAll}"
                               Tag=""
                               IsSelected="True"/>
@@ -75,5 +75,5 @@
                               Tag="435/social"/>
         <local:MyComboBoxItem Content="{StaticResource LangDownloadModTypeLib}"
                               Tag="421/library"/>
-    </local:PageComp>
+    </local:PageResource>
 </local:MyPageRight>

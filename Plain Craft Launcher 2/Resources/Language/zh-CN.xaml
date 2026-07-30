@@ -669,8 +669,8 @@
     <s:String x:Key="LangMySkinHintSaveFail">保存皮肤失败</s:String>
     <s:String x:Key="LangMySkinHintSkinFileCorruption">皮肤文件已损坏：</s:String>
     <s:String x:Key="LangMySkinHintExistSkinFileGetTask">有正在获取中的皮肤，请稍后再试！</s:String>
-    <s:String x:Key="LangMySkinHintRefreshing">正在刷新头像……</s:String>
-    <s:String x:Key="LangMySkinHintRefreshed">已刷新头像！</s:String>
+    <s:String x:Key="LangMySkinHintRefreshing">正在刷新皮肤……</s:String>
+    <s:String x:Key="LangMySkinHintRefreshed">已刷新皮肤！</s:String>
     <s:String x:Key="LangMySkinHintRefreshFail">刷新皮肤缓存失败</s:String>
     <s:String x:Key="LangMySkinHintChangeSuccess">更改皮肤成功！</s:String>
     <s:String x:Key="LangMySkinHintChanging">正在更改披风中，请稍候！</s:String>
@@ -678,6 +678,7 @@
     <s:String x:Key="LangMySkinHintGettingCape">正在获取披风列表，请稍候……</s:String>
     <s:String x:Key="LangMySkinDialogChooseCape">选择披风</s:String>
     <s:String x:Key="LangMySkinHintChangeCapeFail">更改披风失败</s:String>
+    <s:String x:Key="LangMySkinHintChangeCapeFailTimeout">更改披风失败：连接 Mojang 服务器超时，请稍后再试，或使用 VPN 改善网络环境</s:String>
     <s:String x:Key="LangMySkinHintChangeCapeSuccess">更改披风成功！</s:String>
     <s:String x:Key="LangMySkinCapeNameMigrator">迁移者披风</s:String>
     <s:String x:Key="LangMySkinCapeNameMapMaker">Realms 地图制作者披风</s:String>
@@ -741,8 +742,6 @@
     <s:String x:Key="LangLaunchLeftExceptionModpackInstallFail">自动安装整合包失败：{0}</s:String>
     <s:String x:Key="LangLaunchRightSnapshot">快照版提示</s:String>
     <s:String x:Key="LangLaunchRightLog">启动日志</s:String>
-    <s:String x:Key="LangLaunchRightLabHint1">快照版包含尚未正式发布的测试功能，仅用于赞助者本人尝鲜。请不要发给其他人或者用来制作整合包哦！</s:String>
-    <s:String x:Key="LangLaunchRightLabHint2">若已累积赞助￥23.33，在爱发电私信发送 “解锁码” 即可永久隐藏此提示。</s:String>
     <s:String x:Key="LangLaunchRightLoadingPage">正在加载主页……</s:String>
     <s:String x:Key="LangLaunchRightPageTips">你知道吗？</s:String>
     <s:String x:Key="LangLaunchRightPageEcho">回声洞</s:String>
@@ -771,7 +770,7 @@
     <s:String x:Key="LangPageLoginMsAddAccount">添加新账号</s:String>
     <s:String x:Key="LangPageLoginMsAddAccountBeforeStart">请在登录账号后再启动游戏！</s:String>
     <s:String x:Key="LangPageLoginMsAddAccountCancel">已取消登录！</s:String>
-    <s:String x:Key="LangPageLoginMsAddAccountFailA">正版登录验证失败，请尝试在 [设置 → 启动器] 中关闭 [验证 SSL 证书] 然后再试。
+    <s:String x:Key="LangPageLoginMsAddAccountFailA">正版登录验证失败，请考虑在 [设置 → 其他] 中关闭 [在正版登录时验证 SSL 证书]，然后再试。
 
 原始错误信息：</s:String>
     <s:String x:Key="LangPageLoginMsAddAccountFailB">正版登录验证失败，请考虑在 [设置 → 其他] 中关闭 [在正版登录时验证 SSL 证书]，然后再试。</s:String>
@@ -780,6 +779,7 @@
     <s:String x:Key="LangPageLoginMsSkinSkinChange">修改皮肤</s:String>
     <s:String x:Key="LangPageLoginMsSkinSkinSave">保存皮肤</s:String>
     <s:String x:Key="LangPageLoginMsSkinSkinRefresh">刷新头像</s:String>
+    <s:String x:Key="LangPageLoginMsSkinRefresh">刷新皮肤</s:String>
     <s:String x:Key="LangPageLoginMsSkinCapeChange">修改披风</s:String>
     <s:String x:Key="LangPageLoginMsSkinInfoChange">修改信息</s:String>
     <s:String x:Key="LangPageLoginMsSkinInfoChangePassword">修改密码</s:String>
@@ -788,9 +788,9 @@
     <s:String x:Key="LangPageLoginMsSkinChangingSkinPlzWait">正在更改皮肤中，请稍候！</s:String>
     <s:String x:Key="LangPageLoginMsSkinChangeSkinFailByLoginFail">登录失败，无法更改皮肤！</s:String>
     <s:String x:Key="LangPageLoginMsSkinChangingSkin">正在更改皮肤……</s:String>
-    <s:String x:Key="LangPageLoginMsSkinLoginBeforeChangeSkin">正在登录，将在登录完成后继续更改皮肤……</s:String>
+    <s:String x:Key="LangPageLoginMsSkinLoginBeforeChangeSkin">正在重新登录，将在登录后自动更改皮肤……</s:String>
     <s:String x:Key="LangPageLoginMsSkinChangeSkinFail">更改皮肤失败</s:String>
-    <s:String x:Key="LangPageLoginMsSkinChangeSkinFailByTimeOut">更改皮肤失败：连接皮肤服务器超时，请稍后再试，或使用 VPN 改善网络环境</s:String>
+    <s:String x:Key="LangPageLoginMsSkinChangeSkinFailByTimeOut">更改皮肤失败：连接 Mojang 服务器超时，请稍后再试，或使用 VPN 改善网络环境</s:String>
     <s:String x:Key="LangPageLoginNideAccount">账号</s:String>
     <s:String x:Key="LangPageLoginNidePassword">密码</s:String>
     <s:String x:Key="LangPageLoginNideRememberPassword">记住密码</s:String>
@@ -924,7 +924,7 @@
     <s:String x:Key="LangPageSetupLaunchLaunchJavaLoading">加载中……</s:String>
     <s:String x:Key="LangPageSetupLaunchLaunchJavaAutoSearch">自动搜索</s:String>
     <s:String x:Key="LangPageSetupLaunchLaunchJavaImport">手动导入</s:String>
-    <s:String x:Key="LangPageSetupLaunchLaunchMem">游戏内存</s:String>
+    <s:String x:Key="LangPageSetupLaunchLaunchMem">内存分配</s:String>
     <s:String x:Key="LangPageSetupLaunchLaunchMem32BitWarn">32 位 Java 只能分配最多 1 GB 的内存。强烈建议换用 64 位的 Java！</s:String>
     <s:String x:Key="LangPageSetupLaunchLaunchMemAutoAdjust">自动配置</s:String>
     <s:String x:Key="LangPageSetupLaunchLaunchMemAutoAdjustToolTip">根据安装的 Mod 量与电脑剩余内存，动态调整为游戏分配的内存</s:String>
@@ -982,7 +982,7 @@
     <s:String x:Key="LangPageSetupLaunchSkinEmptied">离线皮肤已清空！</s:String>
     <s:String x:Key="LangPageSetupLaunchSkinEmptyFail">清空离线皮肤失败</s:String>
     <s:String x:Key="LangPageSetupLaunchMemAvailable">可用</s:String>
-    <s:String x:Key="LangPageSetupLaunchJavaAutoChoice">自动选择合适的 Java</s:String>
+    <s:String x:Key="LangPageSetupLaunchJavaAutoChoice">自动选择（推荐）</s:String>
     <s:String x:Key="LangPageSetupLaunchJavaUpdateListFail">更新设置 Java 下拉框失败</s:String>
     <s:String x:Key="LangPageSetupLaunchJavaNoAvailableJava">未找到可用的 Java</s:String>
     <s:String x:Key="LangPageSetupLaunchJavaSearchingJava">正在搜索 Java，请稍候！</s:String>
@@ -1420,6 +1420,7 @@ PCL 不支持其他乱七八糟的下载协议。</s:String>
     <s:String x:Key="LangModMinecraftUnknownError">发生了未知错误，请向作者反馈此问题</s:String>
     <s:String x:Key="LangModMinecraftNideAuth">统一通行证验证</s:String>
     <s:String x:Key="LangModMinecraftAuthlibAuth">Authlib 验证</s:String>
+    <s:String x:Key="LangModMinecraftFoolName26w14a">为什么需要物品栏？让方块们跟着你走吧！</s:String>
     <s:String x:Key="LangModMinecraftFoolName24w14potato">毒马铃薯一直都被大家忽视和低估，于是我们超级加强了它！</s:String>
     <s:String x:Key="LangModMinecraftFoolName25w14craftmine">你可以合成任何东西——包括合成你的世界！</s:String>
     <s:String x:Key="LangModMinecraftFoolName23w13ab">研究表明：玩家喜欢作出选择——越多越好！</s:String>
@@ -1608,7 +1609,7 @@ PCL 不支持其他乱七八糟的下载协议。</s:String>
     <s:String x:Key="LangModJavaRequireVersion">需要 Java {0}</s:String>
     <s:String x:Key="LangModJavaDialogContentCompatibilityWarning">你在设置中手动指定了使用 Java {0}，但当前{1}。
 如果强制使用该 Java，可能导致游戏崩溃。
-你也可以将 游戏 Java 设置修改为 自动选择合适的 Java。
+你也可以将 游戏 Java 设置修改为 自动选择。
 
 - 指定的 Java：{2}</s:String>
     <s:String x:Key="LangModJavaDialogTitleCompatibilityWarning">Java 兼容性警告</s:String>
@@ -1711,6 +1712,11 @@ PCL 不支持其他乱七八糟的下载协议。</s:String>
     <s:String x:Key="LangModModpackTaskExtraModpack">解压整合包文件</s:String>
     <s:String x:Key="LangModModpackTaskGetModDownloadInfo">获取 Mod 下载信息</s:String>
     <s:String x:Key="LangModModpackExceptionOnlineModDeleted">整合包中的部分 Mod 版本已被 Mod 作者删除，所以没法继续安装了，请向整合包作者反馈该问题</s:String>
+    <s:String x:Key="LangModModpackDialogTitleOnlineModDeleted">整合包内容缺失</s:String>
+    <s:String x:Key="LangModModpackDialogContentOnlineModDeleted">未找到该整合包所需的以下内容，它们可能已被原作者删除：
+{0}
+
+是否继续安装？缺失这些内容可能导致整合包出现异常！</s:String>
     <s:String x:Key="LangModModpackTaskInitModDownloadInfo">构造 Mod 下载信息</s:String>
     <s:String x:Key="LangModModpackDialogContentDownloadOptionalFile">是否要下载可选文件 {0}？</s:String>
     <s:String x:Key="LangModModpackDialogTitleDownloadOptionalFile">下载可选文件</s:String>
@@ -1835,7 +1841,7 @@ PCL 不支持其他乱七八糟的下载协议。</s:String>
     <s:String x:Key="LangModDownloadLibTaskFabricAnalysisLib">分析 Fabric 支持库文件</s:String>
     <s:String x:Key="LangModDownloadLibTaskFabricDownloadLib">下载 Fabric 支持库文件</s:String>
     <s:String x:Key="LangModDownloadLibSuccess">{0}成功！</s:String>
-    <s:String x:Key="LangModDownloadLibFail">{0}失败：{1}</s:String>
+    <s:String x:Key="LangModDownloadLibFail">{0}失败</s:String>
     <s:String x:Key="LangModDownloadLibCancel">{0}已取消！</s:String>
     <s:String x:Key="LangModDownloadLibTaskMcInstall">{0} 安装</s:String>
     <s:String x:Key="LangModDownloadLibHintMcExist">版本 {0} 已经存在！</s:String>
@@ -1855,7 +1861,7 @@ PCL 不支持其他乱七八糟的下载协议。</s:String>
     <s:String x:Key="LangModDownloadLibExceptionInstallInstallFail">开始合并安装失败</s:String>
     <s:String x:Key="LangModCrashDialogTitleAnalysisResult">错误报告分析结果</s:String>
     <s:String x:Key="LangModCrashDialogTitleMcError">Minecraft 出现错误</s:String>
-    <s:String x:Key="LangModCrashViewLog">查看日志</s:String>
+    <s:String x:Key="LangModCrashViewLog">查看输出</s:String>
     <s:String x:Key="LangModCrashExportCrashReport">导出错误报告</s:String>
     <s:String x:Key="LangModCrashHintExportCrashReportSuccess">错误报告已导出！</s:String>
     <s:String x:Key="LangModCrashCrashReasonNoReason">很抱歉，PCL 无法确定错误原因。</s:String>
@@ -2120,12 +2126,12 @@ PCL 不支持其他乱七八糟的下载协议。</s:String>
     <s:String x:Key="LangPageVersionExportStart">开始导出</s:String>
     <s:String x:Key="LangPageVersionExportContentTitle">导出内容列表</s:String>
     <s:String x:Key="LangPageVersionExportContentTitleReadFromFile">从配置文件中读取</s:String>
-    <s:String x:Key="LangPageVersionExportExportConfigSaveAsFormat">整合包导出配置(*.txt)|*.txt</s:String>
+    <s:String x:Key="LangPageVersionExportExportConfigSaveAsFormat">整合包导出配置</s:String>
     <s:String x:Key="LangPageVersionExportHintSavedExportConfig">已保存配置文件：{0}</s:String>
     <s:String x:Key="LangPageVersionExportSaveExportConfigFail">保存配置失败</s:String>
     <s:String x:Key="LangPageVersionExportSelectConfigSave">保存配置文件</s:String>
     <s:String x:Key="LangPageVersionExportSelectSavedConfig">选择配置文件</s:String>
-    <s:String x:Key="LangPageVersionExportSelectConfigSaveAsFormat">整合包导出配置(*.txt)|*.txt</s:String>
+    <s:String x:Key="LangPageVersionExportSelectConfigSaveAsFormat">整合包导出配置</s:String>
     <s:String x:Key="LangPageVersionExportHintReadExportConfig">已读取配置文件：{0}</s:String>
     <s:String x:Key="LangPageVersionExportReadExportConfigFail">读取配置失败</s:String>
     <s:String x:Key="LangPageVersionExportTaskName">导出整合包：{0}</s:String>
@@ -2134,7 +2140,8 @@ PCL 不支持其他乱七八糟的下载协议。</s:String>
 
 {1}</s:String>
     <s:String x:Key="LangPageVersionExportSelectExportPath">选择导出位置</s:String>
-    <s:String x:Key="LangPageVersionExportSelectExportPathSaveAsFormat">整合包文件(*{0})|*{1}</s:String>
+    <s:String x:Key="LangPageVersionExportSelectExportModpackFile">整合包文件</s:String>
+    <s:String x:Key="LangPageVersionExportSelectExportZipFile">压缩包文件</s:String>
     <s:String x:Key="LangPageVersionExportTaskDownloadPCL">下载 PCL 正式版</s:String>
     <s:String x:Key="LangPageVersionExportTaskCopyFiles">复制导出内容</s:String>
     <s:String x:Key="LangPageVersionExportHintFolderInConfigNotFound">未找到配置文件中指定的文件夹：{0}</s:String>

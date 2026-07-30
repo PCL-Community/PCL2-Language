@@ -1,8 +1,9 @@
 ﻿Imports System.Windows.Markup
+Imports System.Windows.Shapes
 
 <ContentProperty("Inlines")>
 Public Class MyRadioBox
-    Implements IMyRadio
+    Implements IMyRadio, ISettingControl
 
     '基础
 
@@ -48,12 +49,12 @@ Public Class MyRadioBox
             '自定义属性基础
             Dim IsChanged As Boolean = False
             If IsLoaded AndAlso Not value = Checked Then RaiseEvent PreviewChange(Me, New RouteEventArgs(user))
-            If Not value = Checked Then
+            If value <> Checked Then
                 SetValue(CheckedProperty, value)
                 IsChanged = True
             End If
 
-            '保证只有一个单选框选中
+            '保证最多只有一个单选框选中
             If Parent Is Nothing Then Return
             Dim RadioboxList As New List(Of MyRadioBox)
             Dim CheckedCount As Integer = 0
@@ -63,31 +64,26 @@ Public Class MyRadioBox
                     If Control.Checked Then CheckedCount += 1
                 End If
             Next
-            Select Case CheckedCount '判断选中情况
-                Case 0
-                    '没有任何单选框被选中，选择第一个
-                    RadioboxList(0).Checked = True
-                Case Is > 1
-                    '选中项目多于 1 个
-                    If Checked Then
-                        '如果本控件选中，则取消其他所有控件的选中
-                        For Each Control As MyRadioBox In RadioboxList
-                            If Control.Checked AndAlso Not Control.Equals(Me) Then Control.Checked = False
-                        Next
-                    Else
-                        '如果本控件未选中，则只保留第一个选中的控件
-                        Dim FirstChecked = False
-                        For Each Control As MyRadioBox In RadioboxList
-                            If Control.Checked Then
-                                If FirstChecked Then
-                                    Control.Checked = False '修改 Checked 会自动触发 Change 事件，所以不用额外触发
-                                Else
-                                    FirstChecked = True
-                                End If
+            If CheckedCount > 1 Then
+                If Checked Then
+                    '如果本控件选中，则取消其他所有控件的选中
+                    For Each Control As MyRadioBox In RadioboxList
+                        If Control.Checked AndAlso Not Control.Equals(Me) Then Control.Checked = False
+                    Next
+                Else
+                    '如果本控件未选中，则只保留第一个选中的控件
+                    Dim FirstChecked = False
+                    For Each Control As MyRadioBox In RadioboxList
+                        If Control.Checked Then
+                            If FirstChecked Then
+                                Control.Checked = False '修改 Checked 会自动触发 Change 事件，所以不用额外触发
+                            Else
+                                FirstChecked = True
                             End If
-                        Next
-                    End If
-            End Select
+                        End If
+                    Next
+                End If
+            End If
 
             If IsChanged Then
                 '触发事件
@@ -99,7 +95,7 @@ Public Class MyRadioBox
             End If
 
         Catch ex As Exception
-            Log(ex, "单选框勾选改变错误", LogLevel.Hint)
+            Logger.Error(ex, "单选框勾选改变错误", LogBehavior.Toast)
         End Try
     End Sub
     Private Sub SyncUI()
@@ -116,7 +112,7 @@ Public Class MyRadioBox
                           AaOpacity(ShapeDot, 1 - ShapeDot.Opacity, AnimationTimeOfCheck * 0.5, AnimationTimeOfCheck * 0.6)
                      }, "MyRadioBox Dot " & Uuid)
                 AniStart({
-                          AaColor(ShapeBorder, Ellipse.StrokeProperty, If(IsMouseOver, "ColorBrush3", If(IsEnabled, "ColorBrush2", "ColorBrushGray4")), AnimationTimeOfCheck)
+                          AaColor(ShapeBorder, Ellipse.StrokeProperty, If(IsMouseOver, "ColorBrush3", If(IsEnabled, "ColorBrush2", "ColorBrushGray5")), AnimationTimeOfCheck)
                      }, "MyRadioBox BorderColor " & Uuid)
             Else
                 '由有变无
@@ -128,7 +124,7 @@ Public Class MyRadioBox
                           AaOpacity(ShapeDot, -ShapeDot.Opacity, AnimationTimeOfCheck * 0.5, AnimationTimeOfCheck * 0.2)
                      }, "MyRadioBox Dot " & Uuid)
                 AniStart({
-                          AaColor(ShapeBorder, Ellipse.StrokeProperty, If(IsMouseOver, "ColorBrush3", If(IsEnabled, "ColorBrush1", "ColorBrushGray4")), AnimationTimeOfCheck)
+                          AaColor(ShapeBorder, Ellipse.StrokeProperty, If(IsMouseOver, "ColorBrush3", If(IsEnabled, "ColorBrush1", "ColorBrushGray5")), AnimationTimeOfCheck)
                      }, "MyRadioBox BorderColor " & Uuid)
             End If
         Else
@@ -141,13 +137,13 @@ Public Class MyRadioBox
                 ShapeDot.Height = 9
                 ShapeDot.Opacity = 1
                 ShapeDot.Margin = New Thickness(5.5, 0, 0, 0)
-                ShapeBorder.SetResourceReference(Ellipse.StrokeProperty, If(IsEnabled, "ColorBrush2", "ColorBrushGray4"))
+                ShapeBorder.SetResourceReference(Ellipse.StrokeProperty, If(IsEnabled, "ColorBrush2", "ColorBrushGray5"))
             Else
                 ShapeDot.Width = 0
                 ShapeDot.Height = 0
                 ShapeDot.Opacity = 0
                 ShapeDot.Margin = New Thickness(10, 0, 0, 0)
-                ShapeBorder.SetResourceReference(Ellipse.StrokeProperty, If(IsEnabled, "ColorBrush1", "ColorBrushGray4"))
+                ShapeBorder.SetResourceReference(Ellipse.StrokeProperty, If(IsEnabled, "ColorBrush1", "ColorBrushGray5"))
             End If
         End If
     End Sub
@@ -174,7 +170,7 @@ Public Class MyRadioBox
     Private AllowMouseDown As Boolean = True
     Private Sub Radiobox_MouseUp() Handles Me.MouseLeftButtonUp
         If Not MouseDowned Then Return
-        Log("[Control] 按下单选框：" & Text)
+        Logger.Info($"按下单选框：{Text}")
         SetChecked(True, True)
         MouseDowned = False
         AniStart(AaColor(ShapeBorder, Ellipse.FillProperty, "ColorBrushHalfWhite", 100), "MyRadioBox Background " & Uuid)
@@ -209,15 +205,15 @@ Public Class MyRadioBox
                 Radiobox_MouseLeaveAnimation()
             Else
                 '不可用
-                AniStart(AaColor(ShapeBorder, Ellipse.StrokeProperty, ColorGray4 - ShapeBorder.Stroke, AnimationTimeOfMouseOut), "MyRadioBox BorderColor " & Uuid)
-                AniStart(AaColor(LabText, TextBlock.ForegroundProperty, ColorGray4 - LabText.Foreground, AnimationTimeOfMouseOut), "MyRadioBox TextColor " & Uuid)
+                AniStart(AaColor(ShapeBorder, Ellipse.StrokeProperty, ColorGray5 - ShapeBorder.Stroke, AnimationTimeOfMouseOut), "MyRadioBox BorderColor " & Uuid)
+                AniStart(AaColor(LabText, TextBlock.ForegroundProperty, ColorGray5 - LabText.Foreground, AnimationTimeOfMouseOut), "MyRadioBox TextColor " & Uuid)
             End If
         Else
             '无动画
             AniStop("MyRadioBox BorderColor " & Uuid)
             AniStop("MyRadioBox TextColor " & Uuid)
-            LabText.SetResourceReference(TextBlock.ForegroundProperty, If(Me.IsEnabled, "ColorBrush1", "ColorBrushGray4"))
-            ShapeBorder.SetResourceReference(Ellipse.StrokeProperty, If(Me.IsEnabled, If(Checked, "ColorBrush2", "ColorBrush1"), "ColorBrushGray4"))
+            LabText.SetResourceReference(TextBlock.ForegroundProperty, If(Me.IsEnabled, "ColorBrush1", "ColorBrushGray5"))
+            ShapeBorder.SetResourceReference(Ellipse.StrokeProperty, If(Me.IsEnabled, If(Checked, "ColorBrush2", "ColorBrush1"), "ColorBrushGray5"))
         End If
     End Sub
     Private Sub Radiobox_MouseEnterAnimation() Handles Me.MouseEnter
@@ -227,14 +223,30 @@ Public Class MyRadioBox
     Private Sub Radiobox_MouseLeaveAnimation() Handles Me.MouseLeave
         If Not Me.IsEnabled Then Return 'MouseLeave 比 IsEnabledChanged 后执行，所以如果自定义事件修改了 IsEnabled，将导致显示错误
         If IsLoaded AndAlso AniControlEnabled = 0 Then
-            AniStart(AaColor(ShapeBorder, Ellipse.StrokeProperty, If(IsEnabled, If(Checked, "ColorBrush2", "ColorBrush1"), "ColorBrushGray4"), AnimationTimeOfMouseOut), "MyRadioBox BorderColor " & Uuid)
-            AniStart(AaColor(LabText, TextBlock.ForegroundProperty, If(IsEnabled, "ColorBrush1", "ColorBrushGray4"), AnimationTimeOfMouseOut), "MyRadioBox TextColor " & Uuid)
+            AniStart(AaColor(ShapeBorder, Ellipse.StrokeProperty, If(IsEnabled, If(Checked, "ColorBrush2", "ColorBrush1"), "ColorBrushGray5"), AnimationTimeOfMouseOut), "MyRadioBox BorderColor " & Uuid)
+            AniStart(AaColor(LabText, TextBlock.ForegroundProperty, If(IsEnabled, "ColorBrush1", "ColorBrushGray5"), AnimationTimeOfMouseOut), "MyRadioBox TextColor " & Uuid)
         Else
             AniStop("MyRadioBox BorderColor " & Uuid)
             AniStop("MyRadioBox TextColor " & Uuid)
-            ShapeBorder.SetResourceReference(Ellipse.StrokeProperty, If(IsEnabled, If(Checked, "ColorBrush2", "ColorBrush1"), "ColorBrushGray4"))
-            LabText.SetResourceReference(TextBlock.ForegroundProperty, If(IsEnabled, "ColorBrush1", "ColorBrushGray4"))
+            ShapeBorder.SetResourceReference(Ellipse.StrokeProperty, If(IsEnabled, If(Checked, "ColorBrush2", "ColorBrush1"), "ColorBrushGray5"))
+            LabText.SetResourceReference(TextBlock.ForegroundProperty, If(IsEnabled, "ColorBrush1", "ColorBrushGray5"))
         End If
     End Sub
+
+#Region "设置"
+
+    Private Sub RefreshSetting(NewValue As String) Implements ISettingControl.RefreshSetting
+        Checked = NewValue = SettingService.GetValue(Me)
+    End Sub
+
+    Private Function GetCurrentSetting() As String Implements ISettingControl.GetCurrentSetting
+        Return If(Checked, SettingService.GetValue(Me), Nothing)
+    End Function
+
+    Private Sub SaveSetting() Handles Me.Check
+        SettingService.SaveSetting(Me)
+    End Sub
+
+#End Region
 
 End Class

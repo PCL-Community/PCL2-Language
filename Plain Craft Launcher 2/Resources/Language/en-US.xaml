@@ -1,4 +1,7 @@
-﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:s="clr-namespace:System;assembly=mscorlib" xml:space="preserve">
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:s="clr-namespace:System;assembly=mscorlib"
+        xml:space="preserve">
     <s:String x:Key="LangTaskAbort">Canceled!</s:String>
     <s:String x:Key="LangDialogBtnOK">OK</s:String>
     <s:String x:Key="LangDialogBtnCancel">Cancel</s:String>
@@ -2155,7 +2158,7 @@ To modify these options, please click "Save configuration," edit the configurati
 
 {1}</s:String>
     <s:String x:Key="LangPageVersionExportSelectExportPath">Select export location</s:String>
-    <s:String x:Key="LangPageVersionExportSelectExportPathSaveAsFormat">Modpack file (*{0})|*{1}</s:String>
+    <s:String x:Key="LangPageVersionExportSelectExportModpackFile">Modpack file (*{0})|*{1}</s:String>
     <s:String x:Key="LangPageVersionExportTaskDownloadPCL">Download PCL release</s:String>
     <s:String x:Key="LangPageVersionExportTaskCopyFiles">Copy export contents</s:String>
     <s:String x:Key="LangPageVersionExportHintFolderInConfigNotFound">The specified folder in the configuration file was not found: {0}</s:String>

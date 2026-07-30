@@ -72,7 +72,7 @@ Public Class MyBitmap
                 End If
             Else
                 '使用这种自己接管 FileStream 的方法加载才能解除文件占用
-                Using InputStream As New FileStream(FilePathOrResourceName, FileMode.Open, FileAccess.Read, FileShare.Read)
+                Using InputStream = FileUtils.ReadAsStream(FilePathOrResourceName)
                     '判断是否为 WebP 文件头
                     Dim Header(1) As Byte
                     InputStream.Read(Header, 0, 2)
@@ -97,7 +97,7 @@ Public Class MyBitmap
                     Throw New Exception($"加载 MyBitmap 意外失败（{FilePathOrResourceName}）", ex)
                 End If
             Else
-                Log(ex, $"指定类型有误的 MyBitmap 加载（{FilePathOrResourceName}）", LogLevel.Developer)
+                Logger.Warn(ex, $"指定类型有误的 MyBitmap 加载（{FilePathOrResourceName}）")
                 Exit Try
             End If
         End Try
@@ -162,7 +162,7 @@ Public Class MyBitmap
     Public Sub Save(FilePath As String)
         Dim encoder As BitmapEncoder = New PngBitmapEncoder()
         encoder.Frames.Add(BitmapFrame.Create(Me))
-        Using fileStream As New FileStream(FilePath, FileMode.Create)
+        Using fileStream = FileUtils.CreateAsStream(FilePath)
             encoder.Save(fileStream)
         End Using
     End Sub

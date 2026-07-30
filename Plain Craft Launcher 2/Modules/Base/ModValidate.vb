@@ -81,7 +81,7 @@ Public Class ValidateRegex
         Me.ErrorDescription = ErrorDescription
     End Sub
     Public Overrides Function Validate(Str As String) As String
-        If Not RegexCheck(Str, Regex) Then Return ErrorDescription
+        If Not Str.RegexCheck(Regex) Then Return ErrorDescription
         Return ""
     End Function
 End Class
@@ -95,7 +95,7 @@ Public Class ValidateHttp
     End Sub '用于 XAML 初始化
     Public Overrides Function Validate(Str As String) As String
         If Str.EndsWithF("/") Then Str = Str.Substring(0, Str.Length - 1)
-        If Not RegexCheck(Str, "^(http[s]?)\://") Then Return GetLang("LangModValidateIncorrectUrl")
+        If Not Str.RegexCheck("^(http[s]?)\://") Then Return GetLang("LangModValidateIncorrectUrl")
         Return ""
     End Function
 End Class
@@ -211,7 +211,7 @@ Public Class ValidateExceptSame
         If Str Is Nothing Then Return ErrorMessage.Replace("%", "null")
         For Each Ch As String In Excepts
             If IgnoreCase Then
-                If Str.ToLower = Ch.ToLower Then Return ErrorMessage.Replace("%", Ch)
+                If Str.Lower = Ch.Lower Then Return ErrorMessage.Replace("%", Ch)
             Else
                 If Str.Equals(Ch) Then Return ErrorMessage.Replace("%", Ch) '使用 = 不确定是否会忽略大小写
             End If
@@ -222,22 +222,43 @@ Public Class ValidateExceptSame
 End Class
 
 ''' <summary>
+''' 必须为特定字符串。
+''' </summary>
+Public Class ValidateSame
+    Inherits Validate
+    Public Property Required As String
+    Public Property ErrorMessage As String
+    Public Property IgnoreCase As Boolean = False
+    Public Sub New()
+    End Sub
+    Public Sub New(Required As String, Optional ErrorMessage As String = "输入内容有误", Optional IgnoreCase As Boolean = False)
+        Me.Required = Required
+        Me.ErrorMessage = ErrorMessage
+        Me.IgnoreCase = IgnoreCase
+    End Sub
+    Public Overrides Function Validate(Str As String) As String
+        Return If(String.Compare(Str, Required, IgnoreCase) = 0, "", ErrorMessage)
+    End Function
+
+End Class
+
+''' <summary>
 ''' 对文件夹名的粗略的特化检测。
 ''' </summary>
 Public Class ValidateFolderName
     Inherits Validate
-    Public Property Path As String
+    Public Property Folder As String
     Public Property UseMinecraftCharCheck As Boolean = True
     Public Property IgnoreCase As Boolean = True
-    Private ReadOnly PathIgnore As IEnumerable(Of DirectoryInfo)
+    Private ReadOnly PathIgnore As IEnumerable(Of String)
     Public Sub New()
     End Sub
-    Public Sub New(Path As String, Optional UseMinecraftCharCheck As Boolean = True, Optional IgnoreCase As Boolean = True)
-        Me.Path = Path
+    Public Sub New(Folder As String, Optional UseMinecraftCharCheck As Boolean = True, Optional IgnoreCase As Boolean = True)
+        Me.Folder = Folder
         Me.IgnoreCase = IgnoreCase
         Me.UseMinecraftCharCheck = UseMinecraftCharCheck
         On Error Resume Next
-        PathIgnore = New DirectoryInfo(Path).EnumerateDirectories
+        PathIgnore = DirectoryUtils.GetDirectories(Folder, True)
     End Sub
     Public Overrides Function Validate(Str As String) As String
         Try
@@ -253,25 +274,25 @@ Public Class ValidateFolderName
             '检查尾部小数点
             If Str.EndsWithF(".") Then Return GetLang("LangModValidateNoEndWithDotFolderName")
             '检查特殊字符
-            Dim CharactCheck As String = New ValidateExcept(IO.Path.GetInvalidFileNameChars() & If(UseMinecraftCharCheck, "!;", ""), GetLang("LangModValidateNoEndWithSpecialCharFolderName")).Validate(Str)
+            Dim CharactCheck As String = New ValidateExcept(Path.GetInvalidFileNameChars() & If(UseMinecraftCharCheck, "!;", ""), GetLang("LangModValidateNoEndWithSpecialCharFolderName")).Validate(Str)
             If CharactCheck <> "" Then Return CharactCheck
             '检查特殊字符串
             Dim InvalidStrCheck As String = New ValidateExceptSame({"CON", "PRN", "AUX", "CLOCK$", "NUL", "COM0", "COM1", "COM2", "COM3", "COM4", "COM5", "COM6", "COM7", "COM8", "COM9", "LPT0", "LPT1", "LPT2", "LPT3", "LPT4", "LPT5", "LPT6", "LPT7", "LPT8", "LPT9"}, GetLang("LangModValidateNoSpacialFolderName"), True).Validate(Str)
             If InvalidStrCheck <> "" Then Return InvalidStrCheck
             '检查 NTFS 8.3 文件名（#4505）
-            If RegexCheck(Str, ".{2,}~\d") Then Return GetLang("LangModValidateFileNoSpecialName")
+            If Str.RegexCheck(".{2,}~\d") Then Return GetLang("LangModValidateFileNoSpecialName")
             '检查文件夹重名
             Dim Arr As New List(Of String)
             If PathIgnore IsNot Nothing Then
-                For Each Folder As DirectoryInfo In PathIgnore
-                    Arr.Add(Folder.Name)
+                For Each FolderPath In PathIgnore
+                    Arr.Add(PathUtils.GetLastPart(FolderPath))
                 Next
             End If
             Dim SameNameCheck = New ValidateExceptSame(Arr, GetLang("LangModValidateNoSameFolderName"), IgnoreCase).Validate(Str)
             If Not SameNameCheck = "" Then Return SameNameCheck
             Return ""
         Catch ex As Exception
-            Log(ex, "检查文件夹名出错")
+            Logger.Warn(ex, "检查文件夹名出错")
             Return "错误：" & ex.Message
         End Try
     End Function
@@ -308,16 +329,16 @@ Public Class ValidateFileName
             '检查尾部小数点
             If Str.EndsWithF(".") Then Return GetLang("LangModValidateFileNoEndWithDot")
             '检查特殊字符
-            Dim CharactCheck As String = New ValidateExcept(IO.Path.GetInvalidFileNameChars() & If(UseMinecraftCharCheck, "!;", ""), GetLang("LangModValidateFileNoContain")).Validate(Str)
+            Dim CharactCheck As String = New ValidateExcept(Path.GetInvalidFileNameChars() & If(UseMinecraftCharCheck, "!;", ""), GetLang("LangModValidateFileNoContain")).Validate(Str)
             If CharactCheck <> "" Then Return CharactCheck
             '检查特殊字符串
             Dim InvalidStrCheck As String = New ValidateExceptSame({"CON", "PRN", "AUX", "CLOCK$", "NUL", "COM0", "COM1", "COM2", "COM3", "COM4", "COM5", "COM6", "COM7", "COM8", "COM9", "LPT0", "LPT1", "LPT2", "LPT3", "LPT4", "LPT5", "LPT6", "LPT7", "LPT8", "LPT9"}, GetLang("LangModValidateFileNoContent"), True).Validate(Str)
             If InvalidStrCheck <> "" Then Return InvalidStrCheck
             '检查 NTFS 8.3 文件名（#4505）
-            If RegexCheck(Str, ".{2,}~\d") Then Return GetLang("LangModValidateFileNoSpecialName")
+            If Str.RegexCheck(".{2,}~\d") Then Return GetLang("LangModValidateFileNoSpecialName")
             '检查文件重名
             If ParentFolder IsNot Nothing Then
-                Dim DirInfo As New DirectoryInfo(ParentFolder)
+                Dim DirInfo = DirectoryUtils.GetInfo(ParentFolder)
                 If DirInfo.Exists Then
                     Dim SameNameCheck = New ValidateExceptSame(DirInfo.EnumerateFiles("*").Select(Function(f) f.Name),
                                                                GetLang("LangModValidateFileNoSameName"), IgnoreCase).Validate(Str)
@@ -328,7 +349,7 @@ Public Class ValidateFileName
             End If
             Return ""
         Catch ex As Exception
-            Log(ex, "检查文件名出错")
+            Logger.Warn(ex, "检查文件名出错")
             Return "错误：" & ex.Message
         End Try
     End Function
@@ -357,9 +378,10 @@ Public Class ValidateFolderPath
         If LengthCheck <> "" Then Return LengthCheck
         '检查开头
         If Str.StartsWithF("\\Mac\") Then GoTo Fin
-        For Each Drive As DriveInfo In My.Computer.FileSystem.Drives
-            If Str.ToUpper = Drive.Name Then Return ""
-            If Str.StartsWithF(Drive.Name, True) Then GoTo Fin
+        For Each Drive In Environment.GetLogicalDrives().Where(Function(p) DirectoryUtils.Exists(p))
+            Dim DriveName As String = Drive.Upper.First & ":\"
+            If Str.Upper = DriveName Then Return ""
+            If Str.StartsWithF(DriveName, True) Then GoTo Fin
         Next
         Return GetLang("LangModValidateFileHeadUriIncorrect")
 Fin:
@@ -370,7 +392,7 @@ Fin:
             Dim SubLengthCheck As String = New ValidateNullOrWhiteSpace().Validate(SubStr)
             If Not SubLengthCheck = "" Then Return GetLang("LangModValidateFolderUriIncorrect")
             '检查特殊字符
-            Dim CharactCheck As String = New ValidateExcept(IO.Path.GetInvalidFileNameChars() & If(UseMinecraftCharCheck, "!;", ""), GetLang("LangModValidateInvalidChar")).Validate(SubStr)
+            Dim CharactCheck As String = New ValidateExcept(Path.GetInvalidFileNameChars() & If(UseMinecraftCharCheck, "!;", ""), GetLang("LangModValidateInvalidChar")).Validate(SubStr)
             If Not CharactCheck = "" Then Return CharactCheck
             '检查头部空格
             If SubStr.StartsWithF(" ") Then Return GetLang("LangModValidateNoStartWithSpaceFolderName")
@@ -381,7 +403,7 @@ Fin:
             Dim InvalidStrCheck As String = New ValidateExceptSame({"CON", "PRN", "AUX", "CLOCK$", "NUL", "COM0", "COM1", "COM2", "COM3", "COM4", "COM5", "COM6", "COM7", "COM8", "COM9", "LPT0", "LPT1", "LPT2", "LPT3", "LPT4", "LPT5", "LPT6", "LPT7", "LPT8", "LPT9"}, GetLang("LangModValidateNoSpacialFolderName")).Validate(SubStr)
             If Not InvalidStrCheck = "" Then Return InvalidStrCheck
             '检查 NTFS 8.3 文件名（#4505）
-            If RegexCheck(Str, ".{2,}~\d") Then Return GetLang("LangModValidateFileNoSpecialName")
+            If Str.RegexCheck(".{2,}~\d") Then Return GetLang("LangModValidateFileNoSpecialName")
         Next
         Return ""
     End Function

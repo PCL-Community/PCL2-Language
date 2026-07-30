@@ -1,15 +1,11 @@
 ﻿Public Class PageSetupUI
 
-    Public Shadows IsLoaded As Boolean = False
-
     Private Sub PageSetupUI_Loaded(sender As Object, e As RoutedEventArgs) Handles Me.Loaded
-
         '重复加载部分
         PanBack.ScrollToHome()
         ThemeCheckAll(True)
-
         If ThemeDontClick <> 0 Then
-            Dim NewText As String
+            Dim NewText As String = Nothing
             Select Case ThemeDontClick
                 Case 1
                     NewText = GetLang("LangThemeRealWhite")
@@ -19,25 +15,22 @@
                     NewText = "？？？"
             End Select
             For Each Control In PanLauncherTheme.Children
-                If (TypeOf Control Is MyRadioBox) AndAlso CType(Control, MyRadioBox).IsEnabled Then
-                    CType(Control, MyRadioBox).Text = NewText
-                End If
+                If (TypeOf Control Is MyRadioBox) AndAlso CType(Control, MyRadioBox).IsEnabled Then CType(Control, MyRadioBox).Text = NewText
             Next
         End If
 
         AniControlEnabled += 1
-        Reload() '#4826，在每次进入页面时都刷新一下
+        Refresh() '#4826
         AniControlEnabled -= 1
 
         '非重复加载部分
-        If IsLoaded Then Return
-        IsLoaded = True
+        Static Reloaded As Boolean = False
+        If Reloaded Then Return
+        Reloaded = True
 
         SliderLoad()
 
-#If BETA Then
-        PanLauncherHide.Visibility = Visibility.Visible
-#End If
+        If BuildType = BuildTypes.Release Then PanLauncherHide.Visibility = Visibility.Visible
 
         '设置解锁
         If Not RadioLauncherTheme8.IsEnabled Then LabLauncherTheme8Copy.ToolTip = GetLang("LangThemeUnlockCopyTip8")
@@ -47,149 +40,42 @@
         '极客蓝的处理在 ThemeCheck 中
 
     End Sub
-    Public Sub Reload()
+    Public Sub Refresh()
         Try
-
-            '启动器
-            SliderLauncherOpacity.Value = Setup.Get("UiLauncherTransparent")
-            SliderLauncherHue.Value = Setup.Get("UiLauncherHue")
-            SliderLauncherSat.Value = Setup.Get("UiLauncherSat")
-            SliderLauncherDelta.Value = Setup.Get("UiLauncherDelta")
-            SliderLauncherLight.Value = Setup.Get("UiLauncherLight")
-            If Setup.Get("UiLauncherTheme") <= 14 Then CType(FindName("RadioLauncherTheme" & Setup.Get("UiLauncherTheme")), MyRadioBox).Checked = True
-            CheckLauncherLogo.Checked = Setup.Get("UiLauncherLogo")
-            CheckLauncherEmail.Checked = Setup.Get("UiLauncherEmail")
-
-            '背景图片
-            SliderBackgroundOpacity.Value = Setup.Get("UiBackgroundOpacity")
-            SliderBackgroundBlur.Value = Setup.Get("UiBackgroundBlur")
-            ComboBackgroundSuit.SelectedIndex = Setup.Get("UiBackgroundSuit")
-            CheckBackgroundColorful.Checked = Setup.Get("UiBackgroundColorful")
+            SettingService.RefreshSettings(Me)
             BackgroundRefresh(False, False)
 
             '标题栏
-            CType(FindName("RadioLogoType" & Setup.Get("UiLogoType")), MyRadioBox).Checked = True
             CheckLogoLeft.Visibility = If(RadioLogoType0.Checked, Visibility.Visible, Visibility.Collapsed)
             PanLogoText.Visibility = If(RadioLogoType2.Checked, Visibility.Visible, Visibility.Collapsed)
             PanLogoChange.Visibility = If(RadioLogoType3.Checked, Visibility.Visible, Visibility.Collapsed)
-            TextLogoText.Text = Setup.Get("UiLogoText")
-            CheckLogoLeft.Checked = Setup.Get("UiLogoLeft")
 
             '背景音乐
-            CheckMusicRandom.Checked = Setup.Get("UiMusicRandom")
-            CheckMusicAuto.Checked = Setup.Get("UiMusicAuto")
-            CheckMusicStop.Checked = Setup.Get("UiMusicStop")
-            CheckMusicStart.Checked = Setup.Get("UiMusicStart")
-            SliderMusicVolume.Value = Setup.Get("UiMusicVolume")
             MusicRefreshUI()
 
             '主页
-            Try
-                ComboCustomPreset.SelectedIndex = Setup.Get("UiCustomPreset")
-            Catch
-                Setup.Reset("UiCustomPreset")
-            End Try
-            CType(FindName("RadioCustomType" & Setup.Load("UiCustomType", ForceReload:=True)), MyRadioBox).Checked = True
-            TextCustomNet.Text = Setup.Get("UiCustomNet")
-
-            '功能隐藏
-            CheckHiddenPageDownload.Checked = Setup.Get("UiHiddenPageDownload")
-            CheckHiddenPageLink.Checked = Setup.Get("UiHiddenPageLink")
-            CheckHiddenPageSetup.Checked = Setup.Get("UiHiddenPageSetup")
-            CheckHiddenPageOther.Checked = Setup.Get("UiHiddenPageOther")
-            CheckHiddenFunctionSelect.Checked = Setup.Get("UiHiddenFunctionSelect")
-            CheckHiddenFunctionModUpdate.Checked = Setup.Get("UiHiddenFunctionModUpdate")
-            CheckHiddenFunctionHidden.Checked = Setup.Get("UiHiddenFunctionHidden")
-            CheckHiddenSetupLaunch.Checked = Setup.Get("UiHiddenSetupLaunch")
-            CheckHiddenSetupUI.Checked = Setup.Get("UiHiddenSetupUi")
-            CheckHiddenSetupLink.Checked = Setup.Get("UiHiddenSetupLink")
-            CheckHiddenSetupSystem.Checked = Setup.Get("UiHiddenSetupSystem")
-            CheckHiddenOtherAbout.Checked = Setup.Get("UiHiddenOtherAbout")
-            CheckHiddenOtherFeedback.Checked = Setup.Get("UiHiddenOtherFeedback")
-            CheckHiddenOtherVote.Checked = Setup.Get("UiHiddenOtherVote")
-            CheckHiddenOtherHelp.Checked = Setup.Get("UiHiddenOtherHelp")
-            CheckHiddenOtherTest.Checked = Setup.Get("UiHiddenOtherTest")
-
+            OnMainPageTypeChanged()
         Catch ex As NullReferenceException
-            Log(ex, GetLang("LangHintThemeSetIncorrect"), LogLevel.Msgbox)
+            Logger.Error(ex, GetLang("LangHintThemeSetIncorrect"), LogBehavior.Alert)
             Reset()
         Catch ex As Exception
-            Log(ex, GetLang("LangHintThemeSetLoadFail"), LogLevel.Feedback)
+            Logger.Error(ex, GetLang("LangHintThemeSetLoadFail"))
         End Try
     End Sub
-
-    '初始化
     Public Sub Reset()
         Try
-            Setup.Reset("UiLauncherTransparent")
-            Setup.Reset("UiLauncherTheme")
-            Setup.Reset("UiLauncherLogo")
-            Setup.Reset("UiLauncherHue")
-            Setup.Reset("UiLauncherSat")
-            Setup.Reset("UiLauncherDelta")
-            Setup.Reset("UiLauncherLight")
-            Setup.Reset("UiLauncherEmail")
-            Setup.Reset("UiBackgroundColorful")
-            Setup.Reset("UiBackgroundOpacity")
-            Setup.Reset("UiBackgroundBlur")
-            Setup.Reset("UiBackgroundSuit")
-            Setup.Reset("UiLogoType")
-            Setup.Reset("UiLogoText")
-            Setup.Reset("UiLogoLeft")
-            Setup.Reset("UiMusicVolume")
-            Setup.Reset("UiMusicStop")
-            Setup.Reset("UiMusicStart")
-            Setup.Reset("UiMusicRandom")
-            Setup.Reset("UiMusicAuto")
-            Setup.Reset("UiCustomType")
-            Setup.Reset("UiCustomPreset")
-            Setup.Reset("UiCustomNet")
-            Setup.Reset("UiHiddenPageDownload")
-            Setup.Reset("UiHiddenPageLink")
-            Setup.Reset("UiHiddenPageSetup")
-            Setup.Reset("UiHiddenPageOther")
-            Setup.Reset("UiHiddenFunctionSelect")
-            Setup.Reset("UiHiddenFunctionModUpdate")
-            Setup.Reset("UiHiddenFunctionHidden")
-            Setup.Reset("UiHiddenSetupLaunch")
-            Setup.Reset("UiHiddenSetupUi")
-            Setup.Reset("UiHiddenSetupLink")
-            Setup.Reset("UiHiddenSetupSystem")
-            Setup.Reset("UiHiddenOtherAbout")
-            Setup.Reset("UiHiddenOtherFeedback")
-            Setup.Reset("UiHiddenOtherVote")
-            Setup.Reset("UiHiddenOtherHelp")
-            Setup.Reset("UiHiddenOtherTest")
-
-            Log("[Setup] 已初始化个性化设置！")
+            SettingService.ResetSettings(Me)
+            Logger.Info(GetLang("LangHintThemeSetInit"))
             Hint(GetLang("LangHintThemeSetInit"), HintType.Green, False)
         Catch ex As Exception
-            Log(ex, GetLang("LangHintThemeSetInitFail"), LogLevel.Msgbox)
+            Logger.Error(ex, GetLang("LangHintThemeSetInitFail"), LogBehavior.Alert)
         End Try
-
-        Reload()
-    End Sub
-
-    '将控件改变路由到设置改变
-    Private Shared Sub SliderChange(sender As MySlider, e As Object) Handles SliderBackgroundOpacity.Change, SliderBackgroundBlur.Change, SliderLauncherOpacity.Change, SliderMusicVolume.Change, SliderLauncherHue.Change, SliderLauncherLight.Change, SliderLauncherSat.Change, SliderLauncherDelta.Change
-        If AniControlEnabled = 0 Then Setup.Set(sender.Tag, sender.Value)
-    End Sub
-    Private Shared Sub ComboChange(sender As MyComboBox, e As Object) Handles ComboBackgroundSuit.SelectionChanged, ComboCustomPreset.SelectionChanged
-        If AniControlEnabled = 0 Then Setup.Set(sender.Tag, sender.SelectedIndex)
-    End Sub
-    Private Shared Sub CheckBoxChange(sender As MyCheckBox, e As Object) Handles CheckMusicStop.Change, CheckMusicRandom.Change, CheckMusicAuto.Change, CheckBackgroundColorful.Change, CheckLogoLeft.Change, CheckLauncherLogo.Change, CheckHiddenFunctionHidden.Change, CheckHiddenFunctionSelect.Change, CheckHiddenFunctionModUpdate.Change, CheckHiddenPageDownload.Change, CheckHiddenPageLink.Change, CheckHiddenPageOther.Change, CheckHiddenPageSetup.Change, CheckHiddenSetupLaunch.Change, CheckHiddenSetupSystem.Change, CheckHiddenSetupLink.Change, CheckHiddenSetupUI.Change, CheckHiddenOtherAbout.Change, CheckHiddenOtherFeedback.Change, CheckHiddenOtherVote.Change, CheckHiddenOtherHelp.Change, CheckHiddenOtherTest.Change, CheckMusicStart.Change, CheckLauncherEmail.Change
-        If AniControlEnabled = 0 Then Setup.Set(sender.Tag, sender.Checked)
-    End Sub
-    Private Shared Sub TextBoxChange(sender As MyTextBox, e As Object) Handles TextLogoText.ValidatedTextChanged, TextCustomNet.ValidatedTextChanged
-        If AniControlEnabled = 0 Then Setup.Set(sender.Tag, sender.Text)
-    End Sub
-    Private Shared Sub RadioBoxChange(sender As MyRadioBox, e As Object) Handles RadioLogoType0.Check, RadioLogoType1.Check, RadioLogoType2.Check, RadioLogoType3.Check, RadioLauncherTheme0.Check, RadioLauncherTheme1.Check, RadioLauncherTheme2.Check, RadioLauncherTheme3.Check, RadioLauncherTheme4.Check, RadioLauncherTheme5.Check, RadioLauncherTheme6.Check, RadioLauncherTheme7.Check, RadioLauncherTheme8.Check, RadioLauncherTheme9.Check, RadioLauncherTheme10.Check, RadioLauncherTheme11.Check, RadioLauncherTheme12.Check, RadioLauncherTheme13.Check, RadioLauncherTheme14.Check, RadioCustomType0.Check, RadioCustomType1.Check, RadioCustomType2.Check, RadioCustomType3.Check
-        If AniControlEnabled = 0 Then Setup.Set(sender.Tag.ToString.Split("/")(0), Val(sender.Tag.ToString.Split("/")(1)))
+        Refresh()
     End Sub
 
     '背景图片
     Private Sub BtnUIBgOpen_Click(sender As Object, e As EventArgs) Handles BtnBackgroundOpen.Click
-        OpenExplorer(Path & "PCL\Pictures\")
+        OpenExplorer(PathExeFolder & "PCL\Pictures\")
     End Sub
     Private Sub BtnBackgroundRefresh_Click(sender As Object, e As EventArgs) Handles BtnBackgroundRefresh.Click
         BackgroundRefresh(True, True)
@@ -213,7 +99,7 @@
     End Sub
     Private Sub BtnBackgroundClear_Click(sender As Object, e As EventArgs) Handles BtnBackgroundClear.Click
         If MyMsgBox(GetLang("LangDialogDeleteAllBackgroundPicContent"), GetLang("LangDialogTitleWarning"),, GetLang("LangDialogBtnCancel"), IsWarn:=True) = 1 Then
-            DeleteDirectory(Path & "PCL\Pictures")
+            DirectoryUtils.Delete(PathExeFolder & "PCL\Pictures")
             BackgroundRefresh(False, True)
             Hint(GetLang("LangHintBackgroundPicDeleted"), HintType.Green)
         End If
@@ -227,12 +113,11 @@
         Try
 
             '获取可用的图片文件
-            Directory.CreateDirectory(Path & "PCL\Pictures\")
+            DirectoryUtils.Create(PathExeFolder & "PCL\Pictures\")
             Dim Pic As New List(Of String)
-            For Each File In EnumerateFiles(Path & "PCL\Pictures\")
-                If File.Extension.ToLower <> ".ini" AndAlso File.Extension.ToLower <> ".db" Then '文件夹可能会被加入 .ini 和 thumbs.db
-                    Pic.Add(File.FullName)
-                End If
+            For Each File In DirectoryUtils.GetFiles(PathExeFolder & "PCL\Pictures\")
+                Dim Extension As String = PathUtils.GetExtension(File)
+                If Extension <> "ini" AndAlso Extension <> "db" Then Pic.Add(File) '文件夹可能会被加入 .ini 和 thumbs.db
             Next
             '加载
             If Not Pic.Any() Then
@@ -249,16 +134,16 @@
                 If Refresh Then
                     Dim Address As String = RandomOne(Pic)
                     Try
-                        Log("[UI] 加载背景图片：" & Address)
+                        Logger.Info($"加载背景图片：{Address}")
                         FrmMain.ImgBack.Background = New MyBitmap(Address)
-                        Setup.Load("UiBackgroundSuit", True)
                         FrmMain.ImgBack.Visibility = Visibility.Visible
-                        If IsHint Then Hint(GetLang("LangHintBackgroundPicRefreshed") & GetFileNameFromPath(Address), HintType.Green, False)
+                        FrmMain.UpdateBackgroundAndTitleBar()
+                        If IsHint Then Hint(GetLang("LangHintBackgroundPicRefreshed") & PathUtils.GetLastPart(Address), HintType.Green, False)
                     Catch ex As Exception
                         If ex.Message.Contains("参数无效") Then
-                            Log(GetLang("LangDialogBackgroundPicRefreshFailA") & Address, LogLevel.Msgbox)
+                            Logger.Error(GetLang("LangDialogBackgroundPicRefreshFailA") & Address, LogBehavior.Alert)
                         Else
-                            Log(ex, GetLang("LangDialogBackgroundPicRefreshFailB", Address), LogLevel.Msgbox)
+                            Logger.Error(ex, GetLang("LangDialogBackgroundPicRefreshFailB", Address), LogBehavior.Alert)
                         End If
                     End Try
                 End If
@@ -266,26 +151,26 @@
             End If
 
         Catch ex As Exception
-            Log(ex, GetLang("LangDialogBackgroundPicRefreshFailUnknown"), LogLevel.Feedback)
+            Logger.Error(ex, GetLang("LangDialogBackgroundPicRefreshFailUnknown"))
         End Try
     End Sub
 
     '顶部栏
     Private Sub BtnLogoChange_Click(sender As Object, e As EventArgs) Handles BtnLogoChange.Click
-        Dim FileName As String = SelectFile("常用图片文件(*.png;*.jpg;*.jpeg;*.gif;*.webp)|*.png;*.jpg;*.jpeg;*.gif;*.webp", "选择图片")
-        If FileName = "" Then Return
+        Dim FileName As String = Dialogs.SelectFile("选择图片", False, filter:={({"png", "jpg", "jpeg", "gif", "webp"}, "常用图片文件")}).FirstOrDefault()
+        If String.IsNullOrEmpty(FileName) Then Return
+        Dim TargetPath As String = PathExeFolder & "PCL\Logo.png"
         Try
-            '拷贝文件
-            File.Delete(Path & "PCL\Logo.png")
-            CopyFile(FileName, Path & "PCL\Logo.png")
+            '复制文件
+            FileUtils.Copy(FileName, TargetPath)
             '设置当前显示
             FrmMain.ImageTitleLogo.Source = Nothing '防止因为 Source 属性前后的值相同而不更新 (#5628)
-            FrmMain.ImageTitleLogo.Source = Path & "PCL\Logo.png"
+            FrmMain.ImageTitleLogo.Source = TargetPath
         Catch ex As Exception
             If ex.Message.Contains("参数无效") Then
-                Log(GetLang("LangDialogTitlePicChangeFailA"), LogLevel.Msgbox)
+                Logger.Error(GetLang("LangDialogTitlePicChangeFailA"), LogBehavior.Alert)
             Else
-                Log(ex, GetLang("LangDialogTitlePicChangeFailB"), LogLevel.Msgbox)
+                Logger.Error(ex, GetLang("LangDialogTitlePicChangeFailB"), LogBehavior.Alert)
             End If
             FrmMain.ImageTitleLogo.Source = Nothing
         End Try
@@ -294,55 +179,54 @@
         If Not (AniControlEnabled = 0 AndAlso e.RaiseByMouse) Then Return
 Refresh:
         '已有图片则不再选择
-        If File.Exists(Path & "PCL\Logo.png") Then
+        Dim TargetPath As String = PathExeFolder & "PCL\Logo.png"
+        If FileUtils.Exists(TargetPath) Then
             Try
                 FrmMain.ImageTitleLogo.Source = Nothing '防止因为 Source 属性前后的值相同而不更新 (#5628)
-                FrmMain.ImageTitleLogo.Source = Path & "PCL\Logo.png"
+                FrmMain.ImageTitleLogo.Source = TargetPath
             Catch ex As Exception
                 If ex.Message.Contains("参数无效") Then
-                    Log(GetLang("LangDialogTitlePicChangeFailC"), LogLevel.Msgbox)
+                    Logger.Error(GetLang("LangDialogTitlePicChangeFailC"), LogBehavior.Alert)
                 Else
-                    Log(ex, GetLang("LangDialogTitlePicChangeFailD"), LogLevel.Msgbox)
+                    Logger.Error(ex, GetLang("LangDialogTitlePicChangeFailD"), LogBehavior.Alert)
                 End If
                 FrmMain.ImageTitleLogo.Source = Nothing
                 e.Handled = True
                 Try
-                    File.Delete(Path & "PCL\Logo.png")
+                    FileUtils.Delete(TargetPath)
                 Catch exx As Exception
-                    Log(exx, GetLang("LangDialogTitlePicChangeFailE"), LogLevel.Msgbox)
+                    Logger.Error(exx, GetLang("LangDialogTitlePicChangeFailE"), LogBehavior.Alert)
                 End Try
             End Try
             Return
         End If
         '没有图片则要求选择
-        Dim FileName As String = SelectFile("常用图片文件(*.png;*.jpeg;*.jpg;*.gif;*.webp)|*.png;*.jpeg;*.jpg;*.gif;*.webp", "选择图片")
-        If FileName = "" Then
+        Dim FileName As String = Dialogs.SelectFile("选择图片", False, filter:={({"png", "jpeg", "jpg", "gif", "webp"}, "常用图片文件")}).FirstOrDefault()
+        If String.IsNullOrEmpty(FileName) Then
             FrmMain.ImageTitleLogo.Source = Nothing
             e.Handled = True
         Else
             Try
-                '拷贝文件
-                File.Delete(Path & "PCL\Logo.png")
-                CopyFile(FileName, Path & "PCL\Logo.png")
+                FileUtils.Copy(FileName, TargetPath)
                 GoTo Refresh
             Catch ex As Exception
-                Log(ex, GetLang("LangDialogTitlePicChangeFailF"), LogLevel.Msgbox)
+                Logger.Error(ex, GetLang("LangDialogTitlePicChangeFailF"), LogBehavior.Alert)
             End Try
         End If
     End Sub
     Private Sub BtnLogoDelete_Click(sender As Object, e As EventArgs) Handles BtnLogoDelete.Click
         Try
-            File.Delete(Path & "PCL\Logo.png")
+            FileUtils.Delete(PathExeFolder & "PCL\Logo.png")
             RadioLogoType1.SetChecked(True, True)
             Hint(GetLang("LangHintTitlePicEmptied"), HintType.Green)
         Catch ex As Exception
-            Log(ex, GetLang("LangDialogTitlePicEmptyFail"), LogLevel.Msgbox)
+            Logger.Error(ex, GetLang("LangDialogTitlePicEmptyFail"), LogBehavior.Alert)
         End Try
     End Sub
 
     '背景音乐
     Private Sub BtnMusicOpen_Click(sender As Object, e As EventArgs) Handles BtnMusicOpen.Click
-        OpenExplorer(Path & "PCL\Musics\")
+        OpenExplorer(PathExeFolder & "PCL\Musics\")
     End Sub
     Private Sub BtnMusicRefresh_Click(sender As Object, e As EventArgs) Handles BtnMusicRefresh.Click
         MusicRefreshPlay(True)
@@ -353,7 +237,7 @@ Refresh:
             PanMusicVolume.Visibility = Visibility.Visible
             PanMusicDetail.Visibility = Visibility.Visible
             BtnMusicClear.Visibility = Visibility.Visible
-            CardMusic.Title = GetLang("LangBackgroundMusicCount", EnumerateFiles(Path & "PCL\Musics\").Count(Function(f) Not {".ini", ".jpg", ".txt", ".cfg", ".lrc", ".db", ".png"}.Contains(f.Extension.ToLower)))
+            CardMusic.Title = GetLang("LangBackgroundMusicCount", DirectoryUtils.GetFiles(PathExeFolder & "PCL\Musics\").Count(Function(f) Not {"ini", "jpg", "txt", "cfg", "lrc", "db", "png"}.Contains(PathUtils.GetExtension(f))))
         Else
             PanMusicVolume.Visibility = Visibility.Collapsed
             PanMusicDetail.Visibility = Visibility.Collapsed
@@ -374,16 +258,16 @@ Refresh:
                 Thread.Sleep(200)
                 '删除文件
                 Try
-                    DeleteDirectory(Path & "PCL\Musics")
+                    DirectoryUtils.Delete(PathExeFolder & "PCL\Musics")
                     Hint(GetLang("LangHintBackgroundMusicDeleted"), HintType.Green)
                 Catch ex As Exception
-                    Log(ex, GetLang("LangHintBackgroundMusicDeleteFail"), LogLevel.Msgbox)
+                    Logger.Error(ex, GetLang("LangHintBackgroundMusicDeleteFail"), LogBehavior.Alert)
                 End Try
                 Try
-                    Directory.CreateDirectory(Path & "PCL\Musics")
+                    DirectoryUtils.Create(PathExeFolder & "PCL\Musics\")
                     RunInUi(Sub() MusicRefreshPlay(False))
                 Catch ex As Exception
-                    Log(ex, GetLang("LangHintBackgroundMusicCreateFolderFail"), LogLevel.Msgbox)
+                    Logger.Error(ex, GetLang("LangHintBackgroundMusicCreateFolderFail"), LogBehavior.Alert)
                 End Try
             End Sub)
         End If
@@ -400,14 +284,14 @@ Refresh:
     '主页
     Private Sub BtnCustomFile_Click(sender As Object, e As EventArgs) Handles BtnCustomFile.Click
         Try
-            If File.Exists(Path & "PCL\Custom.xaml") Then
+            If FileUtils.Exists(PathExeFolder & "PCL\Custom.xaml") Then
                 If MyMsgBox(GetLang("LangDialogCustomPageOverwriteConfirmationContent"), GetLang("LangDialogCustomHomePageReplaceTitle"), GetLang("LangDialogBtnContinue"), GetLang("LangDialogBtnCancel"), IsWarn:=True) = 2 Then Return
             End If
-            WriteFile(Path & "PCL\Custom.xaml", GetResources("Custom"))
+            ExtractResources(PathExeFolder & "PCL\Custom.xaml", "Custom")
             Hint(GetLang("LangHintCustomPageOverwriteSuccess"), HintType.Green)
-            OpenExplorer(Path & "PCL\Custom.xaml")
+            OpenExplorer(PathExeFolder & "PCL\Custom.xaml")
         Catch ex As Exception
-            Log(ex, GetLang("LangDialogCustomPageOverwriteFail"), LogLevel.Feedback)
+            Logger.Error(ex, GetLang("LangDialogCustomPageOverwriteFail"))
         End Try
     End Sub
     Private Sub BtnCustomRefresh_Click() Handles BtnCustomRefresh.Click
@@ -417,16 +301,51 @@ Refresh:
     Private Sub BtnCustomTutorial_Click(sender As Object, e As EventArgs) Handles BtnCustomTutorial.Click
         MyMsgBox(GetLang("LangDialogCustomPageTeachContent"), GetLang("LangDialogCustomPageTeachTitle"))
     End Sub
+    Public Shared Sub OnMainPageTypeChanged()
+        If FrmSetupUI Is Nothing Then Return
+        Select Case CInt(Settings.Get(Of Integer)("UiCustomType"))
+            Case 0 '无
+                FrmSetupUI.PanCustomPreset.Visibility = Visibility.Collapsed
+                FrmSetupUI.PanCustomLocal.Visibility = Visibility.Collapsed
+                FrmSetupUI.PanCustomNet.Visibility = Visibility.Collapsed
+                FrmSetupUI.HintCustom.Visibility = Visibility.Collapsed
+                FrmSetupUI.HintCustomWarn.Visibility = Visibility.Collapsed
+            Case 1 '本地
+                FrmSetupUI.PanCustomPreset.Visibility = Visibility.Collapsed
+                FrmSetupUI.PanCustomLocal.Visibility = Visibility.Visible
+                FrmSetupUI.PanCustomNet.Visibility = Visibility.Collapsed
+                FrmSetupUI.HintCustom.Visibility = Visibility.Visible
+                FrmSetupUI.HintCustomWarn.Visibility = If(Settings.Get(Of Boolean)("HintCustomWarn"), Visibility.Collapsed, Visibility.Visible)
+                FrmSetupUI.HintCustom.Text = $"从 PCL 文件夹下的 Custom.xaml 读取主页内容。{vbCrLf}你可以手动编辑该文件，向主页添加文本、图片、常用网站、快捷启动等功能。"
+                CustomEventService.SetEventType(FrmSetupUI.HintCustom, CustomEvent.EventType.None)
+            Case 2 '联网
+                FrmSetupUI.PanCustomPreset.Visibility = Visibility.Collapsed
+                FrmSetupUI.PanCustomLocal.Visibility = Visibility.Collapsed
+                FrmSetupUI.PanCustomNet.Visibility = Visibility.Visible
+                FrmSetupUI.HintCustom.Visibility = Visibility.Visible
+                FrmSetupUI.HintCustomWarn.Visibility = If(Settings.Get(Of Boolean)("HintCustomWarn"), Visibility.Collapsed, Visibility.Visible)
+                FrmSetupUI.HintCustom.Text = $"从指定网址联网获取主页内容。服主也可以用于动态更新服务器公告。{vbCrLf}如果你制作了稳定运行的联网主页，可以点击这条提示投稿，若合格即可加入预设！"
+                CustomEventService.SetEventType(FrmSetupUI.HintCustom, CustomEvent.EventType.打开网页)
+                CustomEventService.SetEventData(FrmSetupUI.HintCustom, "https://github.com/Meloong-Git/PCL/discussions/2528")
+            Case 3 '预设
+                FrmSetupUI.PanCustomPreset.Visibility = Visibility.Visible
+                FrmSetupUI.PanCustomLocal.Visibility = Visibility.Collapsed
+                FrmSetupUI.PanCustomNet.Visibility = Visibility.Collapsed
+                FrmSetupUI.HintCustom.Visibility = Visibility.Collapsed
+                FrmSetupUI.HintCustomWarn.Visibility = Visibility.Collapsed
+        End Select
+        FrmSetupUI.CardCustom.TriggerForceResize()
+    End Sub
 
     '主题
     Private Sub LabLauncherTheme5Unlock_MouseLeftButtonUp(sender As Object, e As MouseButtonEventArgs) Handles LabLauncherTheme5Unlock.MouseLeftButtonUp
-        RadioLauncherTheme5Gray.Opacity -= 0.23
-        RadioLauncherTheme5.Opacity += 0.23
+        RadioLauncherTheme5Gray.Opacity -= 0.7
+        RadioLauncherTheme5.Opacity += 0.7
         AniStart({
-            AaOpacity(RadioLauncherTheme5Gray, 1, 1000 * AniSpeed),
-            AaOpacity(RadioLauncherTheme5, -1, 1000 * AniSpeed)
+            AaOpacity(RadioLauncherTheme5Gray, 1, 1000 * AniSpeed, 500 * AniSpeed, New AniEaseInFluent),
+            AaOpacity(RadioLauncherTheme5, -1, 1000 * AniSpeed, 500 * AniSpeed, New AniEaseInFluent)
         }, "ThemeUnlock")
-        If RadioLauncherTheme5Gray.Opacity < 0.08 Then
+        If RadioLauncherTheme5Gray.Opacity < 0.02 Then
             ThemeUnlock(5, UnlockHint:=GetLang("LangThemeBackUnlock"))
             AniStop("ThemeUnlock")
             RadioLauncherTheme5.Checked = True
@@ -442,7 +361,7 @@ Refresh:
         End If
     End Sub
     Private Sub LabLauncherTheme8Copy_MouseRightButtonUp() Handles LabLauncherTheme8Copy.MouseRightButtonUp, RadioLauncherTheme8.MouseRightButtonUp
-        OpenWebsite("https://afdian.com/a/LTCat")
+        OpenWebsite("https://meloong.com/afd/a/LTCat")
     End Sub
     Private Sub LabLauncherTheme9Copy_MouseRightButtonUp() Handles LabLauncherTheme9Copy.MouseRightButtonUp, RadioLauncherTheme9.MouseRightButtonUp
         PageOtherLeft.TryFeedback()
@@ -501,56 +420,56 @@ Refresh:
         If FrmMain.PanTitleSelect Is Nothing OrElse Not FrmMain.PanTitleSelect.IsLoaded Then Return
         Try
             '顶部栏
-            If Not HiddenForceShow AndAlso Setup.Get("UiHiddenPageDownload") AndAlso Setup.Get("UiHiddenPageLink") AndAlso Setup.Get("UiHiddenPageSetup") AndAlso Setup.Get("UiHiddenPageOther") Then
+            If Not HiddenForceShow AndAlso Settings.Get(Of Boolean)("UiHiddenPageDownload") AndAlso Settings.Get(Of Boolean)("UiHiddenPageLink") AndAlso Settings.Get(Of Boolean)("UiHiddenPageSetup") AndAlso Settings.Get(Of Boolean)("UiHiddenPageOther") Then
                 '顶部栏已被全部隐藏
                 FrmMain.PanTitleSelect.Visibility = Visibility.Collapsed
             Else
                 '顶部栏未被全部隐藏
                 FrmMain.PanTitleSelect.Visibility = Visibility.Visible
-                FrmMain.BtnTitleSelect1.Visibility = If(Not HiddenForceShow AndAlso Setup.Get("UiHiddenPageDownload"), Visibility.Collapsed, Visibility.Visible)
-                FrmMain.BtnTitleSelect2.Visibility = Visibility.Collapsed 'If(Not HiddenForceShow AndAlso Setup.Get("UiHiddenPageLink"), Visibility.Collapsed, Visibility.Visible)
-                FrmMain.BtnTitleSelect3.Visibility = If(Not HiddenForceShow AndAlso Setup.Get("UiHiddenPageSetup"), Visibility.Collapsed, Visibility.Visible)
-                FrmMain.BtnTitleSelect4.Visibility = If(Not HiddenForceShow AndAlso Setup.Get("UiHiddenPageOther"), Visibility.Collapsed, Visibility.Visible)
+                FrmMain.BtnTitleSelect1.Visibility = If(Not HiddenForceShow AndAlso Settings.Get(Of Boolean)("UiHiddenPageDownload"), Visibility.Collapsed, Visibility.Visible)
+                FrmMain.BtnTitleSelect2.Visibility = Visibility.Collapsed 'If(Not HiddenForceShow AndAlso Settings.Get(Of Boolean)("UiHiddenPageLink"), Visibility.Collapsed, Visibility.Visible)
+                FrmMain.BtnTitleSelect3.Visibility = If(Not HiddenForceShow AndAlso Settings.Get(Of Boolean)("UiHiddenPageSetup"), Visibility.Collapsed, Visibility.Visible)
+                FrmMain.BtnTitleSelect4.Visibility = If(Not HiddenForceShow AndAlso Settings.Get(Of Boolean)("UiHiddenPageOther"), Visibility.Collapsed, Visibility.Visible)
             End If
             '功能
             FrmLaunchLeft.RefreshButtonsUI()
             If FrmSetupUI IsNot Nothing Then
-                FrmSetupUI.CardSwitch.Visibility = If(Not HiddenForceShow AndAlso Setup.Get("UiHiddenFunctionHidden"), Visibility.Collapsed, Visibility.Visible)
+                FrmSetupUI.CardSwitch.Visibility = If(Not HiddenForceShow AndAlso Settings.Get(Of Boolean)("UiHiddenFunctionHidden"), Visibility.Collapsed, Visibility.Visible)
             End If
             '设置子页面
             If FrmSetupLeft IsNot Nothing Then
-                FrmSetupLeft.ItemLaunch.Visibility = If(Not HiddenForceShow AndAlso Setup.Get("UiHiddenSetupLaunch"), Visibility.Collapsed, Visibility.Visible)
-                FrmSetupLeft.ItemUI.Visibility = If(Not HiddenForceShow AndAlso Setup.Get("UiHiddenSetupUi"), Visibility.Collapsed, Visibility.Visible)
-                FrmSetupLeft.ItemLink.Visibility = Visibility.Collapsed 'If(Not HiddenForceShow AndAlso Setup.Get("UiHiddenSetupLink"), Visibility.Collapsed, Visibility.Visible)
-                FrmSetupLeft.ItemSystem.Visibility = If(Not HiddenForceShow AndAlso Setup.Get("UiHiddenSetupSystem"), Visibility.Collapsed, Visibility.Visible)
+                FrmSetupLeft.ItemLaunch.Visibility = If(Not HiddenForceShow AndAlso Settings.Get(Of Boolean)("UiHiddenSetupLaunch"), Visibility.Collapsed, Visibility.Visible)
+                FrmSetupLeft.ItemUI.Visibility = If(Not HiddenForceShow AndAlso Settings.Get(Of Boolean)("UiHiddenSetupUi"), Visibility.Collapsed, Visibility.Visible)
+                FrmSetupLeft.ItemLink.Visibility = Visibility.Collapsed 'If(Not HiddenForceShow AndAlso Settings.Get(Of Boolean)("UiHiddenSetupLink"), Visibility.Collapsed, Visibility.Visible)
+                FrmSetupLeft.ItemSystem.Visibility = If(Not HiddenForceShow AndAlso Settings.Get(Of Boolean)("UiHiddenSetupSystem"), Visibility.Collapsed, Visibility.Visible)
                 '隐藏左边选择卡
                 Dim AvaliableCount As Integer = 0
-                If Not Setup.Get("UiHiddenSetupLaunch") Then AvaliableCount += 1
-                If Not Setup.Get("UiHiddenSetupUi") Then AvaliableCount += 1
-                'If Not Setup.Get("UiHiddenSetupLink") Then AvaliableCount += 1
-                If Not Setup.Get("UiHiddenSetupSystem") Then AvaliableCount += 1
+                If Not Settings.Get(Of Boolean)("UiHiddenSetupLaunch") Then AvaliableCount += 1
+                If Not Settings.Get(Of Boolean)("UiHiddenSetupUi") Then AvaliableCount += 1
+                'If Not Settings.Get(Of Boolean)("UiHiddenSetupLink") Then AvaliableCount += 1
+                If Not Settings.Get(Of Boolean)("UiHiddenSetupSystem") Then AvaliableCount += 1
                 FrmSetupLeft.PanItem.Visibility = If(AvaliableCount < 2 AndAlso Not HiddenForceShow, Visibility.Collapsed, Visibility.Visible)
             End If
             '更多子页面
             Dim OtherAvaliableCount As Integer = 0
-            If Not Setup.Get("UiHiddenOtherHelp") Then OtherAvaliableCount += 1
-            If Not Setup.Get("UiHiddenOtherAbout") Then OtherAvaliableCount += 1
-            If Not Setup.Get("UiHiddenOtherTest") Then OtherAvaliableCount += 1
-            If Not Setup.Get("UiHiddenOtherFeedback") Then OtherAvaliableCount += 1
-            If Not Setup.Get("UiHiddenOtherVote") Then OtherAvaliableCount += 1
+            If Not Settings.Get(Of Boolean)("UiHiddenOtherHelp") Then OtherAvaliableCount += 1
+            If Not Settings.Get(Of Boolean)("UiHiddenOtherAbout") Then OtherAvaliableCount += 1
+            If Not Settings.Get(Of Boolean)("UiHiddenOtherTest") Then OtherAvaliableCount += 1
+            If Not Settings.Get(Of Boolean)("UiHiddenOtherFeedback") Then OtherAvaliableCount += 1
+            If Not Settings.Get(Of Boolean)("UiHiddenOtherVote") Then OtherAvaliableCount += 1
             If FrmOtherLeft IsNot Nothing Then
-                FrmOtherLeft.ItemHelp.Visibility = If(Not HiddenForceShow AndAlso Setup.Get("UiHiddenOtherHelp"), Visibility.Collapsed, Visibility.Visible)
-                FrmOtherLeft.ItemFeedback.Visibility = If(Not HiddenForceShow AndAlso Setup.Get("UiHiddenOtherFeedback"), Visibility.Collapsed, Visibility.Visible)
-                FrmOtherLeft.ItemVote.Visibility = If(Not HiddenForceShow AndAlso Setup.Get("UiHiddenOtherVote"), Visibility.Collapsed, Visibility.Visible)
-                FrmOtherLeft.ItemAbout.Visibility = If(Not HiddenForceShow AndAlso Setup.Get("UiHiddenOtherAbout"), Visibility.Collapsed, Visibility.Visible)
-                FrmOtherLeft.ItemTest.Visibility = If(Not HiddenForceShow AndAlso Setup.Get("UiHiddenOtherTest"), Visibility.Collapsed, Visibility.Visible)
+                FrmOtherLeft.ItemHelp.Visibility = If(Not HiddenForceShow AndAlso Settings.Get(Of Boolean)("UiHiddenOtherHelp"), Visibility.Collapsed, Visibility.Visible)
+                FrmOtherLeft.ItemFeedback.Visibility = If(Not HiddenForceShow AndAlso Settings.Get(Of Boolean)("UiHiddenOtherFeedback"), Visibility.Collapsed, Visibility.Visible)
+                FrmOtherLeft.ItemVote.Visibility = If(Not HiddenForceShow AndAlso Settings.Get(Of Boolean)("UiHiddenOtherVote"), Visibility.Collapsed, Visibility.Visible)
+                FrmOtherLeft.ItemAbout.Visibility = If(Not HiddenForceShow AndAlso Settings.Get(Of Boolean)("UiHiddenOtherAbout"), Visibility.Collapsed, Visibility.Visible)
+                FrmOtherLeft.ItemTest.Visibility = If(Not HiddenForceShow AndAlso Settings.Get(Of Boolean)("UiHiddenOtherTest"), Visibility.Collapsed, Visibility.Visible)
                 '隐藏左边选择卡
                 FrmOtherLeft.PanItem.Visibility = If(OtherAvaliableCount < 2 AndAlso Not HiddenForceShow, Visibility.Collapsed, Visibility.Visible)
             End If
             If OtherAvaliableCount = 1 AndAlso Not HiddenForceShow Then
-                If Not Setup.Get("UiHiddenOtherHelp") Then
+                If Not Settings.Get(Of Boolean)("UiHiddenOtherHelp") Then
                     FrmMain.BtnTitleSelect4.Text = GetLang("LangOtherHelp")
-                ElseIf Not Setup.Get("UiHiddenOtherAbout") Then
+                ElseIf Not Settings.Get(Of Boolean)("UiHiddenOtherAbout") Then
                     FrmMain.BtnTitleSelect4.Text = GetLang("LangOtherAbout")
                 Else
                     FrmMain.BtnTitleSelect4.Text = GetLang("LangOtherTool")
@@ -565,7 +484,7 @@ Refresh:
             '备注
             If FrmSetupUI IsNot Nothing Then FrmSetupUI.CardSwitch.Title = If(HiddenForceShow, GetLang("LangHiddenModeTitleA"), GetLang("LangHiddenModeTitleB"))
         Catch ex As Exception
-            Log(ex, GetLang("LangHiddenModeFail"), LogLevel.Feedback)
+            Logger.Error(ex, GetLang("LangHiddenModeFail"))
         End Try
     End Sub
 
@@ -580,7 +499,7 @@ Refresh:
             CheckHiddenSetupUI.Checked = True
         Else
             '关闭
-            If Setup.Get("UiHiddenSetupLaunch") AndAlso Setup.Get("UiHiddenSetupUi") AndAlso Setup.Get("UiHiddenSetupSystem") AndAlso Setup.Get("UiHiddenSetupLink") Then
+            If Settings.Get(Of Boolean)("UiHiddenSetupLaunch") AndAlso Settings.Get(Of Boolean)("UiHiddenSetupUi") AndAlso Settings.Get(Of Boolean)("UiHiddenSetupSystem") AndAlso Settings.Get(Of Boolean)("UiHiddenSetupLink") Then
                 CheckHiddenSetupLaunch.Checked = False
                 CheckHiddenSetupSystem.Checked = False
                 CheckHiddenSetupLink.Checked = False
@@ -590,7 +509,7 @@ Refresh:
     End Sub
     Private Sub HiddenSetupSub() Handles CheckHiddenSetupLaunch.Change, CheckHiddenSetupSystem.Change, CheckHiddenSetupLink.Change, CheckHiddenSetupUI.Change
         '设置子页面
-        If Setup.Get("UiHiddenSetupLaunch") AndAlso Setup.Get("UiHiddenSetupUi") AndAlso Setup.Get("UiHiddenSetupSystem") AndAlso Setup.Get("UiHiddenSetupLink") Then
+        If Settings.Get(Of Boolean)("UiHiddenSetupLaunch") AndAlso Settings.Get(Of Boolean)("UiHiddenSetupUi") AndAlso Settings.Get(Of Boolean)("UiHiddenSetupSystem") AndAlso Settings.Get(Of Boolean)("UiHiddenSetupLink") Then
             '已被全部隐藏
             CheckHiddenPageSetup.Checked = True
         Else
@@ -609,8 +528,8 @@ Refresh:
             CheckHiddenOtherHelp.Checked = True
         Else
             '关闭
-            If Setup.Get("UiHiddenOtherHelp") AndAlso Setup.Get("UiHiddenOtherAbout") AndAlso Setup.Get("UiHiddenOtherTest") AndAlso
-                Setup.Get("UiHiddenOtherVote") AndAlso Setup.Get("UiHiddenOtherFeedback") Then
+            If Settings.Get(Of Boolean)("UiHiddenOtherHelp") AndAlso Settings.Get(Of Boolean)("UiHiddenOtherAbout") AndAlso Settings.Get(Of Boolean)("UiHiddenOtherTest") AndAlso
+                Settings.Get(Of Boolean)("UiHiddenOtherVote") AndAlso Settings.Get(Of Boolean)("UiHiddenOtherFeedback") Then
                 CheckHiddenOtherAbout.Checked = False
                 CheckHiddenOtherTest.Checked = False
                 CheckHiddenOtherFeedback.Checked = False
@@ -621,7 +540,7 @@ Refresh:
     End Sub
     Private Sub HiddenOtherSub(sender As Object, user As Boolean) Handles CheckHiddenOtherHelp.Change, CheckHiddenOtherAbout.Change, CheckHiddenOtherTest.Change
         '更多子页面（有具体内容的）
-        If Setup.Get("UiHiddenOtherHelp") AndAlso Setup.Get("UiHiddenOtherAbout") AndAlso Setup.Get("UiHiddenOtherTest") Then
+        If Settings.Get(Of Boolean)("UiHiddenOtherHelp") AndAlso Settings.Get(Of Boolean)("UiHiddenOtherAbout") AndAlso Settings.Get(Of Boolean)("UiHiddenOtherTest") Then
             '已被全部隐藏
             CheckHiddenPageOther.Checked = True
         Else
@@ -630,7 +549,7 @@ Refresh:
         End If
         '修改无具体内容的项
         If Not user Then Return
-        If Setup.Get("UiHiddenOtherHelp") AndAlso Setup.Get("UiHiddenOtherAbout") AndAlso Setup.Get("UiHiddenOtherTest") Then
+        If Settings.Get(Of Boolean)("UiHiddenOtherHelp") AndAlso Settings.Get(Of Boolean)("UiHiddenOtherAbout") AndAlso Settings.Get(Of Boolean)("UiHiddenOtherTest") Then
             CheckHiddenOtherFeedback.Checked = True
             CheckHiddenOtherVote.Checked = True
         End If
@@ -638,8 +557,8 @@ Refresh:
     Private Sub HiddenOtherNet(sender As Object, user As Boolean) Handles CheckHiddenOtherFeedback.Change, CheckHiddenOtherVote.Change
         '更多子页面（无具体内容的）
         If Not user Then Return
-        If Setup.Get("UiHiddenOtherHelp") AndAlso Setup.Get("UiHiddenOtherAbout") AndAlso Setup.Get("UiHiddenOtherTest") AndAlso
-            (Not Setup.Get("UiHiddenOtherFeedback") OrElse Not Setup.Get("UiHiddenOtherVote")) Then
+        If Settings.Get(Of Boolean)("UiHiddenOtherHelp") AndAlso Settings.Get(Of Boolean)("UiHiddenOtherAbout") AndAlso Settings.Get(Of Boolean)("UiHiddenOtherTest") AndAlso
+            (Not Settings.Get(Of Boolean)("UiHiddenOtherFeedback") OrElse Not Settings.Get(Of Boolean)("UiHiddenOtherVote")) Then
             CheckHiddenOtherAbout.Checked = False
             CheckHiddenOtherTest.Checked = False
             CheckHiddenOtherHelp.Checked = False
@@ -653,15 +572,10 @@ Refresh:
 
 #End Region
 
-    '赞助
-    Private Sub BtnLauncherDonate_Click(sender As Object, e As EventArgs) Handles BtnLauncherDonate.Click
-        OpenWebsite("https://afdian.com/a/LTCat")
-    End Sub
-
     '滑动条
     Private Sub SliderLoad()
         SliderMusicVolume.GetHintText = Function(v) Math.Ceiling(v * 0.1) & "%"
-        SliderLauncherOpacity.GetHintText = Function(v) Math.Round(40 + v * 0.1) & "%"
+        SliderLauncherTransparent.GetHintText = Function(v) Math.Round(40 + v * 0.1) & "%"
         SliderLauncherHue.GetHintText = Function(v) v & "°"
         SliderLauncherSat.GetHintText = Function(v) v & "%"
         SliderLauncherDelta.GetHintText =

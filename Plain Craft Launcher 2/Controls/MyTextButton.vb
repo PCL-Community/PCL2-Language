@@ -45,7 +45,7 @@
     Private Sub MyTextButton_MouseLeftButtonUp(sender As Object, e As MouseButtonEventArgs) Handles Me.PreviewMouseLeftButtonUp
         If Not IsMouseDown Then Return
         IsMouseDown = False
-        Log("[Control] 按下文本按钮：" & Text)
+        Logger.Info($"按下文本按钮：{Text}")
         RaiseEvent Click(Me, Nothing)
         RaiseCustomEvent()
         e.Handled = True

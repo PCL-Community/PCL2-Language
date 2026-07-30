@@ -39,7 +39,7 @@
         Dim LogoCustom As Boolean = ReadIni(PageInstanceLeft.Instance.PathVersion & "PCL\Setup.ini", "LogoCustom", "False")
         If LogoCustom Then
             For Each Selection As MyComboBoxItem In ComboDisplayLogo.Items
-                If Selection.Tag = Logo OrElse (Selection.Tag = "PCL\Logo.png" AndAlso Logo.EndsWith("PCL\Logo.png")) Then
+                If Selection.Tag = Logo OrElse (Selection.Tag = "PCL\Logo.png" AndAlso Logo.EndsWithF("PCL\Logo.png")) Then
                     ComboDisplayLogo.SelectedItem = Selection
                     Exit For
                 End If
@@ -65,24 +65,24 @@
                 WriteIni(McFolderSelected & "PCL.ini", "InstanceCache", "") '要求刷新缓存
                 LoaderFolderRun(McInstanceListLoader, McFolderSelected, LoaderFolderRunType.ForceRun, MaxDepth:=1, ExtraPath:="versions\")
             Catch ex As Exception
-                Log(ex, "修改版本分类失败（" & PageInstanceLeft.Instance.Name & "）", LogLevel.Feedback)
+                Logger.Error(ex, $"修改版本分类失败（{PageInstanceLeft.Instance.Name}）")
             End Try
             Reload() '更新 “打开 Mod 文件夹” 按钮
         Else
             '改为隐藏
             Try
-                If Not Setup.Get("HintHide") Then
+                If Not Settings.Get(Of Boolean)("HintHide") Then
                     If MyMsgBox(GetLang("LangPageVersionOverallDialogHideInstanceContent"), GetLang("LangPageVersionOverallDialogHideInstanceTitle"),, GetLang("LangDialogBtnCancel")) <> 1 Then
                         ComboDisplayType.SelectedIndex = 0
                         Return
                     End If
-                    Setup.Set("HintHide", True)
+                    Settings.Set("HintHide", True)
                 End If
                 WriteIni(PageInstanceLeft.Instance.PathVersion & "PCL\Setup.ini", "DisplayType", McInstanceCardType.Hidden)
                 WriteIni(McFolderSelected & "PCL.ini", "InstanceCache", "") '要求刷新缓存
                 LoaderFolderRun(McInstanceListLoader, McFolderSelected, LoaderFolderRunType.ForceRun, MaxDepth:=1, ExtraPath:="versions\")
             Catch ex As Exception
-                Log(ex, "隐藏版本 " & PageInstanceLeft.Instance.Name & " 失败", LogLevel.Feedback)
+                Logger.Error(ex, $"隐藏版本 {PageInstanceLeft.Instance.Name} 失败")
             End Try
         End If
     End Sub
@@ -97,7 +97,7 @@
             Reload()
             LoaderFolderRun(McInstanceListLoader, McFolderSelected, LoaderFolderRunType.ForceRun, MaxDepth:=1, ExtraPath:="versions\")
         Catch ex As Exception
-            Log(ex, "版本 " & PageInstanceLeft.Instance.Name & " 描述更改失败", LogLevel.Msgbox)
+            Logger.Error(ex, $"版本 {PageInstanceLeft.Instance.Name} 描述更改失败", LogBehavior.Alert)
         End Try
     End Sub
 
@@ -109,51 +109,29 @@
             Dim OldPath As String = PageInstanceLeft.Instance.PathVersion
             '修改此部分的同时修改快速安装的版本名检测*
             Dim NewName As String = MyMsgBoxInput(GetLang("LangPageVersionOverallDialogEditNameTitle"), "", OldName, New ObjectModel.Collection(Of Validate) From {
-                New ValidateFolderName(McFolderSelected & "versions", IgnoreCase:=False), New ValidateExceptSame(OldName & "_temp", "不能使用该名称！")})
+                New ValidateFolderName(McFolderSelected & "versions", IgnoreCase:=False)})
             If String.IsNullOrWhiteSpace(NewName) Then Return
             Dim NewPath As String = McFolderSelected & "versions\" & NewName & "\"
-            '获取临时中间名，以防止仅修改大小写的重命名失败
-            Dim TempName As String = NewName & "_temp"
-            Dim TempPath As String = McFolderSelected & "versions\" & TempName & "\"
-            Dim OnlyChangedCase As Boolean = NewName.ToLower = OldName.ToLower
             '重新读取版本 JSON 信息，避免 JsonObject 中已被合并的项被重新存储
             Dim JsonObject As JObject
             Dim OldJsonPath As String = PageInstanceLeft.Instance.GetJsonPath()
             Try
-                JsonObject = GetJson(ReadFile(OldJsonPath))
+                JsonObject = GetJson(FileUtils.ReadAsString(OldJsonPath))
             Catch ex As Exception
-                Log(ex, "在重命名读取 json 时失败")
+                Logger.Warn(ex, "在重命名读取 json 时失败")
                 JsonObject = PageInstanceLeft.Instance.JsonObject
             End Try
             '重命名主文件夹
-            My.Computer.FileSystem.RenameDirectory(OldPath, TempName)
-            My.Computer.FileSystem.RenameDirectory(TempPath, NewName)
+            DirectoryUtils.Move(OldPath, NewPath)
             '清理 ini 缓存
-            IniClearCache(PageInstanceLeft.Instance.PathIndie & "options.txt")
-            IniClearCache(PageInstanceLeft.Instance.PathVersion & "PCL\Setup.ini")
+            PageInstanceLeft.Instance.ResetIniCache()
             '重命名 jar 文件与 natives 文件夹
             '不能进行遍历重命名，否则在版本名很短的时候容易误伤其他文件（#6443）
-            If Directory.Exists($"{NewPath}{OldName}-natives") Then
-                If OnlyChangedCase Then
-                    My.Computer.FileSystem.RenameDirectory($"{NewPath}{OldName}-natives", $"{OldName}natives_temp")
-                    My.Computer.FileSystem.RenameDirectory($"{NewPath}{OldName}-natives_temp", $"{NewName}-natives")
-                Else
-                    DeleteDirectory($"{NewPath}{NewName}-natives")
-                    My.Computer.FileSystem.RenameDirectory($"{NewPath}{OldName}-natives", $"{NewName}-natives")
-                End If
-            End If
-            If File.Exists($"{NewPath}{OldName}.jar") Then
-                If OnlyChangedCase Then
-                    My.Computer.FileSystem.RenameFile($"{NewPath}{OldName}.jar", $"{OldName}_temp.jar")
-                    My.Computer.FileSystem.RenameFile($"{NewPath}{OldName}_temp.jar", $"{NewName}.jar")
-                Else
-                    File.Delete($"{NewPath}{NewName}.jar")
-                    My.Computer.FileSystem.RenameFile($"{NewPath}{OldName}.jar", $"{NewName}.jar")
-                End If
-            End If
+            If DirectoryUtils.Exists($"{NewPath}{OldName}-natives") Then DirectoryUtils.Move($"{NewPath}{OldName}-natives", $"{NewPath}{NewName}-natives")
+            If FileUtils.Exists($"{NewPath}{OldName}.jar") Then FileUtils.Move($"{NewPath}{OldName}.jar", $"{NewPath}{NewName}.jar")
             '替换版本设置文件中的路径
-            If File.Exists(NewPath & "PCL\Setup.ini") Then
-                WriteFile(NewPath & "PCL\Setup.ini", ReadFile(NewPath & "PCL\Setup.ini").Replace(OldPath, NewPath))
+            If FileUtils.Exists(NewPath & "PCL\Setup.ini") Then
+                FileUtils.Write(NewPath & "PCL\Setup.ini", FileUtils.ReadAsString(NewPath & "PCL\Setup.ini").Replace(OldPath, NewPath))
             End If
             '更改已选中的版本
             If ReadIni(McFolderSelected & "PCL.ini", "Version") = OldName Then
@@ -162,10 +140,10 @@
             '更新版本 Json
             Try
                 JsonObject("id") = NewName
-                WriteFile(NewPath & NewName & ".json", JsonObject.ToString)
-                File.Delete(NewPath & GetFileNameFromPath(OldJsonPath))
+                FileUtils.Delete(NewPath & PathUtils.GetLastPart(OldJsonPath))
+                FileUtils.Write(NewPath & NewName & ".json", JsonObject.ToString)
             Catch ex As Exception
-                Log(ex, "重命名版本 json 失败")
+                Logger.Warn(ex, "重命名版本 json 失败")
             End Try
             '刷新与提示
             Hint(GetLang("LangPageVersionOverallHintEditNameSuccess"), HintType.Green)
@@ -174,7 +152,7 @@
             Reload()
             LoaderFolderRun(McInstanceListLoader, McFolderSelected, LoaderFolderRunType.ForceRun, MaxDepth:=1, ExtraPath:="versions\")
         Catch ex As Exception
-            Log(ex, GetLang("LangPageVersionOverallEditNameFail"), LogLevel.Msgbox)
+            Logger.Error(ex, GetLang("LangPageVersionOverallEditNameFail"), LogBehavior.Alert)
         End Try
     End Sub
 
@@ -184,17 +162,17 @@
         '选择 自定义 时修改图片
         Try
             If ComboDisplayLogo.SelectedItem Is ItemDisplayLogoCustom Then
-                Dim FileName As String = SelectFile("常用图片文件(*.png;*.jpeg;*.jpg;*.gif;*.webp)|*.png;*.jpeg;*.jpg;*.gif;*.webp", "选择图片")
-                If FileName = "" Then
+                Dim FileName As String = Dialogs.SelectFile("选择图片", False, filter:={({"png", "jpeg", "jpg", "gif", "webp"}, "常用图片文件")}).FirstOrDefault()
+                If String.IsNullOrEmpty(FileName) Then
                     Reload() '还原选项
                     Return
                 End If
-                CopyFile(FileName, PageInstanceLeft.Instance.PathVersion & "PCL\Logo.png")
+                FileUtils.Copy(FileName, PageInstanceLeft.Instance.PathVersion & "PCL\Logo.png")
             Else
-                File.Delete(PageInstanceLeft.Instance.PathVersion & "PCL\Logo.png")
+                FileUtils.Delete(PageInstanceLeft.Instance.PathVersion & "PCL\Logo.png")
             End If
         Catch ex As Exception
-            Log(ex, "更改自定义版本图标失败（" & PageInstanceLeft.Instance.Name & "）", LogLevel.Feedback)
+            Logger.Error(ex, $"更改自定义版本图标失败（{PageInstanceLeft.Instance.Name}）")
         End Try
         '进行更改
         Try
@@ -207,7 +185,7 @@
             Reload()
             LoaderFolderRun(McInstanceListLoader, McFolderSelected, LoaderFolderRunType.ForceRun, MaxDepth:=1, ExtraPath:="versions\")
         Catch ex As Exception
-            Log(ex, "更改版本图标失败（" & PageInstanceLeft.Instance.Name & "）", LogLevel.Feedback)
+            Logger.Error(ex, $"更改版本图标失败（{PageInstanceLeft.Instance.Name}）")
         End Try
     End Sub
 
@@ -220,7 +198,7 @@
             McInstanceListForceRefresh = True
             LoaderFolderRun(McInstanceListLoader, McFolderSelected, LoaderFolderRunType.ForceRun, MaxDepth:=1, ExtraPath:="versions\")
         Catch ex As Exception
-            Log(ex, "版本 " & PageInstanceLeft.Instance.Name & " 收藏状态更改失败", LogLevel.Msgbox)
+            Logger.Error(ex, $"版本 {PageInstanceLeft.Instance.Name} 收藏状态更改失败", LogBehavior.Alert)
         End Try
     End Sub
 
@@ -238,16 +216,16 @@
 
     '存档文件夹
     Private Sub BtnFolderSaves_Click() Handles BtnFolderSaves.Click
-        Dim FolderPath As String = PageInstanceLeft.Instance.PathIndie & "saves\"
-        Directory.CreateDirectory(FolderPath)
-        OpenExplorer(FolderPath)
+        Dim Folder As String = PageInstanceLeft.Instance.PathIndie & "saves\"
+        DirectoryUtils.Create(Folder)
+        OpenExplorer(Folder)
     End Sub
 
     'Mod 文件夹
     Private Sub BtnFolderMods_Click() Handles BtnFolderMods.Click
-        Dim FolderPath As String = PageInstanceLeft.Instance.PathIndie & "mods\"
-        Directory.CreateDirectory(FolderPath)
-        OpenExplorer(FolderPath)
+        Dim Folder As String = PageInstanceLeft.Instance.PathIndie & "mods\"
+        DirectoryUtils.Create(Folder)
+        OpenExplorer(Folder)
     End Sub
 
 #End Region
@@ -258,8 +236,8 @@
     Private Sub BtnManageScript_Click() Handles BtnManageScript.Click
         Try
             '弹窗要求指定脚本的保存位置
-            Dim SavePath As String = SelectSaveFile(GetLang("LangPageVersionOverallSelectSaveCommandFile"), "启动 " & PageInstanceLeft.Instance.Name & ".bat", "批处理文件(*.bat)|*.bat")
-            If SavePath = "" Then Return
+            Dim SavePath As String = Dialogs.SaveFile(GetLang("LangPageVersionOverallSelectSaveCommandFile"), "启动 " & PageInstanceLeft.Instance.Name & ".bat", filter:={("bat", "批处理文件")})
+            If SavePath Is Nothing Then Return
             '检查中断（等玩家选完弹窗指不定任务就结束了呢……）
             If McLaunchLoader.State = LoadState.Loading Then
                 Hint(GetLang("LangPageVersionOverallHintWaitForTaskOver"), HintType.Red)
@@ -267,14 +245,14 @@
             End If
             '生成脚本
             If McLaunchStart(New McLaunchOptions With {.SaveBatch = SavePath, .Instance = PageInstanceLeft.Instance}) Then
-                If Setup.Get("LoginType") = McLoginType.Legacy Then
+                If Settings.Get(Of McLoginType)("LoginType") = McLoginType.Legacy Then
                     Hint(GetLang("LangPageVersionOverallHintExportingCommandA"))
                 Else
                     Hint(GetLang("LangPageVersionOverallHintExportingCommandB"))
                 End If
             End If
         Catch ex As Exception
-            Log(ex, GetLang("LangPageVersionOverallHintExportingCommandFail") & "（" & PageInstanceLeft.Instance.Name & "）", LogLevel.Msgbox)
+            Log(ex, GetLang("LangPageVersionOverallHintExportingCommandFail") & "（" & PageInstanceLeft.Instance.Name & "）", LogBehavior.Alert)
         End Try
     End Sub
 
@@ -300,8 +278,8 @@
                     Case LoadState.Finished
                         Hint(Loader.Name & GetLang("LangPageVersionOverallCompleteFileSuccess"), HintType.Green)
                     Case LoadState.Failed
-                        Hint(Loader.Name & GetLang("LangPageVersionOverallCompleteFileFail") & Loader.Error.GetBrief(), HintType.Red)
-                    Case LoadState.Aborted
+                        Hint(Loader.Name & GetLang("LangPageVersionOverallCompleteFileFail") & Loader.Error.GetDisplay(False), HintType.Red)
+                    Case LoadState.Interrupted
                         Hint(Loader.Name & GetLang("LangTaskAbort"), HintType.Blue)
                 End Select
             End Sub
@@ -310,7 +288,7 @@
             FrmMain.BtnExtraDownload.ShowRefresh()
             FrmMain.BtnExtraDownload.Ribble()
         Catch ex As Exception
-            Log(ex, "尝试补全文件失败（" & PageInstanceLeft.Instance.Name & "）", LogLevel.Msgbox)
+            Logger.Error(ex, $"尝试补全文件失败（{PageInstanceLeft.Instance.Name}）", LogBehavior.Alert)
         End Try
     End Sub
 
@@ -329,13 +307,8 @@
             Select Case MyMsgBox(MsgContent,
                         GetLang("LangPageVersionOverallDialogDeleteTitle"), , GetLang("LangDialogBtnCancel"),, IsHintIndie OrElse IsShiftPressed)
                 Case 1
-                    IniClearCache(PageInstanceLeft.Instance.PathIndie & "options.txt")
-                    IniClearCache(PageInstanceLeft.Instance.PathVersion & "PCL\Setup.ini")
-                    If IsShiftPressed Then
-                        DeleteDirectory(PageInstanceLeft.Instance.PathVersion)
-                    Else
-                        FileIO.FileSystem.DeleteDirectory(PageInstanceLeft.Instance.PathVersion, FileIO.UIOption.AllDialogs, FileIO.RecycleOption.SendToRecycleBin)
-                    End If
+                    PageInstanceLeft.Instance.ResetIniCache()
+                    DirectoryUtils.Delete(PageInstanceLeft.Instance.PathVersion, Not IsShiftPressed)
                     Hint( GetLang("LangPageVersionOverallHintDeleteSuccess", PageInstanceLeft.Instance.Name), HintType.Green)
                 Case 2
                     Return
@@ -343,9 +316,9 @@
             LoaderFolderRun(McInstanceListLoader, McFolderSelected, LoaderFolderRunType.ForceRun, MaxDepth:=1, ExtraPath:="versions\")
             FrmMain.PageBack()
         Catch ex As OperationCanceledException
-            Log(ex, "删除版本 " & PageInstanceLeft.Instance.Name & " 被主动取消")
+            Logger.Warn(ex, $"删除版本 {PageInstanceLeft.Instance.Name} 被主动取消")
         Catch ex As Exception
-            Log(ex, "删除版本 " & PageInstanceLeft.Instance.Name & " 失败", LogLevel.Msgbox)
+            Logger.Error(ex, $"删除版本 {PageInstanceLeft.Instance.Name} 失败", LogBehavior.Alert)
         End Try
     End Sub
 

@@ -77,10 +77,8 @@ Public Class MyLoading
                     If Ex Is Nothing Then
                         LabText.Text = GetLang("LangModMyLoadingUnknownError")
                     Else
-                        Do While Ex.InnerException IsNot Nothing
-                            Ex = Ex.InnerException
-                        Loop
-                        LabText.Text = If(Ex.IsNetworkRelated(), GetLang("LangModMyLoadingBadNetwork"), StrTrim(Ex.Message))
+                        Ex = Ex.RootException()
+                        LabText.Text = If(Ex.IsBadNetwork(), GetLang("LangModMyLoadingBadNetwork"), Ex.Message)
                     End If
                 Else
                     LabText.Text = TextError

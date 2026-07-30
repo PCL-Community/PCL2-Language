@@ -1,4 +1,12 @@
-﻿[*.{cs,vb}]
+# 如果要从更高级别的目录继承 .editorconfig 设置，请删除以下行
+root = true
+
+[*.cs]
+
+# IDE0320: 使匿名函数成为静态函数
+csharp_prefer_static_anonymous_function = false
+
+[*.{cs,vb}]
 
 # IDE0028: 简化集合初始化
 dotnet_style_collection_initializer = true:silent

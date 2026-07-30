@@ -174,7 +174,7 @@ Public Class MyListItem
             Return GetValue(TitleProperty)
         End Get
         Set(value As String)
-            SetValue(TitleProperty, value.Replace(vbCr, "").Replace(vbLf, ""))
+            SetValue(TitleProperty, value.ReplaceLineEndings(""))
         End Set
     End Property
     Public Shared ReadOnly TitleProperty As DependencyProperty = DependencyProperty.Register("Title", GetType(String), GetType(MyListItem))
@@ -197,7 +197,7 @@ Public Class MyListItem
         End Get
         Set(value As String)
             SetValue(InfoProperty, value)
-            value = value.Replace(vbCr, "").Replace(vbLf, "")
+            value = value.ReplaceLineEndings("")
             If LabInfo Is Nothing Then Exit Property
             LabInfo.Text = value
             LabInfo.Visibility = If(String.IsNullOrWhiteSpace(value), Visibility.Collapsed, Visibility.Visible)
@@ -484,7 +484,7 @@ Public Class MyListItem
             End If
 
         Catch ex As Exception
-            Log(ex, "设置 Checked 失败")
+            Logger.Warn(ex, "设置 Checked 失败")
         End Try
     End Sub
 
@@ -520,12 +520,12 @@ Public Class MyListItem
         '实际的单击处理
         Select Case Type
             Case CheckType.Clickable
-                Log("[Control] 按下单击列表项：" & Title)
+                Logger.Info($"按下单击列表项：{Title}")
             Case CheckType.RadioBox
-                Log("[Control] 按下单选列表项：" & Title)
+                Logger.Info($"按下单选列表项：{Title}")
                 If Not Checked Then SetChecked(True, True, True)
             Case CheckType.CheckBox
-                Log("[Control] 按下复选列表项（" & (Not Checked).ToString & "）：" & Title)
+                Logger.Info($"按下复选列表项（{Not Checked}）：{Title}")
                 SetChecked(Not Checked, True, True)
         End Select
     End Sub
@@ -648,7 +648,7 @@ Public Class MyListItem
                 Dim Entry As New HelpEntry(CustomEvent.GetAbsoluteUrls(CustomEventService.GetEventData(Me), CustomEventService.GetEventType(Me))(0))
                 Entry.SetToListItem(Me)
             Catch ex As Exception
-                Log(ex, "设置帮助 MyListItem 失败", LogLevel.Msgbox)
+                Logger.Error(ex, "设置帮助 MyListItem 失败", LogBehavior.Alert)
                 CustomEventService.SetEventType(Me, CustomEvent.EventType.None)
                 CustomEventService.SetEventData(Me, "")
             End Try

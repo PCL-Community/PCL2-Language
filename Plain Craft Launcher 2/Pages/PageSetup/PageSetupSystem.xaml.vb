@@ -47,17 +47,18 @@
         '重复加载部分
         PanBack.ScrollToHome()
 
-#If BETA Then
-        PanDonate.Visibility = Visibility.Collapsed
-#Else
-        PanDonate.Visibility = Visibility.Visible
-        ItemSystemUpdateDownload.Content = GetLang("LangPageSetupSystemSystemLaunchUpdateE")
-#End If
+        If BuildType = BuildTypes.Release Then
+            PanDonate.Visibility = Visibility.Collapsed
+        Else
+            PanDonate.Visibility = Visibility.Visible
+            ItemSystemUpdateDownload.Content = GetLang("LangPageSetupSystemSystemLaunchUpdateE")
+        End If
 
         '语言
         SelectCurrentLanguage()
 
         '非重复加载部分
+        Static IsLoaded As Boolean = False
         If IsLoaded Then Return
         IsLoaded = True
 
@@ -68,86 +69,17 @@
 
     End Sub
     Public Sub Reload()
-
-        '下载
-        SliderDownloadThread.Value = Setup.Get("ToolDownloadThread")
-        SliderDownloadSpeed.Value = Setup.Get("ToolDownloadSpeed")
-        ComboDownloadSource.SelectedIndex = Setup.Get("ToolDownloadSource")
-        ComboDownloadVersion.SelectedIndex = Setup.Get("ToolDownloadVersion")
-        CheckDownloadCert.Checked = Setup.Get("ToolDownloadCert")
-
-        'Mod 与整合包
-        ComboDownloadTranslateV2.SelectedIndex = Setup.Get("ToolDownloadTranslateV2")
-        ComboDownloadMod.SelectedIndex = Setup.Get("ToolDownloadMod")
-        ComboModLocalNameStyle.SelectedIndex = Setup.Get("ToolModLocalNameStyle")
-        CheckDownloadIgnoreQuilt.Checked = Setup.Get("ToolDownloadIgnoreQuilt")
-
-        'Minecraft 更新提示
-        CheckUpdateRelease.Checked = Setup.Get("ToolUpdateRelease")
-        CheckUpdateSnapshot.Checked = Setup.Get("ToolUpdateSnapshot")
-
-        '辅助设置
-        CheckHelpChinese.Checked = Setup.Get("ToolHelpLanguage")
-
-        '系统设置
-        ComboSystemUpdate.SelectedIndex = Setup.Get("SystemSystemUpdate")
-        ComboSystemActivity.SelectedIndex = Setup.Get("SystemSystemActivity")
-        TextSystemCache.Text = Setup.Get("SystemSystemCache")
-        CheckSystemTelemetry.Checked = Setup.Get("SystemSystemTelemetry")
-
-        '调试选项
-        CheckDebugMode.Checked = Setup.Get("SystemDebugMode")
-        SliderDebugAnim.Value = Setup.Get("SystemDebugAnim")
-        CheckDebugDelay.Checked = Setup.Get("SystemDebugDelay")
-        CheckDebugSkipCopy.Checked = Setup.Get("SystemDebugSkipCopy")
-
+        SettingService.RefreshSettings(Me)
     End Sub
-
-    '初始化
     Public Sub Reset()
         Try
-            Setup.Reset("ToolDownloadThread")
-            Setup.Reset("ToolDownloadSpeed")
-            Setup.Reset("ToolDownloadSource")
-            Setup.Reset("ToolDownloadVersion")
-            Setup.Reset("ToolDownloadTranslateV2")
-            Setup.Reset("ToolDownloadIgnoreQuilt")
-            Setup.Reset("ToolDownloadCert")
-            Setup.Reset("ToolDownloadMod")
-            Setup.Reset("ToolModLocalNameStyle")
-            Setup.Reset("ToolUpdateRelease")
-            Setup.Reset("ToolUpdateSnapshot")
-            Setup.Reset("ToolHelpLanguage")
-            Setup.Reset("SystemDebugMode")
-            Setup.Reset("SystemDebugAnim")
-            Setup.Reset("SystemDebugDelay")
-            Setup.Reset("SystemDebugSkipCopy")
-            Setup.Reset("SystemSystemCache")
-            Setup.Reset("SystemSystemUpdate")
-            Setup.Reset("SystemSystemActivity")
-            Setup.Reset("SystemSystemTelemetry")
-
-            Log("[Setup] 已初始化启动器页设置")
+            SettingService.ResetSettings(Me)
+            Logger.Info(GetLang("LangPageSetupSystemLaunchResetSuccess"))
             Hint(GetLang("LangPageSetupSystemLaunchResetSuccess"), HintType.Green, False)
         Catch ex As Exception
-            Log(ex, GetLang("LangPageSetupSystemLaunchResetFail"), LogLevel.Msgbox)
+            Logger.Error(ex, GetLang("LangPageSetupSystemLaunchResetFail"), LogBehavior.Alert)
         End Try
-
         Reload()
-    End Sub
-
-    '将控件改变路由到设置改变
-    Private Shared Sub CheckBoxChange(sender As MyCheckBox, e As Object) Handles CheckDebugMode.Change, CheckDebugDelay.Change, CheckDebugSkipCopy.Change, CheckUpdateRelease.Change, CheckUpdateSnapshot.Change, CheckHelpChinese.Change, CheckDownloadIgnoreQuilt.Change, CheckDownloadCert.Change, CheckSystemTelemetry.Change
-        If AniControlEnabled = 0 Then Setup.Set(sender.Tag, sender.Checked)
-    End Sub
-    Private Shared Sub SliderChange(sender As MySlider, e As Object) Handles SliderDebugAnim.Change, SliderDownloadThread.Change, SliderDownloadSpeed.Change
-        If AniControlEnabled = 0 Then Setup.Set(sender.Tag, sender.Value)
-    End Sub
-    Private Shared Sub ComboChange(sender As MyComboBox, e As Object) Handles ComboDownloadVersion.SelectionChanged, ComboModLocalNameStyle.SelectionChanged, ComboDownloadTranslateV2.SelectionChanged, ComboSystemUpdate.SelectionChanged, ComboSystemActivity.SelectionChanged, ComboDownloadSource.SelectionChanged, ComboDownloadMod.SelectionChanged
-        If AniControlEnabled = 0 Then Setup.Set(sender.Tag, sender.SelectedIndex)
-    End Sub
-    Private Shared Sub TextBoxChange(sender As MyTextBox, e As Object) Handles TextSystemCache.ValidatedTextChanged
-        If AniControlEnabled = 0 Then Setup.Set(sender.Tag, sender.Text)
     End Sub
 
     '滑动条
@@ -170,18 +102,18 @@
     End Sub
     Private Sub SliderDownloadThread_PreviewChange(sender As Object, e As RouteEventArgs) Handles SliderDownloadThread.PreviewChange
         If SliderDownloadThread.Value < 100 Then Return
-        If Not Setup.Get("HintDownloadThread") Then
-            Setup.Set("HintDownloadThread", True)
+        If Not Settings.Get(Of Boolean)("HintDownloadThread") Then
+            Settings.Set("HintDownloadThread", True)
             MyMsgBox(GetLang("LangPageSetupSystemDownloadSpeedDialogThreadTooMuchContent"), GetLang("LangDialogTitleWarning"), GetLang("LangDialogBtnIC"), IsWarn:=True)
         End If
     End Sub
 
-    '识别码/解锁码替代入口
+    '识别码/土豆码替代入口
     Private Sub BtnSystemIdentify_Click(sender As Object, e As MouseButtonEventArgs) Handles BtnSystemIdentify.Click
         PageOtherAbout.CopyIdentify()
     End Sub
     Private Sub BtnSystemUnlock_Click(sender As Object, e As MouseButtonEventArgs) Handles BtnSystemUnlock.Click
-        DonateCodeInput()
+        InputPotatoCode(False)
     End Sub
 
     '调试模式
@@ -214,17 +146,12 @@
     Public Shared Function IsLauncherNewest() As Boolean?
         Try
             '确认服务器公告是否正常
-            Dim ServerContent As String = ReadFile(PathTemp & "Cache\Notice.cfg")
+            Dim ServerContent As String = If(FileUtils.TryReadAsString(PathTemp & "Cache\Notice.cfg"), "")
             If ServerContent.Split("|").Count < 3 Then Return Nothing
             '确认是否为最新
-#If BETA Then
-            Dim NewVersionCode As Integer = ServerContent.Split("|")(2)
-#Else
-            Dim NewVersionCode As Integer = ServerContent.Split("|")(1)
-#End If
-            Return NewVersionCode <= VersionCode
+            Return ServerContent.Split("|")(If(BuildType = BuildTypes.Release, 2, 1)) <= VersionCode
         Catch ex As Exception
-            Log(ex, GetLang("LangPageSetupSystemSystemLaunchUpdateFail"), LogLevel.Feedback)
+            Logger.Error(ex, GetLang("LangPageSetupSystemSystemLaunchUpdateFail"))
             Return Nothing
         End Try
     End Function

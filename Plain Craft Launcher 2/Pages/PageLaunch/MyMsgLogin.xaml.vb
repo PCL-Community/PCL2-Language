@@ -20,7 +20,7 @@
             Data = Converter.Content
             Init()
         Catch ex As Exception
-            Log(ex, GetLang("LangMyMsgLoginHintInitFail"), LogLevel.Hint)
+            Logger.Error(ex, GetLang("LangMyMsgLoginHintInitFail"), LogBehavior.Toast)
         End Try
     End Sub
 
@@ -35,9 +35,9 @@
                 AaDouble(Sub(i) TransformRotate.Angle += i, -TransformRotate.Angle, 300, 60, New AniEaseOutFluent(AniEasePower.Weak))
             }, "MyMsgBox " & Uuid)
             '记录日志
-            Log("[Control] 登录弹窗：" & LabTitle.Text & vbCrLf & LabCaption.Text)
+            Logger.Info($"登录弹窗：{LabTitle.Text}{vbCrLf}{LabCaption.Text}")
         Catch ex As Exception
-            Log(ex, "登录弹窗加载失败", LogLevel.Hint)
+            Logger.Error(ex, "登录弹窗加载失败", LogBehavior.Toast)
         End Try
     End Sub
     Private Sub Close()
@@ -120,8 +120,8 @@
                 Return
             Catch ex As Exception
                 '修改错误列表时，同时修改 ModLaunch.MsLoginStep1Refresh 中的对应代码
-                If TypeOf ex Is ResponsedWebException Then
-                    Dim Response = CType(ex, ResponsedWebException).Response
+                If TypeOf ex Is HttpRequestCodeException Then
+                    Dim Response = CType(ex, HttpRequestCodeException).Response
                     If Response.Contains("authorization_declined") Then
                         Finished(New Exception("$" & GetLang("LangMyMsgLoginExceptionDecline")))
                         Return
@@ -144,7 +144,7 @@
                 End If
                 If UnknownFailureCount <= 2 Then
                     UnknownFailureCount += 1
-                    Log(ex, $"登录轮询第 {UnknownFailureCount} 次失败")
+                    Logger.Warn(ex, $"登录轮询第 {UnknownFailureCount} 次失败")
                     Thread.Sleep(2000)
                 Else
                     Finished(New Exception(GetLang("LangMyMsgLoginExceptionCheckFail"), ex))
