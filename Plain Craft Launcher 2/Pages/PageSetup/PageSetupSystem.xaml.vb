@@ -144,9 +144,7 @@ Class PageSetupSystem
     Public Shared Function IsLauncherNewest() As Boolean?
         Try
             If ModSecret.LatestReleaseInfoJson Is Nothing Then Return Nothing
-            Dim tagName = ModSecret.LatestReleaseInfoJson("tag_name").ToString
-            If tagName.StartsWith("v", StringComparison.OrdinalIgnoreCase) Then tagName = tagName.Substring(1)
-            Return tagName = VersionBaseName
+            Return ModSecret.LatestVersion = VersionBaseName
         Catch ex As Exception
             Logger.Error(ex, GetLang("LangPageSetupSystemSystemLaunchUpdateFail"))
             Return Nothing

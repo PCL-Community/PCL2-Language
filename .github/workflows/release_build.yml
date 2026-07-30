@@ -1,15 +1,19 @@
 name: Build Publish
 on:
-  release:
-    types: [published]
+  push:
+    tags:
+      - 'v*'
 
 jobs:
   build:
     name: Build
     runs-on: windows-latest
     strategy:  
-       matrix:  
-         configuration: [Release]
+        matrix:  
+          configuration: [Release]
+    
+    permissions:
+      contents: write
 
     steps:
 
@@ -64,8 +68,20 @@ jobs:
       run: |
         mv "Plain Craft Launcher 2\obj\${{ matrix.configuration }}\Plain Craft Launcher 2.exe" "PCL2_Lang.exe"
 
-    - name: Upload binary to Release
-      uses: softprops/action-gh-release@v2.5.0
+    - name: Install git-cliff
+      uses: taiki-e/install-action@git-cliff
+
+    - name: Generate changelog
+      run: git-cliff --unreleased -o CHANGES.md
+
+    - name: Create draft release with assets
+      uses: softprops/action-gh-release@v3
       with:
-        files: |
-          PCL2_Lang.exe
+        draft: true
+        body_path: CHANGES.md
+        files: PCL2_Lang.exe
+
+    - name: Publish draft release
+      uses: softprops/action-gh-release@v3
+      with:
+        tag_name: ${{ github.ref_name }}

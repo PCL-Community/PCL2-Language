@@ -202,7 +202,7 @@ Friend Module ModSecret
         If releaseEx IsNot Nothing Then Throw releaseEx
         If latestJson IsNot Nothing Then
             LatestReleaseInfoJson = latestJson
-            LatestVersion = latestJson("tag_name").ToString
+            LatestVersion = latestJson("tag_name").ToString().TrimStart("v"c)
         End If
         If configJson IsNot Nothing Then
             ServerConfig = configJson
