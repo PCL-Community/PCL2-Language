@@ -1,7 +1,4 @@
-﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:s="clr-namespace:System;assembly=mscorlib"
-        xml:space="preserve">
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:s="clr-namespace:System;assembly=mscorlib" xml:space="preserve">
     <s:String x:Key="LangTaskAbort">キャンセルされました！</s:String>
     <s:String x:Key="LangDialogBtnOK">確認</s:String>
     <s:String x:Key="LangDialogBtnCancel">キャンセル</s:String>
@@ -29,6 +26,7 @@
     <s:String x:Key="LangApplicationDialogTitleUnzipLauncher">環境警告</s:String>
     <s:String x:Key="LangApplicationDialogContentUnzipLauncher">PCLを圧縮ファイルから解凍するか、フォルダを変更してから使用を続けてください！ 
 現在プログラムは一時フォルダで実行されており、設定やゲームのセーブデータが保存できない可能性がありますし、一部の機能は使用できません。</s:String>
+    <s:String x:Key="LangApplicationDialogTitle32BitWarn">环境警告</s:String>
     <s:String x:Key="LangApplicationDialogContent32BitWarn">PCLと新版のMinecraftは32ビットシステムをサポートしておらず、一部の機能が使用できません。
 64ビットシステムに再インストールした後、ゲームを行うことを強くお勧めします！</s:String>
     <s:String x:Key="LangApplicationDialogTitleInitError">PCL 初期化エラー</s:String>
@@ -273,6 +271,7 @@
     <s:String x:Key="LangSetHomePagePresetPageN">Minecraft 更新摘要（作者：pynickle，部分由 AI 生成）</s:String>
     <s:String x:Key="LangSetHomePagePresetPageO">今日新闻热点（作者：EYicheng，部分由 AI 生成）</s:String>
     <s:String x:Key="LangSetHomePagePresetPageP">Minecraft 芝士站（作者：awaEric233，部分由 AI 生成）</s:String>
+    <s:String x:Key="LangSetHomePagePresetPageQ">Bangumi 番剧主页（作者：wzyaeu）</s:String>
     <s:String x:Key="LangSetFuncHidden">機能隠し</s:String>
     <s:String x:Key="LangSetFuncHiddenToolTip">不要なページを隠したり、特定の機能をオフにしたりできます。任意の画面で F12 を押すと、隠された機能を一時的に表示できます。</s:String>
     <s:String x:Key="LangSetFuncHiddenLaunch">メインページ</s:String>
@@ -675,6 +674,7 @@
     <s:String x:Key="LangMySkinHintGettingCape">カペのリストを取得中です。しばらくお待ちください……</s:String>
     <s:String x:Key="LangMySkinDialogChooseCape">カペを選択</s:String>
     <s:String x:Key="LangMySkinHintChangeCapeFail">カペの変更に失敗しました</s:String>
+    <s:String x:Key="LangMySkinHintChangeCapeFailTimeout">更改披风失败：连接 Mojang 服务器超时，请稍后再试，或使用 VPN 改善网络环境</s:String>
     <s:String x:Key="LangMySkinHintChangeCapeSuccess">カペの変更に成功しました！</s:String>
     <s:String x:Key="LangMySkinCapeNameMigrator">移住者カペ</s:String>
     <s:String x:Key="LangMySkinCapeNameMapMaker">Realms 地図制作者カペ</s:String>
@@ -703,6 +703,8 @@
     <s:String x:Key="LangMySkinCapeNameFounders">创始人披风</s:String>
     <s:String x:Key="LangMySkinCapeNameCopper">铜披风</s:String>
     <s:String x:Key="LangMySkinCapeNameZombieHorse">僵尸马披风</s:String>
+    <s:String x:Key="LangMySkinCapeNameBuilder">建造者披风</s:String>
+    <s:String x:Key="LangMySkinCapeNameCrafter">工匠披风</s:String>
     <s:String x:Key="LangMySkinCapeNameNone">カペなし</s:String>
     <s:String x:Key="LangLaunchLeftInstanceChoose">バージョン選択</s:String>
     <s:String x:Key="LangLaunchLeftInstanceConfig">バージョン設定</s:String>
@@ -738,8 +740,6 @@
     <s:String x:Key="LangLaunchLeftExceptionModpackInstallFail">モッドパックの自動インストールに失敗しました：{0}</s:String>
     <s:String x:Key="LangLaunchRightSnapshot">スナップショット版のヒント</s:String>
     <s:String x:Key="LangLaunchRightLog">起動ログ</s:String>
-    <s:String x:Key="LangLaunchRightLabHint1">スナップショット版にはまだ正式にリリースされていないテスト機能が含まれています。これらはスポンサーのみが試用するためのものです。他の人に共有したり、パックの作成に使用しないでください！</s:String>
-    <s:String x:Key="LangLaunchRightLabHint2">すでに寄付額が23.33元に達している場合、愛発電のプライベートメッセージで「解除コード」を送信することで、このヒントを永久に非表示にできます。</s:String>
     <s:String x:Key="LangLaunchRightLoadingPage">ホームページの読み込み中……</s:String>
     <s:String x:Key="LangLaunchRightPageTips">知っていますか？</s:String>
     <s:String x:Key="LangLaunchRightPageEcho">エコーの洞窟</s:String>
@@ -777,6 +777,7 @@
     <s:String x:Key="LangPageLoginMsSkinSkinChange">スキンを変更</s:String>
     <s:String x:Key="LangPageLoginMsSkinSkinSave">スキンを保存</s:String>
     <s:String x:Key="LangPageLoginMsSkinSkinRefresh">アバターをリフレッシュ</s:String>
+    <s:String x:Key="LangPageLoginMsSkinRefresh">刷新皮肤</s:String>
     <s:String x:Key="LangPageLoginMsSkinCapeChange">マントを変更</s:String>
     <s:String x:Key="LangPageLoginMsSkinInfoChange">情報を変更</s:String>
     <s:String x:Key="LangPageLoginMsSkinInfoChangePassword">パスワードを変更</s:String>
@@ -986,6 +987,29 @@ MinecraftバージョンのJSONにおける文字列置換マーカー（例え�
     <s:String x:Key="LangPageSetupLaunchLaunchAdvanceOptionsGPUPerfenceToolTip">Windows の設定 → システム → ディスプレイ → グラフィックカード の中で、Java が高性能グラフィックカードを使用するように自動的に設定します。
 PC に内蔵グラフィックと専用グラフィックの両方がある場合、これにより Minecraft が専用グラフィックカードを使用してレンダリングを行い、パフォーマンスが大幅に向上します。</s:String>
     <s:String x:Key="LangPageSetupLaunchLaunchAdvanceOptionsMoreTips">版本独立设置中还有更多高级选项可供调整。</s:String>
+    <s:String x:Key="LangPageSetupLaunchLaunchAdvanceOptionsMemoryManagement">内存管理</s:String>
+    <s:String x:Key="LangPageSetupLaunchLaunchAdvanceOptionsGCZGC">尽量使用 ZGC</s:String>
+    <s:String x:Key="LangPageSetupLaunchLaunchAdvanceOptionsGCZGCToolTip">在 Java 21+ 使用分代 ZGC，20~15 使用非分代的 ZGC，14- 使用 G1GC。
+ZGC 的内存占用比 G1GC 更高，不过在回收内存时不会导致卡顿。
+覆盖 "Java 虚拟机参数" 设置中的 GC 相关参数。</s:String>
+    <s:String x:Key="LangPageSetupLaunchLaunchAdvanceOptionsGCGenZGC">尽量使用分代 ZGC</s:String>
+    <s:String x:Key="LangPageSetupLaunchLaunchAdvanceOptionsGCGenZGCToolTip">在 Java 21+ 使用分代 ZGC，20- 使用 G1GC。
+ZGC 的内存占用比 G1GC 更高，不过在回收内存时不会导致卡顿。
+覆盖 "Java 虚拟机参数" 设置中的 GC 相关参数。</s:String>
+    <s:String x:Key="LangPageSetupLaunchLaunchAdvanceOptionsGCStandardG1GC">标准 G1GC</s:String>
+    <s:String x:Key="LangPageSetupLaunchLaunchAdvanceOptionsGCStandardG1GCToolTip">总是使用 G1GC，附带 Mojang 官方的优化参数。
+G1GC 的内存占用比 ZGC 更低，但在回收内存时会导致突然的卡顿。
+覆盖 "Java 虚拟机参数" 设置中的 GC 相关参数。</s:String>
+    <s:String x:Key="LangPageSetupLaunchLaunchAdvanceOptionsGCTunedG1GC">调优 G1GC</s:String>
+    <s:String x:Key="LangPageSetupLaunchLaunchAdvanceOptionsGCTunedG1GCToolTip">总是使用 G1GC，附带 PCL 调优过的优化参数。
+G1GC 的内存占用比 ZGC 更低，但在回收内存时会导致突然的卡顿。
+覆盖 "Java 虚拟机参数" 设置中的 GC 相关参数。</s:String>
+    <s:String x:Key="LangPageSetupLaunchLaunchAdvanceOptionsGCCustom">不指定（可自定义）</s:String>
+    <s:String x:Key="LangPageSetupLaunchLaunchAdvanceOptionsGCCustomToolTip">不自动添加 GC 参数。
+仅当选择此项时，你可以在 "Java 虚拟机参数" 设置中手动添加 GC 参数。</s:String>
+    <s:String x:Key="LangPageSetupLaunchLaunchAdvanceOptionsDisableLWJGL">禁用 LWJGL Unsafe Agent</s:String>
+    <s:String x:Key="LangPageSetupLaunchLaunchAdvanceOptionsDisableLWJGLToolTip">是否使用 LWJGL Unsafe Agent 修复 LWJGL 3.4.1 的一个性能问题。
+详见：https://github.com/HMCL-dev/lwjgl-unsafe-agent</s:String>
     <s:String x:Key="LangPageSetupLaunchGotoVersionSetting">インスタンス独立設定</s:String>
     <s:String x:Key="LangPageSetupLaunchReloadByError">起動設定に異常があり、自動的にリセットされました</s:String>
     <s:String x:Key="LangPageSetupLaunchReloadFail">起動設定のリロードに失敗しました</s:String>
@@ -1447,6 +1471,7 @@ PCL は他の様々なダウンロードプロトコルをサポートしてい�
     <s:String x:Key="LangModMinecraftUnknownError">不明なエラーが発生しました。この問題を作者に報告してください</s:String>
     <s:String x:Key="LangModMinecraftNideAuth">統合認証</s:String>
     <s:String x:Key="LangModMinecraftAuthlibAuth">Authlib 認証</s:String>
+    <s:String x:Key="LangModMinecraftFoolName26w14a">为什么需要物品栏？让方块们跟着你走吧！</s:String>
     <s:String x:Key="LangModMinecraftFoolName24w14potato">毒馬鈴薯はいつも見過ごされ、過小評価されていました。そのため、私たちはそれを大幅に強化しました！</s:String>
     <s:String x:Key="LangModMinecraftFoolName25w14craftmine">あなたは何でもクラフトできます——あなたの世界さえもクラフト可能です！</s:String>
     <s:String x:Key="LangModMinecraftFoolName23w13ab">研究により：プレイヤーは選択することが好きです——より多いほどいい！</s:String>
@@ -1737,6 +1762,11 @@ VPNや加速器を使用している場合は、それらをオフにするか�
     <s:String x:Key="LangModModpackTaskExtraModpack">統合パックファイルを解凍しています</s:String>
     <s:String x:Key="LangModModpackTaskGetModDownloadInfo">Mod ダウンロード情報を取得しています</s:String>
     <s:String x:Key="LangModModpackExceptionOnlineModDeleted">統合パックに必要な一部の Mod バージョンが Mod 作者によって削除されたため、統合パックのインストールを完了できません。統合パック作者に連絡して統合パック内の Mod バージョンを更新してください</s:String>
+    <s:String x:Key="LangModModpackDialogTitleOnlineModDeleted">整合包内容缺失</s:String>
+    <s:String x:Key="LangModModpackDialogContentOnlineModDeleted">未找到该整合包所需的以下内容，它们可能已被原作者删除：
+{0}
+
+是否继续安装？缺失这些内容可能导致整合包出现异常！</s:String>
     <s:String x:Key="LangModModpackTaskInitModDownloadInfo">Mod ダウンロード情報を構築しています</s:String>
     <s:String x:Key="LangModModpackDialogContentDownloadOptionalFile">オプションのファイル {0} をダウンロードしますか？</s:String>
     <s:String x:Key="LangModModpackDialogTitleDownloadOptionalFile">オプションファイルをダウンロード</s:String>
@@ -2161,6 +2191,7 @@ Modrinth の要件により、CurseForge からのみダウンロードできる
 {1}</s:String>
     <s:String x:Key="LangPageVersionExportSelectExportPath">エクスポート先を選択する</s:String>
     <s:String x:Key="LangPageVersionExportSelectExportModpackFile">モッドパックファイル(*{0})|*{1}</s:String>
+    <s:String x:Key="LangPageVersionExportSelectExportZipFile">压缩包文件</s:String>
     <s:String x:Key="LangPageVersionExportTaskDownloadPCL">PCL 正式版をダウンロード</s:String>
     <s:String x:Key="LangPageVersionExportTaskCopyFiles">エクスポート内容をコピー</s:String>
     <s:String x:Key="LangPageVersionExportHintFolderInConfigNotFound">設定ファイルで指定されたフォルダーが見つかりませんでした：{0}</s:String>

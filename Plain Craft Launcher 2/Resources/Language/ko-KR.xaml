@@ -1,7 +1,4 @@
-﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:s="clr-namespace:System;assembly=mscorlib"
-        xml:space="preserve">
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:s="clr-namespace:System;assembly=mscorlib" xml:space="preserve">
     <s:String x:Key="LangTaskAbort">작업이 취소되었습니다!</s:String>
     <s:String x:Key="LangDialogBtnOK">확인</s:String>
     <s:String x:Key="LangDialogBtnCancel">취소</s:String>
@@ -29,6 +26,7 @@
     <s:String x:Key="LangApplicationDialogTitleUnzipLauncher">환경 경고</s:String>
     <s:String x:Key="LangApplicationDialogContentUnzipLauncher">PCL을 압축 파일에서 해제하거나 폴더를 변경한 후 계속 사용하십시오!
 현재 프로그램은 임시 폴더에서 실행되며 설정, 게임 저장 등이 저장되지 않을 수 있으며 일부 기능이 작동하지 않을 수 있습니다.</s:String>
+    <s:String x:Key="LangApplicationDialogTitle32BitWarn">环境警告</s:String>
     <s:String x:Key="LangApplicationDialogContent32BitWarn">PCL과 새로운 Minecraft는 더 이상 32 비트 시스템을 지원하지 않으며 일부 기능이 작동하지 않을 수 있습니다.
 게임을 진행하기 전에 64 비트 시스템으로 다시 설치하는 것이 좋습니다!</s:String>
     <s:String x:Key="LangApplicationDialogTitleInitError">PCL 초기화 오류</s:String>
@@ -270,6 +268,7 @@
     <s:String x:Key="LangSetHomePagePresetPageN">Minecraft 更新摘要（作者：pynickle，部分由 AI 生成）</s:String>
     <s:String x:Key="LangSetHomePagePresetPageO">今日新闻热点（作者：EYicheng，部分由 AI 生成）</s:String>
     <s:String x:Key="LangSetHomePagePresetPageP">Minecraft 芝士站（作者：awaEric233，部分由 AI 生成）</s:String>
+    <s:String x:Key="LangSetHomePagePresetPageQ">Bangumi 番剧主页（作者：wzyaeu）</s:String>
     <s:String x:Key="LangSetFuncHidden">기능 숨기기</s:String>
     <s:String x:Key="LangSetFuncHiddenToolTip">필요 없는 페이지를 숨기거나 특정 기능을 끌 수 있습니다. 어떤 화면에서든 F12를 눌러 숨겨진 기능을 일시적으로 표시할 수 있습니다.</s:String>
     <s:String x:Key="LangSetFuncHiddenLaunch">메인 페이지</s:String>
@@ -668,6 +667,7 @@ PCL은 다운로드를 시작하기 전에 설정 → 버전 격리에서 버전
     <s:String x:Key="LangMySkinHintGettingCape">망토 목록을 가져오는 중입니다. 잠시만 기다려 주세요……</s:String>
     <s:String x:Key="LangMySkinDialogChooseCape">망토 선택</s:String>
     <s:String x:Key="LangMySkinHintChangeCapeFail">망토 변경 실패</s:String>
+    <s:String x:Key="LangMySkinHintChangeCapeFailTimeout">更改披风失败：连接 Mojang 服务器超时，请稍后再试，或使用 VPN 改善网络环境</s:String>
     <s:String x:Key="LangMySkinHintChangeCapeSuccess">망토 변경 성공!</s:String>
     <s:String x:Key="LangMySkinCapeNameMigrator">이전자 망토</s:String>
     <s:String x:Key="LangMySkinCapeNameMapMaker">Realms 맵 제작자 망토</s:String>
@@ -696,6 +696,8 @@ PCL은 다운로드를 시작하기 전에 설정 → 버전 격리에서 버전
     <s:String x:Key="LangMySkinCapeNameFounders">创始人披风</s:String>
     <s:String x:Key="LangMySkinCapeNameCopper">铜披风</s:String>
     <s:String x:Key="LangMySkinCapeNameZombieHorse">僵尸马披风</s:String>
+    <s:String x:Key="LangMySkinCapeNameBuilder">建造者披风</s:String>
+    <s:String x:Key="LangMySkinCapeNameCrafter">工匠披风</s:String>
     <s:String x:Key="LangMySkinCapeNameNone">망토 없음</s:String>
     <s:String x:Key="LangLaunchLeftInstanceChoose">버전 선택</s:String>
     <s:String x:Key="LangLaunchLeftInstanceConfig">버전 설정</s:String>
@@ -731,8 +733,6 @@ PCL은 다운로드를 시작하기 전에 설정 → 버전 격리에서 버전
     <s:String x:Key="LangLaunchLeftExceptionModpackInstallFail">自动安装整合包失败：{0}</s:String>
     <s:String x:Key="LangLaunchRightSnapshot">스냅샷 버전 팁</s:String>
     <s:String x:Key="LangLaunchRightLog">시작 로그</s:String>
-    <s:String x:Key="LangLaunchRightLabHint1">스냅샷 버전은 아직 공식 출시되지 않은 테스트 기능을 포함하고 있으며, 후원자 본인만 사용해 보실 수 있습니다. 다른 사람에게 공유하거나 모드팩 제작에 사용하지 마세요!</s:String>
-    <s:String x:Key="LangLaunchRightLabHint2">후원금이 ￥23.33 이상 누적되면, 팬클럽에서 “해제 코드”를 보내주시면 이 팁을 영구적으로 숨길 수 있습니다.</s:String>
     <s:String x:Key="LangLaunchRightLoadingPage">메인 페이지 로딩 중……</s:String>
     <s:String x:Key="LangLaunchRightPageTips">알고 계셨나요?</s:String>
     <s:String x:Key="LangLaunchRightPageEcho">에코 동굴</s:String>
@@ -770,6 +770,7 @@ PCL은 다운로드를 시작하기 전에 설정 → 버전 격리에서 버전
     <s:String x:Key="LangPageLoginMsSkinSkinChange">스킨 변경</s:String>
     <s:String x:Key="LangPageLoginMsSkinSkinSave">스킨 저장</s:String>
     <s:String x:Key="LangPageLoginMsSkinSkinRefresh">아바타 새로 고침</s:String>
+    <s:String x:Key="LangPageLoginMsSkinRefresh">刷新皮肤</s:String>
     <s:String x:Key="LangPageLoginMsSkinCapeChange">망토 변경</s:String>
     <s:String x:Key="LangPageLoginMsSkinInfoChange">정보 변경</s:String>
     <s:String x:Key="LangPageLoginMsSkinInfoChangePassword">비밀번호 변경</s:String>
@@ -978,6 +979,29 @@ assets를 완전히 변경하지 않으며, libraries, 제3자 로그인 라이�
     <s:String x:Key="LangPageSetupLaunchLaunchAdvanceOptionsGPUPerfenceToolTip">自动在 Windows 设置 → 系统 → 屏幕 → 显示卡 中将 Java 改为使用高性能显卡。
 如果电脑同时有集显和独显，这能确保 MC 使用独显进行渲染，以大幅提高性能。</s:String>
     <s:String x:Key="LangPageSetupLaunchLaunchAdvanceOptionsMoreTips">版本独立设置中还有更多高级选项可供调整。</s:String>
+    <s:String x:Key="LangPageSetupLaunchLaunchAdvanceOptionsMemoryManagement">内存管理</s:String>
+    <s:String x:Key="LangPageSetupLaunchLaunchAdvanceOptionsGCZGC">尽量使用 ZGC</s:String>
+    <s:String x:Key="LangPageSetupLaunchLaunchAdvanceOptionsGCZGCToolTip">在 Java 21+ 使用分代 ZGC，20~15 使用非分代的 ZGC，14- 使用 G1GC。
+ZGC 的内存占用比 G1GC 更高，不过在回收内存时不会导致卡顿。
+覆盖 "Java 虚拟机参数" 设置中的 GC 相关参数。</s:String>
+    <s:String x:Key="LangPageSetupLaunchLaunchAdvanceOptionsGCGenZGC">尽量使用分代 ZGC</s:String>
+    <s:String x:Key="LangPageSetupLaunchLaunchAdvanceOptionsGCGenZGCToolTip">在 Java 21+ 使用分代 ZGC，20- 使用 G1GC。
+ZGC 的内存占用比 G1GC 更高，不过在回收内存时不会导致卡顿。
+覆盖 "Java 虚拟机参数" 设置中的 GC 相关参数。</s:String>
+    <s:String x:Key="LangPageSetupLaunchLaunchAdvanceOptionsGCStandardG1GC">标准 G1GC</s:String>
+    <s:String x:Key="LangPageSetupLaunchLaunchAdvanceOptionsGCStandardG1GCToolTip">总是使用 G1GC，附带 Mojang 官方的优化参数。
+G1GC 的内存占用比 ZGC 更低，但在回收内存时会导致突然的卡顿。
+覆盖 "Java 虚拟机参数" 设置中的 GC 相关参数。</s:String>
+    <s:String x:Key="LangPageSetupLaunchLaunchAdvanceOptionsGCTunedG1GC">调优 G1GC</s:String>
+    <s:String x:Key="LangPageSetupLaunchLaunchAdvanceOptionsGCTunedG1GCToolTip">总是使用 G1GC，附带 PCL 调优过的优化参数。
+G1GC 的内存占用比 ZGC 更低，但在回收内存时会导致突然的卡顿。
+覆盖 "Java 虚拟机参数" 设置中的 GC 相关参数。</s:String>
+    <s:String x:Key="LangPageSetupLaunchLaunchAdvanceOptionsGCCustom">不指定（可自定义）</s:String>
+    <s:String x:Key="LangPageSetupLaunchLaunchAdvanceOptionsGCCustomToolTip">不自动添加 GC 参数。
+仅当选择此项时，你可以在 "Java 虚拟机参数" 设置中手动添加 GC 参数。</s:String>
+    <s:String x:Key="LangPageSetupLaunchLaunchAdvanceOptionsDisableLWJGL">禁用 LWJGL Unsafe Agent</s:String>
+    <s:String x:Key="LangPageSetupLaunchLaunchAdvanceOptionsDisableLWJGLToolTip">是否使用 LWJGL Unsafe Agent 修复 LWJGL 3.4.1 的一个性能问题。
+详见：https://github.com/HMCL-dev/lwjgl-unsafe-agent</s:String>
     <s:String x:Key="LangPageSetupLaunchGotoVersionSetting">版本独立设置</s:String>
     <s:String x:Key="LangPageSetupLaunchReloadByError">시작 설정 항목에 예외가 발생하여 자동으로 재설정되었습니다.</s:String>
     <s:String x:Key="LangPageSetupLaunchReloadFail">시작 설정을 다시 로드하는 중 오류가 발생했습니다.</s:String>
@@ -1429,6 +1453,7 @@ PCL은 다른 엉뚱한 다운로드 프로토콜을 지원하지 않습니다.<
     <s:String x:Key="LangModMinecraftUnknownError">알 수 없는 오류가 발생했습니다. 이 문제를 저자에게 보고해 주세요</s:String>
     <s:String x:Key="LangModMinecraftNideAuth">통합 인증서 검증</s:String>
     <s:String x:Key="LangModMinecraftAuthlibAuth">Authlib 인증</s:String>
+    <s:String x:Key="LangModMinecraftFoolName26w14a">为什么需要物品栏？让方块们跟着你走吧！</s:String>
     <s:String x:Key="LangModMinecraftFoolName24w14potato">독 감자에 대한 관심이 부족하여 우리는 그것을 대폭 강화했습니다!</s:String>
     <s:String x:Key="LangModMinecraftFoolName25w14craftmine">你可以合成任何东西——包括合成你的世界！</s:String>
     <s:String x:Key="LangModMinecraftFoolName23w13ab">연구에 따르면: 플레이어는 선택을 좋아합니다 - 많을수록 좋습니다!</s:String>
@@ -1721,6 +1746,11 @@ VPN이나 가속기를 사용 중이라면, 이를 끄거나 노드를 변경한
     <s:String x:Key="LangModModpackTaskExtraModpack">모드팩 파일 압축 해제</s:String>
     <s:String x:Key="LangModModpackTaskGetModDownloadInfo">모드 다운로드 정보 가져오기</s:String>
     <s:String x:Key="LangModModpackExceptionOnlineModDeleted">모드팩에 필요한 일부 모드 버전이 모드 작성자에 의해 삭제되어 설치를 완료할 수 없습니다. 모드팩 작성자에게 모드 버전 업데이트를 요청하세요.</s:String>
+    <s:String x:Key="LangModModpackDialogTitleOnlineModDeleted">整合包内容缺失</s:String>
+    <s:String x:Key="LangModModpackDialogContentOnlineModDeleted">未找到该整合包所需的以下内容，它们可能已被原作者删除：
+{0}
+
+是否继续安装？缺失这些内容可能导致整合包出现异常！</s:String>
     <s:String x:Key="LangModModpackTaskInitModDownloadInfo">모드 다운로드 정보 구성</s:String>
     <s:String x:Key="LangModModpackDialogContentDownloadOptionalFile">모드팩의 선택적 파일 {0}을(를) 다운로드하시겠습니까?</s:String>
     <s:String x:Key="LangModModpackDialogTitleDownloadOptionalFile">선택적 파일 다운로드</s:String>
@@ -2147,6 +2177,7 @@ Forge를 다시 설치해 보세요. </s:String>
 {1}</s:String>
     <s:String x:Key="LangPageVersionExportSelectExportPath">选择导出位置</s:String>
     <s:String x:Key="LangPageVersionExportSelectExportModpackFile">整合包文件(*{0})|*{1}</s:String>
+    <s:String x:Key="LangPageVersionExportSelectExportZipFile">压缩包文件</s:String>
     <s:String x:Key="LangPageVersionExportTaskDownloadPCL">下载 PCL 正式版</s:String>
     <s:String x:Key="LangPageVersionExportTaskCopyFiles">复制导出内容</s:String>
     <s:String x:Key="LangPageVersionExportHintFolderInConfigNotFound">未找到配置文件中指定的文件夹：{0}</s:String>
