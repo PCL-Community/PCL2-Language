@@ -922,11 +922,17 @@
     <s:String x:Key="LangPageSetupLaunchLaunchWindowSizeCustom">自定义尺寸</s:String>
     <s:String x:Key="LangPageSetupLaunchLaunchWindowSizeCustomToolTip">Forge 1.12.2 等个别版本存在 Bug，会导致高度设定无效</s:String>
     <s:String x:Key="LangPageSetupLaunchLaunchWindowSizeMaximum">最大化</s:String>
-    <s:String x:Key="LangPageSetupLaunchLaunchJava">游戏 Java</s:String>
-    <s:String x:Key="LangPageSetupLaunchLaunchJavaToolTip">若将 Java 放在游戏文件夹或 PCL 文件夹，在进行自动选择时 PCL 会尽量优先选择它</s:String>
-    <s:String x:Key="LangPageSetupLaunchLaunchJavaLoading">加载中……</s:String>
-    <s:String x:Key="LangPageSetupLaunchLaunchJavaAutoSearch">自动搜索</s:String>
-    <s:String x:Key="LangPageSetupLaunchLaunchJavaImport">手动导入</s:String>
+    <s:String x:Key="LangPageSetupLaunchLaunchJava">Java 列表</s:String>
+    <s:String x:Key="LangPageSetupLaunchLaunchJavaToolTip">启动游戏时，PCL 会选择列表中第一个兼容当前 Minecraft 的 Java。&#xa;点击选项右侧的箭头可以进行排序，以控制优先选择哪个 Java。&#xa;若想无视兼容性，强制使用某个 Java，请在版本独立设置中修改。</s:String>
+    <s:String x:Key="LangPageSetupLaunchLaunchJavaLoading">搜索中……</s:String>
+    <s:String x:Key="LangPageSetupLaunchLaunchJavaDescDisplay">共有 {0} 个 Java …</s:String>
+    <s:String x:Key="LangPageSetupLaunchLaunchJavaNoJava">未找到 Java，点击以导入已有的 Java</s:String>
+    <s:String x:Key="LangPageSetupLaunchLaunchJavaHintClickArrow2Sort">点击选项右侧的箭头可以进行排序，以控制 PCL 优先选择哪个 Java！</s:String>
+    <s:String x:Key="LangPageSetupLaunchLaunchJavaBtnMakeGreater">提高优先级</s:String>
+    <s:String x:Key="LangPageSetupLaunchLaunchJavaBtnMakeLess">降低优先级</s:String>
+    <s:String x:Key="LangPageSetupLaunchLaunchJavaTooltipRemoveItem">从列表中移除</s:String>
+    <s:String x:Key="LangPageSetupLaunchLaunchJavaTooltipUnableRemoveOfficialJava">无法移除官方 Java</s:String>
+    <s:String x:Key="LangPageSetupLaunchLaunchJavaBtnImportExistJava">导入电脑中已有的 Java…</s:String>
     <s:String x:Key="LangPageSetupLaunchLaunchMem">内存分配</s:String>
     <s:String x:Key="LangPageSetupLaunchLaunchMem32BitWarn">32 位 Java 只能分配最多 1 GB 的内存。强烈建议换用 64 位的 Java！</s:String>
     <s:String x:Key="LangPageSetupLaunchLaunchMemAutoAdjust">自动配置</s:String>
@@ -970,17 +976,20 @@
     <s:String x:Key="LangPageSetupLaunchLaunchAdvanceOptionsDisableFileVerificationToolTip">完全不更改 assets；不校验 libraries、第三方登录库与版本主 jar 文件是否被修改。
 如果你没有修改相关文件，请勿勾选此项。</s:String>
     <s:String x:Key="LangPageSetupLaunchLaunchAdvanceOptionsDisableJLW">禁用 Java Launch Wrapper</s:String>
-    <s:String x:Key="LangPageSetupLaunchLaunchAdvanceOptionsDisableJLWToolTip">PCL 会使用 Java Launch Wrapper 来修复老版本 Java 在中文路径下无法启动的问题。
-如果这被反作弊拦截，或遇到其他问题，也可以将其关闭。</s:String>
+    <s:String x:Key="LangPageSetupLaunchLaunchAdvanceOptionsDisableJLWToolTip">是否使用 Java Launch Wrapper 修复 Java 18- 在中文路径下可能无法正常启动的问题。
+详见：https://github.com/00ll00/java_launch_wrapper</s:String>
+    <s:String x:Key="LangPageSetupLaunchLaunchAdvanceOptionsDisableLUA">禁用 LWJGL Unsafe Agent</s:String>
+    <s:String x:Key="LangPageSetupLaunchLaunchAdvanceOptionsDisableLUAToolTip">是否使用 LWJGL Unsafe Agent 修复 LWJGL 3.4.1 的一个性能问题。
+详见：https://github.com/HMCL-dev/lwjgl-unsafe-agent</s:String>
     <s:String x:Key="LangPageSetupLaunchLaunchAdvanceOptionsGPUPerfence">使用高性能显卡</s:String>
     <s:String x:Key="LangPageSetupLaunchLaunchAdvanceOptionsGPUPerfenceToolTip">自动在 Windows 设置 → 系统 → 屏幕 → 显示卡 中将 PCL 和 Java 改为使用高性能显卡。
 如果同时有集成显卡和独立显卡，这能确保 MC 使用独立显卡进行渲染，以大幅提高帧率。</s:String>
     <s:String x:Key="LangPageSetupLaunchLaunchAdvanceOptionsMoreTips">版本独立设置中还有更多高级选项可供调整。</s:String>
     <s:String x:Key="LangPageSetupLaunchLaunchAdvanceOptionsMemoryManagement">内存管理</s:String>
     <s:String x:Key="LangPageSetupLaunchLaunchAdvanceOptionsGCZGC">尽量使用 ZGC</s:String>
-    <s:String x:Key="LangPageSetupLaunchLaunchAdvanceOptionsGCZGCToolTip">在 Java 21+ 使用分代 ZGC，20~15 使用非分代的 ZGC，14- 使用 G1GC。&#xa;ZGC 的内存占用比 G1GC 更高，不过在回收内存时不会导致卡顿。&#xa;覆盖 "Java 虚拟机参数" 设置中的 GC 相关参数。</s:String>
+    <s:String x:Key="LangPageSetupLaunchLaunchAdvanceOptionsGCZGCToolTip">在 Java 21+ 使用分代 ZGC，20~15 使用非分代的 ZGC，14- 使用 G1GC。&#xa;ZGC 的内存占用比 G1GC 更高，不过在回收内存时不会导致卡顿。&#xa;覆盖 “Java 虚拟机参数” 设置中的 GC 相关参数。</s:String>
     <s:String x:Key="LangPageSetupLaunchLaunchAdvanceOptionsGCGenZGC">尽量使用分代 ZGC</s:String>
-    <s:String x:Key="LangPageSetupLaunchLaunchAdvanceOptionsGCGenZGCToolTip">在 Java 21+ 使用分代 ZGC，20- 使用 G1GC。&#xa;ZGC 的内存占用比 G1GC 更高，不过在回收内存时不会导致卡顿。&#xa;覆盖 "Java 虚拟机参数" 设置中的 GC 相关参数。</s:String>
+    <s:String x:Key="LangPageSetupLaunchLaunchAdvanceOptionsGCGenZGCToolTip">在 Java 21+ 使用分代 ZGC，20- 使用 G1GC。&#xa;ZGC 的内存占用比 G1GC 更高，不过在回收内存时不会导致卡顿。&#xa;覆盖 “Java 虚拟机参数” 设置中的 GC 相关参数。</s:String>
     <s:String x:Key="LangPageSetupLaunchLaunchAdvanceOptionsGCStandardG1GC">标准 G1GC</s:String>
     <s:String x:Key="LangPageSetupLaunchLaunchAdvanceOptionsGCStandardG1GCToolTip">总是使用 G1GC，附带 Mojang 官方的优化参数。&#xa;G1GC 的内存占用比 ZGC 更低，但在回收内存时会导致突然的卡顿。&#xa;覆盖 "Java 虚拟机参数" 设置中的 GC 相关参数。</s:String>
     <s:String x:Key="LangPageSetupLaunchLaunchAdvanceOptionsGCTunedG1GC">调优 G1GC</s:String>

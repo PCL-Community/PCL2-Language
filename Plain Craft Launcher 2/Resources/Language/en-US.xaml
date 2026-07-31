@@ -923,8 +923,14 @@ Saves will not be shared between Vanilla instances, so it is generally not recom
     <s:String x:Key="LangPageSetupLaunchLaunchJava">Java</s:String>
     <s:String x:Key="LangPageSetupLaunchLaunchJavaToolTip">Put Java in the game folder or PCL folder, and PCL will choose it priorly.</s:String>
     <s:String x:Key="LangPageSetupLaunchLaunchJavaLoading">Loading...</s:String>
-    <s:String x:Key="LangPageSetupLaunchLaunchJavaAutoSearch">Search</s:String>
-    <s:String x:Key="LangPageSetupLaunchLaunchJavaImport">Import</s:String>
+    <s:String x:Key="LangPageSetupLaunchLaunchJavaDescDisplay">共有 {0} 个 Java …</s:String>
+    <s:String x:Key="LangPageSetupLaunchLaunchJavaNoJava">未找到 Java，点击以导入已有的 Java</s:String>
+    <s:String x:Key="LangPageSetupLaunchLaunchJavaHintClickArrow2Sort">点击选项右侧的箭头可以进行排序，以控制 PCL 优先选择哪个 Java！</s:String>
+    <s:String x:Key="LangPageSetupLaunchLaunchJavaBtnMakeGreater">提高优先级</s:String>
+    <s:String x:Key="LangPageSetupLaunchLaunchJavaBtnMakeLess">降低优先级</s:String>
+    <s:String x:Key="LangPageSetupLaunchLaunchJavaTooltipRemoveItem">从列表中移除</s:String>
+    <s:String x:Key="LangPageSetupLaunchLaunchJavaTooltipUnableRemoveOfficialJava">无法移除官方 Java</s:String>
+    <s:String x:Key="LangPageSetupLaunchLaunchJavaBtnImportExistJava">导入电脑中已有的 Java…</s:String>
     <s:String x:Key="LangPageSetupLaunchLaunchMem">Game memory</s:String>
     <s:String x:Key="LangPageSetupLaunchLaunchMem32BitWarn">A 32-bit Java runtime can allocate at most 1 GB of memory. It is strongly recommended to switch to 64-bit Java!</s:String>
     <s:String x:Key="LangPageSetupLaunchLaunchMemAutoAdjust">Automatic</s:String>
@@ -981,6 +987,9 @@ Do not enable this unless the relevant files are modified.</s:String>
     <s:String x:Key="LangPageSetupLaunchLaunchAdvanceOptionsDisableJLW">Disable Java Launch Wrapper</s:String>
     <s:String x:Key="LangPageSetupLaunchLaunchAdvanceOptionsDisableJLWToolTip">PCL uses Java Launch Wrapper to fix issues with older Java versions failing to launch under Chinese file paths.
 If this causes problems, such as being blocked by anti-cheat systems, you can disable it.</s:String>
+    <s:String x:Key="LangPageSetupLaunchLaunchAdvanceOptionsDisableLUA">禁用 LWJGL Unsafe Agent</s:String>
+    <s:String x:Key="LangPageSetupLaunchLaunchAdvanceOptionsDisableLUAToolTip">是否使用 LWJGL Unsafe Agent 修复 LWJGL 3.4.1 的一个性能问题。
+详见：https://github.com/HMCL-dev/lwjgl-unsafe-agent</s:String>
     <s:String x:Key="LangPageSetupLaunchLaunchAdvanceOptionsGPUPerfence">Force Java to use high-performance GPU</s:String>
     <s:String x:Key="LangPageSetupLaunchLaunchAdvanceOptionsGPUPerfenceToolTip">Automatically sets Java to use the high-performance GPU in Windows Settings → System → Display → Graphics.
 This ensures Minecraft runs on the dedicated GPU instead of the integrated one, significantly improving performance on systems with both.</s:String>

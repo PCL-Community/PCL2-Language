@@ -925,8 +925,14 @@
     <s:String x:Key="LangPageSetupLaunchLaunchJava">遊戲 Java</s:String>
     <s:String x:Key="LangPageSetupLaunchLaunchJavaToolTip">若將 Java 放在遊戲資料夾或 PCL 資料夾，在進行自動選擇時 PCL 會盡量優先選擇它</s:String>
     <s:String x:Key="LangPageSetupLaunchLaunchJavaLoading">載入中……</s:String>
-    <s:String x:Key="LangPageSetupLaunchLaunchJavaAutoSearch">自動搜尋</s:String>
-    <s:String x:Key="LangPageSetupLaunchLaunchJavaImport">手動匯入</s:String>
+    <s:String x:Key="LangPageSetupLaunchLaunchJavaDescDisplay">共有 {0} 个 Java …</s:String>
+    <s:String x:Key="LangPageSetupLaunchLaunchJavaNoJava">未找到 Java，点击以导入已有的 Java</s:String>
+    <s:String x:Key="LangPageSetupLaunchLaunchJavaHintClickArrow2Sort">点击选项右侧的箭头可以进行排序，以控制 PCL 优先选择哪个 Java！</s:String>
+    <s:String x:Key="LangPageSetupLaunchLaunchJavaBtnMakeGreater">提高优先级</s:String>
+    <s:String x:Key="LangPageSetupLaunchLaunchJavaBtnMakeLess">降低优先级</s:String>
+    <s:String x:Key="LangPageSetupLaunchLaunchJavaTooltipRemoveItem">从列表中移除</s:String>
+    <s:String x:Key="LangPageSetupLaunchLaunchJavaTooltipUnableRemoveOfficialJava">无法移除官方 Java</s:String>
+    <s:String x:Key="LangPageSetupLaunchLaunchJavaBtnImportExistJava">导入电脑中已有的 Java…</s:String>
     <s:String x:Key="LangPageSetupLaunchLaunchMem">遊戲記憶體</s:String>
     <s:String x:Key="LangPageSetupLaunchLaunchMem32BitWarn">32 位元 Java 最多只能分配 1 GB 記憶體。強烈建議改用 64 位元 Java！</s:String>
     <s:String x:Key="LangPageSetupLaunchLaunchMemAutoAdjust">自動配置</s:String>
@@ -983,6 +989,9 @@
     <s:String x:Key="LangPageSetupLaunchLaunchAdvanceOptionsDisableJLW">停用 Java Launch Wrapper</s:String>
     <s:String x:Key="LangPageSetupLaunchLaunchAdvanceOptionsDisableJLWToolTip">PCL 會使用 Java Launch Wrapper 來修復老版本 Java 在中文路徑下無法啟動的問題。
 如果這被反作弊攔截，或遇到其他問題，也可以將其關閉。</s:String>
+    <s:String x:Key="LangPageSetupLaunchLaunchAdvanceOptionsDisableLUA">禁用 LWJGL Unsafe Agent</s:String>
+    <s:String x:Key="LangPageSetupLaunchLaunchAdvanceOptionsDisableLUAToolTip">是否使用 LWJGL Unsafe Agent 修复 LWJGL 3.4.1 的一个性能问题。
+详见：https://github.com/HMCL-dev/lwjgl-unsafe-agent</s:String>
     <s:String x:Key="LangPageSetupLaunchLaunchAdvanceOptionsGPUPerfence">要求 Java 使用高性能顯示卡</s:String>
     <s:String x:Key="LangPageSetupLaunchLaunchAdvanceOptionsGPUPerfenceToolTip">自動在「Windows 設定 → 系統 → 螢幕 → 顯示卡」中將 Java 改為使用高效能顯示卡。
 如果電腦同時有整合顯示卡和獨立顯示卡，這能確保 Minecraft 使用獨立顯示卡進行繪製，以大幅提高效能。</s:String>

@@ -361,7 +361,7 @@ PreFin:
         If JavaListRefreshWorker.Running Then
             BtnAdvanceJavaSearch.IsEnabled = False
             ComboAdvanceJava.IsEnabled = False
-            LabAdvanceJava.Text = "搜索中 …"
+            LabAdvanceJava.Text = GetLang("LangPageSetupLaunchLaunchJavaLoading")
             Return
         End If
         '========================================== 显示结果 ==========================================
@@ -369,7 +369,7 @@ PreFin:
         ComboAdvanceJava.IsEnabled = True
         '更新下拉框文本
         Dim Count = Configs.JavaList.Get().Count
-        LabAdvanceJava.Text = If(Count > 0, $"共有 {Count} 个 Java …", "未找到 Java，点击以导入已有的 Java")
+        LabAdvanceJava.Text = If(Count > 0, GetLang("LangPageSetupLaunchLaunchJavaDescDisplay", Count), GetLang("LangPageSetupLaunchLaunchJavaNoJava"))
         '更新列表
         Try
             Dim JavaEntries = Configs.JavaList.Get()
@@ -379,20 +379,20 @@ PreFin:
                     .FontSize = 13, .Height = 24, .IsScaleAnimationEnabled = False, .Type = MyListItem.CheckType.Clickable,
                     .Tag = JavaEntry, .Title = JavaEntry.ToString}
                 AddHandler JavaItem.MouseLeftButtonUp, Sub(sender As Object, e As MouseButtonEventArgs) e.Handled = True
-                AddHandler JavaItem.Click, Sub() Hint("点击选项右侧的箭头可以进行排序，以控制 PCL 优先选择哪个 Java！")
+                AddHandler JavaItem.Click, Sub() Hint(GetLang("LangPageSetupLaunchLaunchJavaHintClickArrow2Sort"))
                 ComboAdvanceJava.Items.Add(JavaItem)
                 Dim Buttons As New List(Of MyIconButton)
                 '向上移动按钮
                 Dim UpButton As New MyIconButton With {.Logo = Logo.IconButtonArrowUp, .LogoScale = 0.95, .Height = 24, .Width = 24}
                 UpButton.IsEnabled = i > 0
-                UpButton.ToolTip = "提高优先级"
+                UpButton.ToolTip = GetLang("LangPageSetupLaunchLaunchJavaBtnMakeGreater")
                 ToolTipService.SetShowOnDisabled(UpButton, True)
                 AddHandler UpButton.Click, Sub() MoveJavaInList(JavaEntry, -1)
                 Buttons.Add(UpButton)
                 '向下移动按钮
                 Dim DownButton As New MyIconButton With {.Logo = Logo.IconButtonArrowDown, .LogoScale = 0.95, .Height = 24, .Width = 24}
                 DownButton.IsEnabled = i < JavaEntries.Count - 1
-                DownButton.ToolTip = "降低优先级"
+                DownButton.ToolTip = GetLang("LangPageSetupLaunchLaunchJavaBtnMakeLess")
                 ToolTipService.SetShowOnDisabled(DownButton, True)
                 AddHandler DownButton.Click, Sub() MoveJavaInList(JavaEntry, 1)
                 Buttons.Add(DownButton)
@@ -400,19 +400,19 @@ PreFin:
                 Dim IsOfficial As Boolean = JavaEntry.Folder.StartsWithF($"{Paths.AppData}.minecraft\runtime\")
                 Dim DeleteButton As New MyIconButton With {.Logo = Logo.IconButtonStop, .Height = 24, .Width = 24}
                 DeleteButton.IsEnabled = Not IsOfficial
-                DeleteButton.ToolTip = If(DeleteButton.IsEnabled, "从列表中移除", "无法移除官方 Java")
+                DeleteButton.ToolTip = If(DeleteButton.IsEnabled, GetLang("LangPageSetupLaunchLaunchJavaTooltipRemoveItem"), GetLang("LangPageSetupLaunchLaunchJavaTooltipUnableRemoveOfficialJava"))
                 AddHandler DeleteButton.Click, Sub() ManuallyRemoveJava(JavaEntry)
                 ToolTipService.SetShowOnDisabled(DeleteButton, True)
                 Buttons.Add(DeleteButton)
                 '打开文件夹按钮
                 Dim OpenButton As New MyIconButton With {.Logo = Logo.IconButtonOpen, .LogoScale = 1.1, .Height = 24, .Width = 24}
-                OpenButton.ToolTip = "打开文件夹"
+                OpenButton.ToolTip = GetLang("LangSetOpenFolder")
                 AddHandler OpenButton.Click, Sub() OpenExplorer(JavaEntry.JavaExePath)
                 Buttons.Add(OpenButton)
                 JavaItem.Buttons = Buttons
             Next
             Dim ImportItem As New MyListItem With {
-                .FontSize = 13, .Height = 24, .IsScaleAnimationEnabled = False, .Title = "导入电脑中已有的 Java…", .Type = MyListItem.CheckType.Clickable}
+                .FontSize = 13, .Height = 24, .IsScaleAnimationEnabled = False, .Title = GetLang("LangPageSetupLaunchLaunchJavaBtnImportExistJava"), .Type = MyListItem.CheckType.Clickable}
             AddHandler ImportItem.MouseLeftButtonUp,
             Sub(sender As Object, e As MouseButtonEventArgs)
                 e.Handled = True

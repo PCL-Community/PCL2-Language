@@ -924,8 +924,14 @@ MINECRAFT の公式製品ではありません。MOJANG または MICROSOFT の�
     <s:String x:Key="LangPageSetupLaunchLaunchJava">ゲーム Java</s:String>
     <s:String x:Key="LangPageSetupLaunchLaunchJavaToolTip">ゲームフォルダまたは PCL フォルダに Java を置くと、自動選択時に PCL が優先的に選択します</s:String>
     <s:String x:Key="LangPageSetupLaunchLaunchJavaLoading">読み込み中……</s:String>
-    <s:String x:Key="LangPageSetupLaunchLaunchJavaAutoSearch">自動検索</s:String>
-    <s:String x:Key="LangPageSetupLaunchLaunchJavaImport">手動インポート</s:String>
+    <s:String x:Key="LangPageSetupLaunchLaunchJavaDescDisplay">共有 {0} 个 Java …</s:String>
+    <s:String x:Key="LangPageSetupLaunchLaunchJavaNoJava">未找到 Java，点击以导入已有的 Java</s:String>
+    <s:String x:Key="LangPageSetupLaunchLaunchJavaHintClickArrow2Sort">点击选项右侧的箭头可以进行排序，以控制 PCL 优先选择哪个 Java！</s:String>
+    <s:String x:Key="LangPageSetupLaunchLaunchJavaBtnMakeGreater">提高优先级</s:String>
+    <s:String x:Key="LangPageSetupLaunchLaunchJavaBtnMakeLess">降低优先级</s:String>
+    <s:String x:Key="LangPageSetupLaunchLaunchJavaTooltipRemoveItem">从列表中移除</s:String>
+    <s:String x:Key="LangPageSetupLaunchLaunchJavaTooltipUnableRemoveOfficialJava">无法移除官方 Java</s:String>
+    <s:String x:Key="LangPageSetupLaunchLaunchJavaBtnImportExistJava">导入电脑中已有的 Java…</s:String>
     <s:String x:Key="LangPageSetupLaunchLaunchMem">ゲームメモリ</s:String>
     <s:String x:Key="LangPageSetupLaunchLaunchMem32BitWarn">32ビットのJavaでは最大で1GBのメモリしか割り当てられません。64ビットのJavaに切り替えることを強くお勧めします！</s:String>
     <s:String x:Key="LangPageSetupLaunchLaunchMemAutoAdjust">自動設定</s:String>
@@ -983,6 +989,9 @@ MinecraftバージョンのJSONにおける文字列置換マーカー（例え�
     <s:String x:Key="LangPageSetupLaunchLaunchAdvanceOptionsDisableJLW">Java Launch Wrapperを無効にする</s:String>
     <s:String x:Key="LangPageSetupLaunchLaunchAdvanceOptionsDisableJLWToolTip">PCLは、古いバージョンのJavaが中国語のパスで起動できない問題を修正するために、Java Launch Wrapperを使用します。
 もしこれがアンチチートにブロックされるか、他の問題が発生した場合は、無効にすることもできます。</s:String>
+    <s:String x:Key="LangPageSetupLaunchLaunchAdvanceOptionsDisableLUA">禁用 LWJGL Unsafe Agent</s:String>
+    <s:String x:Key="LangPageSetupLaunchLaunchAdvanceOptionsDisableLUAToolTip">是否使用 LWJGL Unsafe Agent 修复 LWJGL 3.4.1 的一个性能问题。
+详见：https://github.com/HMCL-dev/lwjgl-unsafe-agent</s:String>
     <s:String x:Key="LangPageSetupLaunchLaunchAdvanceOptionsGPUPerfence">Java に高性能グラフィックカードを使用するように要求する</s:String>
     <s:String x:Key="LangPageSetupLaunchLaunchAdvanceOptionsGPUPerfenceToolTip">Windows の設定 → システム → ディスプレイ → グラフィックカード の中で、Java が高性能グラフィックカードを使用するように自動的に設定します。
 PC に内蔵グラフィックと専用グラフィックの両方がある場合、これにより Minecraft が専用グラフィックカードを使用してレンダリングを行い、パフォーマンスが大幅に向上します。</s:String>

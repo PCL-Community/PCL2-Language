@@ -916,8 +916,14 @@ PCL은 다운로드를 시작하기 전에 설정 → 버전 격리에서 버전
     <s:String x:Key="LangPageSetupLaunchLaunchJava">게임 Java</s:String>
     <s:String x:Key="LangPageSetupLaunchLaunchJavaToolTip">Java를 게임 폴더나 PCL 폴더에 두면 자동 선택 시 PCL이 이를 우선 선택합니다</s:String>
     <s:String x:Key="LangPageSetupLaunchLaunchJavaLoading">로딩 중……</s:String>
-    <s:String x:Key="LangPageSetupLaunchLaunchJavaAutoSearch">자동 검색</s:String>
-    <s:String x:Key="LangPageSetupLaunchLaunchJavaImport">수동 가져오기</s:String>
+    <s:String x:Key="LangPageSetupLaunchLaunchJavaDescDisplay">共有 {0} 个 Java …</s:String>
+    <s:String x:Key="LangPageSetupLaunchLaunchJavaNoJava">未找到 Java，点击以导入已有的 Java</s:String>
+    <s:String x:Key="LangPageSetupLaunchLaunchJavaHintClickArrow2Sort">点击选项右侧的箭头可以进行排序，以控制 PCL 优先选择哪个 Java！</s:String>
+    <s:String x:Key="LangPageSetupLaunchLaunchJavaBtnMakeGreater">提高优先级</s:String>
+    <s:String x:Key="LangPageSetupLaunchLaunchJavaBtnMakeLess">降低优先级</s:String>
+    <s:String x:Key="LangPageSetupLaunchLaunchJavaTooltipRemoveItem">从列表中移除</s:String>
+    <s:String x:Key="LangPageSetupLaunchLaunchJavaTooltipUnableRemoveOfficialJava">无法移除官方 Java</s:String>
+    <s:String x:Key="LangPageSetupLaunchLaunchJavaBtnImportExistJava">导入电脑中已有的 Java…</s:String>
     <s:String x:Key="LangPageSetupLaunchLaunchMem">게임 메모리</s:String>
     <s:String x:Key="LangPageSetupLaunchLaunchMem32BitWarn">32비트 Java는 최대 1GB 메모리만 할당할 수 있으며, 64비트 Java 설치를 권장합니다!</s:String>
     <s:String x:Key="LangPageSetupLaunchLaunchMemAutoAdjust">자동 구성</s:String>
@@ -975,6 +981,9 @@ assets를 완전히 변경하지 않으며, libraries, 제3자 로그인 라이�
     <s:String x:Key="LangPageSetupLaunchLaunchAdvanceOptionsDisableJLW">禁用 Java Launch Wrapper</s:String>
     <s:String x:Key="LangPageSetupLaunchLaunchAdvanceOptionsDisableJLWToolTip">PCL 会使用 Java Launch Wrapper 来修复老版本 Java 在中文路径下无法启动的问题。
 如果这被反作弊拦截，或遇到其他问题，也可以将其关闭。</s:String>
+    <s:String x:Key="LangPageSetupLaunchLaunchAdvanceOptionsDisableLUA">禁用 LWJGL Unsafe Agent</s:String>
+    <s:String x:Key="LangPageSetupLaunchLaunchAdvanceOptionsDisableLUAToolTip">是否使用 LWJGL Unsafe Agent 修复 LWJGL 3.4.1 的一个性能问题。
+详见：https://github.com/HMCL-dev/lwjgl-unsafe-agent</s:String>
     <s:String x:Key="LangPageSetupLaunchLaunchAdvanceOptionsGPUPerfence">要求 Java 使用高性能显卡</s:String>
     <s:String x:Key="LangPageSetupLaunchLaunchAdvanceOptionsGPUPerfenceToolTip">自动在 Windows 设置 → 系统 → 屏幕 → 显示卡 中将 Java 改为使用高性能显卡。
 如果电脑同时有集显和独显，这能确保 MC 使用独显进行渲染，以大幅提高性能。</s:String>

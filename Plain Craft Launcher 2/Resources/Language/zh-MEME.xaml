@@ -924,8 +924,14 @@
     <s:String x:Key="LangPageSetupLaunchLaunchJava">游戏爪哇</s:String>
     <s:String x:Key="LangPageSetupLaunchLaunchJavaToolTip">若将爪哇 放在游戏文件夹子或平原合成发射台文件夹子，在进行自动选择时平原合成发射台会尽量优先选择它</s:String>
     <s:String x:Key="LangPageSetupLaunchLaunchJavaLoading">捞丁……</s:String>
-    <s:String x:Key="LangPageSetupLaunchLaunchJavaAutoSearch">自动帮你百度一下</s:String>
-    <s:String x:Key="LangPageSetupLaunchLaunchJavaImport">手动进口</s:String>
+    <s:String x:Key="LangPageSetupLaunchLaunchJavaDescDisplay">共有 {0} 个 Java …</s:String>
+    <s:String x:Key="LangPageSetupLaunchLaunchJavaNoJava">未找到 Java，点击以导入已有的 Java</s:String>
+    <s:String x:Key="LangPageSetupLaunchLaunchJavaHintClickArrow2Sort">点击选项右侧的箭头可以进行排序，以控制 PCL 优先选择哪个 Java！</s:String>
+    <s:String x:Key="LangPageSetupLaunchLaunchJavaBtnMakeGreater">提高优先级</s:String>
+    <s:String x:Key="LangPageSetupLaunchLaunchJavaBtnMakeLess">降低优先级</s:String>
+    <s:String x:Key="LangPageSetupLaunchLaunchJavaTooltipRemoveItem">从列表中移除</s:String>
+    <s:String x:Key="LangPageSetupLaunchLaunchJavaTooltipUnableRemoveOfficialJava">无法移除官方 Java</s:String>
+    <s:String x:Key="LangPageSetupLaunchLaunchJavaBtnImportExistJava">导入电脑中已有的 Java…</s:String>
     <s:String x:Key="LangPageSetupLaunchLaunchMem">游戏内存</s:String>
     <s:String x:Key="LangPageSetupLaunchLaunchMem32BitWarn">32 位爪哇只能分配最多 1 千兆字节内存。强烈建议换用 64 位的爪哇！</s:String>
     <s:String x:Key="LangPageSetupLaunchLaunchMemAutoAdjust">自动帮你配置</s:String>
@@ -982,6 +988,9 @@
     <s:String x:Key="LangPageSetupLaunchLaunchAdvanceOptionsDisableJLW">禁用爪哇启动包装器</s:String>
     <s:String x:Key="LangPageSetupLaunchLaunchAdvanceOptionsDisableJLWToolTip">平原合成发射台会食用爪哇启动包装器来修复老版本爪哇在中文路径下无法发射的问题。
 如果这被反作弊拦截，或遇到其它问题，也可以将其关闭。</s:String>
+    <s:String x:Key="LangPageSetupLaunchLaunchAdvanceOptionsDisableLUA">禁用 LWJGL Unsafe Agent</s:String>
+    <s:String x:Key="LangPageSetupLaunchLaunchAdvanceOptionsDisableLUAToolTip">是否使用 LWJGL Unsafe Agent 修复 LWJGL 3.4.1 的一个性能问题。
+详见：https://github.com/HMCL-dev/lwjgl-unsafe-agent</s:String>
     <s:String x:Key="LangPageSetupLaunchLaunchAdvanceOptionsGPUPerfence">要求爪哇食用高性能显卡</s:String>
     <s:String x:Key="LangPageSetupLaunchLaunchAdvanceOptionsGPUPerfenceToolTip">自动在 窗户设置 → 系统 → 屏幕 → 显示卡 中将爪哇改为食用高性能显卡。
 如果电脑同时有集显和独显，这能确保安慕希食用独显进行渲染，以大幅提高性能。</s:String>
