@@ -1,4 +1,4 @@
-﻿Public Module ModLaunch
+Public Module ModLaunch
 
 #Region "开始"
 
@@ -241,7 +241,7 @@ NextInner:
             Sub()
                 Select Case Settings.Get(Of Integer)("SystemLaunchCount")
                     Case 10, 20, 40, 60, 80, 100, 120, 150, 200, 250, 300, 350, 400, 500, 600, 700, 800, 900, 1000, 1200, 1400, 1600, 1800, 2000
-                        If MyMsgBox(GetLang("LangModLaunchDialogContentSponsorship", Settings.Get(Of Integer)("SystemLaunchCount")),GetLang("LangModLaunchDialogTitleSponsorship", Settings.Get(Of Integer)("SystemLaunchCount")), GetLang("LangModLaunchDialogBtn1Sponsorship"), GetLang("LangModLaunchDialogBtn2Sponsorship")) = 1 Then
+                        If MyMsgBox(GetLang("LangModLaunchDialogContentSponsorship", Settings.Get(Of Integer)("SystemLaunchCount")), GetLang("LangModLaunchDialogTitleSponsorship", Settings.Get(Of Integer)("SystemLaunchCount")), GetLang("LangModLaunchDialogBtn1Sponsorship"), GetLang("LangModLaunchDialogBtn2Sponsorship")) = 1 Then
                             OpenWebsite("https://meloong.com/afd/a/LTCat")
                         End If
                 End Select
@@ -250,7 +250,7 @@ NextInner:
         '正版购买提示
         If CurrentLaunchOptions?.SaveBatch Is Nothing AndAlso '保存脚本时不提示
            Not Settings.Get(Of Boolean)("HintBuy") AndAlso Settings.Get(Of McLoginType)("LoginType") <> McLoginType.Ms Then
-            If Globalization.CultureInfo.CurrentCulture.Name.StartsWithF("zh") OrElse Globalization.CultureInfo.CurrentUICulture.Name.StartsWithF("zh") Then '中文？
+            If IsLocationZH() Then '中文？
                 RunInNewThread(
                 Sub()
                     Select Case Settings.Get(Of Integer)("SystemLaunchCount")
