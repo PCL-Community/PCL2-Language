@@ -112,28 +112,16 @@ Public Class PageInstanceMod
         '图标按钮
         Dim BtnOpen As New MyIconButton With {.LogoScale = 1.05, .Logo = Logo.IconButtonOpen, .Tag = sender}
         BtnOpen.ToolTip = GetLang("LangPageVersionModOpenPath")
-        ToolTipService.SetPlacement(BtnOpen, Primitives.PlacementMode.Center)
-        ToolTipService.SetVerticalOffset(BtnOpen, 30)
-        ToolTipService.SetHorizontalOffset(BtnOpen, 2)
         AddHandler BtnOpen.Click, AddressOf Open_Click
         Dim BtnCont As New MyIconButton With {.LogoScale = 1, .Logo = Logo.IconButtonInfo, .Tag = sender}
         BtnCont.ToolTip = GetLang("LangPageVersionModDetail")
-        ToolTipService.SetPlacement(BtnCont, Primitives.PlacementMode.Center)
-        ToolTipService.SetVerticalOffset(BtnCont, 30)
-        ToolTipService.SetHorizontalOffset(BtnCont, 2)
         AddHandler BtnCont.Click, AddressOf Info_Click
         AddHandler sender.MouseRightButtonUp, AddressOf Info_Click
         Dim BtnDelete As New MyIconButton With {.LogoScale = 1, .Logo = Logo.IconButtonDelete, .Tag = sender}
         BtnDelete.ToolTip = GetLang("LangPageVersionModOperationDelete")
-        ToolTipService.SetPlacement(BtnDelete, Primitives.PlacementMode.Center)
-        ToolTipService.SetVerticalOffset(BtnDelete, 30)
-        ToolTipService.SetHorizontalOffset(BtnDelete, 2)
         AddHandler BtnDelete.Click, AddressOf Delete_Click
         Dim BtnED As New MyIconButton With {.LogoScale = 1, .Logo = If(sender.Entry.IsEnabled, Logo.IconButtonStop, Logo.IconButtonCheck), .Tag = sender}
         BtnED.ToolTip = If(sender.Entry.IsEnabled, GetLang("LangPageVersionModOperationDisable"), GetLang("LangPageVersionModOperationEnable"))
-        ToolTipService.SetPlacement(BtnED, Primitives.PlacementMode.Center)
-        ToolTipService.SetVerticalOffset(BtnED, 30)
-        ToolTipService.SetHorizontalOffset(BtnED, 2)
         AddHandler BtnED.Click, AddressOf ED_Click
         sender.Buttons = {BtnCont, BtnOpen, BtnED, BtnDelete}
     End Sub
@@ -499,7 +487,6 @@ Install:
                         Continue For
                     End If
                 End If
-                FileUtils.Delete(NewPath)
                 FileUtils.Move(ModEntity.File.FullName, NewPath)
             Catch ex As FileNotFoundException
                 Logger.Error(ex, $"未找到需要重命名的 Mod（{If(ModEntity.File.FullName, "null")}）")
@@ -613,10 +600,6 @@ Install:
                         End If
                     Next
                     For Each Entry As KeyValuePair(Of String, String) In FileCopyList
-                        If FileUtils.Exists(Entry.Value) Then
-                            Logger.Warn($"更新后的 Mod 文件已存在，将会把它放入回收站：{Entry.Value}")
-                            FileUtils.Delete(Entry.Value, True)
-                        End If
                         If DirectoryUtils.Exists(PathUtils.RemoveLastPart(Entry.Value)) Then
                             FileUtils.Move(Entry.Key, Entry.Value)
                             FinishedFileNames.Add(PathUtils.GetLastPart(Entry.Value))
@@ -646,7 +629,7 @@ Install:
                         End Select
                     Case LoadState.Failed
                         Hint(GetLang("LangPageVersionModTaskModUpdateFail") & Loader.Error.GetDisplay(False), HintType.Red)
-                    Case LoadState.Interrupted
+                    Case LoadState.Canceled
                         Hint(GetLang("LangPageVersionModTaskModUpdateAbort"), HintType.Blue)
                     Case Else
                         Return
@@ -666,7 +649,7 @@ Install:
                 End Sub, "Clean Mod Update Cache", ThreadPriority.BelowNormal)
             End Sub
             '启动加载器
-            Logger.Info($"开始更新 {ModList.Count} 个 Mod：{PathMods}")
+            Logger.Info($"开始更新 {ModList.Count} 个 Mod：{ModList.Select(Function(m) m.File.Name).Join("，")}")
             UpdatingInstanceModFolders.Add(PathMods)
             Loader.Start()
             LoaderTaskbarAdd(Loader)
@@ -775,7 +758,7 @@ Install:
                 '获取信息
                 Dim ContentLines As New List(Of String)
                 If ModEntry.Description IsNot Nothing Then ContentLines.Add(ModEntry.Description & vbCrLf)
-                ContentLines.Add("文件：" & ModEntry.File.Name & "（" & FormatFileSize(ModEntry.File.Length) & "）")
+                ContentLines.Add("文件：" & ModEntry.File.Name & "（" & StringUtils.FormatByteSize(ModEntry.File.Length) & "）")
                 If ModEntry.Version IsNot Nothing Then ContentLines.Add("版本：" & ModEntry.Version)
                 Dim DebugInfo As New List(Of String)
                 If DebugInfo.Any Then

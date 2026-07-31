@@ -1,10 +1,12 @@
-﻿Public Class Settings
-    'TODO: 目前仅有此处在使用 DES 加密，后续考虑更换加密算法
+Imports System.Security.Cryptography
+
+Public Class Settings
+
     Public Shared ReadOnly Entries As Dictionary(Of String, Setting) = (New List(Of Setting) From {
         New Setting("Identify", "", Source:=Sources.Registry),
         New Setting("WindowHeight", 550),
         New Setting("WindowWidth", 900),
-        New Setting("AprilDoneYear", 0, Source:=Sources.Registry),
+        New Setting("AprilYear", 0, Source:=Sources.Registry, Encrypted:=True),
         New Setting("Potatoes", "", Source:=Sources.Registry, Encrypted:=True),
         New Setting("HintDownloadThread", False, Source:=Sources.Registry),
         New Setting("HintNotice", 0, Source:=Sources.Registry),
@@ -172,7 +174,6 @@
         New Setting("VersionAdvanceGame", "", Source:=Sources.Instance),
         New Setting("VersionAdvanceAssets", 0, Source:=Sources.Instance),
         New Setting("VersionAdvanceAssetsV2", False, Source:=Sources.Instance),
-        New Setting("VersionAdvanceJava", False, Source:=Sources.Instance),
         New Setting("VersionAdvanceRun", "", Source:=Sources.Instance),
         New Setting("VersionAdvanceRunWait", True, Source:=Sources.Instance),
         New Setting("VersionAdvanceDisableJLW", False, Source:=Sources.Instance),
@@ -187,6 +188,8 @@
         New Setting("VersionArgumentIndie", -1, Source:=Sources.Instance),
         New Setting("VersionArgumentIndieV2", False, Source:=Sources.Instance),
         New Setting("VersionArgumentJavaSelect", "使用全局设置", Source:=Sources.Instance),
+        New Setting("VersionArgumentJavaV2", 0, Source:=Sources.Instance),
+        New Setting("VersionArgumentJavaRange", "", Source:=Sources.Instance),
         New Setting("VersionServerEnter", "", Source:=Sources.Instance),
         New Setting("VersionServerLogin", 0, Source:=Sources.Instance, OnChanged:=AddressOf PageInstanceSetup.OnVersionServerLoginChanged),
         New Setting("VersionServerNide", "", Source:=Sources.Instance),
@@ -246,11 +249,11 @@
         ''' </summary>
         Public Sub Save(Optional Instance As McInstance = Nothing)
             Dim Value As String = GetCache(Instance)
-            Logger.Trace($"保存设置：{Key} = {Value}{If(Instance Is Nothing, "", $"（实例：{Instance?.PathVersion}）")}")
+            Logger.Trace($"保存设置：{Key} {If(Encrypted, "", "= " & Value)}{If(Instance Is Nothing, "", $"（实例：{Instance?.PathVersion}）")}")
             If Encrypted Then
                 Try
                     If Value Is Nothing Then Value = ""
-                    Value = CryptographyUtils.DesEncrypt(Value, "PCL" & Identify)
+                    Value = DesEncrypt(Value, "PCL" & Identify)
                 Catch ex As Exception
                     Logger.Warn(ex, $"加密设置失败：{Key}")
                 End Try
@@ -320,7 +323,7 @@
         '正常读取
         Try
             Dim GotValue As String = Nothing '先用 String 储存，避免类型转换
-            Dim DefaultValue As String = If(Entry.Encrypted, CryptographyUtils.DesEncrypt(Entry.DefaultValue, "PCL" & Identify), Entry.DefaultValue)
+            Dim DefaultValue As String = If(Entry.Encrypted, DesEncrypt(Entry.DefaultValue, "PCL" & Identify), Entry.DefaultValue)
             Select Case Entry.Source
                 Case Sources.Normal
                     GotValue = ReadIni("Setup", Key, DefaultValue)
@@ -338,7 +341,7 @@
                     GotValue = Entry.DefaultValue
                 Else
                     Try
-                        GotValue = CryptographyUtils.DesDecrypt(GotValue, "PCL" & Identify)
+                        GotValue = DesDecrypt(GotValue, "PCL" & Identify)
                     Catch ex As Exception
                         Logger.Warn(ex, $"解密设置失败：{Key}")
                         GotValue = Entry.DefaultValue
@@ -418,5 +421,47 @@
                 Return HasIniKey(Instance.PathVersion & "PCL\Setup.ini", Key)
         End Select
     End Function
+
+#Region "DES 加密"
+
+    Private Shared ReadOnly desInitialVector As Byte() = Encoding.UTF8.GetBytes("95168702")
+
+    ''' <summary>
+    ''' 使用 DES 对称加密算法加密字符串。
+    ''' </summary>
+    Private Shared Function DesEncrypt(sourceString As String, Optional key As String = Nothing) As String
+        key = If(key Is Nothing, "@;$ Abv2", key.GetStableHashCode().ToString().EnsureLength("X"c, 8).Substring(0, 8))
+        Dim btKey As Byte() = Encoding.UTF8.GetBytes(key)
+        Using des As New DESCryptoServiceProvider()
+            Using ms As New MemoryStream()
+                Using cs As New CryptoStream(ms, des.CreateEncryptor(btKey, desInitialVector), CryptoStreamMode.Write)
+                    Dim inData As Byte() = Encoding.UTF8.GetBytes(sourceString)
+                    cs.Write(inData, 0, inData.Length)
+                    cs.FlushFinalBlock()
+                    Return Convert.ToBase64String(ms.ToArray())
+                End Using
+            End Using
+        End Using
+    End Function
+
+    ''' <summary>
+    ''' 使用 DES 对称加密算法解密字符串。
+    ''' </summary>
+    Private Shared Function DesDecrypt(encryptedString As String, Optional key As String = Nothing) As String
+        key = If(key Is Nothing, "@;$ Abv2", key.GetStableHashCode().ToString().EnsureLength("X"c, 8).Substring(0, 8))
+        Dim btKey As Byte() = Encoding.UTF8.GetBytes(key)
+        Using des As New DESCryptoServiceProvider()
+            Using ms As New MemoryStream()
+                Using cs As New CryptoStream(ms, des.CreateDecryptor(btKey, desInitialVector), CryptoStreamMode.Write)
+                    Dim inData As Byte() = Convert.FromBase64String(encryptedString)
+                    cs.Write(inData, 0, inData.Length)
+                    cs.FlushFinalBlock()
+                    Return Encoding.UTF8.GetString(ms.ToArray())
+                End Using
+            End Using
+        End Using
+    End Function
+
+#End Region
 
 End Class

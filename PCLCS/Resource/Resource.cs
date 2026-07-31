@@ -1,4 +1,4 @@
-﻿namespace PCLCS;
+namespace PCLCS;
 public static class Resource {
 
     /// <summary>

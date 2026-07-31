@@ -1,4 +1,4 @@
-﻿Public Class PageSpeedLeft
+Public Class PageSpeedLeft
     Private Const WatcherInterval As Integer = 300
 
     '初始化
@@ -48,7 +48,7 @@
                 Dim RawPercent As Double = If(Tasks.Any, Tasks.Select(Function(l) l.Progress).Average().Clamp(0, 1), 1)
                 Dim PredictText As String = Math.Floor(RawPercent * 100) & "." & Math.Floor((RawPercent * 100 - Math.Floor(RawPercent * 100)) * 100).ToString.EnsureLength("0", 2) & " %"
                 LabProgress.Text = If(RawPercent > 0.999999, "100 %", PredictText)
-                LabSpeed.Text = FormatFileSize(NetManager.Speed) & "/s"
+                LabSpeed.Text = StringUtils.FormatByteSize(NetManager.Speed) & "/s"
                 LabFile.Text = If(NetManager.FileRemain < 0, "0*", NetManager.FileRemain)
                 LabThread.Text = NetTaskThreadCount & " / " & NetTaskThreadLimit
             End If
@@ -98,7 +98,7 @@
                             End Sub
                             Card.Children.Add(Tb)
 #End Region
-                        Case LoadState.Finished, LoadState.Interrupted
+                        Case LoadState.Finished, LoadState.Canceled
 #Region "完成或中断，销毁卡片并返回"
                             AniDispose(CType(Card.Parent, MyCard), True, AddressOf TryReturnToHome)
 #End Region
@@ -140,12 +140,12 @@
                 Catch ex As Exception
                     Logger.Error(ex, $"更新下载管理显示失败（{Loader.State}）")
                 End Try
-            ElseIf Not (Loader.State = LoadState.Interrupted OrElse Loader.State = LoadState.Finished) Then
+            ElseIf Not (Loader.State = LoadState.Canceled OrElse Loader.State = LoadState.Finished) Then
                 Try
 #Region "没有卡片且未中断或完成，添加新的卡片"
                     Dim CardXAML As String = "
                         <local:MyCard xmlns=""http://schemas.microsoft.com/winfx/2006/xaml/presentation"" xmlns:x=""http://schemas.microsoft.com/winfx/2006/xaml"" xmlns:local=""clr-namespace:PCL;assembly=Plain Craft Launcher 2""
-                            Tag=""" & (Loader.Progress + Loader.State) & """ Title=""" & EscapeUtils.XmlEscape(Loader.Name) & """ Margin=""0,0,0,15"">
+                            Tag=""" & (Loader.Progress + Loader.State) & """ Title=""" & StringUtils.XmlEscape(Loader.Name) & """ Margin=""0,0,0,15"">
                             <Grid Margin=""14,40,15,10"">
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width=""50""/>
@@ -168,7 +168,7 @@
                             Case Else
                                 CardXAML += "<Path Stretch=""Uniform"" Tag=""Failed"" Data=""F1 M2.5,0 L0,2.5 7.5,10 0,17.5 2.5,20 10,12.5 17.5,20 20,17.5 12.5,10 20,2.5 17.5,0 10,7.5 2.5,0Z"" Height=""15"" Width=""15"" HorizontalAlignment=""Center"" Grid.Column=""0"" Grid.Row=""" & Row & """ Fill=""{DynamicResource ColorBrush3}"" Margin=""0,1,0,0"" VerticalAlignment=""Top""/>"
                         End Select
-                        CardXAML += "<TextBlock Text=""" & EscapeUtils.XmlEscape(SubTask.Name) & """ HorizontalAlignment=""Left"" Grid.Column=""1"" Grid.Row=""" & Row & """/>"
+                        CardXAML += "<TextBlock Text=""" & StringUtils.XmlEscape(SubTask.Name) & """ HorizontalAlignment=""Left"" Grid.Column=""1"" Grid.Row=""" & Row & """/>"
                         Row += 1
                     Next
                     CardXAML += "</Grid></local:MyCard>"
@@ -194,7 +194,7 @@
                         RightCards.Remove(Loader.Name)
                         LoaderTaskbar.Remove(Loader)
                         Logger.Info($"关闭下载管理卡片：{Loader.Name}，且移出任务列表")
-                        RunInThread(Sub() Loader.Interrupt())
+                        RunInThread(Sub() Loader.Cancel())
                     End Sub
                     '如果已经失败，再刷新一次，修改成失败的控件
                     If Loader.State = LoadState.Failed Then

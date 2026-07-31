@@ -63,13 +63,17 @@ public static class Versions {
     /// <summary>
     /// 土豆码版本号。
     /// </summary>
-    public const char POTATO_VERSION = '1';
+    public const char PotatoVersion = '1';
     /// <summary>
     /// 版本管理中 Mod 信息缓存的版本号。
     /// </summary>
-    public const int LOCAL_MOD_CACHE_VERSION = 17;
+    public const int LocalModCacheVersion = 17;
     /// <summary>
     /// Minecraft 本地实例信息缓存的版本号。
     /// </summary>
-    public const int MCINSTANCE_CACHE_VERSION = 38;
+    public const int McInstanceCacheVersion = 38;
+    /// <summary>
+    /// Java 相关配置的版本号。
+    /// </summary>
+    public const int JavaConfigVersion = 1;
 }

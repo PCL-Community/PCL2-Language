@@ -1,4 +1,4 @@
-﻿Public Class PageLoginMsSkin
+Public Class PageLoginMsSkin
 
     Public Sub New()
         InitializeComponent()
@@ -32,7 +32,7 @@
     Private Sub ShowPanel(sender As Object, e As MouseEventArgs) Handles PanData.MouseEnter
         AniStart(AaOpacity(PanButtons, 1 - PanButtons.Opacity, 120), "PageLoginMsSkin Button")
     End Sub
-    Public Sub HidePanel() Handles PanData.MouseLeave
+    Public Sub HidePanel(sender As Object, e As EventArgs) Handles PanData.MouseLeave
         If BtnEdit.ContextMenu.IsOpen OrElse BtnSkin.ContextMenu.IsOpen OrElse PanData.IsMouseOver Then Return
         AniStart(AaOpacity(PanButtons, -PanButtons.Opacity, 120), "PageLoginMsSkin Button")
     End Sub
@@ -50,7 +50,7 @@
         Settings.Set("CacheMsV2Uuid", "")
         Settings.Set("CacheMsV2Name", "")
         Settings.Set("CacheMsV2Expires", 0L)
-        McLoginMsLoader.Interrupt()
+        McLoginMsLoader.Cancel()
         FrmLaunchLeft.RefreshPage(False, True)
     End Sub
 
@@ -91,16 +91,12 @@ Retry:
             If McLoginMsLoader.State = LoadState.Failed Then Throw New Exception("登录失败", McLoginMsLoader.Error)
             Dim AccessToken As String = Settings.Get(Of String)("CacheMsV2Access")
             Dim Uuid As String = Settings.Get(Of String)("CacheMsV2Uuid")
-            Dim Result As String = Nothing
-            ResilientUtils.Retry( 'MultipartFormDataContent 在一次请求后就会被 Dispose，所以不能直接 Retry（#8397）
-            Sub()
-                Result = NetRequestByClient("https://api.minecraftservices.com/minecraft/profile/skins", HttpMethod.Post,
-                    Content:=New Net.Http.MultipartFormDataContent From {
-                        {New Net.Http.StringContent(If(SkinInfo.IsSlim, "slim", "classic")), "variant"},
-                        {New Net.Http.ByteArrayContent(FileUtils.ReadAsBytes(SkinInfo.LocalFile)), "file", PathUtils.GetLastPart(SkinInfo.LocalFile)}
-                    },
-                    Headers:={{"Authorization", "Bearer " & AccessToken}, {"Accept", "*/*"}, {"User-Agent", "MojangSharp/0.1"}})
-            End Sub, 3)
+            Dim Result As String = NetRequestByClientRetry("https://api.minecraftservices.com/minecraft/profile/skins", HttpMethod.Post,
+                Content:=New Net.Http.MultipartFormDataContent From {
+                    {New Net.Http.StringContent(If(SkinInfo.IsSlim, "slim", "classic")), "variant"},
+                    {New Net.Http.ByteArrayContent(FileUtils.ReadAsBytes(SkinInfo.LocalFile)), "file", PathUtils.GetLastPart(SkinInfo.LocalFile)}
+                },
+                Headers:={{"Authorization", "Bearer " & AccessToken}, {"Accept", "*/*"}, {"User-Agent", "MojangSharp/0.1"}})
             If Result.Contains("request requires user authentication") Then
                 Hint(GetLang("LangPageLoginMsSkinLoginBeforeChangeSkin"))
                 McLoginMsLoader.Start(GetLoginData(), IsForceRestart:=True)
@@ -108,7 +104,7 @@ Retry:
             End If
             '获取新皮肤地址
             Logger.Info($"皮肤修改返回值：{vbCrLf}{Result}")
-            Dim ResultJson As JObject = GetJson(Result)
+            Dim ResultJson As JObject = Result.DeserializeJson()
             If ResultJson.ContainsKey("errorMessage") Then Throw New Exception(ResultJson("errorMessage").ToString) '#5309
             For Each Skin As JObject In ResultJson("skins")
                 If Skin("state").ToString = "ACTIVE" Then
@@ -124,10 +120,10 @@ Retry:
                     Case HttpStatusCode.BadRequest
                         Logger.Warn(ex, "更改皮肤时遭遇 400 错误")
                         If requestException.Response?.Contains("""error""") Then
-                            Hint(GetLang("LangPageLoginMsSkinChangeSkinFail") & ": " & GetJson(requestException.Response)("error").ToString, HintType.Red)
+                            Hint(GetLang("LangPageLoginMsSkinChangeSkinFail") & ": " & requestException.Response.DeserializeJson()("error").ToString, HintType.Red)
                             Return
                         ElseIf requestException.Response?.Contains("""errorMessage""") Then
-                            Hint(GetLang("LangPageLoginMsSkinChangeSkinFail") & ": " & GetJson(requestException.Response)("errorMessage").ToString, HintType.Red)
+                            Hint(GetLang("LangPageLoginMsSkinChangeSkinFail") & ": " & requestException.Response.DeserializeJson()("errorMessage").ToString, HintType.Red)
                             Return
                         End If
                     Case HttpStatusCode.Unauthorized

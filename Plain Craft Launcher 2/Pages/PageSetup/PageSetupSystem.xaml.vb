@@ -1,4 +1,4 @@
-Class PageSetupSystem
+Public Class PageSetupSystem
 
 #Region "语言"
     Private Sub SelectCurrentLanguage()
@@ -124,14 +124,14 @@ Class PageSetupSystem
         If AniControlEnabled <> 0 Then Return
         If ComboSystemActivity.SelectedIndex <> 2 Then Return
         If MyMsgBox(GetLang("LangPageSetupSystemLaunchDialogAnnouncementSilentContent"), GetLang("LangDialogTitleWarning"), GetLang("LangPageSetupSystemLaunchDialogAnnouncementBtnConfirm"), GetLang("LangDialogBtnCancel"), IsWarn:=True) = 2 Then
-            ComboSystemActivity.SelectedItem = e.RemovedItems(0)
+            If e.RemovedItems.Count > 0 Then ComboSystemActivity.SelectedItem = e.RemovedItems(0)
         End If
     End Sub
     Private Sub ComboSystemUpdate_SelectionChanged(sender As Object, e As SelectionChangedEventArgs) Handles ComboSystemUpdate.SelectionChanged
         If AniControlEnabled <> 0 Then Return
         If ComboSystemUpdate.SelectedIndex <> 3 Then Return
         If MyMsgBox(GetLang("LangPageSetupSystemLaunchDialogAnnouncementDisableContent"), GetLang("LangDialogTitleWarning"), GetLang("LangPageSetupSystemLaunchDialogAnnouncementBtnConfirm"), GetLang("LangDialogBtnCancel"), IsWarn:=True) = 2 Then
-            ComboSystemUpdate.SelectedItem = e.RemovedItems(0)
+            If e.RemovedItems.Count > 0 Then ComboSystemUpdate.SelectedItem = e.RemovedItems(0)
         End If
     End Sub
     Private Sub BtnSystemUpdate_Click(sender As Object, e As EventArgs) Handles BtnSystemUpdate.Click

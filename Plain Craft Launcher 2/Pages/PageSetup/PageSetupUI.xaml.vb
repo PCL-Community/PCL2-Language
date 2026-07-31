@@ -1,4 +1,4 @@
-﻿Public Class PageSetupUI
+Public Class PageSetupUI
 
     Private Sub PageSetupUI_Loaded(sender As Object, e As RoutedEventArgs) Handles Me.Loaded
         '重复加载部分
@@ -75,7 +75,7 @@
 
     '背景图片
     Private Sub BtnUIBgOpen_Click(sender As Object, e As EventArgs) Handles BtnBackgroundOpen.Click
-        OpenExplorer(PathExeFolder & "PCL\Pictures\")
+        OpenExplorer(Paths.Base & "PCL\Pictures\")
     End Sub
     Private Sub BtnBackgroundRefresh_Click(sender As Object, e As EventArgs) Handles BtnBackgroundRefresh.Click
         BackgroundRefresh(True, True)
@@ -99,7 +99,7 @@
     End Sub
     Private Sub BtnBackgroundClear_Click(sender As Object, e As EventArgs) Handles BtnBackgroundClear.Click
         If MyMsgBox(GetLang("LangDialogDeleteAllBackgroundPicContent"), GetLang("LangDialogTitleWarning"),, GetLang("LangDialogBtnCancel"), IsWarn:=True) = 1 Then
-            DirectoryUtils.Delete(PathExeFolder & "PCL\Pictures")
+            DirectoryUtils.Delete(Paths.Base & "PCL\Pictures")
             BackgroundRefresh(False, True)
             Hint(GetLang("LangHintBackgroundPicDeleted"), HintType.Green)
         End If
@@ -113,9 +113,9 @@
         Try
 
             '获取可用的图片文件
-            DirectoryUtils.Create(PathExeFolder & "PCL\Pictures\")
+            DirectoryUtils.Create(Paths.Base & "PCL\Pictures\")
             Dim Pic As New List(Of String)
-            For Each File In DirectoryUtils.GetFiles(PathExeFolder & "PCL\Pictures\")
+            For Each File In DirectoryUtils.EnumerateFiles(Paths.Base & "PCL\Pictures\", True)
                 Dim Extension As String = PathUtils.GetExtension(File)
                 If Extension <> "ini" AndAlso Extension <> "db" Then Pic.Add(File) '文件夹可能会被加入 .ini 和 thumbs.db
             Next
@@ -159,7 +159,7 @@
     Private Sub BtnLogoChange_Click(sender As Object, e As EventArgs) Handles BtnLogoChange.Click
         Dim FileName As String = Dialogs.SelectFile("选择图片", False, filter:={({"png", "jpg", "jpeg", "gif", "webp"}, "常用图片文件")}).FirstOrDefault()
         If String.IsNullOrEmpty(FileName) Then Return
-        Dim TargetPath As String = PathExeFolder & "PCL\Logo.png"
+        Dim TargetPath As String = Paths.Base & "PCL\Logo.png"
         Try
             '复制文件
             FileUtils.Copy(FileName, TargetPath)
@@ -179,7 +179,7 @@
         If Not (AniControlEnabled = 0 AndAlso e.RaiseByMouse) Then Return
 Refresh:
         '已有图片则不再选择
-        Dim TargetPath As String = PathExeFolder & "PCL\Logo.png"
+        Dim TargetPath As String = Paths.Base & "PCL\Logo.png"
         If FileUtils.Exists(TargetPath) Then
             Try
                 FrmMain.ImageTitleLogo.Source = Nothing '防止因为 Source 属性前后的值相同而不更新 (#5628)
@@ -216,7 +216,7 @@ Refresh:
     End Sub
     Private Sub BtnLogoDelete_Click(sender As Object, e As EventArgs) Handles BtnLogoDelete.Click
         Try
-            FileUtils.Delete(PathExeFolder & "PCL\Logo.png")
+            FileUtils.Delete(Paths.Base & "PCL\Logo.png")
             RadioLogoType1.SetChecked(True, True)
             Hint(GetLang("LangHintTitlePicEmptied"), HintType.Green)
         Catch ex As Exception
@@ -226,7 +226,7 @@ Refresh:
 
     '背景音乐
     Private Sub BtnMusicOpen_Click(sender As Object, e As EventArgs) Handles BtnMusicOpen.Click
-        OpenExplorer(PathExeFolder & "PCL\Musics\")
+        OpenExplorer(Paths.Base & "PCL\Musics\")
     End Sub
     Private Sub BtnMusicRefresh_Click(sender As Object, e As EventArgs) Handles BtnMusicRefresh.Click
         MusicRefreshPlay(True)
@@ -237,7 +237,7 @@ Refresh:
             PanMusicVolume.Visibility = Visibility.Visible
             PanMusicDetail.Visibility = Visibility.Visible
             BtnMusicClear.Visibility = Visibility.Visible
-            CardMusic.Title = GetLang("LangBackgroundMusicCount", DirectoryUtils.GetFiles(PathExeFolder & "PCL\Musics\").Count(Function(f) Not {"ini", "jpg", "txt", "cfg", "lrc", "db", "png"}.Contains(PathUtils.GetExtension(f))))
+            CardMusic.Title = GetLang("LangBackgroundMusicCount", DirectoryUtils.EnumerateFiles(Paths.Base & "PCL\Musics\", True).Count(Function(f) Not {"ini", "jpg", "txt", "cfg", "lrc", "db", "png"}.Contains(PathUtils.GetExtension(f))))
         Else
             PanMusicVolume.Visibility = Visibility.Collapsed
             PanMusicDetail.Visibility = Visibility.Collapsed
@@ -258,13 +258,13 @@ Refresh:
                 Thread.Sleep(200)
                 '删除文件
                 Try
-                    DirectoryUtils.Delete(PathExeFolder & "PCL\Musics")
+                    DirectoryUtils.Delete(Paths.Base & "PCL\Musics")
                     Hint(GetLang("LangHintBackgroundMusicDeleted"), HintType.Green)
                 Catch ex As Exception
                     Logger.Error(ex, GetLang("LangHintBackgroundMusicDeleteFail"), LogBehavior.Alert)
                 End Try
                 Try
-                    DirectoryUtils.Create(PathExeFolder & "PCL\Musics\")
+                    DirectoryUtils.Create(Paths.Base & "PCL\Musics\")
                     RunInUi(Sub() MusicRefreshPlay(False))
                 Catch ex As Exception
                     Logger.Error(ex, GetLang("LangHintBackgroundMusicCreateFolderFail"), LogBehavior.Alert)
@@ -284,12 +284,12 @@ Refresh:
     '主页
     Private Sub BtnCustomFile_Click(sender As Object, e As EventArgs) Handles BtnCustomFile.Click
         Try
-            If FileUtils.Exists(PathExeFolder & "PCL\Custom.xaml") Then
+            If FileUtils.Exists(Paths.Base & "PCL\Custom.xaml") Then
                 If MyMsgBox(GetLang("LangDialogCustomPageOverwriteConfirmationContent"), GetLang("LangDialogCustomHomePageReplaceTitle"), GetLang("LangDialogBtnContinue"), GetLang("LangDialogBtnCancel"), IsWarn:=True) = 2 Then Return
             End If
-            ExtractResources(PathExeFolder & "PCL\Custom.xaml", "Custom")
+            ExtractResources(Paths.Base & "PCL\Custom.xaml", "Custom")
             Hint(GetLang("LangHintCustomPageOverwriteSuccess"), HintType.Green)
-            OpenExplorer(PathExeFolder & "PCL\Custom.xaml")
+            OpenExplorer(Paths.Base & "PCL\Custom.xaml")
         Catch ex As Exception
             Logger.Error(ex, GetLang("LangDialogCustomPageOverwriteFail"))
         End Try
@@ -579,7 +579,7 @@ Refresh:
         SliderLauncherHue.GetHintText = Function(v) v & "°"
         SliderLauncherSat.GetHintText = Function(v) v & "%"
         SliderLauncherDelta.GetHintText =
-        Function(Value As Integer)
+        Function(Value As Integer) As String
             If Value > 90 Then
                 Return "+" & (Value - 90)
             ElseIf Value = 90 Then
@@ -589,7 +589,7 @@ Refresh:
             End If
         End Function
         SliderLauncherLight.GetHintText =
-        Function(Value As Integer)
+        Function(Value As Integer) As String
             If Value > 20 Then
                 Return "+" & (Value - 20)
             ElseIf Value = 20 Then

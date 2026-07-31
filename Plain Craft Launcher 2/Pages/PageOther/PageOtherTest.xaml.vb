@@ -1,4 +1,4 @@
-﻿Public Class PageOtherTest
+Public Class PageOtherTest
 
     Public Shared Sub StartCustomDownload(Url As String, FileName As String, Optional Folder As String = Nothing)
         Hint(GetLang("LangPageOtherTestNoUtility"))

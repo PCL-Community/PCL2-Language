@@ -1,4 +1,4 @@
-﻿Public Module ModWatcher
+Public Module ModWatcher
 
     '对全体的监视
     Public McWatcherList As New List(Of Watcher)
@@ -91,7 +91,7 @@
             RunInNewThread(
             Sub()
                 Try
-                    Do Until State = MinecraftState.Ended OrElse State = MinecraftState.Crashed OrElse State = MinecraftState.Canceled OrElse Loader.State = LoadState.Interrupted
+                    Do Until State = MinecraftState.Ended OrElse State = MinecraftState.Crashed OrElse State = MinecraftState.Canceled OrElse Loader.State = LoadState.Canceled
                         TimerWindow()
                         TimerLog()
                         '设置窗口标题
@@ -177,7 +177,7 @@
                 Logger.Error(ex, "输出 Minecraft 日志失败")
             End Try
         End Sub
-        Public LatestLog As New Queue(Of String)
+        Public LatestLog As New ConcurrentQueue(Of String)
         Private Sub GameLog(Text As String)
             '预处理
             If Text Is Nothing Then Return
@@ -185,7 +185,7 @@
             'If Text.Contains("�����") Then Hint("检测到错误的日志编码：" & Text)
             '加入预存储
             LatestLog.Enqueue(Text)
-            If LatestLog.Count >= 501 Then LatestLog.Dequeue()
+            If LatestLog.Count >= 501 Then LatestLog.TryDequeue(Nothing)
             Logger.Trace(Text)
             '进度处理
             If LogProgress < 1 Then
@@ -362,7 +362,7 @@
                     Analyzer.Prepare()
                     Analyzer.Analyze()
                     Analyzer.Output(False, New List(Of String) From
-                        {Instance.PathVersion & Instance.Name & ".json", PathExeFolder & "PCL\Log1.txt", PathExeFolder & "PCL\LatestLaunch.bat"})
+                        {Instance.PathVersion & Instance.Name & ".json", Paths.Base & "PCL\Log1.txt", Paths.Base & "PCL\LatestLaunch.bat"})
                 Catch ex As Exception
                     Logger.Error(ex, "崩溃分析失败")
                 End Try

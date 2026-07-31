@@ -1,4 +1,5 @@
-﻿Imports System.Windows.Interop
+Imports System.Collections.ObjectModel
+Imports System.Windows.Interop
 Imports System.Windows.Threading
 
 Public Module ModMain
@@ -23,27 +24,24 @@ Public Module ModMain
     ''' <summary>
     ''' 等待弹出的提示列表。以 {String, HintType, Log As Boolean} 形式存储为数组。
     ''' </summary>
-    Private HintWaiting As ConcurrentList(Of HintMessage) = If(HintWaiting, New ConcurrentList(Of HintMessage))
+    Private HintWaiting As New ConcurrentQueue(Of HintMessage)
     ''' <summary>
     ''' 在窗口左下角弹出提示文本。
     ''' </summary>
     Public Sub Hint(Text As String, Optional Type As HintType = HintType.Blue, Optional Log As Boolean = True)
-        If HintWaiting Is Nothing Then HintWaiting = New ConcurrentList(Of HintMessage)
-        HintWaiting.Add(New HintMessage With {.Text = If(Text, ""), .Type = Type, .Log = Log})
+        HintWaiting.Enqueue(New HintMessage With {.Text = If(Text, ""), .Type = Type, .Log = Log})
     End Sub
 
     Private Sub HintTick()
         Try
-
             'Tag 存储了：{ 是否可以重用, Uuid }
-            If Not HintWaiting.Any() Then Return
-            Do While HintWaiting.Any
+            Dim CurrentHint As HintMessage = Nothing
+            Do While HintWaiting.TryDequeue(CurrentHint)
                 ''清除空提示
                 'If IsNothing(HintWaiting(0)) OrElse IsNothing(HintWaiting(0)(0)) Then
                 '    HintWaiting.RemoveAt(0)
                 '    Continue Do
                 'End If
-                Dim CurrentHint = HintWaiting(0)
                 '去回车
                 CurrentHint.Text = CurrentHint.Text.ReplaceLineEndings(" ", mergeMultiple:=True)
                 '超量提示直接忽略
@@ -134,7 +132,6 @@ Public Module ModMain
                 '结束处理
 EndHint:
                 If CurrentHint.Log Then Logger.Info($"弹出提示：{CurrentHint.Text}")
-                HintWaiting.RemoveAt(0)
             Loop
         Catch ex As Exception
             Logger.Info(ex, "显示弹出提示失败")
@@ -173,7 +170,7 @@ EndHint:
         ''' <summary>
         ''' 输入模式：输入验证规则。
         ''' </summary>
-        Public ValidateRules As ObjectModel.Collection(Of Validate)
+        Public ValidateRules As Collection(Of Validate)
         ''' <summary>
         ''' 输入模式：提示文本。
         ''' </summary>
@@ -238,14 +235,13 @@ EndHint:
         If Button1 = "确定" Then Button1 = GetLang("LangDialogBtnOK")
         If Title = "提示" Then Title = GetLang("LangDialogTitleTip")
         Dim Converter As New MyMsgBoxConverter With {.Type = MyMsgBoxType.Text, .Button1 = Button1, .Button2 = Button2, .Button3 = Button3, .Text = Caption, .IsWarn = IsWarn, .Title = Title, .HighLight = HighLight, .ForceWait = True, .Button1Action = Button1Action, .Button2Action = Button2Action, .Button3Action = Button3Action}
-        WaitingMyMsgBox.Add(Converter)
         If Button2.Length > 0 OrElse ForceWait Then
             '若有多个按钮则开始等待
             If FrmMain Is Nothing OrElse FrmMain.PanMsg Is Nothing AndAlso RunInUi() Then
                 '主窗体尚未加载，用老土的弹窗来替代
-                WaitingMyMsgBox.Remove(Converter)
                 If Button2.Length > 0 Then
-                    Dim RawResult As MsgBoxResult = MsgBox(Caption, If(Button3.Length > 0, MsgBoxStyle.YesNoCancel, MsgBoxStyle.YesNo) + If(IsWarn, MsgBoxStyle.Critical, MsgBoxStyle.Question), Title)
+                    Dim RawResult As MsgBoxResult =
+                        MsgBox(Caption, If(Button3.Length > 0, MsgBoxStyle.YesNoCancel, MsgBoxStyle.YesNo) + If(IsWarn, MsgBoxStyle.Critical, MsgBoxStyle.Question), Title)
                     Select Case RawResult
                         Case MsgBoxResult.Yes
                             Converter.Result = 1
@@ -260,6 +256,7 @@ EndHint:
                 End If
                 Logger.Warn($"主窗体加载完成前出现意料外的等待弹窗：{Button1},{Button2},{Button3}")
             Else
+                WaitingMyMsgBox.Enqueue(Converter)
                 Try
                     FrmMain.DragStop()
                     If RunInUi() Then MyMsgBoxTick()
@@ -273,6 +270,7 @@ EndHint:
             Return Converter.Result
         Else
             '不进行等待，直接返回
+            WaitingMyMsgBox.Enqueue(Converter)
             Return 1
         End If
     End Function
@@ -287,12 +285,12 @@ EndHint:
     ''' <param name="Button1">显示的第一个按钮，默认为“确定”。</param>
     ''' <param name="Button2">显示的第二个按钮，默认为“取消”。</param>
     ''' <param name="IsWarn">是否为警告弹窗，若为 True，弹窗配色和背景会变为红色。</param>
-    Public Function MyMsgBoxInput(Title As String, Optional Text As String = Nothing, Optional DefaultInput As String = Nothing, Optional ValidateRules As ObjectModel.Collection(Of Validate) = Nothing, Optional HintText As String = "", Optional Button1 As String = "确定", Optional Button2 As String = "取消", Optional IsWarn As Boolean = False) As String
+    Public Function MyMsgBoxInput(Title As String, Optional Text As String = Nothing, Optional DefaultInput As String = Nothing, Optional ValidateRules As Collection(Of Validate) = Nothing, Optional HintText As String = "", Optional Button1 As String = "确定", Optional Button2 As String = "取消", Optional IsWarn As Boolean = False) As String
         If Button1 = "确定" Then Button1 = GetLang("LangDialogBtnOK")
         If Button2 = "取消" Then Button2 = GetLang("LangDialogBtnCancel")
         '将弹窗列入队列
-        Dim Converter As New MyMsgBoxConverter With {.Text = If(Text, ""), .HintText = If(HintText, ""), .Type = MyMsgBoxType.Input, .ValidateRules = If(ValidateRules, New ObjectModel.Collection(Of Validate)), .Button1 = Button1, .Button2 = Button2, .Content = DefaultInput, .IsWarn = IsWarn, .Title = Title}
-        WaitingMyMsgBox.Add(Converter)
+        Dim Converter As New MyMsgBoxConverter With {.Text = If(Text, ""), .HintText = If(HintText, ""), .Type = MyMsgBoxType.Input, .ValidateRules = If(ValidateRules, New Collection(Of Validate)), .Button1 = Button1, .Button2 = Button2, .Content = DefaultInput, .IsWarn = IsWarn, .Title = Title}
+        WaitingMyMsgBox.Enqueue(Converter)
         '虽然我也不知道这是啥但是能用就成了 :)
         Try
             If FrmMain IsNot Nothing Then FrmMain.DragStop()
@@ -317,7 +315,7 @@ EndHint:
         If Title = "提示" Then Title = GetLang("LangDialogTitleTip")
         '将弹窗列入队列
         Dim Converter As New MyMsgBoxConverter With {.Type = MyMsgBoxType.Select, .Button1 = Button1, .Button2 = Button2, .Content = Selections, .IsWarn = IsWarn, .Title = Title}
-        WaitingMyMsgBox.Add(Converter)
+        WaitingMyMsgBox.Enqueue(Converter)
         '虽然我也不知道这是啥但是能用就成了 :)
         Try
             If FrmMain IsNot Nothing Then FrmMain.DragStop()
@@ -334,27 +332,27 @@ EndHint:
     ''' <summary>
     ''' 等待显示的弹窗。
     ''' </summary>
-    Public WaitingMyMsgBox As List(Of MyMsgBoxConverter) = If(WaitingMyMsgBox, New List(Of MyMsgBoxConverter))
+    Public WaitingMyMsgBox As New ConcurrentQueue(Of MyMsgBoxConverter)
     Public Sub MyMsgBoxTick()
         Try
-            If FrmMain Is Nothing OrElse FrmMain.PanMsg Is Nothing OrElse FrmMain.WindowState = WindowState.Minimized Then Return
+            If FrmMain?.PanMsg Is Nothing OrElse FrmMain.WindowState = WindowState.Minimized Then Return
+            Dim TargetMsgBox As MyMsgBoxConverter = Nothing
             If FrmMain.PanMsg.Children.Count > 0 Then
                 '弹窗中
                 FrmMain.PanMsg.Visibility = Visibility.Visible
-            ElseIf WaitingMyMsgBox.Any Then
+            ElseIf WaitingMyMsgBox.TryDequeue(TargetMsgBox) Then
                 '没有弹窗，显示一个等待的弹窗
                 FrmMain.PanMsg.Visibility = Visibility.Visible
-                Select Case WaitingMyMsgBox(0).Type
+                Select Case TargetMsgBox.Type
                     Case MyMsgBoxType.Input
-                        FrmMain.PanMsg.Children.Add(New MyMsgInput(WaitingMyMsgBox(0)))
+                        FrmMain.PanMsg.Children.Add(New MyMsgInput(TargetMsgBox))
                     Case MyMsgBoxType.Select
-                        FrmMain.PanMsg.Children.Add(New MyMsgSelect(WaitingMyMsgBox(0)))
+                        FrmMain.PanMsg.Children.Add(New MyMsgSelect(TargetMsgBox))
                     Case MyMsgBoxType.Text
-                        FrmMain.PanMsg.Children.Add(New MyMsgText(WaitingMyMsgBox(0)))
+                        FrmMain.PanMsg.Children.Add(New MyMsgText(TargetMsgBox))
                     Case MyMsgBoxType.Login
-                        FrmMain.PanMsg.Children.Add(New MyMsgLogin(WaitingMyMsgBox(0)))
+                        FrmMain.PanMsg.Children.Add(New MyMsgLogin(TargetMsgBox))
                 End Select
-                WaitingMyMsgBox.RemoveAt(0)
             Else
                 '没有弹窗，没有等待的弹窗
                 If FrmMain.PanMsg.Visibility <> Visibility.Collapsed Then FrmMain.PanMsg.Visibility = Visibility.Collapsed
@@ -495,7 +493,7 @@ EndHint:
         Public Sub New(FilePath As String)
             RawPath = FilePath
             If Not FileUtils.Exists(FilePath) Then Throw New FileNotFoundException(GetLang("LangModMainExceptionNoFileFound", FilePath), FilePath)
-            Dim JsonData As JObject = GetJson(ArgumentReplace(FileUtils.ReadAsString(FilePath), AddressOf EscapeUtils.XmlEscape))
+            Dim JsonData As JObject = ArgumentReplace(FileUtils.ReadAsString(FilePath), AddressOf StringUtils.XmlEscape).DeserializeJson()
             '加载常规信息
             If JsonData("Title") IsNot Nothing Then
                 Title = JsonData("Title")
@@ -509,7 +507,7 @@ EndHint:
             ShowInPublic = If(JsonData("ShowInPublic"), ShowInPublic)
             ShowInSnapshot = If(JsonData("ShowInSnapshot"), ShowInSnapshot)
             Types = New List(Of String)
-            For Each NameOfType In If(JsonData("Types"), GetJson("[]"))
+            For Each NameOfType In If(JsonData("Types"), New JArray)
                 Types.Add(NameOfType)
             Next
             '加载事件信息
@@ -583,8 +581,8 @@ EndHint:
                 Try
                     Dim IgnoreList As New List(Of String)
                     '读取自定义文件
-                    If DirectoryUtils.Exists(PathExeFolder & "PCL\Help\") Then
-                        For Each File In DirectoryUtils.GetFiles(PathExeFolder & "PCL\Help\")
+                    If DirectoryUtils.Exists(Paths.Base & "PCL\Help\") Then
+                        For Each File In DirectoryUtils.EnumerateFiles(Paths.Base & "PCL\Help\", True)
                             Select Case PathUtils.GetExtension(File)
                                 Case "helpignore"
                                     '加载忽略列表
@@ -602,7 +600,7 @@ EndHint:
                     End If
                     Logger.Info($"已扫描 PCL 文件夹下的帮助文件，目前总计 {FileList.Count} 条")
                     '读取自带文件
-                    For Each File In DirectoryUtils.GetFiles(PathTemp & "Help")
+                    For Each File In DirectoryUtils.EnumerateFiles(PathTemp & "Help", True)
                         '跳过非 json 文件与以 . 开头的文件夹
                         If PathUtils.RemoveLastPart(File).Replace(PathTemp & "Help", "").Contains("\.") OrElse PathUtils.GetExtension(File) <> "json" Then Continue For
                         '检查忽略列表
@@ -620,7 +618,7 @@ NextFile:
                 Catch ex As Exception
                     Logger.Error(ex, "检查帮助文件夹失败", LogBehavior.Alert)
                 End Try
-                If Loader.IsInterrupted Then Return
+                If Loader.IsCanceled Then Return
 
                 '将文件实例化
                 Dim Dict As New List(Of HelpEntry)
@@ -636,7 +634,7 @@ NextFile:
 
                 '回设
                 If Not Dict.Any() Then Throw New Exception(GetLang("LangModMainExceptionNoHelpFound"))
-                If Loader.IsInterrupted Then Return
+                If Loader.IsCanceled Then Return
                 Loader.Output = Dict
 
             Catch ex As Exception
@@ -654,7 +652,7 @@ NextFile:
             ExtractResources(PathTemp & "Cache\Help.zip", "Help")
             FileUtils.ExtractToDirectory(PathTemp & "Cache\Help.zip", PathTemp & "Help")
             Settings.Set("SystemHelpVersion", VersionCode)
-            Logger.Warn($"已解压内置帮助文件，目前状态：{FileUtils.Exists(PathTemp & "Help\启动器\备份设置.xaml")}")
+            Logger.Info($"已解压内置帮助文件，目前状态：{FileUtils.Exists(PathTemp + "Help\启动器\备份设置.xaml")}")
         End If
     End Sub
 
@@ -668,7 +666,7 @@ NextFile:
             If _IsAprilEnabled Is Nothing Then
                 _IsAprilEnabled =
                     Date.Now.Month = 4 AndAlso Date.Now.Day = 1 AndAlso
-                    Settings.Get(Of Integer)("AprilDoneYear") <> Date.Now.Year '成功后同年内则不再触发
+                    Settings.Get(Of Integer)("AprilYear") <> Date.Now.Year '成功后同年内则不再触发
             End If
             Return _IsAprilEnabled.Value
         End Get
@@ -853,7 +851,7 @@ NextFile:
         Text = Text.Replace("{pcl_build_type}", Replacer(BuildType.ToString))
         Text = Text.Replace("{pcl_branch}", Replacer(VersionBranchMain))
         Text = Text.Replace("{identify}", Replacer(Identify))
-        Text = Text.Replace("{path}", Replacer(PathUtils.CurrentFolder))
+        Text = Text.Replace("{path}", Replacer(Paths.Base))
         Text = Text.Replace("{path_with_name}", Replacer(PathExe))
         Text = Text.Replace("{path_temp}", Replacer(PathTemp))
         Text = Text.Replace("{pcl_md5}", Function() Replacer(CryptographyUtils.ComputeFileHash(PathExe, CryptographyUtils.HashMethod.Md5)))
@@ -864,7 +862,7 @@ NextFile:
             Text = Text.Replace("{time}", Replacer(Date.Now.ToString("HH':'mm':'ss")))
         End If
         'Minecraft
-        Text = Text.Replace("{java}", Replacer(McLaunchJavaSelected?.PathFolder))
+        Text = Text.Replace("{java}", Replacer(McLaunchJavaSelected?.Folder))
         Text = Text.Replace("{minecraft}", Replacer(McFolderSelected))
         If McInstanceSelected?.IsLoaded Then
             Text = Text.Replace("{version_path}", Replacer(McInstanceSelected.PathVersion)) : Text = Text.Replace("{verpath}", Replacer(McInstanceSelected.PathVersion))
@@ -974,7 +972,7 @@ NextFile:
         On Error Resume Next
         FeedbackInfo()
         If ForceOpenLog OrElse (ShowMsgbox AndAlso MyMsgBox("若你在汇报一个 Bug，请点击 打开文件夹 按钮，并上传 Log(1~5).txt 中包含错误信息的文件。" & vbCrLf & "游戏崩溃一般与启动器无关，请不要因为游戏崩溃而提交反馈。", "反馈提交提醒", "打开文件夹", "不需要") = 1) Then
-            OpenExplorer(PathExeFolder & "PCL\Log1.txt")
+            OpenExplorer(Paths.Base & "PCL\Log1.txt")
         End If
         OpenWebsite("https://github.com/Meloong-Git/PCL/issues/")
     End Sub
@@ -984,11 +982,11 @@ NextFile:
     Public Sub FeedbackInfo()
         On Error Resume Next
         Logger.Warn($"诊断信息：{vbCrLf}" &
-            "操作系统：" & My.Computer.Info.OSFullName & "（32 位：" & Is32BitSystem & "）" & vbCrLf &
+            "操作系统：" & My.Computer.Info.OSFullName & vbCrLf &
             "剩余内存：" & Int(My.Computer.Info.AvailablePhysicalMemory / 1024 / 1024) & " M / " & Int(My.Computer.Info.TotalPhysicalMemory / 1024 / 1024) & " M" & vbCrLf &
             "DPI：" & DPI & "（" & Math.Round(DPI / 96, 2) * 100 & "%）" & vbCrLf &
             "MC 文件夹：" & If(McFolderSelected, "Nothing") & vbCrLf &
-            "文件位置：" & PathExeFolder)
+            "文件位置：" & Paths.Base)
     End Sub
 
     '遥测
@@ -1000,9 +998,9 @@ NextFile:
         Sub()
             Try
                 Logger.Info($"匿名数据上报：{[Event]}")
-                Dim Url As String = $"{ClsBaseUrl}&Event={EscapeUtils.UrlEscape([Event])}"
+                Dim Url As String = $"{ClsBaseUrl}&Event={StringUtils.UrlEscape([Event])}"
                 For i = 0 To Datas.Length - 1 Step 2
-                    Url &= "&" & EscapeUtils.UrlEscape(Datas(i)) & "=" & EscapeUtils.UrlEscape(Datas(i + 1).ReplaceLineEndings(vbLf, mergeMultiple:=True))
+                    Url &= "&" & StringUtils.UrlEscape(Datas(i)) & "=" & StringUtils.UrlEscape(Datas(i + 1).ReplaceLineEndings(vbLf, mergeMultiple:=True))
                 Next
                 NetRequestByClient(Url, MakeLog:=False)
             Catch ex As Exception

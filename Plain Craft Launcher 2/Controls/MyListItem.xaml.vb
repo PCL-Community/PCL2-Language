@@ -1,4 +1,4 @@
-﻿Imports System.Windows.Markup
+Imports System.Windows.Markup
 
 <ContentProperty("Inlines")>
 Public Class MyListItem
@@ -317,7 +317,8 @@ Public Class MyListItem
             Else
                 '添加竖条控件
                 If IsNothing(RectCheck) Then
-                    RectCheck = New Border With {.Width = 5, .Height = If(Checked, Double.NaN, 0), .CornerRadius = New CornerRadius(2, 2, 2, 2),
+                    RectCheck = New Border With {
+                        .Width = 5, .Height = If(Checked, Double.NaN, 0), .CornerRadius = New CornerRadius(2, 2, 2, 2),
                         .VerticalAlignment = If(Checked, VerticalAlignment.Stretch, VerticalAlignment.Center),
                         .HorizontalAlignment = HorizontalAlignment.Left, .UseLayoutRounding = False, .SnapsToDevicePixels = False,
                         .Margin = If(Checked, New Thickness(-1, 6, 0, 6), New Thickness(-1, 0, 0, 0))}
@@ -547,7 +548,7 @@ Public Class MyListItem
 
     Private StateLast As String
     Public IsMouseOverAnimationEnabled As Boolean = True
-    Public Sub RefreshColor(sender As Object, e As EventArgs) Handles Me.MouseEnter, Me.MouseLeave, Me.MouseLeftButtonDown, Me.MouseLeftButtonUp
+    Public Sub RefreshColor(sender As Object, e As EventArgs) Handles Me.MouseEnter, Me.MouseLeave, Me.PreviewMouseLeftButtonDown, Me.PreviewMouseLeftButtonUp
         '菜单虚拟化检测
         If ContentHandler IsNot Nothing Then
             ContentHandler(Me, e)

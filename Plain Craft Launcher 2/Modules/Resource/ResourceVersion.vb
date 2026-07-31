@@ -1,4 +1,4 @@
-﻿''' <summary>
+''' <summary>
 ''' 社区资源的单个可下载版本。
 ''' </summary>
 Public Class ResourceVersion
@@ -132,7 +132,7 @@ Public Class ResourceVersion
                 'DownloadAddress
                 Dim Url = Data("downloadUrl").ToString
                 If Url = "" Then Url = $"https://edge.forgecdn.net/files/{CInt(.Id.ToString.Substring(0, 4))}/{CInt(.Id.ToString.Substring(4))}/{ .FileName}"
-                .DownloadUrls = ParseCurseForgeDownloadUrls(Url.Replace(.FileName, EscapeUtils.UrlEscape(.FileName))) '对脑残 CurseForge 的下载地址进行多种修正
+                .DownloadUrls = ParseCurseForgeDownloadUrls(Url.Replace(.FileName, StringUtils.UrlEscape(.FileName))) '对脑残 CurseForge 的下载地址进行多种修正
                 .DownloadUrls.Add(DlSourceModGet(Url)) '添加镜像源；注意 MCIM 源不支持 URL 编码后的文件名，必须传入 URL 编码前的文件名
                 .DownloadUrls = .DownloadUrls.Distinct.ToList '最终去重
                 'Dependencies
@@ -178,21 +178,20 @@ Public Class ResourceVersion
                     .Size = File("size")
                     .Hash = File("hashes")("sha1")
                 End If
-                '类别
+                '类别与 Loaders
                 '结果可能混杂着 Mod、数据包和服务端插件
                 Dim RawLoaders As List(Of String) = Data("loaders").Select(Function(v) v.ToString).ToList
                 .ModLoaders = ModLoaders.None
-                If .ResourceType.HasFlag(ResourceTypes.Mod) OrElse .ResourceType.HasFlag(ResourceTypes.DataPack) Then
-                    If RawLoaders.Intersect({"bukkit", "folia", "paper", "purpur", "spigot"}).Any() Then .ResourceType = ResourceTypes.Plugin 'Veinminer Enchantment 同时支持服务端与 Fabric
-                    If RawLoaders.Contains("datapack") Then .ResourceType = ResourceTypes.DataPack
-                    If EnumUtils.GetAllFlags(Of ModLoaders)().Any() Then .ResourceType = ResourceTypes.Mod
-                Else
-                    '使用传入的类别，不作修改（#8377）
-                End If
-                'Loaders
                 For Each Loader As ModLoaders In EnumUtils.GetAllFlags(Of ModLoaders)()
                     If RawLoaders.Contains(Loader.ToString.Lower) Then .ModLoaders = .ModLoaders Or Loader
                 Next
+                If .ResourceType.HasFlag(ResourceTypes.Mod) OrElse .ResourceType.HasFlag(ResourceTypes.DataPack) Then
+                    If RawLoaders.Intersect({"bukkit", "folia", "paper", "purpur", "spigot"}).Any() Then .ResourceType = ResourceTypes.Plugin 'Veinminer Enchantment 同时支持服务端与 Fabric
+                    If RawLoaders.Contains("datapack") Then .ResourceType = ResourceTypes.DataPack
+                    If .ModLoaders.Flags().Any() Then .ResourceType = ResourceTypes.Mod
+                Else
+                    '使用传入的类别，不作修改（#8377）
+                End If
                 'Dependencies
                 If Data.ContainsKey("dependencies") Then
                     .RawDependencies = Data("dependencies").
@@ -256,7 +255,7 @@ Public Class ResourceVersion
             Else 'Modrinth
                 ResultJsonArray = DlModRequest($"https://api.modrinth.com/v2/project/{ProjectId}/version?include_changelog=false")
             End If
-            ProjectFilesCache(ProjectId) = ResultJsonArray.Select(Function(a) ResourceVersion.FromPlatformJson(a, TargetProject.Types)).
+            ProjectFilesCache(ProjectId) = ResultJsonArray.Select(Function(a) FromPlatformJson(a, TargetProject.Types)).
                 Where(Function(a) a.DownloadAvailable).
                 DistinctBy(Function(a) a.Id).ToList 'CurseForge 可能会重复返回相同项（#1330）
         End If
@@ -313,13 +312,13 @@ Public Class ResourceVersion
     Public Function ToCacheJson() As JObject
         Dim Result As New JObject
         With Result
-            .Add("ResourceType", ResourceType)
+            .Add("ResourceType", CInt(ResourceType))
             .Add("Id", Id)
             If Version IsNot Nothing Then .Add("Version", Version)
             .Add("DisplayName", Display)
             .Add("ReleaseDate", ReleaseDate)
             .Add("DownloadCount", DownloadCount)
-            .Add("ModLoaders", ModLoaders)
+            .Add("ModLoaders", CInt(ModLoaders))
             .Add("GameVersions", New JArray(GameVersions))
             .Add("ReleaseType", CInt(ReleaseType))
             If FileName IsNot Nothing Then .Add("FileName", FileName)
@@ -359,17 +358,14 @@ Public Class ResourceVersion
                     If .Title <> FileName.BeforeLast(".") Then Yield FileName.BeforeLast(".")
                     If Dependencies.Any Then Yield $"{Dependencies.Count} 项前置"
                     If GameVersions.All(Function(v) Not v.Contains(".") OrElse {"w", "snapshot", "rc", "pre", "experimental", "-"}.Any(Function(s) v.ContainsIgnoreCase(s))) Then Yield $"游戏版本 {GameVersions.Join("、"c)}"
-                    If DownloadCount > 0 Then Yield $"下载 {If(DownloadCount > 100000, Math.Round(DownloadCount / 10000) & " 万", DownloadCount & " ")}次" 'CurseForge 的下载次数经常错误地返回 0
-                    Yield $"更新于 {GetTimeSpanString(ReleaseDate - Date.Now, False)}"
+                    If DownloadCount > 0 Then Yield $"下载 {If(DownloadCount > 100000, Math.Round(DownloadCount / 10000) & " 万", DownloadCount.ToString() + " ")}次" 'CurseForge 的下载次数经常错误地返回 0
+                    Yield $"更新于 {StringUtils.FormatTimeSpan(ReleaseDate - Date.Now, False)}"
                     If ReleaseType <> ReleaseTypes.Release Then Yield ReleaseTypeDisplay
                 End Function().Join("，"c)
 
                 '另存为按钮
                 If SaveAsButtonHandler IsNot Nothing Then
                     Dim BtnSave As New MyIconButton With {.Logo = Logo.IconButtonSave, .ToolTip = "另存为"}
-                    ToolTipService.SetPlacement(BtnSave, Primitives.PlacementMode.Center)
-                    ToolTipService.SetVerticalOffset(BtnSave, 30)
-                    ToolTipService.SetHorizontalOffset(BtnSave, 2)
                     AddHandler BtnSave.Click, SaveAsButtonHandler
                     .Buttons = {BtnSave}
                 End If
@@ -383,17 +379,18 @@ Public Class ResourceVersion
     ''' </summary>
     ''' <param name="LocalFileOrFolder">目标本地文件夹，或完整的文件路径。会自动判断类型。</param>
     Public Function ToNetFile(LocalFileOrFolder As String,
-        Optional TrackDownloadReason As DownloadReason? = Nothing, Optional TrackGameVersion As String = Nothing, Optional TrackLoader As ModLoaders = ModLoaders.None) As NetFile
+            Optional TrackDownloadReason As DownloadReason? = Nothing, Optional TrackGameVersion As String = Nothing, Optional TrackLoader As ModLoaders = ModLoaders.None) As NetFile
         Return New NetFile(
             ParseModrinthTrackArguments(DownloadUrls, TrackDownloadReason, TrackGameVersion, TrackLoader),
             LocalFileOrFolder & If(LocalFileOrFolder.EndsWithF("\"), FileName, ""),
-            New FileChecker(Hash:=Hash, ActualSize:=Size),
+            New FileChecker With {.Hash = Hash, .ActualSize = Size},
             SimulateBrowserHeaders:=True)
     End Function
     ''' <summary>
     ''' 添加 Modrinth 追踪参数。
     ''' </summary>
-    Public Shared Iterator Function ParseModrinthTrackArguments(Urls As List(Of String), Optional TrackDownloadReason As DownloadReason? = Nothing, Optional TrackGameVersion As String = Nothing, Optional TrackLoader As ModLoaders = ModLoaders.None) As IEnumerable(Of String)
+    Public Shared Iterator Function ParseModrinthTrackArguments(Urls As List(Of String),
+            Optional TrackDownloadReason As DownloadReason? = Nothing, Optional TrackGameVersion As String = Nothing, Optional TrackLoader As ModLoaders = ModLoaders.None) As IEnumerable(Of String)
         Dim Arguments As New Dictionary(Of String, String)
         If TrackDownloadReason IsNot Nothing Then Arguments.Add("mr_download_reason", TrackDownloadReason.ToString.Lower)
         If TrackGameVersion IsNot Nothing Then Arguments.Add("mr_game_version", TrackGameVersion)

@@ -1,4 +1,4 @@
-﻿Public Class PageOtherHelp
+Public Class PageOtherHelp
     Implements IRefreshable
 
 #Region "初始化"

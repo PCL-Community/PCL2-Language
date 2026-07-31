@@ -1,4 +1,4 @@
-﻿Public Class CrashAnalyzer
+Public Class CrashAnalyzer
 
     '构造函数
     Private TempFolder As String
@@ -24,7 +24,7 @@
         '简单收集可能的日志文件路径
         Dim PossibleLogs As New List(Of String)
         Try
-            PossibleLogs.AddRange(DirectoryUtils.GetFiles(VersionPathIndie & "crash-reports\"))
+            PossibleLogs.AddRange(DirectoryUtils.EnumerateFiles(VersionPathIndie & "crash-reports\", True))
         Catch ex As Exception
             Logger.Warn(ex, "收集 Minecraft 崩溃日志文件夹下的日志失败")
         End Try

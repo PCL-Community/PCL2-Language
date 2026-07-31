@@ -31,8 +31,8 @@
     <s:String x:Key="LangApplicationDialogTitleUnzipLauncher">尚未解压</s:String>
     <s:String x:Key="LangApplicationDialogContentUnzipLauncher">请将 PCL 从压缩包中解压之后再使用！
 如果不会解压，可以在网上寻找教程。</s:String>
-    <s:String x:Key="LangApplicationDialogContent32BitWarn">PCL 和新版 Minecraft 均不再支持 32 位系统，部分功能将无法使用。
-非常建议重装为 64 位系统后再进行游戏！</s:String>
+    <s:String x:Key="LangApplicationDialogTitle32BitWarn">环境警告</s:String>
+    <s:String x:Key="LangApplicationDialogContent32BitWarn">PCL 和新版 Minecraft 均不再支持 32 位系统，请重装为 64 位系统后再进行游戏！</s:String>
     <s:String x:Key="LangApplicationDialogTitleInitError">PCL 初始化错误</s:String>
     <s:String x:Key="LangApplicationDialogTitleNETWarn">运行环境错误</s:String>
     <s:String x:Key="LangApplicationDialogContentNETWarn">你的 .NET Framework 版本过低或损坏，请下载并重新安装 .NET Framework 4.6.2！
@@ -275,6 +275,7 @@
     <s:String x:Key="LangSetHomePagePresetPageN">Minecraft 更新摘要（作者：pynickle，部分由 AI 生成）</s:String>
     <s:String x:Key="LangSetHomePagePresetPageO">今日新闻热点（作者：EYicheng，部分由 AI 生成）</s:String>
     <s:String x:Key="LangSetHomePagePresetPageP">Minecraft 芝士站（作者：awaEric233，部分由 AI 生成）</s:String>
+    <s:String x:Key="LangSetHomePagePresetPageQ">Bangumi 番剧主页（作者：wzyaeu）</s:String>
     <s:String x:Key="LangSetFuncHidden">功能隐藏</s:String>
     <s:String x:Key="LangSetFuncHiddenToolTip">你可以隐藏不需要的页面或关闭特定功能。在任意界面按 F12 可以暂时显示被隐藏的功能。</s:String>
     <s:String x:Key="LangSetFuncHiddenLaunch">主页面</s:String>
@@ -707,6 +708,8 @@
     <s:String x:Key="LangMySkinCapeNameFounders">创始人披风</s:String>
     <s:String x:Key="LangMySkinCapeNameCopper">铜披风</s:String>
     <s:String x:Key="LangMySkinCapeNameZombieHorse">僵尸马披风</s:String>
+    <s:String x:Key="LangMySkinCapeNameBuilder">建造者披风</s:String>
+    <s:String x:Key="LangMySkinCapeNameCrafter">工匠披风</s:String>
     <s:String x:Key="LangMySkinCapeNameNone">无披风</s:String>
     <s:String x:Key="LangLaunchLeftInstanceChoose">版本选择</s:String>
     <s:String x:Key="LangLaunchLeftInstanceConfig">版本设置</s:String>
@@ -927,7 +930,7 @@
     <s:String x:Key="LangPageSetupLaunchLaunchMem">内存分配</s:String>
     <s:String x:Key="LangPageSetupLaunchLaunchMem32BitWarn">32 位 Java 只能分配最多 1 GB 的内存。强烈建议换用 64 位的 Java！</s:String>
     <s:String x:Key="LangPageSetupLaunchLaunchMemAutoAdjust">自动配置</s:String>
-    <s:String x:Key="LangPageSetupLaunchLaunchMemAutoAdjustToolTip">根据安装的 Mod 量与电脑剩余内存，动态调整为游戏分配的内存</s:String>
+    <s:String x:Key="LangPageSetupLaunchLaunchMemAutoAdjustToolTip">根据安装的 Mod 量与电脑剩余内存动态调整为游戏分配的内存</s:String>
     <s:String x:Key="LangPageSetupLaunchLaunchMemCustom">自定义</s:String>
     <s:String x:Key="LangPageSetupLaunchLaunchMemReduceMemBeforeLaunch">启动游戏前进行内存优化</s:String>
     <s:String x:Key="LangPageSetupLaunchLaunchMemReduceMemBeforeLaunchToolTip">内存优化能将当前物理内存占用降低约 1/3，不仅限于 MC！
@@ -996,7 +999,7 @@
     <s:String x:Key="LangPageSetupLaunchSkinEmptyFail">清空离线皮肤失败</s:String>
     <s:String x:Key="LangPageSetupLaunchMemAvailable">可用</s:String>
     <s:String x:Key="LangPageSetupLaunchJavaAutoChoice">自动选择（推荐）</s:String>
-    <s:String x:Key="LangPageSetupLaunchJavaUpdateListFail">更新设置 Java 下拉框失败</s:String>
+    <s:String x:Key="LangPageSetupLaunchJavaUpdateListFail">更新 Java 下拉框失败</s:String>
     <s:String x:Key="LangPageSetupLaunchJavaNoAvailableJava">未找到可用的 Java</s:String>
     <s:String x:Key="LangPageSetupLaunchJavaSearchingJava">正在搜索 Java，请稍候！</s:String>
     <s:String x:Key="LangPageSetupLaunchJavaAddedJava">已将该 Java 加入 Java 列表！</s:String>
@@ -1547,7 +1550,7 @@ PCL 不支持其他乱七八糟的下载协议。</s:String>
     <s:String x:Key="LangModValidateFileNoEndWithDot">文件名不能以小数点结尾！</s:String>
     <s:String x:Key="LangModValidateFileNoContain">文件名不可包含 % 字符！</s:String>
     <s:String x:Key="LangModValidateFileNoContent">文件名不可为 %！</s:String>
-    <s:String x:Key="LangModValidateFileNoSpecialName">文件名不能包含这一特殊格式！</s:String>
+    <s:String x:Key="LangModValidateFileNoSpecialName">文件夹名不可包含这一特殊格式！</s:String>
     <s:String x:Key="LangModValidateFileNoSameName">不可与现有文件重名！</s:String>
     <s:String x:Key="LangModValidateFileNoParentFolder">父文件夹不存在：{0}</s:String>
     <s:String x:Key="LangModValidateFileHeadUriIncorrect">文件夹路径头存在错误！</s:String>
@@ -1891,15 +1894,16 @@ PCL 不支持其他乱七八糟的下载协议。</s:String>
 如果还是不行，请在启动设置中增加为游戏分配的内存，并删除配置要求较高的材质、Mod、光影。
 如果依然不奏效，请在开始游戏前尽量关闭其他软件，或者……换台电脑？</s:String>
     <s:String x:Key="LangModCrashCrashReasonReasonAC">游戏因为使用 OpenJ9 而崩溃了。
-请在启动设置的 Java 选择一项中改用非 OpenJ9 的 Java，然后再启动游戏。</s:String>
+请在版本设置的 Java 选项中改用非 OpenJ9 的 Java，然后再启动游戏。</s:String>
     <s:String x:Key="LangModCrashCrashReasonReasonAD">游戏似乎因为使用 JDK，或 Java 版本过高而崩溃了。
-请在启动设置的 Java 选择一项中改用 JRE 8（Java 8），然后再启动游戏。
-如果你没有安装 JRE 8，你可以从网络中下载、安装一个。</s:String>
+请在版本设置的 Java 选项中改用 Java 8，然后再启动游戏。
+如果你没有安装 Java 8，可以从网络中下载、安装一个。</s:String>
     <s:String x:Key="LangModCrashCrashReasonReasonAE">游戏似乎因为你所使用的 Java 版本过高而崩溃了。
-请在启动设置的 Java 选择一项中改用较低版本的 Java，然后再启动游戏。
+请在版本设置的 Java 选项中改用较低版本的 Java，然后再启动游戏。
 如果没有，可以从网络中下载、安装一个。</s:String>
     <s:String x:Key="LangModCrashCrashReasonReasonAF">游戏不兼容你当前使用的 Java。
-如果没有合适的 Java，可以从网络中下载、安装一个。</s:String>
+请在版本设置的 Java 选项中改用合适版本的 Java，然后再启动游戏。
+如果你没有安装任何 Mod 并且因此崩溃，请向 PCL 提交反馈。</s:String>
     <s:String x:Key="LangModCrashCrashReasonReasonAG">由于有 Mod 的名称包含特殊字符，导致游戏崩溃。
 请尝试修改 Mod 文件名，让它只包含英文字母、数字、减号（-）、下划线（_）和小数点，然后再启动游戏。</s:String>
     <s:String x:Key="LangModCrashCrashReasonReasonAH">由于缺失 MixinBootstrap，导致游戏崩溃。

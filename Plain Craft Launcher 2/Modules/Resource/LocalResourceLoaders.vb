@@ -1,4 +1,4 @@
-﻿Public Module LocalResourceLoaders
+Public Module LocalResourceLoaders
 
     '加载 Mod 列表
     Public LocalResourceLoader As New LoaderTask(Of String, List(Of LocalResourceFile))("LocalResourceLoader", AddressOf LocalResourceFileLoad)
@@ -12,7 +12,7 @@
                 Try
                     RunInUiWait(Sub() If FrmInstanceMod IsNot Nothing Then FrmInstanceMod.Load.Text = "正在更新 Mod")
                     Do Until Not PageInstanceMod.UpdatingInstanceModFolders.Contains(Loader.Input)
-                        If Loader.IsInterrupted Then Return
+                        If Loader.IsCanceled Then Return
                         Thread.Sleep(100)
                     Loop
                 Finally
@@ -25,7 +25,7 @@
             Dim ModFileList As New List(Of String)
             If DirectoryUtils.Exists(Loader.Input) Then
                 Dim RawName As String = Loader.Input.Lower
-                For Each File In DirectoryUtils.GetFiles(Loader.Input)
+                For Each File In DirectoryUtils.EnumerateFiles(Loader.Input, True)
                     If File.BeforeLast("\").Lower & "\" <> RawName Then
                         '仅当 Forge 1.13- 且文件夹名与版本号相同时，才加载该子文件夹下的 Mod
                         If Not (PageInstanceLeft.Instance IsNot Nothing AndAlso PageInstanceLeft.Instance.Version.HasForge AndAlso
@@ -53,8 +53,8 @@
             Try
                 Dim CacheContent As String = FileUtils.TryReadAsString(CachePath)
                 If Not String.IsNullOrWhiteSpace(CacheContent) Then
-                    Cache = GetJson(CacheContent)
-                    If Not Cache.ContainsKey("version") OrElse Cache("version").ToObject(Of Integer) <> Versions.LOCAL_MOD_CACHE_VERSION Then
+                    Cache = CacheContent.DeserializeJson()
+                    If Not Cache.ContainsKey("version") OrElse Cache("version").ToObject(Of Integer) <> Versions.LocalModCacheVersion Then
                         Logger.Warn($"本地 Mod 信息缓存版本已过期，将弃用这些缓存信息")
                         Cache = New JObject
                     End If
@@ -63,12 +63,12 @@
                 Logger.Warn(ex, "读取本地 Mod 信息缓存失败，已重置")
                 Cache = New JObject
             End Try
-            Cache("version") = Versions.LOCAL_MOD_CACHE_VERSION
+            Cache("version") = Versions.LocalModCacheVersion
 
             '加载 Mod 列表
             Dim ModList As New List(Of LocalResourceFile)
             For Each ModFile In ModFileList
-                If Loader.IsInterrupted Then Return
+                If Loader.IsCanceled Then Return
                 Dim ModEntry As New LocalResourceFile(ModFile)
                 Dim DumpMod As LocalResourceFile = ModList.FirstOrDefault(Function(m) m.EnabledName = ModEntry.EnabledName) '存在两个文件，名称相同，但一个启用一个禁用
                 If DumpMod IsNot Nothing Then
@@ -88,7 +88,7 @@
             ModList = ModList.OrderBy(Function(m) m.File.Name).ToList
 
             '回设
-            If Loader.IsInterrupted Then Return
+            If Loader.IsCanceled Then Return
             Loader.Output = ModList
 
             '开始联网加载
@@ -109,7 +109,7 @@
         Dim ModLoaders = Loader.Input.Target.ModLoaders
         '读取缓存，获取需要更新的 Mod 列表
         For Each ModEntry As LocalResourceFile In Loader.Input.ModList
-            If Loader.IsInterrupted Then Return
+            If Loader.IsCanceled Then Return
             Dim CacheKey = ModEntry.ModrinthHash & Loader.Input.Target.VanillaName & ModLoaders
             If Cache.ContainsKey(CacheKey) Then
                 ModEntry.FromJson(Cache(CacheKey))
@@ -119,10 +119,7 @@
             Mods.Add(ModEntry)
         Next
         Logger.Info($"有 {Mods.Where(Function(m) m.Project Is Nothing).Count} 个 Mod 需要联网获取信息，{Mods.Where(Function(m) m.Project IsNot Nothing).Count} 个 Mod 需要更新信息")
-        If Not Mods.Any Then
-            Loader.Input.ModList.Where(Function(m) m.Version Is Nothing).ForAll(Sub(m) m.LoadMetadataFromJar())  '从 JAR 中获取缺失的版本信息（下面有另一个分支）
-            Return
-        End If
+        If Not Mods.Any Then Return
         '获取作为检查目标的加载器和版本
         '此处不应向下扩展检查的 MC 小版本，例如 Mod 在更新 1.16.5 后，对早期的 1.16.2 版本发布了修补补丁，这会导致 PCL 将 1.16.5 版本的 Mod 降级到 1.16.2
         Dim TargetMcVersion As McVersion = Loader.Input.Target
@@ -158,7 +155,7 @@
                         Entry.ProjectVersion.Version = File.Version '使用来自 Modrinth 的版本号
                     End If
                 Next
-                If Loader.IsInterruptedWithThread(CurrentTaskThread) Then Return
+                If Loader.IsCanceledWithThread(CurrentTaskThread) Then Return
                 Logger.Info($"需要从 Modrinth 获取 {ModrinthMapping.Count} 个本地 Mod 的工程信息")
                 '步骤 3：获取工程信息
                 If Not ModrinthMapping.Any() Then Return
@@ -211,7 +208,7 @@
                 Dim Hashes As New List(Of UInteger)
                 For Each Entry In Mods
                     Hashes.Add(Entry.CurseForgeHash)
-                    If Loader.IsInterruptedWithThread(CurrentTaskThread) Then Return
+                    If Loader.IsCanceledWithThread(CurrentTaskThread) Then Return
                 Next
                 Dim CurseForgeRaw As JContainer = DlModRequest("https://api.curseforge.com/v1/fingerprints/432", HttpMethod.Post,
                     $"{{""fingerprints"": [{Hashes.Join(",")}]}}", "application/json")("data")("exactMatches")
@@ -232,7 +229,7 @@
                         If Entry.ProjectVersion Is Nothing OrElse Entry.ProjectVersion.ReleaseDate < File.ReleaseDate Then Entry.ProjectVersion = File
                     Next
                 Next
-                If Loader.IsInterruptedWithThread(CurrentTaskThread) Then Return
+                If Loader.IsCanceledWithThread(CurrentTaskThread) Then Return
                 Logger.Info($"需要从 CurseForge 获取 {ProjectIdToLocalFiles.Count} 个本地 Mod 的工程信息")
                 If Not ProjectIdToLocalFiles.Any() Then Return
 
@@ -313,25 +310,23 @@
                 EndedThreadCount += 1
             End Try
         End Sub, "Mod List Detail Loader CurseForge")
-        '从 JAR 中获取缺失的版本信息（上面有另一个分支）
-        Loader.Input.ModList.Where(Function(m) m.Version Is Nothing).ForAll(Sub(m) m.LoadMetadataFromJar())
         '等待线程结束
         Do Until EndedThreadCount = 2
             Thread.Sleep(10)
-            If Loader.IsInterrupted Then Return
+            If Loader.IsCanceled Then Return
         Loop
         '保存缓存
         Mods = Mods.Where(Function(m) m.Project IsNot Nothing).ToList()
         Logger.Info($"联网获取本地 Mod 信息完成，为 {Mods.Count} 个 Mod 更新缓存")
         If Not Mods.Any() Then Return
-        If Loader.IsInterrupted Then Return
+        If Loader.IsCanceled Then Return
         For Each Entry In Mods
             Entry.OnlineDataLoaded = Not IsFailed
             Cache(Entry.ModrinthHash & VanillaVersion & ModLoaders) = Entry.ToJson()
         Next
         FileUtils.Write(PathTemp & "Cache\LocalMod.json", Cache.ToString(If(ModeDebug, Newtonsoft.Json.Formatting.Indented, Newtonsoft.Json.Formatting.None)))
         '刷新边栏
-        If Loader.IsInterrupted Then Return
+        If Loader.IsCanceled Then Return
         If FrmInstanceMod?.Filter = PageInstanceMod.FilterType.CanUpdate Then
             RunInUi(Sub() FrmInstanceMod?.RefreshUI()) '同步 “可更新” 列表 (#4677)
         Else

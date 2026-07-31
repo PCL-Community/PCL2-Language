@@ -1,4 +1,4 @@
-﻿''' <summary>
+''' <summary>
 ''' 社区资源的项目信息。
 ''' </summary>
 Public Class ResourceProject
@@ -88,7 +88,7 @@ Public Class ResourceProject
             If Not LoadedDatabase Then
                 LoadedDatabase = True
                 If Types.HasFlag(ResourceTypes.Mod) OrElse Types.HasFlag(ResourceTypes.DataPack) Then
-                    _WikiEntry = WikiEntry.All.FirstOrDefault(Function(c) If(Platform = ResourcePlatforms.CurseForge, c.CurseForgeSlug, c.ModrinthSlug) = Slug)
+                    _WikiEntry = WikiEntry.All.Value.FirstOrDefault(Function(c) c.Slugs.GetOrDefault(Platform) = Slug)
                 End If
             End If
             Return _WikiEntry
@@ -111,7 +111,7 @@ Public Class ResourceProject
     ''' </summary>
     Public ReadOnly Property TranslatedName As String
         Get
-            Return If(WikiEntry Is Nothing OrElse WikiEntry.ChineseName = "", RawName, WikiEntry.ChineseName)
+            Return If(WikiEntry?.ChineseName, RawName)
         End Get
     End Property
 
@@ -441,7 +441,7 @@ Public Class ResourceProject
         Json("Website") = Website
         Json("LastUpdate") = LastUpdate
         Json("DownloadCount") = DownloadCount
-        If ModLoaders <> ModLoaders.None Then Json("ModLoaders") = ModLoaders
+        If ModLoaders <> ModLoaders.None Then Json("ModLoaders") = CInt(ModLoaders)
         Json("Tags") = New JArray(Tags)
         If LogoUrl IsNot Nothing Then Json("LogoUrl") = LogoUrl
         If Drops.Any Then Json("Drops") = New JArray(Drops)
@@ -561,7 +561,7 @@ Public Class ResourceProject
                 NewItem.LabVersion.Text = ModLoaderDescriptionFull
             End If
             NewItem.LabSource.Text = Platform.ToString
-            NewItem.LabTime.Text = GetTimeSpanString(LastUpdate - Date.Now, True)
+            NewItem.LabTime.Text = StringUtils.FormatTimeSpan(LastUpdate - Date.Now, True)
             NewItem.LabDownload.Text =
                 If(DownloadCount > 100000000, Math.Round(DownloadCount / 100000000, 2) & " 亿",
                 If(DownloadCount > 100000, Math.Floor(DownloadCount / 10000) & " 万", DownloadCount))

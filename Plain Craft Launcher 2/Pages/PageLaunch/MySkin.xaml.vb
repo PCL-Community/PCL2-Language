@@ -1,4 +1,4 @@
-﻿Public Class MySkin
+Public Class MySkin
 
     '事件
     Public Event Click(sender As Object, e As MouseButtonEventArgs)
@@ -143,7 +143,7 @@
             End If
         Next
         If FrmLaunchLeft IsNot Nothing AndAlso HasLoaderRunning Then
-            '由于 Interrupt 不是实时的，暂时不会释放文件，会导致删除报错，故只能取消执行
+            '由于取消不是实时的，暂时不会释放文件，会导致删除报错，故只能取消执行
             Hint(GetLang("LangMySkinHintExistSkinFileGetTask"), HintType.Blue)
         Else
             RunInThread(
@@ -231,7 +231,7 @@ Retry:
                 End If
                 Dim AccessToken As String = McLoginMsLoader.Output.AccessToken
                 Dim Uuid As String = McLoginMsLoader.Output.Uuid
-                Dim SkinData As JObject = GetJson(McLoginMsLoader.Output.ProfileJson)
+                Dim SkinData As JObject = McLoginMsLoader.Output.ProfileJson.DeserializeJson()
                 '获取玩家的所有披风
                 Dim SelectedIndex As Integer? = Nothing
                 RunInUiWait(
@@ -245,7 +245,7 @@ Retry:
                             {"Cherry Blossom", GetLang("LangMySkinCapeNameCherryBlossom")}, {"15th Anniversary", GetLang("LangMySkinCapeName15th-Anniversary")}, {"Purple Heart", GetLang("LangMySkinCapeNamePurpleHeart")},
                             {"Follower's", GetLang("LangMySkinCapeNameFollower's")}, {"MCC 15th Year", GetLang("LangMySkinCapeNameMCC15thYear")}, {"Minecraft Experience", GetLang("LangMySkinCapeNameMinecraftExperience")},
                             {"Mojang Office", GetLang("LangMySkinCapeNameMojangOffice")}, {"Home", GetLang("LangMySkinCapeNameHome")}, {"Menace", GetLang("LangMySkinCapeNameMenace")}, {"Yearn", GetLang("LangMySkinCapeNameYearn")},
-                            {"Common", GetLang("LangMySkinCapeNameCommon")}, {"Pan", GetLang("LangMySkinCapeNamePan")}, {"Founder's", GetLang("LangMySkinCapeNameFounders")}, {"Copper", GetLang("LangMySkinCapeNameCopper")}, {"Zombie Horse", GetLang("LangMySkinCapeNameZombieHorse")}
+                            {"Common", GetLang("LangMySkinCapeNameCommon")}, {"Pan", GetLang("LangMySkinCapeNamePan")}, {"Founder's", GetLang("LangMySkinCapeNameFounders")}, {"Copper", GetLang("LangMySkinCapeNameCopper")}, {"Zombie Horse", GetLang("LangMySkinCapeNameZombieHorse")}, {"Builder", GetLang("LangMySkinCapeNameBuilder")}, {"Crafter", GetLang("LangMySkinCapeNameCrafter")}
                         }
                         Dim SelectionControl As New List(Of IMyRadio) From {
                             New MyRadioBox With {.Text = GetLang("LangMySkinCapeNameNone"), .Checked = Not SkinData("capes").Any(Function(c) c("state")?.ToString = "ACTIVE")}}
@@ -267,7 +267,7 @@ Retry:
                     ContentType:="application/json",
                     Headers:={{"Authorization", "Bearer " & AccessToken}})
                 If Result.Contains("""errorMessage""") Then
-                    Hint(GetLang("LangMySkinHintChangeCapeFail") & ":" & GetJson(Result)("errorMessage").ToString, HintType.Red)
+                    Hint(GetLang("LangMySkinHintChangeCapeFail") & ":" & Result.DeserializeJson()("errorMessage").ToString, HintType.Red)
                     Return
                 Else
                     Hint(GetLang("LangMySkinHintChangeCapeSuccess"), HintType.Green)
@@ -277,6 +277,7 @@ Retry:
                     Next
                     If SelectedIndex > 0 Then SkinData("capes")(SelectedIndex - 1)("state") = "ACTIVE"
                     McLoginMsLoader.Output.ProfileJson = SkinData.ToString()
+                    Settings.Set("CacheMsV2ProfileJson", McLoginMsLoader.Output.ProfileJson)
                 End If
             Catch ex As Exception
                 If TypeOf ex Is HttpRequestCodeException Then
@@ -285,10 +286,10 @@ Retry:
                         Case HttpStatusCode.BadRequest
                             Logger.Warn(ex, "更改披风时遭遇 400 错误")
                             If requestException.Response?.Contains("""error""") Then
-                                Hint(GetLang("LangMySkinHintChangeCapeFail") & ": " & GetJson(requestException.Response)("error").ToString, HintType.Red)
+                                Hint(GetLang("LangMySkinHintChangeCapeFail") & ": " & requestException.Response.DeserializeJson()("error").ToString, HintType.Red)
                                 Return
                             ElseIf requestException.Response?.Contains("""errorMessage""") Then
-                                Hint(GetLang("LangMySkinHintChangeCapeFail") & ": " & GetJson(requestException.Response)("errorMessage").ToString, HintType.Red)
+                                Hint(GetLang("LangMySkinHintChangeCapeFail") & ": " & requestException.Response.DeserializeJson()("errorMessage").ToString, HintType.Red)
                                 Return
                             End If
                         Case HttpStatusCode.Unauthorized
