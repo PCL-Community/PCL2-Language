@@ -1,4 +1,4 @@
-﻿Public Class MyImage
+Public Class MyImage
     Inherits Image
 
 #Region "公开属性"

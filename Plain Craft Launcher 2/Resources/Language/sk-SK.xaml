@@ -1,7 +1,4 @@
-﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:s="clr-namespace:System;assembly=mscorlib"
-        xml:space="preserve">
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:s="clr-namespace:System;assembly=mscorlib" xml:space="preserve">
     <s:String x:Key="LangTaskAbort">Zrušené!</s:String>
     <s:String x:Key="LangDialogBtnOK">OK</s:String>
     <s:String x:Key="LangDialogBtnCancel">Zrušiť</s:String>
@@ -29,6 +26,7 @@ Error Cause: {0}</s:String>
     <s:String x:Key="LangApplicationDialogTitleUnzipLauncher">Upozornenie prostredia</s:String>
     <s:String x:Key="LangApplicationDialogContentUnzipLauncher">Prosím, extrahujte súbor PCL z komprimovaného archívu alebo zmeňte priečinok pred pokračovaním v používaní!
 Program sa momentálne spúšťa v dočasnom priečinku a nastavenia, uložené hry a pod. nemusia byť uložené a niektoré funkcie nemusia byť dostupné.</s:String>
+    <s:String x:Key="LangApplicationDialogTitle32BitWarn">环境警告</s:String>
     <s:String x:Key="LangApplicationDialogContent32BitWarn">PCL a nové verzie Minecraftu už nepodporujú 32-bitové systémy a niektoré funkcie nemusia byť dostupné.
 Dôrazne sa odporúča preinštalovať na 64-bitový systém pred pokračovaním v hraní!</s:String>
     <s:String x:Key="LangApplicationDialogTitleInitError">Initialization Error</s:String>
@@ -271,6 +269,7 @@ Ak ste vytvorili stabilnú online domovskú stránku, môžete kliknutím na ten
     <s:String x:Key="LangSetHomePagePresetPageN">Minecraft 更新摘要（作者：pynickle，部分由 AI 生成）</s:String>
     <s:String x:Key="LangSetHomePagePresetPageO">今日新闻热点（作者：EYicheng，部分由 AI 生成）</s:String>
     <s:String x:Key="LangSetHomePagePresetPageP">Minecraft 芝士站（作者：awaEric233，部分由 AI 生成）</s:String>
+    <s:String x:Key="LangSetHomePagePresetPageQ">Bangumi 番剧主页（作者：wzyaeu）</s:String>
     <s:String x:Key="LangSetFuncHidden">Skrytie funkcií</s:String>
     <s:String x:Key="LangSetFuncHiddenToolTip">Môžete skryť nepotrebné stránky alebo zakázať konkrétne funkcie. Stlačením klávesy "F12" v akomkoľvek rozhraní môžete dočasne zobraziť skryté funkcie.</s:String>
     <s:String x:Key="LangSetFuncHiddenLaunch">Hlavné rozhranie</s:String>
@@ -674,6 +673,7 @@ Prosím, skontrolujte internet a potom sa znovu pokúste.</s:String>
     <s:String x:Key="LangMySkinHintGettingCape">Získavanie zoznamu plášťov, prosím čakajte...</s:String>
     <s:String x:Key="LangMySkinDialogChooseCape">Vyberte si plášť</s:String>
     <s:String x:Key="LangMySkinHintChangeCapeFail">Nepodarilo sa zmeniť plášť.</s:String>
+    <s:String x:Key="LangMySkinHintChangeCapeFailTimeout">更改披风失败：连接 Mojang 服务器超时，请稍后再试，或使用 VPN 改善网络环境</s:String>
     <s:String x:Key="LangMySkinHintChangeCapeSuccess">Plášť bol úspešne zmenený!</s:String>
     <s:String x:Key="LangMySkinCapeNameMigrator">Plášť Migrator</s:String>
     <s:String x:Key="LangMySkinCapeNameMapMaker">Plášť MapMaker</s:String>
@@ -702,6 +702,8 @@ Prosím, skontrolujte internet a potom sa znovu pokúste.</s:String>
     <s:String x:Key="LangMySkinCapeNameFounders">创始人披风</s:String>
     <s:String x:Key="LangMySkinCapeNameCopper">铜披风</s:String>
     <s:String x:Key="LangMySkinCapeNameZombieHorse">僵尸马披风</s:String>
+    <s:String x:Key="LangMySkinCapeNameBuilder">建造者披风</s:String>
+    <s:String x:Key="LangMySkinCapeNameCrafter">工匠披风</s:String>
     <s:String x:Key="LangMySkinCapeNameNone">Žiadny</s:String>
     <s:String x:Key="LangLaunchLeftInstanceChoose">Výber</s:String>
     <s:String x:Key="LangLaunchLeftInstanceConfig">Vlastnosti</s:String>
@@ -737,8 +739,6 @@ Prosím, skontrolujte internet a potom sa znovu pokúste.</s:String>
     <s:String x:Key="LangLaunchLeftExceptionModpackInstallFail">Automatická inštalácia balíka zlyhala: {0}</s:String>
     <s:String x:Key="LangLaunchRightSnapshot">Tip snapshotu</s:String>
     <s:String x:Key="LangLaunchRightLog">Log spustenia</s:String>
-    <s:String x:Key="LangLaunchRightLabHint1">Verzia snapshot obsahuje testované funkcie, ktoré neboli oficiálne vydané a je dostupná iba sponzorom. Prosím, neposielajte ju nikomu inému ani nepoužívajte na vytváranie modpackov!</s:String>
-    <s:String x:Key="LangLaunchRightLabHint2">Ak sa vám nahromadí sponzorstvo ¥23.33, môžete touto funkciu navždy skryť, ak pošlete správu s termínom "odemknutie kódu" (Unlock Code) vývojárovi na Afdian.</s:String>
     <s:String x:Key="LangLaunchRightLoadingPage">Načítavanie úvodnej stránky...</s:String>
     <s:String x:Key="LangLaunchRightPageTips">Zaujímavosti</s:String>
     <s:String x:Key="LangLaunchRightPageEcho">Echo díra</s:String>
@@ -776,6 +776,7 @@ Originálna chybová správa: </s:String>
     <s:String x:Key="LangPageLoginMsSkinSkinChange">Zmeniť kožu</s:String>
     <s:String x:Key="LangPageLoginMsSkinSkinSave">Uložiť kožu</s:String>
     <s:String x:Key="LangPageLoginMsSkinSkinRefresh">Obnoviť</s:String>
+    <s:String x:Key="LangPageLoginMsSkinRefresh">刷新皮肤</s:String>
     <s:String x:Key="LangPageLoginMsSkinCapeChange">Zmeniť plášť</s:String>
     <s:String x:Key="LangPageLoginMsSkinInfoChange">Upraviť informácie</s:String>
     <s:String x:Key="LangPageLoginMsSkinInfoChangePassword">Upraviť heslo</s:String>
@@ -919,8 +920,14 @@ Toto spôsobí, že uložené, ktoré nie sú zdieľané medzi Vanilla inštanci
     <s:String x:Key="LangPageSetupLaunchLaunchJava">Java</s:String>
     <s:String x:Key="LangPageSetupLaunchLaunchJavaToolTip">Umieštenie Java do priečinka hry alebo PCL, aby PCL vybral túto Java prednostne.</s:String>
     <s:String x:Key="LangPageSetupLaunchLaunchJavaLoading">Načítavanie...</s:String>
-    <s:String x:Key="LangPageSetupLaunchLaunchJavaAutoSearch">Hľadať</s:String>
-    <s:String x:Key="LangPageSetupLaunchLaunchJavaImport">Importovať</s:String>
+    <s:String x:Key="LangPageSetupLaunchLaunchJavaDescDisplay">共有 {0} 个 Java …</s:String>
+    <s:String x:Key="LangPageSetupLaunchLaunchJavaNoJava">未找到 Java，点击以导入已有的 Java</s:String>
+    <s:String x:Key="LangPageSetupLaunchLaunchJavaHintClickArrow2Sort">点击选项右侧的箭头可以进行排序，以控制 PCL 优先选择哪个 Java！</s:String>
+    <s:String x:Key="LangPageSetupLaunchLaunchJavaBtnMakeGreater">提高优先级</s:String>
+    <s:String x:Key="LangPageSetupLaunchLaunchJavaBtnMakeLess">降低优先级</s:String>
+    <s:String x:Key="LangPageSetupLaunchLaunchJavaTooltipRemoveItem">从列表中移除</s:String>
+    <s:String x:Key="LangPageSetupLaunchLaunchJavaTooltipUnableRemoveOfficialJava">无法移除官方 Java</s:String>
+    <s:String x:Key="LangPageSetupLaunchLaunchJavaBtnImportExistJava">导入电脑中已有的 Java…</s:String>
     <s:String x:Key="LangPageSetupLaunchLaunchMem">Pamäť hry</s:String>
     <s:String x:Key="LangPageSetupLaunchLaunchMem32BitWarn">32-bit Java môže alokovať maximálne 1 GB pamäti. Odporúča sa inštalácia 64-bit Java!</s:String>
     <s:String x:Key="LangPageSetupLaunchLaunchMemAutoAdjust">Automatické</s:String>
@@ -978,10 +985,36 @@ Nepoužívajte to, ak nie sú relevantné súbory modifikované.</s:String>
     <s:String x:Key="LangPageSetupLaunchLaunchAdvanceOptionsDisableJLW">禁用 Java Launch Wrapper</s:String>
     <s:String x:Key="LangPageSetupLaunchLaunchAdvanceOptionsDisableJLWToolTip">PCL 会使用 Java Launch Wrapper 来修复老版本 Java 在中文路径下无法启动的问题。
 如果这被反作弊拦截，或遇到其他问题，也可以将其关闭。</s:String>
+    <s:String x:Key="LangPageSetupLaunchLaunchAdvanceOptionsDisableLUA">禁用 LWJGL Unsafe Agent</s:String>
+    <s:String x:Key="LangPageSetupLaunchLaunchAdvanceOptionsDisableLUAToolTip">是否使用 LWJGL Unsafe Agent 修复 LWJGL 3.4.1 的一个性能问题。
+详见：https://github.com/HMCL-dev/lwjgl-unsafe-agent</s:String>
     <s:String x:Key="LangPageSetupLaunchLaunchAdvanceOptionsGPUPerfence">要求 Java 使用高性能显卡</s:String>
     <s:String x:Key="LangPageSetupLaunchLaunchAdvanceOptionsGPUPerfenceToolTip">自动在 Windows 设置 → 系统 → 屏幕 → 显示卡 中将 Java 改为使用高性能显卡。
 如果电脑同时有集显和独显，这能确保 MC 使用独显进行渲染，以大幅提高性能。</s:String>
     <s:String x:Key="LangPageSetupLaunchLaunchAdvanceOptionsMoreTips">版本独立设置中还有更多高级选项可供调整。</s:String>
+    <s:String x:Key="LangPageSetupLaunchLaunchAdvanceOptionsMemoryManagement">内存管理</s:String>
+    <s:String x:Key="LangPageSetupLaunchLaunchAdvanceOptionsGCZGC">尽量使用 ZGC</s:String>
+    <s:String x:Key="LangPageSetupLaunchLaunchAdvanceOptionsGCZGCToolTip">在 Java 21+ 使用分代 ZGC，20~15 使用非分代的 ZGC，14- 使用 G1GC。
+ZGC 的内存占用比 G1GC 更高，不过在回收内存时不会导致卡顿。
+覆盖 "Java 虚拟机参数" 设置中的 GC 相关参数。</s:String>
+    <s:String x:Key="LangPageSetupLaunchLaunchAdvanceOptionsGCGenZGC">尽量使用分代 ZGC</s:String>
+    <s:String x:Key="LangPageSetupLaunchLaunchAdvanceOptionsGCGenZGCToolTip">在 Java 21+ 使用分代 ZGC，20- 使用 G1GC。
+ZGC 的内存占用比 G1GC 更高，不过在回收内存时不会导致卡顿。
+覆盖 "Java 虚拟机参数" 设置中的 GC 相关参数。</s:String>
+    <s:String x:Key="LangPageSetupLaunchLaunchAdvanceOptionsGCStandardG1GC">标准 G1GC</s:String>
+    <s:String x:Key="LangPageSetupLaunchLaunchAdvanceOptionsGCStandardG1GCToolTip">总是使用 G1GC，附带 Mojang 官方的优化参数。
+G1GC 的内存占用比 ZGC 更低，但在回收内存时会导致突然的卡顿。
+覆盖 "Java 虚拟机参数" 设置中的 GC 相关参数。</s:String>
+    <s:String x:Key="LangPageSetupLaunchLaunchAdvanceOptionsGCTunedG1GC">调优 G1GC</s:String>
+    <s:String x:Key="LangPageSetupLaunchLaunchAdvanceOptionsGCTunedG1GCToolTip">总是使用 G1GC，附带 PCL 调优过的优化参数。
+G1GC 的内存占用比 ZGC 更低，但在回收内存时会导致突然的卡顿。
+覆盖 "Java 虚拟机参数" 设置中的 GC 相关参数。</s:String>
+    <s:String x:Key="LangPageSetupLaunchLaunchAdvanceOptionsGCCustom">不指定（可自定义）</s:String>
+    <s:String x:Key="LangPageSetupLaunchLaunchAdvanceOptionsGCCustomToolTip">不自动添加 GC 参数。
+仅当选择此项时，你可以在 "Java 虚拟机参数" 设置中手动添加 GC 参数。</s:String>
+    <s:String x:Key="LangPageSetupLaunchLaunchAdvanceOptionsDisableLWJGL">禁用 LWJGL Unsafe Agent</s:String>
+    <s:String x:Key="LangPageSetupLaunchLaunchAdvanceOptionsDisableLWJGLToolTip">是否使用 LWJGL Unsafe Agent 修复 LWJGL 3.4.1 的一个性能问题。
+详见：https://github.com/HMCL-dev/lwjgl-unsafe-agent</s:String>
     <s:String x:Key="LangPageSetupLaunchGotoVersionSetting">版本独立设置</s:String>
     <s:String x:Key="LangPageSetupLaunchReloadByError">V nastaveniach spustenia nastala chyba a boli automaticky resetované.</s:String>
     <s:String x:Key="LangPageSetupLaunchReloadFail">Pri znovunačítaní nastavení spustenia nastala chyba.</s:String>
@@ -1441,6 +1474,7 @@ Prosím, skontrolujte, či je typ udalosti správne vyplnený, či je PCL najnov
     <s:String x:Key="LangModMinecraftUnknownError">Nastala neznáma chyba, prosím, nahláste tento problém autorovi.</s:String>
     <s:String x:Key="LangModMinecraftNideAuth">Unifikovaná autentifikácia</s:String>
     <s:String x:Key="LangModMinecraftAuthlibAuth">Autentifikácia Authlib</s:String>
+    <s:String x:Key="LangModMinecraftFoolName26w14a">为什么需要物品栏？让方块们跟着你走吧！</s:String>
     <s:String x:Key="LangModMinecraftFoolName24w14potato">Jedovaté zemiaky boli vždy prehliadnuté a podceňované, takže sme ich supermocili!</s:String>
     <s:String x:Key="LangModMinecraftFoolName25w14craftmine">你可以合成任何东西——包括合成你的世界！</s:String>
     <s:String x:Key="LangModMinecraftFoolName23w13ab">Výskum ukázal: hráči sa radi rozhodujú—the more, the better!</s:String>
@@ -1732,6 +1766,11 @@ Ak táto možnosť nie je dostupná, prosím, vyberte "Nastaviť heslo", a prihl
     <s:String x:Key="LangModModpackTaskExtraModpack">Extrahujte modpack</s:String>
     <s:String x:Key="LangModModpackTaskGetModDownloadInfo">Získajte informácie o stiahnutí modov</s:String>
     <s:String x:Key="LangModModpackExceptionOnlineModDeleted">Nemôžem inštalovaliť modpack, pretože niektoré vyžadované mody boli odstránené autorom. Prosím, kontaktujte autora modpacku, aby aktualizoval mody v modpacku.</s:String>
+    <s:String x:Key="LangModModpackDialogTitleOnlineModDeleted">整合包内容缺失</s:String>
+    <s:String x:Key="LangModModpackDialogContentOnlineModDeleted">未找到该整合包所需的以下内容，它们可能已被原作者删除：
+{0}
+
+是否继续安装？缺失这些内容可能导致整合包出现异常！</s:String>
     <s:String x:Key="LangModModpackTaskInitModDownloadInfo">Pripravte informácie o stiahnutí modov</s:String>
     <s:String x:Key="LangModModpackDialogContentDownloadOptionalFile">Chcete stiahnuť nepovinné súbory {0} z modpacku?</s:String>
     <s:String x:Key="LangModModpackDialogTitleDownloadOptionalFile">Stiahnite nepovinné súbory</s:String>
@@ -2156,6 +2195,7 @@ Môžete tiež pristupovať k {1} na inom zariadení a zadať kód.</s:String>
 {1}</s:String>
     <s:String x:Key="LangPageVersionExportSelectExportPath">选择导出位置</s:String>
     <s:String x:Key="LangPageVersionExportSelectExportModpackFile">整合包文件(*{0})|*{1}</s:String>
+    <s:String x:Key="LangPageVersionExportSelectExportZipFile">压缩包文件</s:String>
     <s:String x:Key="LangPageVersionExportTaskDownloadPCL">下载 PCL 正式版</s:String>
     <s:String x:Key="LangPageVersionExportTaskCopyFiles">复制导出内容</s:String>
     <s:String x:Key="LangPageVersionExportHintFolderInConfigNotFound">未找到配置文件中指定的文件夹：{0}</s:String>

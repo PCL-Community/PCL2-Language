@@ -1,7 +1,4 @@
-﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:s="clr-namespace:System;assembly=mscorlib"
-        xml:space="preserve">
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:s="clr-namespace:System;assembly=mscorlib" xml:space="preserve">
     <s:String x:Key="LangTaskAbort">Ακυρώθηκε!</s:String>
     <s:String x:Key="LangDialogBtnOK">Εντάξει</s:String>
     <s:String x:Key="LangDialogBtnCancel">Ακύρωση</s:String>
@@ -29,6 +26,7 @@
     <s:String x:Key="LangApplicationDialogTitleUnzipLauncher">Περιβαλλοντική Προειδοποίηση</s:String>
     <s:String x:Key="LangApplicationDialogContentUnzipLauncher">Εξαγάγετε το PCL από το συμπιεσμένο αρχείο ή μετακινήστε το σε διαφορετικό φάκελο πριν συνεχίσετε να χρησιμοποιείτε!
 Το πρόγραμμα εκτελείται αυτήν τη στιγμή σε προσωρινό φάκελο, ενδέχεται να μην αποθηκευτούν ρυθμίσεις, αποθηκεύσεις κ.λπ. και ορισμένες λειτουργίες ενδέχεται να μην είναι διαθέσιμες.</s:String>
+    <s:String x:Key="LangApplicationDialogTitle32BitWarn">环境警告</s:String>
     <s:String x:Key="LangApplicationDialogContent32BitWarn">Το PCL και η νεότερη έκδοση του Minecraft δεν υποστηρίζουν πλέον συστήματα 32-bit, ορισμένες λειτουργίες δεν θα είναι διαθέσιμες.
 Συνιστάται ιδιαίτερα η επανεγκατάσταση του παιχνιδιού μετά τη μετάβαση σε σύστημα 64-bit!</s:String>
     <s:String x:Key="LangApplicationDialogTitleInitError">PCL Σφάλμα Αρχικοποίησης</s:String>
@@ -271,6 +269,7 @@
     <s:String x:Key="LangSetHomePagePresetPageN">Σύνοψη ενημέρωσης Minecraft (Συγγραφέας: pynickle, εν μέρει AIGC)</s:String>
     <s:String x:Key="LangSetHomePagePresetPageO">Κύρια νέα της ημέρας (Συγγραφέας: EYicheng, εν μέρει AIGC)</s:String>
     <s:String x:Key="LangSetHomePagePresetPageP">Σταθμός γνώσης Minecraft (Συγγραφέας: awaEric233, εν μέρει AIGC)</s:String>
+    <s:String x:Key="LangSetHomePagePresetPageQ">Bangumi 番剧主页（作者：wzyaeu）</s:String>
     <s:String x:Key="LangSetFuncHidden">Απόκρυψη Λειτουργιών</s:String>
     <s:String x:Key="LangSetFuncHiddenToolTip">Μπορείτε να αποκρύψετε περιττές σελίδες ή να απενεργοποιήσετε συγκεκριμένες λειτουργίες. Πατήστε «F12» σε οποιαδήποτε διεπαφή για να εμφανιστούν προσωρινά οι κρυφές λειτουργίες.</s:String>
     <s:String x:Key="LangSetFuncHiddenLaunch">Κύρια Διεπαφή</s:String>
@@ -674,6 +673,7 @@
     <s:String x:Key="LangMySkinHintGettingCape">Λήψη της λίστας με τις μανδύας, περιμένετε...</s:String>
     <s:String x:Key="LangMySkinDialogChooseCape">Επιλέξτε ένα Μανδύα</s:String>
     <s:String x:Key="LangMySkinHintChangeCapeFail">Απέτυχε η αλλαγή του ακρωτηρίου.</s:String>
+    <s:String x:Key="LangMySkinHintChangeCapeFailTimeout">更改披风失败：连接 Mojang 服务器超时，请稍后再试，或使用 VPN 改善网络环境</s:String>
     <s:String x:Key="LangMySkinHintChangeCapeSuccess">Το μανδύα άλλαξε με επιτυχία!</s:String>
     <s:String x:Key="LangMySkinCapeNameMigrator">Μανδύα Μεταναστών</s:String>
     <s:String x:Key="LangMySkinCapeNameMapMaker">Μανδύα Realms MapMaker</s:String>
@@ -702,6 +702,8 @@
     <s:String x:Key="LangMySkinCapeNameFounders">创始人披风</s:String>
     <s:String x:Key="LangMySkinCapeNameCopper">铜披风</s:String>
     <s:String x:Key="LangMySkinCapeNameZombieHorse">僵尸马披风</s:String>
+    <s:String x:Key="LangMySkinCapeNameBuilder">建造者披风</s:String>
+    <s:String x:Key="LangMySkinCapeNameCrafter">工匠披风</s:String>
     <s:String x:Key="LangMySkinCapeNameNone">Κανένα</s:String>
     <s:String x:Key="LangLaunchLeftInstanceChoose">Επιλογή</s:String>
     <s:String x:Key="LangLaunchLeftInstanceConfig">Ιδιότητες</s:String>
@@ -737,8 +739,6 @@
     <s:String x:Key="LangLaunchLeftExceptionModpackInstallFail">自动安装整合包失败：{0}</s:String>
     <s:String x:Key="LangLaunchRightSnapshot">Συμβουλή Στιγμιότυπου</s:String>
     <s:String x:Key="LangLaunchRightLog">Ημερολόγιο Εκκίνησης</s:String>
-    <s:String x:Key="LangLaunchRightLabHint1">Η έκδοση στιγμιότυπου περιέχει δοκιμαστικές δυνατότητες που δεν κυκλοφορούν επίσημα και είναι διαθέσιμη μόνο στον χορηγό. Μην το στείλετε σε κανέναν άλλον και μην το χρησιμοποιήσετε για να δημιουργήσετε modpacks!</s:String>
-    <s:String x:Key="LangLaunchRightLabHint2">Εάν έχετε συγκεντρώσει χορηγία 23,33 ¥, μπορείτε να αποκρύψετε οριστικά αυτήν την υπόδειξη στέλνοντας μήνυμα στον προγραμματιστή στο Afdian τον όρο «解锁码» (Κωδικός ξεκλειδώματος).</s:String>
     <s:String x:Key="LangLaunchRightLoadingPage">Φόρτωση Αρχικής Σελίδας...</s:String>
     <s:String x:Key="LangLaunchRightPageTips">Πρωτότυπα</s:String>
     <s:String x:Key="LangLaunchRightPageEcho">Ηχώ Τρύπα</s:String>
@@ -776,6 +776,7 @@
     <s:String x:Key="LangPageLoginMsSkinSkinChange">Αλλαγή Εμφάνισης</s:String>
     <s:String x:Key="LangPageLoginMsSkinSkinSave">Αποθήκευση Δέρματος</s:String>
     <s:String x:Key="LangPageLoginMsSkinSkinRefresh">Ανανέωση</s:String>
+    <s:String x:Key="LangPageLoginMsSkinRefresh">刷新皮肤</s:String>
     <s:String x:Key="LangPageLoginMsSkinCapeChange">Αλλαγή Μανδύα</s:String>
     <s:String x:Key="LangPageLoginMsSkinInfoChange">Επεξεργασία Πληροφοριών</s:String>
     <s:String x:Key="LangPageLoginMsSkinInfoChangePassword">Επεξεργασία Κωδικού Πρόσβασης</s:String>
@@ -919,8 +920,14 @@ Email για Αναφορά Παράνομης και Παράτυπης Συμ�
     <s:String x:Key="LangPageSetupLaunchLaunchJava">Java</s:String>
     <s:String x:Key="LangPageSetupLaunchLaunchJavaToolTip">Τοποθετήστε Java στο φάκελο του παιχνιδιού ή στον φάκελο PCL για να κάνετε το PCL να το επιλέξει εκ των προτέρων.</s:String>
     <s:String x:Key="LangPageSetupLaunchLaunchJavaLoading">Φόρτωση...</s:String>
-    <s:String x:Key="LangPageSetupLaunchLaunchJavaAutoSearch">Αναζήτηση</s:String>
-    <s:String x:Key="LangPageSetupLaunchLaunchJavaImport">Εισαγωγή</s:String>
+    <s:String x:Key="LangPageSetupLaunchLaunchJavaDescDisplay">共有 {0} 个 Java …</s:String>
+    <s:String x:Key="LangPageSetupLaunchLaunchJavaNoJava">未找到 Java，点击以导入已有的 Java</s:String>
+    <s:String x:Key="LangPageSetupLaunchLaunchJavaHintClickArrow2Sort">点击选项右侧的箭头可以进行排序，以控制 PCL 优先选择哪个 Java！</s:String>
+    <s:String x:Key="LangPageSetupLaunchLaunchJavaBtnMakeGreater">提高优先级</s:String>
+    <s:String x:Key="LangPageSetupLaunchLaunchJavaBtnMakeLess">降低优先级</s:String>
+    <s:String x:Key="LangPageSetupLaunchLaunchJavaTooltipRemoveItem">从列表中移除</s:String>
+    <s:String x:Key="LangPageSetupLaunchLaunchJavaTooltipUnableRemoveOfficialJava">无法移除官方 Java</s:String>
+    <s:String x:Key="LangPageSetupLaunchLaunchJavaBtnImportExistJava">导入电脑中已有的 Java…</s:String>
     <s:String x:Key="LangPageSetupLaunchLaunchMem">Μνήμη Μαιχνιδιού</s:String>
     <s:String x:Key="LangPageSetupLaunchLaunchMem32BitWarn">Η Java 32-bit μπορεί να εκχωρήσει μόνο έως και 1 GB μνήμης. Συνιστάται η εγκατάσταση Java 64-bit!</s:String>
     <s:String x:Key="LangPageSetupLaunchLaunchMemAutoAdjust">Αυτόματη</s:String>
@@ -978,10 +985,36 @@ Email για Αναφορά Παράνομης και Παράτυπης Συμ�
     <s:String x:Key="LangPageSetupLaunchLaunchAdvanceOptionsDisableJLW">禁用 Java Launch Wrapper</s:String>
     <s:String x:Key="LangPageSetupLaunchLaunchAdvanceOptionsDisableJLWToolTip">PCL 会使用 Java Launch Wrapper 来修复老版本 Java 在中文路径下无法启动的问题。
 如果这被反作弊拦截，或遇到其他问题，也可以将其关闭。</s:String>
+    <s:String x:Key="LangPageSetupLaunchLaunchAdvanceOptionsDisableLUA">禁用 LWJGL Unsafe Agent</s:String>
+    <s:String x:Key="LangPageSetupLaunchLaunchAdvanceOptionsDisableLUAToolTip">是否使用 LWJGL Unsafe Agent 修复 LWJGL 3.4.1 的一个性能问题。
+详见：https://github.com/HMCL-dev/lwjgl-unsafe-agent</s:String>
     <s:String x:Key="LangPageSetupLaunchLaunchAdvanceOptionsGPUPerfence">要求 Java 使用高性能显卡</s:String>
     <s:String x:Key="LangPageSetupLaunchLaunchAdvanceOptionsGPUPerfenceToolTip">自动在 Windows 设置 → 系统 → 屏幕 → 显示卡 中将 Java 改为使用高性能显卡。
 如果电脑同时有集显和独显，这能确保 MC 使用独显进行渲染，以大幅提高性能。</s:String>
     <s:String x:Key="LangPageSetupLaunchLaunchAdvanceOptionsMoreTips">版本独立设置中还有更多高级选项可供调整。</s:String>
+    <s:String x:Key="LangPageSetupLaunchLaunchAdvanceOptionsMemoryManagement">内存管理</s:String>
+    <s:String x:Key="LangPageSetupLaunchLaunchAdvanceOptionsGCZGC">尽量使用 ZGC</s:String>
+    <s:String x:Key="LangPageSetupLaunchLaunchAdvanceOptionsGCZGCToolTip">在 Java 21+ 使用分代 ZGC，20~15 使用非分代的 ZGC，14- 使用 G1GC。
+ZGC 的内存占用比 G1GC 更高，不过在回收内存时不会导致卡顿。
+覆盖 "Java 虚拟机参数" 设置中的 GC 相关参数。</s:String>
+    <s:String x:Key="LangPageSetupLaunchLaunchAdvanceOptionsGCGenZGC">尽量使用分代 ZGC</s:String>
+    <s:String x:Key="LangPageSetupLaunchLaunchAdvanceOptionsGCGenZGCToolTip">在 Java 21+ 使用分代 ZGC，20- 使用 G1GC。
+ZGC 的内存占用比 G1GC 更高，不过在回收内存时不会导致卡顿。
+覆盖 "Java 虚拟机参数" 设置中的 GC 相关参数。</s:String>
+    <s:String x:Key="LangPageSetupLaunchLaunchAdvanceOptionsGCStandardG1GC">标准 G1GC</s:String>
+    <s:String x:Key="LangPageSetupLaunchLaunchAdvanceOptionsGCStandardG1GCToolTip">总是使用 G1GC，附带 Mojang 官方的优化参数。
+G1GC 的内存占用比 ZGC 更低，但在回收内存时会导致突然的卡顿。
+覆盖 "Java 虚拟机参数" 设置中的 GC 相关参数。</s:String>
+    <s:String x:Key="LangPageSetupLaunchLaunchAdvanceOptionsGCTunedG1GC">调优 G1GC</s:String>
+    <s:String x:Key="LangPageSetupLaunchLaunchAdvanceOptionsGCTunedG1GCToolTip">总是使用 G1GC，附带 PCL 调优过的优化参数。
+G1GC 的内存占用比 ZGC 更低，但在回收内存时会导致突然的卡顿。
+覆盖 "Java 虚拟机参数" 设置中的 GC 相关参数。</s:String>
+    <s:String x:Key="LangPageSetupLaunchLaunchAdvanceOptionsGCCustom">不指定（可自定义）</s:String>
+    <s:String x:Key="LangPageSetupLaunchLaunchAdvanceOptionsGCCustomToolTip">不自动添加 GC 参数。
+仅当选择此项时，你可以在 "Java 虚拟机参数" 设置中手动添加 GC 参数。</s:String>
+    <s:String x:Key="LangPageSetupLaunchLaunchAdvanceOptionsDisableLWJGL">禁用 LWJGL Unsafe Agent</s:String>
+    <s:String x:Key="LangPageSetupLaunchLaunchAdvanceOptionsDisableLWJGLToolTip">是否使用 LWJGL Unsafe Agent 修复 LWJGL 3.4.1 的一个性能问题。
+详见：https://github.com/HMCL-dev/lwjgl-unsafe-agent</s:String>
     <s:String x:Key="LangPageSetupLaunchGotoVersionSetting">版本独立设置</s:String>
     <s:String x:Key="LangPageSetupLaunchReloadByError">Υπάρχει εξαίρεση στις επιλογές εκκίνησης και έχει γίνει αυτόματη επαναφορά.</s:String>
     <s:String x:Key="LangPageSetupLaunchReloadFail">Παρουσιάστηκε σφάλμα κατά την επαναφόρτωση των επιλογών εκκίνησης.</s:String>
@@ -1441,6 +1474,7 @@ PCL 不会上传或收集任何个人信息，包括上报的东西里面也没�
     <s:String x:Key="LangModMinecraftUnknownError">Παρουσιάστηκε άγνωστο σφάλμα, αναφέρετε αυτό το ζήτημα στον συγγραφέα.</s:String>
     <s:String x:Key="LangModMinecraftNideAuth">Ενοποιημένος έλεγχος ταυτότητας πάσου</s:String>
     <s:String x:Key="LangModMinecraftAuthlibAuth">Έλεγχος ταυτότητας Authlib</s:String>
+    <s:String x:Key="LangModMinecraftFoolName26w14a">为什么需要物品栏？让方块们跟着你走吧！</s:String>
     <s:String x:Key="LangModMinecraftFoolName24w14potato">Οι δηλητηριώδεις πατάτες πάντα αγνοούνταν και υποτιμούνταν, γι' αυτό τις τροφοδοτήσαμε πολύ!</s:String>
     <s:String x:Key="LangModMinecraftFoolName25w14craftmine">你可以合成任何东西——包括合成你的世界！</s:String>
     <s:String x:Key="LangModMinecraftFoolName23w13ab">Η έρευνα δείχνει: στους παίκτες αρέσει να κάνουν επιλογές—όσο περισσότερες, τόσο το καλύτερο!</s:String>
@@ -1732,6 +1766,11 @@ URL: {0}</s:String>
     <s:String x:Key="LangModModpackTaskExtraModpack">Εξαγωγή Modpack</s:String>
     <s:String x:Key="LangModModpackTaskGetModDownloadInfo">Λήψη Πληροφοριών Λήψης Mods</s:String>
     <s:String x:Key="LangModModpackExceptionOnlineModDeleted">Δεν είναι δυνατή η εγκατάσταση του modpack, καθώς ορισμένες απαιτούμενες τροποποιήσεις έχουν διαγραφεί από τον συγγραφέα. Επικοινωνήστε με τον συγγραφέα του modpack για να ενημερώσετε τα modpack στο modpack.</s:String>
+    <s:String x:Key="LangModModpackDialogTitleOnlineModDeleted">整合包内容缺失</s:String>
+    <s:String x:Key="LangModModpackDialogContentOnlineModDeleted">未找到该整合包所需的以下内容，它们可能已被原作者删除：
+{0}
+
+是否继续安装？缺失这些内容可能导致整合包出现异常！</s:String>
     <s:String x:Key="LangModModpackTaskInitModDownloadInfo">Προετοιμασία Πληροφοριών Λήψης Mods</s:String>
     <s:String x:Key="LangModModpackDialogContentDownloadOptionalFile">Θέλετε να πραγματοποιήσετε λήψη προαιρετικών αρχείων {0} από το modpack;</s:String>
     <s:String x:Key="LangModModpackDialogTitleDownloadOptionalFile">Λήψη Προαιρετικών Αρχείων</s:String>
@@ -2158,6 +2197,7 @@ URL: {0}</s:String>
 {1}</s:String>
     <s:String x:Key="LangPageVersionExportSelectExportPath">选择导出位置</s:String>
     <s:String x:Key="LangPageVersionExportSelectExportModpackFile">整合包文件(*{0})|*{1}</s:String>
+    <s:String x:Key="LangPageVersionExportSelectExportZipFile">压缩包文件</s:String>
     <s:String x:Key="LangPageVersionExportTaskDownloadPCL">下载 PCL 正式版</s:String>
     <s:String x:Key="LangPageVersionExportTaskCopyFiles">复制导出内容</s:String>
     <s:String x:Key="LangPageVersionExportHintFolderInConfigNotFound">未找到配置文件中指定的文件夹：{0}</s:String>

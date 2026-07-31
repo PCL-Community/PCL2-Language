@@ -1,4 +1,6 @@
-﻿Public Class PageLaunchLeft
+Imports System.Windows.Threading
+
+Public Class PageLaunchLeft
 
     '加载当前版本
     Private IsLoad As Boolean = False
@@ -24,8 +26,8 @@
         Sub()
             '自动整合包安装：准备
             Dim PackInstallPath As String = Nothing
-            If FileUtils.Exists(PathExeFolder & "modpack.zip") Then PackInstallPath = PathExeFolder & "modpack.zip"
-            If FileUtils.Exists(PathExeFolder & "modpack.mrpack") Then PackInstallPath = PathExeFolder & "modpack.mrpack"
+            If FileUtils.Exists(Paths.Base & "modpack.zip") Then PackInstallPath = Paths.Base & "modpack.zip"
+            If FileUtils.Exists(Paths.Base & "modpack.mrpack") Then PackInstallPath = Paths.Base & "modpack.mrpack"
             If PackInstallPath IsNot Nothing Then
                 Logger.Warn($"需自动安装整合包：{PackInstallPath}")
                 PageSelectLeft.CreateMcFolderInCurrentPath()
@@ -53,10 +55,12 @@
                         Logger.Info($"自动安装整合包成功，清理安装包：{PackInstallPath}")
                         FileUtils.Delete(PackInstallPath)
                     End If
-                Catch ex As CancelledException
-                    Logger.Warn(ex, $"自动安装整合包被用户取消：{PackInstallPath}")
                 Catch ex As Exception
-                    Logger.Error(ex, GetLang("LangLaunchLeftExceptionModpackInstallFail", PackInstallPath), LogBehavior.Alert)
+                    If ex.IsCanceled Then
+                        Logger.Info($"自动安装整合包已取消：{PackInstallPath}")
+                    Else
+                        Logger.Error(ex, GetLang("LangLaunchLeftExceptionModpackInstallFail", PackInstallPath), LogBehavior.Alert)
+                    End If
                 End Try
             End If
             '确认 Minecraft 版本存在
@@ -81,7 +85,26 @@
                 RefreshButtonsUI()
                 RefreshPage(False, False) '有可能选择的版本变化了，需要重新刷新
                 If McLoginAble() = "" Then McLoginLoader.Start() '自动登录
-                If Environment.CommandLine.Contains("--test") Then FormMain.EndProgramForce(123) '用于更新器测试生成的程序是否可以正常运行
+                '用于自动化测试生成的程序是否可以正常运行
+                If Environment.CommandLine.Contains("--test") Then
+                    RunInThread(
+                    Sub()
+                        Thread.Sleep(500)
+                        RunInUi(Sub() FrmMain.PageChange(FormMain.PageType.Download))
+                        Thread.Sleep(500)
+                        RunInUi(Sub() FrmMain.PageChange(FormMain.PageType.Download, FormMain.PageSubType.DownloadMod))
+                        Thread.Sleep(500)
+                        RunInUi(Sub() FrmMain.PageChange(FormMain.PageType.Setup))
+                        Thread.Sleep(500)
+                        RunInUi(Sub() FrmMain.PageChange(FormMain.PageType.Other))
+                        Thread.Sleep(500)
+                        RunInUi(Sub() BtnVersion_Click())
+                        Thread.Sleep(500)
+                        RunInUi(Sub() BtnMore_Click())
+                        Thread.Sleep(500)
+                        FormMain.EndProgramForce(123)
+                    End Sub)
+                End If
             End Sub)
         End Sub, "Version Check", ThreadPriority.AboveNormal)
 
@@ -245,7 +268,7 @@
                         End Sub, 100),
                         AaOpacity(PanLogin, 1, 100, 120, New AniEaseInFluent)
                     }, "FrmLogin PageChange")
-                End Sub, Threading.DispatcherPriority.Render)
+                End Sub, DispatcherPriority.Render)
             Else
                 '无动画
                 AniControlEnabled += 1
@@ -376,15 +399,15 @@ UnknownType:
         End If
         Try
             Dim Result As String = McSkinGetAddress(Uuid, "Ms")
-            If Data.IsInterrupted Then Throw New ThreadInterruptedException("当前任务已取消：" & UserName)
+            If Data.IsCanceled Then Throw New OperationCanceledException("当前任务已取消：" & UserName)
             Result = McSkinDownload(Result)
-            If Data.IsInterrupted Then Throw New ThreadInterruptedException("当前任务已取消：" & UserName)
+            If Data.IsCanceled Then Throw New OperationCanceledException("当前任务已取消：" & UserName)
             Data.Output = Result
-        Catch ex As ThreadInterruptedException
-            Data.Output = ""
-            Return
         Catch ex As Exception
-            If ex.GetDisplay(False).Contains("(429)") Then
+            If ex.IsCanceled Then
+                Data.Output = ""
+                Return
+            ElseIf ex.GetDisplay(False).Contains("(429)") Then
                 Data.Output = PathImage & "Skins/" & McSkinSex(McLoginLegacyUuid(UserName)) & ".png"
                 Logger.Error($"获取正版皮肤失败（{UserName}）：获取皮肤太过频繁，请 5 分钟后再试！", LogBehavior.Toast)
             ElseIf ex.GetDisplay(False).Contains("未设置自定义皮肤") Then
@@ -399,7 +422,7 @@ Finish:
         '刷新显示
         If FrmLoginMsSkin IsNot Nothing Then
             RunInUi(AddressOf FrmLoginMsSkin.Skin.Load)
-        ElseIf Not Data.IsInterrupted Then '如果已经中断，Input 也被清空，就不会再次刷新
+        ElseIf Not Data.IsCanceled Then '如果已经中断，Input 也被清空，就不会再次刷新
             Data.Input = Nothing '清空输入，因为皮肤实际上没有被渲染，如果不清空切换到页面的 Start 会由于输入相同而不渲染
         End If
     End Sub
@@ -443,18 +466,18 @@ UseDefault:
                         Data.Output = PathImage & "Skins/Steve.png"
                     Else
                         Dim Result As String = McLoginMojangUuid(ID, True)
-                        If Data.IsInterrupted Then Throw New ThreadInterruptedException("当前任务已取消：" & ID)
+                        If Data.IsCanceled Then Throw New OperationCanceledException("当前任务已取消：" & ID)
                         Result = McSkinGetAddress(Result, "Mojang")
-                        If Data.IsInterrupted Then Throw New ThreadInterruptedException("当前任务已取消：" & ID)
+                        If Data.IsCanceled Then Throw New OperationCanceledException("当前任务已取消：" & ID)
                         Result = McSkinDownload(Result)
-                        If Data.IsInterrupted Then Throw New ThreadInterruptedException("当前任务已取消：" & ID)
+                        If Data.IsCanceled Then Throw New OperationCanceledException("当前任务已取消：" & ID)
                         Data.Output = Result
                     End If
-                Catch ex As ThreadInterruptedException
-                    Data.Output = ""
-                    Return
                 Catch ex As Exception
-                    If ex.GetDisplay(False).Contains("(429)") Then
+                    If ex.IsCanceled Then
+                        Data.Output = ""
+                        Return
+                    ElseIf ex.GetDisplay(False).Contains("(429)") Then
                         Data.Output = PathImage & "Skins/" & McSkinSex(McLoginLegacyUuid(ID)) & ".png"
                         Logger.Info($"获取离线登录使用的正版皮肤失败（{ID}）：获取皮肤太过频繁，请 5 分钟后再试！")
                     Else
@@ -463,17 +486,17 @@ UseDefault:
                     End If
                 End Try
             Case 4 '自定义
-                If Not FileUtils.Exists(PathAppdata & "CustomSkin.png") Then
+                If Not FileUtils.Exists(Paths.AppDataThenName & "CustomSkin.png") Then
                     Hint(GetLang("LangLaunchLeftSkinNotFound"))
                     Settings.Set("LaunchSkinType", 1)
                     GoTo UseDefault
                 End If
-                Data.Output = PathAppdata & "CustomSkin.png"
+                Data.Output = Paths.AppDataThenName & "CustomSkin.png"
         End Select
         '刷新显示
         If FrmLoginLegacy IsNot Nothing Then
             RunInUi(AddressOf FrmLoginLegacy.Skin.Load)
-        ElseIf Not Data.IsInterrupted Then '如果已经中断，Input 也被清空，就不会再次刷新
+        ElseIf Not Data.IsCanceled Then '如果已经中断，Input 也被清空，就不会再次刷新
             Data.Input = Nothing '清空输入，因为皮肤实际上没有被渲染，如果不清空切换到页面的 Start 会由于输入相同而不渲染
         End If
     End Sub
@@ -498,15 +521,15 @@ UseDefault:
         End If
         Try
             Dim Result As String = McSkinGetAddress(Uuid, "Nide")
-            If Data.IsInterrupted Then Throw New ThreadInterruptedException("当前任务已取消：" & UserName)
+            If Data.IsCanceled Then Throw New OperationCanceledException("当前任务已取消：" & UserName)
             Result = McSkinDownload(Result)
-            If Data.IsInterrupted Then Throw New ThreadInterruptedException("当前任务已取消：" & UserName)
+            If Data.IsCanceled Then Throw New OperationCanceledException("当前任务已取消：" & UserName)
             Data.Output = Result
-        Catch ex As ThreadInterruptedException
-            Data.Output = ""
-            Return
         Catch ex As Exception
-            If ex.GetDisplay(False).Contains("(429)") Then
+            If ex.IsCanceled Then
+                Data.Output = ""
+                Return
+            ElseIf ex.GetDisplay(False).Contains("(429)") Then
                 Data.Output = PathImage & "Skins/Steve.png"
                 Logger.Error($"获取统一通行证皮肤失败（{UserName}）：获取皮肤太过频繁，请 5 分钟后再试！", LogBehavior.Toast)
             ElseIf ex.GetDisplay(False).Contains("未设置自定义皮肤") Then
@@ -521,7 +544,7 @@ Finish:
         '刷新显示
         If FrmLoginNideSkin IsNot Nothing Then
             RunInUi(AddressOf FrmLoginNideSkin.Skin.Load)
-        ElseIf Not Data.IsInterrupted Then '如果已经中断，Input 也被清空，就不会再次刷新
+        ElseIf Not Data.IsCanceled Then '如果已经中断，Input 也被清空，就不会再次刷新
             Data.Input = Nothing '清空输入，因为皮肤实际上没有被渲染，如果不清空切换到页面的 Start 会由于输入相同而不渲染
         End If
     End Sub
@@ -546,15 +569,15 @@ Finish:
         End If
         Try
             Dim Result As String = McSkinGetAddress(UUID, "Auth")
-            If Data.IsInterrupted Then Throw New ThreadInterruptedException("当前任务已取消：" & UserName)
+            If Data.IsCanceled Then Throw New OperationCanceledException("当前任务已取消：" & UserName)
             Result = McSkinDownload(Result)
-            If Data.IsInterrupted Then Throw New ThreadInterruptedException("当前任务已取消：" & UserName)
+            If Data.IsCanceled Then Throw New OperationCanceledException("当前任务已取消：" & UserName)
             Data.Output = Result
-        Catch ex As ThreadInterruptedException
-            Data.Output = ""
-            Return
         Catch ex As Exception
-            If ex.GetDisplay(False).Contains("(429)") Then
+            If ex.IsCanceled Then
+                Data.Output = ""
+                Return
+            ElseIf ex.GetDisplay(False).Contains("(429)") Then
                 Data.Output = PathImage & "Skins/Steve.png"
                 Logger.Error($"获取 Authlib-Injector 皮肤失败（{UserName}）：获取皮肤太过频繁，请 5 分钟后再试！", LogBehavior.Toast)
             ElseIf ex.GetDisplay(False).Contains("未设置自定义皮肤") Then
@@ -569,7 +592,7 @@ Finish:
         '刷新显示
         If FrmLoginAuthSkin IsNot Nothing Then
             RunInUi(AddressOf FrmLoginAuthSkin.Skin.Load)
-        ElseIf Not Data.IsInterrupted Then '如果已经中断，Input 也被清空，就不会再次刷新
+        ElseIf Not Data.IsCanceled Then '如果已经中断，Input 也被清空，就不会再次刷新
             Data.Input = Nothing '清空输入，因为皮肤实际上没有被渲染，如果不清空切换到页面的 Start 会由于输入相同而不渲染
         End If
     End Sub
@@ -581,19 +604,19 @@ Finish:
 #End Region
 
     '版本选择按钮
-    Private Sub BtnVersion_Click(sender As Object, e As EventArgs) Handles BtnVersion.Click
+    Private Sub BtnVersion_Click() Handles BtnVersion.Click
         If McLaunchLoader.State = LoadState.Loading Then Return
         FrmMain.PageChange(FormMain.PageType.InstanceSelect)
     End Sub
     '启动按钮
     Public Sub LaunchButtonClick() Handles BtnLaunch.Click
         If McLaunchLoader.State = LoadState.Loading OrElse Not BtnLaunch.IsEnabled OrElse
-            （FrmMain.PageRight IsNot Nothing AndAlso FrmMain.PageRight.PageState <> MyPageRight.PageStates.ContentStay AndAlso FrmMain.PageRight.PageState <> MyPageRight.PageStates.ContentEnter） Then Return
+            (FrmMain.PageRight IsNot Nothing AndAlso FrmMain.PageRight.PageState <> MyPageRight.PageStates.ContentStay AndAlso FrmMain.PageRight.PageState <> MyPageRight.PageStates.ContentEnter) Then Return
         '愚人节处理
         If IsAprilEnabled AndAlso Not IsAprilGiveup Then
             ThemeUnlock(12, False, GetLang("LangLaunchThemeFunnyUnlock"))
             IsAprilGiveup = True
-            Settings.Set("AprilDoneYear", Date.Now.Year)
+            Settings.Set("AprilYear", Date.Now.Year)
             FrmLaunchLeft.AprilScaleTrans.ScaleX = 1
             FrmLaunchLeft.AprilScaleTrans.ScaleY = 1
             FrmLaunchLeft.AprilPosTrans.X = 0
@@ -672,7 +695,7 @@ ExitRefresh:
     '取消按钮
     Private Sub BtnCancel_Click() Handles BtnCancel.Click
         If McLaunchLoaderReal IsNot Nothing Then
-            McLaunchLoaderReal.Interrupt()
+            McLaunchLoaderReal.Cancel()
             McLaunchLog(GetLang("LangLaunchLeftStartCancelled"))
             Try
                 If McLaunchWatcher IsNot Nothing Then
@@ -686,7 +709,7 @@ ExitRefresh:
         End If
     End Sub
     '版本设置按钮
-    Private Sub BtnMore_Click(sender As Object, e As EventArgs) Handles BtnMore.Click
+    Private Sub BtnMore_Click() Handles BtnMore.Click
         If McLaunchLoader.State = LoadState.Loading Then Return
         McInstanceSelected.Load()
         PageInstanceLeft.Instance = McInstanceSelected
@@ -697,7 +720,7 @@ ExitRefresh:
     ''' </summary>
     Public Sub LaunchingRefresh()
         Try
-            If McLaunchLoaderReal.State = LoadState.Interrupted Then Return
+            If McLaunchLoaderReal.State = LoadState.Canceled Then Return
             '阶段状态获取
             Dim IsLaunched As Boolean = False '是否已经启动游戏，只是在等待窗口
             Try
@@ -714,8 +737,8 @@ ExitRefresh:
                 Return
             End Try
             LabLaunchingTitle.Text = If(IsLaunched OrElse McLaunchLoaderReal.State = LoadState.Finished,
-                "已启动游戏",
-                If(CurrentLaunchOptions.SaveBatch Is Nothing, "正在启动游戏", "正在导出启动脚本"))
+                GetLang("LangLaunchLeftStarted"),
+                If(CurrentLaunchOptions.SaveBatch Is Nothing, GetLang("LangLaunchLeftStartingInstance"), GetLang("LangLaunchLeftExportStartingInstanceCommand")))
             If AniIsRun("Launch State Page") Then IsLaunched = False '等待页面切换动画完成
             '更新进度
             Dim ActualProgress = McLaunchLoaderReal.Progress
@@ -738,7 +761,7 @@ ExitRefresh:
                 Logger.Warn(ex, "获取 Minecraft 启动下载器失败，可能是因为启动被取消")
                 HasLaunchDownloader = False
             End Try
-            LabLaunchingDownload.Text = FormatFileSize(NetManager.Speed) & "/s"
+            LabLaunchingDownload.Text = StringUtils.FormatByteSize(NetManager.Speed) & "/s"
             '进度改变动画
             Dim AnimList As New List(Of AniData) From {
                  AaGridLengthWidth(ProgressLaunchingFinished, ShowProgress - ProgressLaunchingFinished.Width.Value, 130,, New AniEaseOutFluent),

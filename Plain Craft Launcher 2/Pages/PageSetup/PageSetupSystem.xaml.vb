@@ -1,4 +1,4 @@
-Class PageSetupSystem
+Public Class PageSetupSystem
 
 #Region "语言"
     Private Sub SelectCurrentLanguage()
@@ -28,7 +28,7 @@ Class PageSetupSystem
         Lang = TargetLang
         Settings.Set("SystemLang", Lang)
         Application.Current.Resources.MergedDictionaries(1) = New ResourceDictionary With {.Source = New Uri("pack://application:,,,/Resources/Language/" & Lang & ".xaml", UriKind.RelativeOrAbsolute)}
-        If Lang.Equals("zh-MEME") Then MyMsgBox($"此语言仅供娱乐，请勿当真{vbCr}此語言僅供娛樂，請勿當真{vbCr}This language is for entertainment only, please don't take it seriously", IsWarn:=True)
+        If Lang.Equals("zh-MEME") Then MyMsgBox(GetLang("LangPageSetupSystemDialogContentEntertainment"), IsWarn:=True)
         MyMsgBox(GetLang("LangPageSetupSystemDialogContentLanguageRestart"), ForceWait:=True)
         Process.Start(New ProcessStartInfo(PathExe))
         FormMain.EndProgramForce()
@@ -124,14 +124,14 @@ Class PageSetupSystem
         If AniControlEnabled <> 0 Then Return
         If ComboSystemActivity.SelectedIndex <> 2 Then Return
         If MyMsgBox(GetLang("LangPageSetupSystemLaunchDialogAnnouncementSilentContent"), GetLang("LangDialogTitleWarning"), GetLang("LangPageSetupSystemLaunchDialogAnnouncementBtnConfirm"), GetLang("LangDialogBtnCancel"), IsWarn:=True) = 2 Then
-            ComboSystemActivity.SelectedItem = e.RemovedItems(0)
+            If e.RemovedItems.Count > 0 Then ComboSystemActivity.SelectedItem = e.RemovedItems(0)
         End If
     End Sub
     Private Sub ComboSystemUpdate_SelectionChanged(sender As Object, e As SelectionChangedEventArgs) Handles ComboSystemUpdate.SelectionChanged
         If AniControlEnabled <> 0 Then Return
         If ComboSystemUpdate.SelectedIndex <> 3 Then Return
         If MyMsgBox(GetLang("LangPageSetupSystemLaunchDialogAnnouncementDisableContent"), GetLang("LangDialogTitleWarning"), GetLang("LangPageSetupSystemLaunchDialogAnnouncementBtnConfirm"), GetLang("LangDialogBtnCancel"), IsWarn:=True) = 2 Then
-            ComboSystemUpdate.SelectedItem = e.RemovedItems(0)
+            If e.RemovedItems.Count > 0 Then ComboSystemUpdate.SelectedItem = e.RemovedItems(0)
         End If
     End Sub
     Private Sub BtnSystemUpdate_Click(sender As Object, e As EventArgs) Handles BtnSystemUpdate.Click

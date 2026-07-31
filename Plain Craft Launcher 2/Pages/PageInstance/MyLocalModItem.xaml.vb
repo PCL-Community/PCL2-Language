@@ -1,4 +1,4 @@
-﻿Imports System.Windows.Forms
+Imports System.Windows.Forms
 
 Public Class MyLocalModItem
 
@@ -312,7 +312,7 @@ Public Class MyLocalModItem
             NewestName = NewestSegs.Join("-")
             Entry._Version = CurrentName '使用网络信息作为显示的版本号
         End If
-        Return GetLang("LangMyLocalModItemToolTipModUpdate", CurrentName, GetTimeSpanString(Entry.ProjectVersion.ReleaseDate - Date.Now, False), NewestName, GetTimeSpanString(Entry.UpdateFile.ReleaseDate - Date.Now, False))
+        Return GetLang("LangMyLocalModItemToolTipModUpdate", CurrentName, StringUtils.FormatTimeSpan(Entry.ProjectVersion.ReleaseDate - Date.Now, False), NewestName, StringUtils.FormatTimeSpan(Entry.UpdateFile.ReleaseDate - Date.Now, False))
     End Function
 
     '懒加载

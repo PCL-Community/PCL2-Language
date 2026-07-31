@@ -1,4 +1,4 @@
-﻿'提供不同的输入验证方法，名称以 Validate 开头
+'提供不同的输入验证方法，名称以 Validate 开头
 Public Module ModValidate
 
     ''' <summary>
@@ -63,6 +63,20 @@ Public Class ValidateNullOrWhiteSpace
     Public Overrides Function Validate(Str As String) As String
         If IsNothing(Str) OrElse String.IsNullOrWhiteSpace(Str) Then Return GetLang("LangModValidateNoEmptyInput")
         Return ""
+    End Function
+End Class
+
+''' <summary>
+''' 自定义的 Validate。
+''' </summary>
+Public Class ValidateFunc
+    Inherits Validate
+    Private ReadOnly _func As Func(Of String, String)
+    Public Sub New(F As Func(Of String, String))
+        _func = F
+    End Sub
+    Public Overrides Function Validate(Str As String) As String
+        Return _func(Str)
     End Function
 End Class
 
@@ -258,7 +272,7 @@ Public Class ValidateFolderName
         Me.IgnoreCase = IgnoreCase
         Me.UseMinecraftCharCheck = UseMinecraftCharCheck
         On Error Resume Next
-        PathIgnore = DirectoryUtils.GetDirectories(Folder, True)
+        PathIgnore = DirectoryUtils.EnumerateDirectories(Folder)
     End Sub
     Public Overrides Function Validate(Str As String) As String
         Try
@@ -403,7 +417,7 @@ Fin:
             Dim InvalidStrCheck As String = New ValidateExceptSame({"CON", "PRN", "AUX", "CLOCK$", "NUL", "COM0", "COM1", "COM2", "COM3", "COM4", "COM5", "COM6", "COM7", "COM8", "COM9", "LPT0", "LPT1", "LPT2", "LPT3", "LPT4", "LPT5", "LPT6", "LPT7", "LPT8", "LPT9"}, GetLang("LangModValidateNoSpacialFolderName")).Validate(SubStr)
             If Not InvalidStrCheck = "" Then Return InvalidStrCheck
             '检查 NTFS 8.3 文件名（#4505）
-            If Str.RegexCheck(".{2,}~\d") Then Return GetLang("LangModValidateFileNoSpecialName")
+            If SubStr.RegexCheck(".{2,}~\d") Then Return GetLang("LangModValidateFileNoSpecialName")
         Next
         Return ""
     End Function

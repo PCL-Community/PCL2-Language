@@ -1,4 +1,4 @@
-﻿Public Class PageDownloadInstall
+Public Class PageDownloadInstall
 
     Private Sub LoaderInit() Handles Me.Initialized
         DisabledPageAnimControls.Add(BtnStart)
@@ -1126,9 +1126,8 @@
         '确认版本隔离
         If (SelectedForge IsNot Nothing OrElse SelectedNeoForge IsNot Nothing OrElse SelectedFabric IsNot Nothing) AndAlso
            (Settings.Get(Of Integer)("LaunchArgumentIndieV2") = 0 OrElse Settings.Get(Of Integer)("LaunchArgumentIndieV2") = 2) Then
-            If MyMsgBox("你尚未开启版本隔离，多个 MC 版本会共用同一个 Mod 文件夹。" & vbCrLf &
-                        "因此，游戏可能会因为读取到与当前版本不符的 Mod 而崩溃。" & vbCrLf &
-                        "推荐先在 设置 → 启动选项 → 默认版本隔离 中开启版本隔离！", "版本隔离提示", "取消下载", "继续") = 1 Then
+            If MyMsgBox(GetLang("LangDownloadInstallDialogIndieContent"), GetLang("LangDownloadInstallDialogIndieTitle"),
+                        GetLang("LangDownloadInstallCancelDownload"), GetLang("LangDialogBtnContinue")) = 1 Then
                 Return
             End If
         End If
@@ -1155,16 +1154,16 @@
 #End Region
 
     Private Function GetLoaderError(Loader As MyLoading) As String
-        If Loader Is Nothing Then Return "获取中……"
-        If Not Loader.State.IsLoader Then Return "获取中……"
+        If Loader Is Nothing Then Return GetLang("LangDownloadGetting")
+        If Not Loader.State.IsLoader Then Return GetLang("LangDownloadGetting")
         Select Case Loader.State.LoadingState
             Case MyLoading.MyLoadingState.Run
-                Return "获取中……"
+                Return GetLang("LangDownloadGetting")
             Case MyLoading.MyLoadingState.Error
                 Dim Message As String = CType(Loader.State, LoaderBase).Error.Message
-                Return If(Message = "无", "无", "获取失败：" & Message)
+                Return If(Message = GetLang("LangSetNone"), GetLang("LangSetNone"), GetLang("LangDownloadGetFail", Message))
             Case MyLoading.MyLoadingState.Unloaded
-                Return "未知错误，状态为 Unloaded"
+                Return GetLang("LangDownloadUnknownErrorUnloaded")
             Case Else
                 Return Nothing
         End Select

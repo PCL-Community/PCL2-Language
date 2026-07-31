@@ -1,4 +1,4 @@
-﻿Imports System.Windows.Threading
+Imports System.Windows.Threading
 
 Public Class PageLaunchRight
     Implements IRefreshable, IDispatcherUnhandledException
@@ -35,7 +35,7 @@ Public Class PageLaunchRight
             Case 1
                 '加载本地文件
                 Logger.Info("主页自定义数据来源：本地文件")
-                Content = FileUtils.TryReadAsString(PathExeFolder & "PCL\Custom.xaml")
+                Content = FileUtils.TryReadAsString(Paths.Base & "PCL\Custom.xaml")
             Case 2
                 '联网下载
                 Url = Settings.Get(Of String)("UiCustomNet")
@@ -49,7 +49,7 @@ Public Class PageLaunchRight
                                 <TextBlock Margin=""25,38,23,15"" FontSize=""13.5"" IsHitTestVisible=""False"" Text=""{hint}"" TextWrapping=""Wrap"" Foreground=""{DynamicResource ColorBrush1}"" />
                                 <local:MyIconButton Height=""22"" Width=""22"" Margin=""9"" VerticalAlignment=""Top"" HorizontalAlignment=""Right"" 
                                     EventType=""刷新主页"" EventData=""/""
-                                    Logo=""M875.52 148.48C783.36 56.32 655.36 0 512 0 291.84 0 107.52 138.24 30.72 332.8l122.88 46.08C204.8 230.4 348.16 128 512 128c107.52 0 199.68 40.96 271.36 112.64L640 384h384V0L875.52 148.48zM512 896c-107.52 0-199.68-40.96-271.36-112.64L384 640H0v384l148.48-148.48C240.64 967.68 368.64 1024 512 1024c220.16 0 404.48-138.24 481.28-332.8L870.4 645.12C819.2 793.6 675.84 896 512 896z"" />
+                                    Logo=""M512.0 838.3c-80.2 0-153.4-29.3-210.2-77.4l75.5-75.5c11.5-11.5 25.8-22.0 25.8-37.0a27.2 27.2 0 0 0-27.1-27.1H104.0c-27.1 0-27.1 23.9-27.1 27.1v271.9a27.1 27.1 0 0 0 27.1 27.1c15.0 0 27.8-16.6 42.5-31.2l77.9-77.9c76.6 67.7 177.1 108.9 287.4 108.9 221.7 0 404.5-166.0 431.2-380.6h-109.8c-25.9 154.2-159.7 271.9-321.3 271.9zM919.9 76.6c-15.0 0-27.8 16.6-42.5 31.3L799.5 185.8c-76.5-67.7-177.1-108.9-287.4-108.9-221.8 0-404.5 166.1-431.3 380.6H190.6c25.9-154.2 159.7-271.9 321.4-271.9 80.2 0 153.4 29.3 210.1 77.4l-75.5 75.5c-11.6 11.5-25.8 22.0-25.8 37.1a27.2 27.2 0 0 0 27.1 27.1h271.9c27.1 0 27.1-23.9 27.1-27.1V103.8a27.1 27.1 0 0 0-27.1-27.1z"" />
                             </local:MyCard>"
                     Case 1
                         Logger.Info("主页预设：回声洞")
@@ -58,7 +58,7 @@ Public Class PageLaunchRight
                                 <TextBlock Margin=""25,38,23,15"" FontSize=""13.5"" IsHitTestVisible=""False"" Text=""{cave}"" TextWrapping=""Wrap"" Foreground=""{DynamicResource ColorBrush1}"" />
                                 <local:MyIconButton Height=""22"" Width=""22"" Margin=""9"" VerticalAlignment=""Top"" HorizontalAlignment=""Right"" 
                                     EventType=""刷新主页"" EventData=""/""
-                                    Logo=""M875.52 148.48C783.36 56.32 655.36 0 512 0 291.84 0 107.52 138.24 30.72 332.8l122.88 46.08C204.8 230.4 348.16 128 512 128c107.52 0 199.68 40.96 271.36 112.64L640 384h384V0L875.52 148.48zM512 896c-107.52 0-199.68-40.96-271.36-112.64L384 640H0v384l148.48-148.48C240.64 967.68 368.64 1024 512 1024c220.16 0 404.48-138.24 481.28-332.8L870.4 645.12C819.2 793.6 675.84 896 512 896z"" />
+                                    Logo=""M512.0 838.3c-80.2 0-153.4-29.3-210.2-77.4l75.5-75.5c11.5-11.5 25.8-22.0 25.8-37.0a27.2 27.2 0 0 0-27.1-27.1H104.0c-27.1 0-27.1 23.9-27.1 27.1v271.9a27.1 27.1 0 0 0 27.1 27.1c15.0 0 27.8-16.6 42.5-31.2l77.9-77.9c76.6 67.7 177.1 108.9 287.4 108.9 221.7 0 404.5-166.0 431.2-380.6h-109.8c-25.9 154.2-159.7 271.9-321.3 271.9zM919.9 76.6c-15.0 0-27.8 16.6-42.5 31.3L799.5 185.8c-76.5-67.7-177.1-108.9-287.4-108.9-221.8 0-404.5 166.1-431.3 380.6H190.6c25.9-154.2 159.7-271.9 321.4-271.9 80.2 0 153.4 29.3 210.1 77.4l-75.5 75.5c-11.6 11.5-25.8 22.0-25.8 37.1a27.2 27.2 0 0 0 27.1 27.1h271.9c27.1 0 27.1-23.9 27.1-27.1V103.8a27.1 27.1 0 0 0-27.1-27.1z"" />
                             </local:MyCard>"
                     Case 2
                         Logger.Info("主页预设：Minecraft 新闻")
@@ -105,6 +105,9 @@ Public Class PageLaunchRight
                     Case 16
                         Logger.Info("主页预设：整合包推荐引擎")
                         Url = "https://qawsedrftgyhujiko.fun/pcl2/Custom.xaml"
+                    Case 17
+                        Logger.Info("Bangumi 番剧主页")
+                        Url = "https://bangumi.p.kaphia.qzz.io"
                 End Select
         End Select
         '联网下载
@@ -222,7 +225,7 @@ Public Class PageLaunchRight
                 End If
                 Dim LoadStartTime As Date = Date.Now
                 '修改时应同时修改 PageOtherHelpDetail.Init
-                Content = ArgumentReplace(Content, AddressOf EscapeUtils.XmlEscape)
+                Content = ArgumentReplace(Content, AddressOf StringUtils.XmlEscape)
                 Do While Content.Contains("xmlns")
                     Content = Content.RegexReplace("xmlns[^""']*(""|')[^""']*(""|')", "").Replace("xmlns", "") '禁止声明命名空间
                 Loop
@@ -245,8 +248,8 @@ Public Class PageLaunchRight
     Private Sub OnLoadContentFailed(ex As Exception)
         If ModeDebug OrElse Settings.Get(Of Integer)("UiCustomType") = 1 Then
             Logger.Warn(ex, "加载主页失败")
-            If MyMsgBox(If(TypeOf ex Is UnauthorizedAccessException, ex.Message, $"主页内容编写有误，请根据下列错误信息进行检查：{vbCrLf}{ex.GetDisplay(False)}"),
-                        "加载主页失败", "重试", "取消") = 1 Then ForceRefresh()
+            If MyMsgBox(If(TypeOf ex Is UnauthorizedAccessException, ex.Message, GetLang("LangLaunchRightPageLoadFailContent", ex.GetDisplay(False))),
+                        GetLang("LangLaunchRightPageLoadFailTitle"), GetLang("LangDialogBtnRetry"), GetLang("LangDialogBtnCancel")) = 1 Then ForceRefresh()
         Else
             Logger.Error(ex, "加载主页失败", LogBehavior.Toast)
         End If

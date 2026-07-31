@@ -170,7 +170,6 @@
     <Compile Include="Modules\Resource\LocalResourceFile.vb" />
     <Compile Include="Modules\Resource\ResourceProject.vb" />
     <Compile Include="Modules\Resource\ResourceVersion.vb" />
-    <Compile Include="Modules\Resource\WikiEntry.vb" />
     <Compile Include="Modules\Resource\ResourceSearcher.vb" />
     <Compile Include="Modules\Minecraft\ModJava.vb" />
     <Compile Include="Modules\Resource\LocalResourceLoaders.vb" />
@@ -518,7 +517,6 @@
     </Page>
     <None Include="app.manifest" />
     <None Include="Resources\Custom.xaml">
-      <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </None>
     <Page Include="Pages\PageLink\PageLinkMain.xaml">
@@ -696,6 +694,7 @@
     <Import Include="MeloongCore.Wpf" />
     <Import Include="MeloongCore.Wpf.Extensions" />
     <Import Include="Microsoft.VisualBasic" />
+    <Import Include="Newtonsoft.Json" />
     <Import Include="Newtonsoft.Json.Linq" />
     <Import Include="PCLCS" />
     <Import Include="System" />
@@ -708,6 +707,7 @@
     <Import Include="System.Net.Http" />
     <Import Include="System.Text" />
     <Import Include="System.Threading" />
+    <Import Include="System.Threading.Tasks" />
     <Import Include="System.Xml.Linq" />
     <Import Include="System.Collections" />
     <Import Include="System.Diagnostics" />
@@ -718,6 +718,7 @@
     <Import Include="System.Windows.Input" />
     <Import Include="System.Windows.Media" />
     <Import Include="System.Windows.Media.Imaging" />
+    <Import Include="ThrottleDebounce" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Modules\Base\ModAnimation.vb" />
@@ -784,7 +785,6 @@
     <None Include="Resources\java-wrapper.jar" />
     <None Include="Resources\libwebp64.dll" />
     <None Include="Resources\lwjgl-unsafe-agent.jar" />
-    <None Include="Resources\moddata.txt" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="CacheCow.Client.FileStore">
@@ -812,6 +812,9 @@
     </PackageReference>
     <PackageReference Include="System.ValueTuple">
       <Version>4.6.2</Version>
+    </PackageReference>
+    <PackageReference Include="ThrottleDebounce">
+      <Version>2.0.2</Version>
     </PackageReference>
   </ItemGroup>
   <ItemGroup>

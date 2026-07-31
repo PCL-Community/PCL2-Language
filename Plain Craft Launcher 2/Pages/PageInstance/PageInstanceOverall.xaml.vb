@@ -1,4 +1,4 @@
-﻿Public Class PageInstanceOverall
+Public Class PageInstanceOverall
 
     Private IsLoad As Boolean = False
     Private Sub PageSetupLaunch_Loaded(sender As Object, e As RoutedEventArgs) Handles Me.Loaded
@@ -116,15 +116,15 @@
             Dim JsonObject As JObject
             Dim OldJsonPath As String = PageInstanceLeft.Instance.GetJsonPath()
             Try
-                JsonObject = GetJson(FileUtils.ReadAsString(OldJsonPath))
+                JsonObject = FileUtils.ReadAsJson(OldJsonPath)
             Catch ex As Exception
-                Logger.Warn(ex, "在重命名读取 json 时失败")
+                Logger.Warn(ex, "在重命名读取 JSON 时失败")
                 JsonObject = PageInstanceLeft.Instance.JsonObject
             End Try
             '重命名主文件夹
             DirectoryUtils.Move(OldPath, NewPath)
             '清理 ini 缓存
-            PageInstanceLeft.Instance.ResetIniCache()
+            PageInstanceLeft.Instance.ResetSettingsCache()
             '重命名 jar 文件与 natives 文件夹
             '不能进行遍历重命名，否则在版本名很短的时候容易误伤其他文件（#6443）
             If DirectoryUtils.Exists($"{NewPath}{OldName}-natives") Then DirectoryUtils.Move($"{NewPath}{OldName}-natives", $"{NewPath}{NewName}-natives")
@@ -162,7 +162,7 @@
         '选择 自定义 时修改图片
         Try
             If ComboDisplayLogo.SelectedItem Is ItemDisplayLogoCustom Then
-                Dim FileName As String = Dialogs.SelectFile("选择图片", False, filter:={({"png", "jpeg", "jpg", "gif", "webp"}, "常用图片文件")}).FirstOrDefault()
+                Dim FileName As String = Dialogs.SelectFile(GetLang("LangDialogSelectImage"), False, filter:={({"png", "jpeg", "jpg", "gif", "webp"}, GetLang("LangDialogImageFileFilter"))}).FirstOrDefault()
                 If String.IsNullOrEmpty(FileName) Then
                     Reload() '还原选项
                     Return
@@ -236,7 +236,7 @@
     Private Sub BtnManageScript_Click() Handles BtnManageScript.Click
         Try
             '弹窗要求指定脚本的保存位置
-            Dim SavePath As String = Dialogs.SaveFile(GetLang("LangPageVersionOverallSelectSaveCommandFile"), "启动 " & PageInstanceLeft.Instance.Name & ".bat", filter:={("bat", "批处理文件")})
+            Dim SavePath As String = Dialogs.SaveFile(GetLang("LangPageVersionOverallSelectSaveCommandFile"), "启动 " & PageInstanceLeft.Instance.Name & ".bat", filter:={("bat", GetLang("LangPageVersionOverallBatchFileFilter"))})
             If SavePath Is Nothing Then Return
             '检查中断（等玩家选完弹窗指不定任务就结束了呢……）
             If McLaunchLoader.State = LoadState.Loading Then
@@ -271,7 +271,7 @@
                 Return
             Next
             '启动
-            Dim Loader As New LoaderCombo(Of String)(PageInstanceLeft.Instance.Name & " " & GetLang("LangPageVersionOverallTaskCompleteFile"), DlClientFix(PageInstanceLeft.Instance, True, AssetsIndexExistsBehaviour.AlwaysDownload))
+            Dim Loader As New LoaderCombo(Of String)(PageInstanceLeft.Instance.Name & " " & GetLang("LangPageVersionOverallTaskCompleteFile"), DlClientFix(PageInstanceLeft.Instance, True, False))
             Loader.OnStateChanged =
             Sub()
                 Select Case Loader.State
@@ -279,7 +279,7 @@
                         Hint(Loader.Name & GetLang("LangPageVersionOverallCompleteFileSuccess"), HintType.Green)
                     Case LoadState.Failed
                         Hint(Loader.Name & GetLang("LangPageVersionOverallCompleteFileFail") & Loader.Error.GetDisplay(False), HintType.Red)
-                    Case LoadState.Interrupted
+                    Case LoadState.Canceled
                         Hint(Loader.Name & GetLang("LangTaskAbort"), HintType.Blue)
                 End Select
             End Sub
@@ -307,7 +307,7 @@
             Select Case MyMsgBox(MsgContent,
                         GetLang("LangPageVersionOverallDialogDeleteTitle"), , GetLang("LangDialogBtnCancel"),, IsHintIndie OrElse IsShiftPressed)
                 Case 1
-                    PageInstanceLeft.Instance.ResetIniCache()
+                    PageInstanceLeft.Instance.ResetSettingsCache()
                     DirectoryUtils.Delete(PageInstanceLeft.Instance.PathVersion, Not IsShiftPressed)
                     Hint( GetLang("LangPageVersionOverallHintDeleteSuccess", PageInstanceLeft.Instance.Name), HintType.Green)
                 Case 2

@@ -6,32 +6,36 @@ Public Class Application
 
     '开始
     Private Sub Application_Startup(sender As Object, e As StartupEventArgs) Handles Me.Startup
-        '同步语言到新配置系统
-        Settings.Set("SystemLang", Lang)
-        '刷新语言
         Try
-            Application.Current.Resources.MergedDictionaries(1) = New ResourceDictionary With {.Source = New Uri("pack://application:,,,/Resources/Language/" & Lang & ".xaml", UriKind.RelativeOrAbsolute)}
-        Catch ex As Exception
-            MsgBox("无法找到语言资源：" & Lang & vbCrLf & "Language resource cannot be found:" & Lang, MsgBoxStyle.Critical)
-            Lang = GetDefaultLang()
-        End Try
+            '核心初始化
+            MeloongCore.Main.Init("PCL")
+            MeloongCore.Wpf.Main.Init()
+            Logger.Instance = New PclLogger With {.logFolder = Paths.BaseThenName, .MinLevel = If(ModeDebug, LogLevel.Trace, LogLevel.Info)}
+            '同步语言到新配置系统
+            Settings.Set("SystemLang", Lang)
+            '刷新语言
+            Try
+                Application.Current.Resources.MergedDictionaries(1) = New ResourceDictionary With {.Source = New Uri("pack://application:,,,/Resources/Language/" & Lang & ".xaml", UriKind.RelativeOrAbsolute)}
+            Catch ex As Exception
+                MsgBox("无法找到语言资源：" & Lang & vbCrLf & "Language resource cannot be found:" & Lang, MsgBoxStyle.Critical)
+                Lang = GetDefaultLang()
+            End Try
 
-        '依照选择语言切换字体
-        Dim LaunchFont As FontFamily
-        Select Case Lang
-            Case "zh-TW", "zh-HK", "lzh", "zh-MARS"
-                LaunchFont = New FontFamily(New Uri("pack://application:,,,/"), "./Resources/#PCL English, Segoe UI, Microsoft JhengHei UI")
-            Case "ja-JP"
-                LaunchFont = New FontFamily(New Uri("pack://application:,,,/"), "./Resources/#PCL English, Segoe UI, Yu Gothic UI, Microsoft YaHei UI")
-            Case "ko-KR"
-                LaunchFont = New FontFamily(New Uri("pack://application:,,,/"), "./Resources/#PCL English, Segoe UI, Malgun Gothic, Microsoft YaHei UI")
-            Case "en-US", "en-GB", "zh-CN", "zh-MEME"
-                LaunchFont = New FontFamily(New Uri("pack://application:,,,/"), "./Resources/#PCL English, Segoe UI, Microsoft YaHei UI")
-            Case Else '非英语的其他西欧语言统一使用 Segoe UI
-                LaunchFont = New FontFamily(New Uri("pack://application:,,,/"), "Segoe UI, ./Resources/#PCL English, Microsoft YaHei UI")
-        End Select
-        SwitchApplicationFont(LaunchFont)
-        Try
+            '依照选择语言切换字体
+            Dim LaunchFont As FontFamily
+            Select Case Lang
+                Case "zh-TW", "zh-HK", "lzh", "zh-MARS"
+                    LaunchFont = New FontFamily(New Uri("pack://application:,,,/"), "./Resources/#PCL English, Segoe UI, Microsoft JhengHei UI")
+                Case "ja-JP"
+                    LaunchFont = New FontFamily(New Uri("pack://application:,,,/"), "./Resources/#PCL English, Segoe UI, Yu Gothic UI, Microsoft YaHei UI")
+                Case "ko-KR"
+                    LaunchFont = New FontFamily(New Uri("pack://application:,,,/"), "./Resources/#PCL English, Segoe UI, Malgun Gothic, Microsoft YaHei UI")
+                Case "en-US", "en-GB", "zh-CN", "zh-MEME"
+                    LaunchFont = New FontFamily(New Uri("pack://application:,,,/"), "./Resources/#PCL English, Segoe UI, Microsoft YaHei UI")
+                Case Else '非英语的其他西欧语言统一使用 Segoe UI
+                    LaunchFont = New FontFamily(New Uri("pack://application:,,,/"), "Segoe UI, ./Resources/#PCL English, Microsoft YaHei UI")
+            End Select
+            SwitchApplicationFont(LaunchFont)
             '提升主线程优先级
             Thread.CurrentThread.Priority = ThreadPriority.Highest
             '执行开发版测试
@@ -89,15 +93,13 @@ Public Class Application
             End If
             '初始化文件结构
             Try
-                DirectoryUtils.Create(PathExeFolder & "PCL\Pictures\")
-                DirectoryUtils.Create(PathExeFolder & "PCL\Musics\")
-                CheckPermissionWithException(PathExeFolder & "PCL\")
+                DirectoryUtils.Create(Paths.Base & "PCL\Pictures\")
+                DirectoryUtils.Create(Paths.Base & "PCL\Musics\")
+                CheckPermissionWithException(Paths.Base & "PCL\")
             Catch ex As Exception
-                MsgBox($"PCL 没有对当前文件夹的权限（{PathExeFolder}PCL\），请尝试：" & vbCrLf &
-                  "1. 将 PCL 移动到其他文件夹" & If(PathExeFolder.StartsWithF("C:", True), "，例如 C 盘和桌面以外的其他位置。", "。") & vbCrLf &
-                  "2. 删除当前目录中的 PCL 文件夹，然后再试。" & vbCrLf &
-                  "3. 右键 PCL 选择属性，打开 兼容性 中的 以管理员身份运行此程序。",
-                MsgBoxStyle.Critical, "运行环境错误")
+                MsgBox(GetLang("LangApplicationDialogContentNoPermission", Paths.Base,
+                                If(Paths.Base.StartsWithF("C:", True), GetLang("LangApplicationDialogNoPermissionMoveSuffixC"), GetLang("LangApplicationDialogNoPermissionMoveSuffixDefault"))),
+                       MsgBoxStyle.Critical, GetLang("LangModSecretPermissionError"))
                 Environment.[Exit](ProcessReturnValues.Cancel)
             End Try
 RetryCacheCheck:
@@ -106,25 +108,20 @@ RetryCacheCheck:
                 CheckPermissionWithException(PathTemp)
             Catch ex As Exception
                 If PathTemp = Path.GetTempPath() & "PCL\" Then
-                    MyMsgBox("PCL 无法访问缓存文件夹，可能导致程序出错或无法正常使用！" & vbCrLf & vbCrLf & "错误原因：" & ex.GetDisplay(True), "缓存文件夹不可用")
+                    MyMsgBox(GetLang("LangApplicationDialogContentCacheFolderUnavailable", ex.GetDisplay(True)), GetLang("LangApplicationDialogTitleCacheFolderUnavailable"))
                 Else
-                    MyMsgBox("手动设置的缓存文件夹不可用，PCL 将使用默认缓存文件夹。" & vbCrLf & vbCrLf & "错误原因：" & ex.GetDisplay(True), "缓存文件夹不可用")
+                    MyMsgBox(GetLang("LangApplicationDialogContentCustomCacheFolderUnavailable", ex.GetDisplay(True)), GetLang("LangApplicationDialogTitleCacheFolderUnavailable"))
                     Settings.Set("SystemSystemCache", "")
                     PathTemp = Path.GetTempPath() & "PCL\"
                     GoTo RetryCacheCheck
                 End If
             End Try
             DirectoryUtils.Create(PathTemp & "Cache\")
-            DirectoryUtils.Create(PathAppdata)
+            DirectoryUtils.Create(Paths.AppDataThenName)
             '要求单例
             WaitingMutex(e)
             '设置 ToolTipService 默认值
-            ToolTipService.InitialShowDelayProperty.OverrideMetadata(GetType(DependencyObject), New FrameworkPropertyMetadata(300))
-            ToolTipService.BetweenShowDelayProperty.OverrideMetadata(GetType(DependencyObject), New FrameworkPropertyMetadata(400))
-            ToolTipService.ShowDurationProperty.OverrideMetadata(GetType(DependencyObject), New FrameworkPropertyMetadata(9999999))
-            ToolTipService.PlacementProperty.OverrideMetadata(GetType(DependencyObject), New FrameworkPropertyMetadata(Primitives.PlacementMode.Bottom))
-            ToolTipService.HorizontalOffsetProperty.OverrideMetadata(GetType(DependencyObject), New FrameworkPropertyMetadata(8.0))
-            ToolTipService.VerticalOffsetProperty.OverrideMetadata(GetType(DependencyObject), New FrameworkPropertyMetadata(4.0))
+            ToolTipService.InitialShowDelayProperty.OverrideMetadata(GetType(DependencyObject), New FrameworkPropertyMetadata(100))
             '设置网络配置默认值
             ServicePointManager.Expect100Continue = False
             ServicePointManager.DefaultConnectionLimit = 10000
@@ -139,8 +136,7 @@ RetryCacheCheck:
                 FrmStart = New SplashScreen("Images\icon.ico")
                 FrmStart.Show(False, True)
             End If
-            '日志初始化
-            MeloongCore.Main.Init(New PclLogger With {.logFolder = PathUtils.CurrentFolder & "PCL", .MinLevel = If(ModeDebug, LogLevel.Trace, LogLevel.Info)})
+            '基础信息
             Logger.Info($"程序版本：{VersionDisplay} ({VersionCode}{If(CommitHash = "", "", $"，#{CommitHash}")})")
             If BuildType = BuildTypes.Snapshot Then
                 Logger.Info($"识别码：{Identify}{If(ThemeCheckOne(9), "，已解锁反馈主题", "，未解锁反馈主题")}")
@@ -149,16 +145,17 @@ RetryCacheCheck:
             End If
             Logger.Info($"程序路径：{PathExe}")
             Logger.Info($"系统编码：{Encoding.Default.HeaderName} ({Encoding.Default.CodePage}, GBK={IsGBKEncoding})")
-            Logger.Info($"管理员权限：{SystemUtils.HasAdminRole()}")
+            Logger.Info($"管理员权限：{WindowsUtils.HasAdminRole()}")
             Logger.Info("[Location] 启动器语言：" & Lang)
             Logger.Info("[Location] 当前系统环境是否为中国大陆：" & IsLocationZH())
             '检测异常环境
-            If PathExeFolder.Contains(Path.GetTempPath()) OrElse PathExeFolder.Contains("AppData\Local\Temp\") Then
-                MyMsgBox("请将 PCL 从压缩包中解压后再使用！" & vbCrLf & "如果不会解压，可以在网上寻找教程。", "需要解压！", "我知道了", IsWarn:=True, ForceWait:=True)
+            If Paths.Base.Contains(Path.GetTempPath()) OrElse Paths.Base.Contains("AppData\Local\Temp\") Then
+                MyMsgBox(GetLang("LangApplicationDialogContentUnzipLauncher"), GetLang("LangApplicationDialogTitleUnzipLauncher"), GetLang("LangDialogBtnOK"), IsWarn:=True, ForceWait:=True)
                 FormMain.EndProgramForce(ProcessReturnValues.Cancel)
             End If
-            If Is32BitSystem Then
-                MyMsgBox(GetLang("LangApplicationDialogContent32BitWarn"), GetLang("LangApplicationDialogTitleUnzipLauncher"), GetLang("LangDialogThemeUnlockGameAccept"), IsWarn:=True)
+            If Not Environment.Is64BitOperatingSystem Then
+                MyMsgBox(GetLang("LangApplicationDialogContent32BitWarn"), GetLang("LangApplicationDialogTitle32BitWarn"), GetLang("LangDialogBtnOK"), IsWarn:=True, ForceWait:=True)
+                FormMain.EndProgramForce(ProcessReturnValues.Cancel)
             End If
             SetUnmanagedDll()
             '计时
@@ -171,7 +168,7 @@ RetryCacheCheck:
                 FilePath = PathExe
             Catch
             End Try
-            MsgBox(ex.GetDisplay(True) & vbCrLf & "PCL 所在路径：" & If(String.IsNullOrEmpty(FilePath), "获取失败", FilePath), MsgBoxStyle.Critical, GetLang("LangApplicationDialogTitleInitError"))
+            MsgBox(ex.GetDisplay(True) & vbCrLf & GetLang("LangApplicationDialogPathPrefix") & If(String.IsNullOrEmpty(FilePath), GetLang("LangApplicationDialogPathGetFail"), FilePath), MsgBoxStyle.Critical, GetLang("LangApplicationDialogTitleInitError"))
             FormMain.EndProgramForce(ProcessReturnValues.Exception)
         End Try
     End Sub
@@ -262,7 +259,7 @@ RetryCacheCheck:
         Select Case Settings.Get(Of McLoginType)("LoginType")
             Case McLoginType.Ms
                 '微软
-                Dim MsJson As JObject = GetJson(Settings.Get(Of String)("LoginMsJson"))
+                Dim MsJson As JObject = Settings.Get(Of String)("LoginMsJson").DeserializeJson()
                 MsJson.Remove(sender.Tag)
                 Settings.Set("LoginMsJson", MsJson.ToString(Newtonsoft.Json.Formatting.None))
                 If FrmLoginMs.ComboAccounts.SelectedItem Is sender.Parent Then FrmLoginMs.ComboAccounts.SelectedIndex = 0
@@ -302,11 +299,11 @@ RetryCacheCheck:
         End Select
     End Sub
 
-    Public Shared ShowingTooltips As New List(Of Border)
-    Private Sub TooltipLoaded(sender As Border, e As EventArgs)
+    Public Shared ShowingTooltips As New List(Of ToolTip)
+    Private Sub OnTooltipOpened(sender As ToolTip, e As RoutedEventArgs)
         ShowingTooltips.Add(sender)
     End Sub
-    Private Sub TooltipUnloaded(sender As Border, e As RoutedEventArgs)
+    Private Sub OnTooltipClosed(sender As ToolTip, e As RoutedEventArgs)
         ShowingTooltips.Remove(sender)
     End Sub
 

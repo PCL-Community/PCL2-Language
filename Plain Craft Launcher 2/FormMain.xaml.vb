@@ -11,6 +11,14 @@ Public Class FormMain
         Dim FeatureList As New List(Of KeyValuePair(Of Integer, String))
         '统计更新日志条目
         If BuildType = BuildTypes.Release Then
+            If LastVersion < 406 Then 'Release 2.13.0.1
+                FeatureList.Add(New KeyValuePair(Of Integer, String)(4, "新增：重做 Java 管理与相关设置，允许调整 Java 优先级、指定 Java 版本范围等"))
+                FeatureList.Add(New KeyValuePair(Of Integer, String)(3, "优化：导出整合包时允许自动导出版本文件夹中的 Java"))
+                FeatureList.Add(New KeyValuePair(Of Integer, String)(3, "优化：重做弹出提示的样式以及动画，以更符合现代 UI 审美"))
+                FeatureList.Add(New KeyValuePair(Of Integer, String)(1, "修复：可能无法安装 OptiFine 26.1.2"))
+                FeatureCount += 35
+                BugCount += 17
+            End If
             If LastVersion < 404 Then 'Release 2.12.8.2
                 FeatureList.Add(New KeyValuePair(Of Integer, String)(1, "修复：Windows 7 无法正常联网"))
                 FeatureCount += 1
@@ -79,6 +87,24 @@ Public Class FormMain
             '3：BUG+ IMP* FEAT-
             '2：BUG* IMP-
             '1：BUG-
+            If LastVersion < 407 Then 'Snapshot 2.13.0.1
+                If LastVersion = 405 Then
+                    FeatureList.Add(New KeyValuePair(Of Integer, String)(1, "修复：使用部分主页预设时崩溃"))
+                    FeatureList.Add(New KeyValuePair(Of Integer, String)(1, "修复：无法删除部分文件夹"))
+                    FeatureList.Add(New KeyValuePair(Of Integer, String)(1, "修复：版本设置中指定的 Java 无法被保存"))
+                    FeatureCount += 1
+                    BugCount += 3
+                End If
+                FeatureCount += 2
+            End If
+            If LastVersion < 405 Then 'Snapshot 2.13.0.0
+                FeatureList.Add(New KeyValuePair(Of Integer, String)(4, "新增：重做 Java 管理与相关设置，允许调整 Java 优先级、指定 Java 版本范围等"))
+                FeatureList.Add(New KeyValuePair(Of Integer, String)(3, "优化：导出整合包时允许自动导出版本文件夹中的 Java"))
+                FeatureList.Add(New KeyValuePair(Of Integer, String)(3, "优化：重做弹出提示的样式以及动画，以更符合现代 UI 审美"))
+                FeatureList.Add(New KeyValuePair(Of Integer, String)(1, "修复：可能无法安装 OptiFine 26.1.2"))
+                FeatureCount += 35
+                BugCount += 17
+            End If
             If LastVersion < 403 Then 'Snapshot 2.12.8.2
                 FeatureList.Add(New KeyValuePair(Of Integer, String)(1, "修复：Windows 7 无法正常联网"))
                 FeatureCount += 1
@@ -256,7 +282,7 @@ Public Class FormMain
         InitializeComponent()
         Opacity = 0
         '开启管理员权限下的文件拖拽
-        If SystemUtils.HasAdminRole() Then
+        If WindowsUtils.HasAdminRole() Then
             Static Helper As New DragHelper
             AddHandler SourceInitialized,
             Sub()
@@ -276,7 +302,7 @@ Public Class FormMain
         PageRight = FrmLaunchRight
         FrmLaunchRight.PageState = MyPageRight.PageStates.ContentStay
         '模式提醒
-        If BuildType = BuildTypes.Debug Then Hint("[开发者模式] PCL 正以开发者模式运行，这可能会造成严重的性能下降，请务必立即向开发者反馈此问题！", HintType.Red)
+        If BuildType = BuildTypes.Debug Then Hint(GetLang("LangHintDebugDeveloperWarning"), HintType.Red)
         If ModeDebug Then Hint(GetLang("LangHintDebugWarning"))
         '尽早执行的加载池
         McFolderListLoader.Start(0) '为了让下载已存在文件检测可以正常运行，必须跑一次；为了让启动按钮尽快可用，需要尽早执行；为了与 PageLaunchLeft 联动，需要为 0 而不是 GetUuid
@@ -367,7 +393,7 @@ Public Class FormMain
             End If
             '启动加载器池
             Try
-                JavaListInit() '延后到同意协议后再执行，避免在初次启动时进行进程操作
+                JavaInit() '延后到同意协议后再执行，避免在初次启动时进行进程操作
                 Thread.Sleep(100)
                 DlClientListMojangLoader.Start(1) 'PCL 会同时根据这里的加载结果决定是否使用官方源进行下载
                 RunCountSub()
@@ -378,7 +404,7 @@ Public Class FormMain
             End Try
             '清理自动更新文件
             Try
-                FileUtils.Delete(PathExeFolder & "PCL\Plain Craft Launcher 2.exe")
+                FileUtils.Delete(Paths.Base & "PCL\Plain Craft Launcher 2.exe")
             Catch ex As Exception
                 Logger.Warn(ex, "清理自动更新文件失败")
             End Try
@@ -400,9 +426,7 @@ Public Class FormMain
         If BuildType = BuildTypes.Snapshot Then
             Select Case Settings.Get(Of Integer)("SystemCount")
                 Case 1
-                    MyMsgBox("欢迎使用 PCL 快照版！" & vbCrLf &
-                             "快照版包含尚未在正式版发布的测试性功能，仅用于赞助者本人尝鲜。所以请不要发给其他人或者用于制作整合包哦！" & vbCrLf &
-                             "如果你并非通过赞助或赞助者本人邀请进群获得的本程序，那么可能是有人在违规传播，记得提醒他一下啦。", "快照版使用说明")
+                    MyMsgBox(GetLang("LangFormMainSnapshotDialogContent"), GetLang("LangFormMainSnapshotDialogTitle"))
             End Select
             If Settings.Get(Of Integer)("SystemCount") >= 99 Then
                 If ThemeUnlock(6, False) Then
@@ -417,17 +441,17 @@ Public Class FormMain
         Logger.Info($"版本号从 {LastVersionCode} 升高到 {VersionCode}")
         Settings.Set("SystemLastVersionReg", VersionCode)
         '检查有记录的最高版本号
-        Dim LowerVersionCode As Integer
+        Dim HighestVersionCode As Integer
         Const SettingKey = If(BuildType = BuildTypes.Snapshot, "SystemHighestAlphaVersionReg", "SystemHighestBetaVersionReg")
-        LowerVersionCode = Settings.Get(Of Integer)("SystemHighestAlphaVersionReg")
-        If LowerVersionCode < VersionCode Then
+        HighestVersionCode = Settings.Get(Of Integer)(SettingKey)
+        If HighestVersionCode < VersionCode Then
             Settings.Set(SettingKey, VersionCode)
-            Logger.Info($"最高版本号从 {LowerVersionCode} 升高到 {VersionCode}")
+            Logger.Info($"最高版本号从 {HighestVersionCode} 升高到 {VersionCode}")
         End If
         '被移除的窗口设置选项
         If Settings.Get(Of Integer)("LaunchArgumentWindowType") = 5 Then Settings.Set("LaunchArgumentWindowType", 1)
         '修改主题设置项名称
-        If LowerVersionCode <= 207 Then
+        If HighestVersionCode <= 207 Then
             Dim UnlockedTheme As New List(Of String) From {"2"}
             UnlockedTheme.AddRange(New List(Of String)(Settings.Get(Of String)("UiLauncherThemeHide").ToString.Split("|")))
             UnlockedTheme.AddRange(New List(Of String)(Settings.Get(Of String)("UiLauncherThemeHide2").ToString.Split("|")))
@@ -438,24 +462,22 @@ Public Class FormMain
             Dim UnlockedTheme As New List(Of String)(Settings.Get(Of String)("UiLauncherThemeHide2").ToString.Split("|"))
             UnlockedTheme.Remove("13")
             Settings.Set("UiLauncherThemeHide2", UnlockedTheme.Join("|"c))
-            MyMsgBox("由于新版 PCL 修改了欧皇彩的解锁方式，你需要重新解锁欧皇彩。" & vbCrLf &
-                     "多谢各位的理解啦！", "重新解锁提醒")
+            MyMsgBox(GetLang("LangFormMainThemeUnlockContentA"), GetLang("LangFormMainThemeUnlockDialogTitle"))
         End If
         '重置滑稽彩
         If LastVersionCode <= 152 AndAlso Settings.Get(Of String)("UiLauncherThemeHide2").ToString.Split("|").Contains("12") Then
             Dim UnlockedTheme As New List(Of String)(Settings.Get(Of String)("UiLauncherThemeHide2").ToString.Split("|"))
             UnlockedTheme.Remove("12")
             Settings.Set("UiLauncherThemeHide2", UnlockedTheme.Join("|"c))
-            MyMsgBox("由于新版 PCL 修改了滑稽彩的解锁方式，你需要重新解锁滑稽彩。" & vbCrLf &
-                     "多谢各位的理解啦！", "重新解锁提醒")
+            MyMsgBox(GetLang("LangFormMainThemeUnlockContentB"), GetLang("LangFormMainThemeUnlockDialogTitle"))
         End If
         '移动自定义皮肤
-        If LastVersionCode <= 161 AndAlso FileUtils.Exists(PathExeFolder & "PCL\CustomSkin.png") AndAlso Not FileUtils.Exists(PathAppdata & "CustomSkin.png") Then
-            FileUtils.Copy(PathExeFolder & "PCL\CustomSkin.png", PathAppdata & "CustomSkin.png")
+        If LastVersionCode <= 161 AndAlso FileUtils.Exists(Paths.Base & "PCL\CustomSkin.png") AndAlso Not FileUtils.Exists(Paths.AppDataThenName & "CustomSkin.png") Then
+            FileUtils.Copy(Paths.Base & "PCL\CustomSkin.png", Paths.AppDataThenName & "CustomSkin.png")
             Logger.Info("已移动离线自定义皮肤 (162)")
         End If
-        If LastVersionCode <= 263 AndAlso FileUtils.Exists(PathTemp & "CustomSkin.png") AndAlso Not FileUtils.Exists(PathAppdata & "CustomSkin.png") Then
-            FileUtils.Copy(PathTemp & "CustomSkin.png", PathAppdata & "CustomSkin.png")
+        If LastVersionCode <= 263 AndAlso FileUtils.Exists(PathTemp & "CustomSkin.png") AndAlso Not FileUtils.Exists(Paths.AppDataThenName & "CustomSkin.png") Then
+            FileUtils.Copy(PathTemp & "CustomSkin.png", Paths.AppDataThenName & "CustomSkin.png")
             Logger.Info("已移动离线自定义皮肤 (264)")
         End If
         '解除帮助页面的隐藏
@@ -486,8 +508,8 @@ Public Class FormMain
         End If
         '输出更新日志
         If LastVersionCode <= 0 Then Return
-        If LowerVersionCode >= VersionCode Then Return
-        ShowUpdateLog(LowerVersionCode)
+        If HighestVersionCode >= VersionCode Then Return
+        ShowUpdateLog(HighestVersionCode)
     End Sub
     Private Sub DowngradeSub(LastVersionCode As Integer)
         Logger.Info($"版本号从 {LastVersionCode} 降低到 {VersionCode}")
@@ -515,7 +537,7 @@ Public Class FormMain
             Sub()
                 Logger.Info("正在强行停止任务")
                 For Each Task As LoaderBase In LoaderTaskbar.ToList()
-                    Task.Interrupt()
+                    Task.Cancel()
                 Next
             End Sub, "强行停止下载任务")
         End If
@@ -564,11 +586,12 @@ Public Class FormMain
                 FeedbackInfo()
                 Logger.Info(GetLang("LangCrashReport"))
                 IsLogShown = True
-                StartProcess(PathExeFolder & "PCL\Log1.txt")
+                StartProcess(Paths.Base & "PCL\Log1.txt")
             End If
             Thread.Sleep(500) '防止 PCL 在记事本打开前就被掐掉
         End If
         Logger.Info($"程序已退出，返回值：{ReturnCode}")
+        ConfigUtils.SaveAll()
         Logger.Instance.Flush()
         If ReturnCode <> ProcessReturnValues.Success Then Environment.Exit(ReturnCode)
         Process.GetCurrentProcess.Kill()
@@ -718,7 +741,7 @@ Public Class FormMain
                     FrmSetupUI.PanLogoChange.Visibility = Visibility.Visible
                 End If
                 Try
-                    ImageTitleLogo.Source = PathExeFolder & "PCL\Logo.png"
+                    ImageTitleLogo.Source = Paths.Base & "PCL\Logo.png"
                 Catch ex As Exception
                     ImageTitleLogo.Source = Nothing
                     Logger.Error(ex, "显示标题栏图片失败", LogBehavior.Alert)
@@ -810,12 +833,16 @@ Public Class FormMain
 
     '切回窗口
     Private Sub FormMain_Activated() Handles Me.Activated
+        '切回窗口时自动刷新
         Try
             If PageCurrent = PageType.InstanceSetup AndAlso PageCurrentSub = PageSubType.InstanceMod Then
-                'Mod 管理自动刷新
+                'Mod 管理
                 FrmInstanceMod.ReloadModList()
+            ElseIf PageCurrent = PageType.InstanceSetup AndAlso (PageCurrentSub = PageSubType.InstanceSetup OrElse PageCurrentSub = PageSubType.InstanceExport) Then
+                '更新当前选用的 Java
+                PageInstanceLeft.ReloadCurrentJava()
             ElseIf PageCurrent = PageType.InstanceSelect Then
-                '版本选择自动刷新
+                '版本选择
                 LoaderFolderRun(McInstanceListLoader, McFolderSelected, LoaderFolderRunType.RunOnUpdated, MaxDepth:=1, ExtraPath:="versions\")
             End If
         Catch ex As Exception
@@ -831,7 +858,7 @@ Public Class FormMain
         Settings.Set("LinkLastAutoJoinInviteCode", Code)
         RunInThread(
         Sub()
-            If MyMsgBox("嘿，是否使用复制的邀请码加入房间？", "加入联机房间", "加入", "取消") = 2 Then Return '防止弹窗阻碍主线程，所以必须放在工作线程
+            If MyMsgBox(GetLang("LangFormMainJoinRoomDialogContent"), GetLang("LangFormMainJoinRoomDialogTitle"), GetLang("LangFormMainJoinRoomDialogBtnJoin"), GetLang("LangDialogBtnCancel")) = 2 Then Return '防止弹窗阻碍主线程，所以必须放在工作线程
             RunInUi(
             Sub()
                 PageLinkMain.Join(Code)
@@ -885,7 +912,7 @@ Public Class FormMain
                         'Authlib 拖拽
                         e.Handled = True
                         e.Effects = DragDropEffects.Copy
-                        Dim AuthlibServer As String = EscapeUtils.FormUrlUnescape(Str.Substring("authlib-injector:yggdrasil-server:".Length))
+                        Dim AuthlibServer As String = StringUtils.FormUrlUnescape(Str.Substring("authlib-injector:yggdrasil-server:".Length))
                         Logger.Info($"Authlib 拖拽：{AuthlibServer}")
                         If Not String.IsNullOrEmpty(New ValidateHttp().Validate(AuthlibServer)) Then
                             Hint(GetLang("LangHintAuthlibUrlIncorrect", AuthlibServer), HintType.Red)
@@ -976,12 +1003,12 @@ Public Class FormMain
             Dim Extension As String = FilePath.AfterLast(".").Lower
             If Extension = "xaml" Then
                 Logger.Info("文件后缀为 XAML，作为主页加载")
-                If FileUtils.Exists(PathExeFolder & "PCL\Custom.xaml") Then
+                If FileUtils.Exists(Paths.Base & "PCL\Custom.xaml") Then
                     If MyMsgBox(GetLang("LangDialogCustomHomePageReplaceContent"), GetLang("LangDialogCustomHomePageReplaceTitle"), GetLang("LangDialogBtnCustomHomePageReplaceConfirm"), GetLang("LangDialogBtnCancel")) = 2 Then
                         Return
                     End If
                 End If
-                FileUtils.Copy(FilePath, PathExeFolder & "PCL\Custom.xaml")
+                FileUtils.Copy(FilePath, Paths.Base & "PCL\Custom.xaml")
                 RunInUi(
                 Sub()
                     Settings.Set("UiCustomType", 1)
@@ -998,9 +1025,8 @@ Public Class FormMain
                 Try
                     ModpackInstall(FilePath)
                     Return
-                Catch ex As CancelledException
-                    Return '用户主动取消
                 Catch ex As Exception
+                    If ex.IsCanceled Then Return
                     '安装失败，继续往后尝试
                 End Try
             End If
@@ -1597,7 +1623,7 @@ Public Class FormMain
     '关闭 Minecraft
     Public Sub BtnExtraShutdown_Click() Handles BtnExtraShutdown.Click
         Try
-            If McLaunchLoaderReal IsNot Nothing Then McLaunchLoaderReal.Interrupt()
+            If McLaunchLoaderReal IsNot Nothing Then McLaunchLoaderReal.Cancel()
             For Each Watcher In McWatcherList
                 Watcher.Kill()
             Next

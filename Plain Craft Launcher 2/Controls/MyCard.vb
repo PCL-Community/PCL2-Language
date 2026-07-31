@@ -1,4 +1,4 @@
-﻿Public Class MyCard
+Public Class MyCard
 
     '控件
     Inherits Grid

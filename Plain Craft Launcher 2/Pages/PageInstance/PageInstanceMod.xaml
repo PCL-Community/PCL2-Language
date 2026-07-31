@@ -83,26 +83,26 @@
                                     ColorType="Highlight"
                                     VerticalAlignment="Center"
                                     Margin="2,0"
-                                    Text="全部"
+                                    Text="{StaticResource LangPageVersionModViewTypeAll}"
                                     x:Name="BtnFilterAll"
                                     Checked="True"/>
                             <local:MyRadioButton Tag="1"
                                     ColorType="Highlight"
                                     VerticalAlignment="Center"
                                     Margin="2,0"
-                                    Text="已启用"
+                                    Text="{StaticResource LangPageVersionModViewTypeEnabled}"
                                     x:Name="BtnFilterEnabled"/>
                             <local:MyRadioButton Tag="2"
                                     ColorType="Highlight"
                                     VerticalAlignment="Center"
                                     Margin="2,0"
-                                    Text="已禁用"
+                                    Text="{StaticResource LangPageVersionModViewTypeDisabled}"
                                     x:Name="BtnFilterDisabled"/>
                             <local:MyRadioButton Tag="3"
                                     ColorType="Highlight"
                                     VerticalAlignment="Center"
                                     Margin="2,0"
-                                    Text="可更新"
+                                    Text="{StaticResource LangPageVersionModViewTypeCanUpdate}"
                                     x:Name="BtnFilterCanUpdate"/>
                         </StackPanel>
                         <StackPanel Margin="20,48,18,22"
@@ -145,7 +145,7 @@
                                 Grid.Column="0"
                                 x:Name="BtnHintDownload"
                                 MinWidth="140"
-                                Text="下载 Mod"
+                                Text="{StaticResource LangPageVersionModInstallMod}"
                                 Margin="0,0,17,0"
                                 Padding="13,0"
                                 ColorType="Highlight"/>
@@ -154,7 +154,7 @@
                                 Grid.Column="1"
                                 x:Name="BtnHintInstall"
                                 MinWidth="140"
-                                Text="从文件安装 Mod"
+                                Text="{StaticResource LangPageVersionModInstallModFromFile}"
                                 Margin="0,0,17,0"
                                 Padding="13,0"/>
                         <local:MyButton Height="35"
@@ -162,7 +162,7 @@
                                 Grid.Column="2"
                                 x:Name="BtnHintOpen"
                                 MinWidth="140"
-                                Text="打开 Mod 文件夹"
+                                Text="{StaticResource LangPageVersionModOpenFolder}"
                                 Margin="0,0,17,0"
                                 Padding="13,0"/>
                     </Grid>

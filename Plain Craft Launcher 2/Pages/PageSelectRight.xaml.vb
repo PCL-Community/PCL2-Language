@@ -1,4 +1,4 @@
-﻿Public Class PageSelectRight
+Public Class PageSelectRight
 
     '窗口基础
     Private Sub PageSelectRight_Loaded(sender As Object, e As RoutedEventArgs) Handles Me.Loaded
@@ -121,16 +121,10 @@
         Dim BtnStar As New MyIconButton
         If Instance.IsStar Then
             BtnStar.ToolTip = GetLang("LangSelectBtnCancelFavorite")
-            ToolTipService.SetPlacement(BtnStar, Primitives.PlacementMode.Center)
-            ToolTipService.SetVerticalOffset(BtnStar, 30)
-            ToolTipService.SetHorizontalOffset(BtnStar, 2)
             BtnStar.LogoScale = 1.1
             BtnStar.Logo = Logo.IconButtonLikeFill
         Else
             BtnStar.ToolTip = GetLang("LangSelectBtnFavorite")
-            ToolTipService.SetPlacement(BtnStar, Primitives.PlacementMode.Center)
-            ToolTipService.SetVerticalOffset(BtnStar, 30)
-            ToolTipService.SetHorizontalOffset(BtnStar, 2)
             BtnStar.LogoScale = 1.1
             BtnStar.Logo = Logo.IconButtonLikeLine
         End If
@@ -141,16 +135,10 @@
                                   End Sub
         Dim BtnDel As New MyIconButton With {.LogoScale = 1.1, .Logo = Logo.IconButtonDelete}
         BtnDel.ToolTip = GetLang("LangSelectDelete")
-        ToolTipService.SetPlacement(BtnDel, Primitives.PlacementMode.Center)
-        ToolTipService.SetVerticalOffset(BtnDel, 30)
-        ToolTipService.SetHorizontalOffset(BtnDel, 2)
         AddHandler BtnDel.Click, Sub() DeleteInstance(sender, Instance)
         If Instance.State <> McInstanceState.Error Then
             Dim BtnCont As New MyIconButton With {.LogoScale = 1.1, .Logo = Logo.IconButtonSetup}
             BtnCont.ToolTip = GetLang("LangSelectBtnSet")
-            ToolTipService.SetPlacement(BtnCont, Primitives.PlacementMode.Center)
-            ToolTipService.SetVerticalOffset(BtnCont, 30)
-            ToolTipService.SetHorizontalOffset(BtnCont, 2)
             AddHandler BtnCont.Click,
             Sub()
                 PageInstanceLeft.Instance = Instance
@@ -165,9 +153,6 @@
         Else
             Dim BtnCont As New MyIconButton With {.LogoScale = 1.15, .Logo = Logo.IconButtonOpen}
             BtnCont.ToolTip = GetLang("LangSelectBtnOpenFolder")
-            ToolTipService.SetPlacement(BtnCont, Primitives.PlacementMode.Center)
-            ToolTipService.SetVerticalOffset(BtnCont, 30)
-            ToolTipService.SetHorizontalOffset(BtnCont, 2)
             AddHandler BtnCont.Click, Sub() PageInstanceOverall.OpenInstanceFolder(Instance)
             AddHandler sender.MouseRightButtonUp, Sub() PageInstanceOverall.OpenInstanceFolder(Instance)
             sender.Buttons = {BtnStar, BtnDel, BtnCont}
@@ -204,7 +189,7 @@
             Select Case MyMsgBox(MsgBoxContent, GetLang("LangSelectDeleteVersionTitle"), GetLang("LangDialogBtnContinue"), GetLang("LangDialogBtnCancel"),, True)
 
                 Case 1
-                    Instance.ResetIniCache()
+                    Instance.ResetSettingsCache()
                     DirectoryUtils.Delete(Instance.PathVersion, Not IsShiftPressed)
                     Hint( GetLang("LangSelectVersionDeleted", Instance.Name), HintType.Green)
                 Case 2

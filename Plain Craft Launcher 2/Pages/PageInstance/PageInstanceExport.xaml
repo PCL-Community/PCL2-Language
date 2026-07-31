@@ -1,4 +1,4 @@
-﻿<local:MyPageRight
+<local:MyPageRight
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:local="clr-namespace:PCL"
@@ -23,6 +23,9 @@
                               Text="{StaticResource LangPageVersionExportNoOptifine}"
                               Theme="Yellow"
                               x:Name="HintOptiFine"/>
+                <local:MyHint Margin="0,15,0,0"
+                        Theme="Yellow"
+                        x:Name="HintJava"/>
                 <local:MyCard Margin="0,15">
                     <Grid Margin="22,15,25,15">
                         <Grid.ColumnDefinitions>
@@ -147,7 +150,7 @@
                             <local:MyCheckBox>
                                 <local:MyCheckBox.Tag>
                                     <local:ExportOption
-                                        Title="TaCZ 枪包"
+                                        Title="{StaticResource LangPageVersionExportTaCZ}"
                                         Rules="tacz/|config/tacz/custom/"
                                         DefaultChecked="True"/>
                                 </local:MyCheckBox.Tag>
@@ -155,7 +158,7 @@
                             <local:MyCheckBox>
                                 <local:MyCheckBox.Tag>
                                     <local:ExportOption
-                                        Title="已上传的沉浸画"
+                                        Title="{StaticResource LangPageVersionExportImmersivePaintings}"
                                         Rules="immersive_paintings/"
                                         DefaultChecked="True"/>
                                 </local:MyCheckBox.Tag>
@@ -266,8 +269,8 @@
                         <local:MyCheckBox>
                             <local:MyCheckBox.Tag>
                                 <local:ExportOption
-                                    Title="协议"
-                                    Description="Licence 文件"
+                                    Title="{StaticResource LangPageVersionExportLicense}"
+                                    Description="{StaticResource LangPageVersionExportLicenseDesc}"
                                     Rules="LICEN*"
                                     DefaultChecked="True"/>
                             </local:MyCheckBox.Tag>
@@ -275,9 +278,16 @@
                         <local:MyCheckBox>
                             <local:MyCheckBox.Tag>
                                 <local:ExportOption
-                                    Title="多人游戏服务器列表"
+                                    Title="{StaticResource LangPageVersionExportServerList}"
                                     Rules="servers.dat"
                                     DefaultChecked="False"/>
+                            </local:MyCheckBox.Tag>
+                        </local:MyCheckBox>
+                        <local:MyCheckBox x:Name="CheckOptionsJava">
+                            <local:MyCheckBox.Tag>
+                                <local:ExportOption
+                                    Title="版本文件夹中的 Java"
+                                    DefaultChecked="True"/>
                             </local:MyCheckBox.Tag>
                         </local:MyCheckBox>
                         <local:MyCheckBox x:Name="CheckOptionsPcl">
@@ -316,6 +326,10 @@
                         <local:MyCheckBox Text="{StaticResource LangPageVersionExportModrinthStandard}"
                                           x:Name="CheckAdvancedModrinth"
                                           ToolTip="{StaticResource LangPageVersionExportModrinthStandardDesc}"/>
+                        <local:MyHint Theme="Yellow"
+                                x:Name="HintModrinthFormat"
+                                Margin="26,2,0,2"
+                                      Text="若不勾选 “PCL 启动器程序”，导出时才能在 “保存类型” 中选择 .mrpack 格式！"/>
                         <local:MyHint Theme="Blue"
                                       RelativeSetup="HintExportConfig"
                                       CanClose="True"

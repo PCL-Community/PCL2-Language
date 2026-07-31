@@ -1,7 +1,4 @@
-﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:s="clr-namespace:System;assembly=mscorlib"
-        xml:space="preserve">
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:s="clr-namespace:System;assembly=mscorlib" xml:space="preserve">
     <s:String x:Key="LangTaskAbort">Annulé !</s:String>
     <s:String x:Key="LangDialogBtnOK">OK</s:String>
     <s:String x:Key="LangDialogBtnCancel">Annuler</s:String>
@@ -29,6 +26,7 @@ Causé par : {0}</s:String>
     <s:String x:Key="LangApplicationDialogTitleUnzipLauncher">Avertissement sur l'environnement d'exécution</s:String>
     <s:String x:Key="LangApplicationDialogContentUnzipLauncher">Veuillez extraire PCL du fichier compressé ou le déplacer vers un autre dossier avant de continuer à l'utiliser !
 Le programme est actuellement exécuté dans un dossier temporaire, les paramètres, les sauvegardes, etc. peuvent ne pas être enregistrés et certaines fonctionnalités peuvent ne pas être disponibles ！</s:String>
+    <s:String x:Key="LangApplicationDialogTitle32BitWarn">环境警告</s:String>
     <s:String x:Key="LangApplicationDialogContent32BitWarn">PCL et la nouvelle version de Minecraft ne prennent plus en charge les systèmes 32 bits, certaines fonctionnalités ne seront pas disponibles.
 Il est fortement recommandé de réinstaller le jeu après le passage à un système 64 bits !</s:String>
     <s:String x:Key="LangApplicationDialogTitleInitError">Erreur d'initialisation de PCL</s:String>
@@ -271,6 +269,7 @@ Si vous avez créé une page d'accueil en ligne stable, vous pouvez cliquer sur 
     <s:String x:Key="LangSetHomePagePresetPageN">Minecraft 更新摘要（作者：pynickle，部分由 AI 生成）</s:String>
     <s:String x:Key="LangSetHomePagePresetPageO">今日新闻热点（作者：EYicheng，部分由 AI 生成）</s:String>
     <s:String x:Key="LangSetHomePagePresetPageP">Minecraft 芝士站（作者：awaEric233，部分由 AI 生成）</s:String>
+    <s:String x:Key="LangSetHomePagePresetPageQ">Bangumi 番剧主页（作者：wzyaeu）</s:String>
     <s:String x:Key="LangSetFuncHidden">Masquage de Fonctionnalités</s:String>
     <s:String x:Key="LangSetFuncHiddenToolTip">Vous pouvez masquer des pages inutiles ou désactiver des fonctionnalités spécifiques. Appuyez sur "F12" dans n'importe quelle interface pour afficher temporairement les fonctionnalités cachées.</s:String>
     <s:String x:Key="LangSetFuncHiddenLaunch">Interface Principale</s:String>
@@ -669,6 +668,7 @@ Cette page fournit le téléchargement de l'installateur NeoForge. Après le té
     <s:String x:Key="LangMySkinHintGettingCape">Obtention de la liste des capes, veuillez patienter...</s:String>
     <s:String x:Key="LangMySkinDialogChooseCape">Choisissez une cape</s:String>
     <s:String x:Key="LangMySkinHintChangeCapeFail">Échec du changement de la cape.</s:String>
+    <s:String x:Key="LangMySkinHintChangeCapeFailTimeout">更改披风失败：连接 Mojang 服务器超时，请稍后再试，或使用 VPN 改善网络环境</s:String>
     <s:String x:Key="LangMySkinHintChangeCapeSuccess">Cape changée avec succès !</s:String>
     <s:String x:Key="LangMySkinCapeNameMigrator">Cape de Migrateur</s:String>
     <s:String x:Key="LangMySkinCapeNameMapMaker">Cape de Créateur de Cartes</s:String>
@@ -697,6 +697,8 @@ Cette page fournit le téléchargement de l'installateur NeoForge. Après le té
     <s:String x:Key="LangMySkinCapeNameFounders">创始人披风</s:String>
     <s:String x:Key="LangMySkinCapeNameCopper">铜披风</s:String>
     <s:String x:Key="LangMySkinCapeNameZombieHorse">僵尸马披风</s:String>
+    <s:String x:Key="LangMySkinCapeNameBuilder">建造者披风</s:String>
+    <s:String x:Key="LangMySkinCapeNameCrafter">工匠披风</s:String>
     <s:String x:Key="LangMySkinCapeNameNone">Aucune</s:String>
     <s:String x:Key="LangLaunchLeftInstanceChoose">Sélection</s:String>
     <s:String x:Key="LangLaunchLeftInstanceConfig">Propriétés</s:String>
@@ -732,8 +734,6 @@ Cette page fournit le téléchargement de l'installateur NeoForge. Après le té
     <s:String x:Key="LangLaunchLeftExceptionModpackInstallFail">自动安装整合包失败：{0}</s:String>
     <s:String x:Key="LangLaunchRightSnapshot">Aperçu de l'instantané</s:String>
     <s:String x:Key="LangLaunchRightLog">Journal de lancement</s:String>
-    <s:String x:Key="LangLaunchRightLabHint1">La version instantanée contient des fonctionnalités de test qui ne sont pas officiellement publiées et ne sont disponibles que pour le sponsor. Veuillez ne pas l'envoyer à d'autres ou l'utiliser pour créer des modpacks !</s:String>
-    <s:String x:Key="LangLaunchRightLabHint2">Si vous avez accumulé un parrainage de ¥23.33, vous pouvez cacher définitivement cet indice en envoyant le terme "解锁码" (Code de déverrouillage) au développeur sur Afdian.</s:String>
     <s:String x:Key="LangLaunchRightLoadingPage">Chargement de la page d'accueil...</s:String>
     <s:String x:Key="LangLaunchRightPageTips">Anecdote</s:String>
     <s:String x:Key="LangLaunchRightPageEcho">Trou d'écho</s:String>
@@ -771,6 +771,7 @@ Message d'erreur original : </s:String>
     <s:String x:Key="LangPageLoginMsSkinSkinChange">Changer de peau</s:String>
     <s:String x:Key="LangPageLoginMsSkinSkinSave">Enregistrer la peau</s:String>
     <s:String x:Key="LangPageLoginMsSkinSkinRefresh">Rafraîchir</s:String>
+    <s:String x:Key="LangPageLoginMsSkinRefresh">刷新皮肤</s:String>
     <s:String x:Key="LangPageLoginMsSkinCapeChange">Changer de cape</s:String>
     <s:String x:Key="LangPageLoginMsSkinInfoChange">Modifier les informations</s:String>
     <s:String x:Key="LangPageLoginMsSkinInfoChangePassword">Modifier le mot de passe</s:String>
@@ -914,8 +915,14 @@ Cela entraînera des sauvegardes qui ne sont pas partagées entre les instances 
     <s:String x:Key="LangPageSetupLaunchLaunchJava">Java</s:String>
     <s:String x:Key="LangPageSetupLaunchLaunchJavaToolTip">Mettez Java dans le dossier du jeu ou le dossier PCL pour que PCL le choisisse en priorité.</s:String>
     <s:String x:Key="LangPageSetupLaunchLaunchJavaLoading">Chargement...</s:String>
-    <s:String x:Key="LangPageSetupLaunchLaunchJavaAutoSearch">Recherche</s:String>
-    <s:String x:Key="LangPageSetupLaunchLaunchJavaImport">Importer</s:String>
+    <s:String x:Key="LangPageSetupLaunchLaunchJavaDescDisplay">共有 {0} 个 Java …</s:String>
+    <s:String x:Key="LangPageSetupLaunchLaunchJavaNoJava">未找到 Java，点击以导入已有的 Java</s:String>
+    <s:String x:Key="LangPageSetupLaunchLaunchJavaHintClickArrow2Sort">点击选项右侧的箭头可以进行排序，以控制 PCL 优先选择哪个 Java！</s:String>
+    <s:String x:Key="LangPageSetupLaunchLaunchJavaBtnMakeGreater">提高优先级</s:String>
+    <s:String x:Key="LangPageSetupLaunchLaunchJavaBtnMakeLess">降低优先级</s:String>
+    <s:String x:Key="LangPageSetupLaunchLaunchJavaTooltipRemoveItem">从列表中移除</s:String>
+    <s:String x:Key="LangPageSetupLaunchLaunchJavaTooltipUnableRemoveOfficialJava">无法移除官方 Java</s:String>
+    <s:String x:Key="LangPageSetupLaunchLaunchJavaBtnImportExistJava">导入电脑中已有的 Java…</s:String>
     <s:String x:Key="LangPageSetupLaunchLaunchMem">Mémoire du jeu</s:String>
     <s:String x:Key="LangPageSetupLaunchLaunchMem32BitWarn">Java 32 bits ne peut allouer qu'un maximum de 1 Go de mémoire. Il est recommandé d'installer Java 64 bits !</s:String>
     <s:String x:Key="LangPageSetupLaunchLaunchMemAutoAdjust">Automatique</s:String>
@@ -973,10 +980,36 @@ N'ouvrez pas cela à moins que les fichiers concernés ne soient modifiés.</s:S
     <s:String x:Key="LangPageSetupLaunchLaunchAdvanceOptionsDisableJLW">禁用 Java Launch Wrapper</s:String>
     <s:String x:Key="LangPageSetupLaunchLaunchAdvanceOptionsDisableJLWToolTip">PCL 会使用 Java Launch Wrapper 来修复老版本 Java 在中文路径下无法启动的问题。
 如果这被反作弊拦截，或遇到其他问题，也可以将其关闭。</s:String>
+    <s:String x:Key="LangPageSetupLaunchLaunchAdvanceOptionsDisableLUA">禁用 LWJGL Unsafe Agent</s:String>
+    <s:String x:Key="LangPageSetupLaunchLaunchAdvanceOptionsDisableLUAToolTip">是否使用 LWJGL Unsafe Agent 修复 LWJGL 3.4.1 的一个性能问题。
+详见：https://github.com/HMCL-dev/lwjgl-unsafe-agent</s:String>
     <s:String x:Key="LangPageSetupLaunchLaunchAdvanceOptionsGPUPerfence">要求 Java 使用高性能显卡</s:String>
     <s:String x:Key="LangPageSetupLaunchLaunchAdvanceOptionsGPUPerfenceToolTip">自动在 Windows 设置 → 系统 → 屏幕 → 显示卡 中将 Java 改为使用高性能显卡。
 如果电脑同时有集显和独显，这能确保 MC 使用独显进行渲染，以大幅提高性能。</s:String>
     <s:String x:Key="LangPageSetupLaunchLaunchAdvanceOptionsMoreTips">版本独立设置中还有更多高级选项可供调整。</s:String>
+    <s:String x:Key="LangPageSetupLaunchLaunchAdvanceOptionsMemoryManagement">内存管理</s:String>
+    <s:String x:Key="LangPageSetupLaunchLaunchAdvanceOptionsGCZGC">尽量使用 ZGC</s:String>
+    <s:String x:Key="LangPageSetupLaunchLaunchAdvanceOptionsGCZGCToolTip">在 Java 21+ 使用分代 ZGC，20~15 使用非分代的 ZGC，14- 使用 G1GC。
+ZGC 的内存占用比 G1GC 更高，不过在回收内存时不会导致卡顿。
+覆盖 "Java 虚拟机参数" 设置中的 GC 相关参数。</s:String>
+    <s:String x:Key="LangPageSetupLaunchLaunchAdvanceOptionsGCGenZGC">尽量使用分代 ZGC</s:String>
+    <s:String x:Key="LangPageSetupLaunchLaunchAdvanceOptionsGCGenZGCToolTip">在 Java 21+ 使用分代 ZGC，20- 使用 G1GC。
+ZGC 的内存占用比 G1GC 更高，不过在回收内存时不会导致卡顿。
+覆盖 "Java 虚拟机参数" 设置中的 GC 相关参数。</s:String>
+    <s:String x:Key="LangPageSetupLaunchLaunchAdvanceOptionsGCStandardG1GC">标准 G1GC</s:String>
+    <s:String x:Key="LangPageSetupLaunchLaunchAdvanceOptionsGCStandardG1GCToolTip">总是使用 G1GC，附带 Mojang 官方的优化参数。
+G1GC 的内存占用比 ZGC 更低，但在回收内存时会导致突然的卡顿。
+覆盖 "Java 虚拟机参数" 设置中的 GC 相关参数。</s:String>
+    <s:String x:Key="LangPageSetupLaunchLaunchAdvanceOptionsGCTunedG1GC">调优 G1GC</s:String>
+    <s:String x:Key="LangPageSetupLaunchLaunchAdvanceOptionsGCTunedG1GCToolTip">总是使用 G1GC，附带 PCL 调优过的优化参数。
+G1GC 的内存占用比 ZGC 更低，但在回收内存时会导致突然的卡顿。
+覆盖 "Java 虚拟机参数" 设置中的 GC 相关参数。</s:String>
+    <s:String x:Key="LangPageSetupLaunchLaunchAdvanceOptionsGCCustom">不指定（可自定义）</s:String>
+    <s:String x:Key="LangPageSetupLaunchLaunchAdvanceOptionsGCCustomToolTip">不自动添加 GC 参数。
+仅当选择此项时，你可以在 "Java 虚拟机参数" 设置中手动添加 GC 参数。</s:String>
+    <s:String x:Key="LangPageSetupLaunchLaunchAdvanceOptionsDisableLWJGL">禁用 LWJGL Unsafe Agent</s:String>
+    <s:String x:Key="LangPageSetupLaunchLaunchAdvanceOptionsDisableLWJGLToolTip">是否使用 LWJGL Unsafe Agent 修复 LWJGL 3.4.1 的一个性能问题。
+详见：https://github.com/HMCL-dev/lwjgl-unsafe-agent</s:String>
     <s:String x:Key="LangPageSetupLaunchGotoVersionSetting">版本独立设置</s:String>
     <s:String x:Key="LangPageSetupLaunchReloadByError">Il y a une exception dans les options de lancement et elles ont été automatiquement réinitialisées.</s:String>
     <s:String x:Key="LangPageSetupLaunchReloadFail">Une erreur s'est produite lors du rechargement des options de lancement.</s:String>
@@ -1436,6 +1469,7 @@ Veuillez vérifier si le type d'événement est correctement rempli, si le PCL e
     <s:String x:Key="LangModMinecraftUnknownError">Une erreur inconnue s'est produite, veuillez signaler ce problème à l'auteur.</s:String>
     <s:String x:Key="LangModMinecraftNideAuth">Authentification Unified Pass</s:String>
     <s:String x:Key="LangModMinecraftAuthlibAuth">Authentification Authlib</s:String>
+    <s:String x:Key="LangModMinecraftFoolName26w14a">为什么需要物品栏？让方块们跟着你走吧！</s:String>
     <s:String x:Key="LangModMinecraftFoolName24w14potato">Les pommes de terre toxiques ont toujours été négligées et sous-estimées, alors nous leur avons donné des super-pouvoirs !</s:String>
     <s:String x:Key="LangModMinecraftFoolName25w14craftmine">你可以合成任何东西——包括合成你的世界！</s:String>
     <s:String x:Key="LangModMinecraftFoolName23w13ab">Des recherches montrent : les joueurs aiment faire des choix - plus il y en a, mieux c'est !</s:String>
@@ -1721,6 +1755,11 @@ Si cette option n'est pas disponible, sélectionnez « Définir un mot de passe 
     <s:String x:Key="LangModModpackTaskExtraModpack">Extraire le Modpack</s:String>
     <s:String x:Key="LangModModpackTaskGetModDownloadInfo">Obtenir les informations de téléchargement des mods</s:String>
     <s:String x:Key="LangModModpackExceptionOnlineModDeleted">Impossible d'installer le modpack car certains mods requis ont été supprimés par l'auteur. Veuillez contacter l'auteur du modpack pour mettre à jour les mods dans le modpack.</s:String>
+    <s:String x:Key="LangModModpackDialogTitleOnlineModDeleted">整合包内容缺失</s:String>
+    <s:String x:Key="LangModModpackDialogContentOnlineModDeleted">未找到该整合包所需的以下内容，它们可能已被原作者删除：
+{0}
+
+是否继续安装？缺失这些内容可能导致整合包出现异常！</s:String>
     <s:String x:Key="LangModModpackTaskInitModDownloadInfo">Préparer les informations de téléchargement des mods</s:String>
     <s:String x:Key="LangModModpackDialogContentDownloadOptionalFile">Voulez-vous télécharger les fichiers optionnels {0} du modpack ?</s:String>
     <s:String x:Key="LangModModpackDialogTitleDownloadOptionalFile">Télécharger les fichiers optionnels</s:String>
@@ -2147,6 +2186,7 @@ Vous pouvez également accéder à {1} sur un autre appareil et saisir le code.<
 {1}</s:String>
     <s:String x:Key="LangPageVersionExportSelectExportPath">选择导出位置</s:String>
     <s:String x:Key="LangPageVersionExportSelectExportModpackFile">整合包文件(*{0})|*{1}</s:String>
+    <s:String x:Key="LangPageVersionExportSelectExportZipFile">压缩包文件</s:String>
     <s:String x:Key="LangPageVersionExportTaskDownloadPCL">下载 PCL 正式版</s:String>
     <s:String x:Key="LangPageVersionExportTaskCopyFiles">复制导出内容</s:String>
     <s:String x:Key="LangPageVersionExportHintFolderInConfigNotFound">未找到配置文件中指定的文件夹：{0}</s:String>

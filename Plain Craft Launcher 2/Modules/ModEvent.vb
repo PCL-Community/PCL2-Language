@@ -1,4 +1,4 @@
-﻿
+
 #Region "附加属性"
 
 ''' <summary>
@@ -183,10 +183,10 @@ Public Class CustomEvent
                 Case EventType.打开网页
                     Arg = Arg.Replace("\", "/")
                     If Not Arg.Contains("://") OrElse Arg.StartsWithF("file", True) Then '为了支持更多协议（#2200）
-                        MyMsgBox("EventData 必须为一个网址。" & vbCrLf & "如果想要启动程序，请将 EventType 改为 打开文件。", "事件执行失败")
+                        MyMsgBox(GetLang("LangModEventDialogWebIncorrectContent"), GetLang("LangModEventDialogEventFailTitle"))
                         Return
                     End If
-                    Hint("正在开启，请稍候：" & Arg)
+                    Hint(GetLang("LangModEventOpeningWebWithUrl", Arg))
                     RunInThread(Sub() OpenWebsite(Arg))
 
                 Case EventType.打开文件, EventType.打开帮助, EventType.执行命令
@@ -238,7 +238,7 @@ Public Class CustomEvent
                     RunInUi(
                     Sub()
                         FrmLaunchRight.ForceRefresh()
-                        If String.IsNullOrEmpty(Arg) Then Hint("已刷新！", HintType.Green)
+            If String.IsNullOrEmpty(Arg) Then Hint(GetLang("LangRefreshed"), HintType.Green)
                     End Sub)
 
                 Case EventType.刷新页面
@@ -263,16 +263,16 @@ Public Class CustomEvent
                     RunInThread(Sub() PageOtherTest.RubbishClear())
 
                 Case EventType.弹出窗口
-                    If Args.Length = 1 Then Throw New Exception($"EventType {Type} 需要至少 2 个以 | 分割的参数，例如 弹窗标题|弹窗内容")
-                    MyMsgBox(Args(1).Replace("\n", vbCrLf), Args(0).Replace("\n", vbCrLf), If(Args.Length > 2, Args(2), "确定"))
+                    If Args.Length = 1 Then Throw New Exception(GetLang("LangModEventDialogPopupParamError", Type))
+                    MyMsgBox(Args(1).Replace("\n", vbCrLf), Args(0).Replace("\n", vbCrLf), If(Args.Length > 2, Args(2), GetLang("LangDialogBtnOK")))
 
                 Case EventType.弹出提示
-                    Hint(Args(0).Replace("\n", vbCrLf), If(Args.Length = 1, HintType.Blue, Args(1).ToEnum(Of HintType)))
+                    Hint(Args(0).Replace("\n", vbCrLf), If(Args.Length = 1, HintType.Blue, EnumUtils.FromString(Of HintType)(Args(1))))
 
                 Case EventType.切换页面
                     RunInUi(Sub() FrmMain.PageChange(
-                                Args(0).ToEnum(Of FormMain.PageType),
-                                If(Args.Length = 1, FormMain.PageSubType.Default, Args(1).ToEnum(Of FormMain.PageSubType))))
+                                EnumUtils.FromString(Of FormMain.PageType)(Args(0)),
+                                If(Args.Length = 1, FormMain.PageSubType.Default, EnumUtils.FromString(Of FormMain.PageSubType)(Args(1)))))
 
                 Case EventType.导入整合包, EventType.安装整合包
                     RunInUi(Sub() ModpackInstall())
@@ -283,7 +283,7 @@ Public Class CustomEvent
                         MyMsgBox(GetLang("LangModEventDialogDownloadIncorrectContent"), GetLang("LangModEventDialogEventFailTitle"))
                         Return
                     End If
-                    If Not EventSafetyConfirm("即将从该网址下载文件：" & vbCrLf & Args(0)) Then Return
+                    If Not EventSafetyConfirm(GetLang("LangModEventDownloadConfirm", Args(0))) Then Return
                     RunInUi(
                     Sub()
                         Try
@@ -301,14 +301,14 @@ Public Class CustomEvent
                     End Sub)
 
                 Case EventType.修改设置, EventType.写入设置
-                    If Args.Length = 1 Then Throw New Exception($"EventType {Type} 需要至少 2 个以 | 分割的参数，例如 UiLauncherTransparent|400")
+                    If Args.Length = 1 Then Throw New Exception(GetLang("LangModEventDialogSettingParamError", Type))
                     Settings.SetSafe(Args(0), Args(1), Instance:=McInstanceSelected)
-                    If Args.Length = 2 Then Hint($"已写入设置：{Args(0)} → {Args(1)}", HintType.Green)
+                    If Args.Length = 2 Then Hint(GetLang("LangModEventSettingWritten", Args(0), Args(1)), HintType.Green)
 
                 Case EventType.修改变量, EventType.写入变量
-                    If Args.Length = 1 Then Throw New Exception($"EventType {Type} 需要至少 2 个以 | 分割的参数，例如 VariableName|SomeValue")
+                    If Args.Length = 1 Then Throw New Exception(GetLang("LangModEventDialogVariableParamError", Type))
                     WriteReg("CustomEvent" & Args(0), Args(1))
-                    If Args.Length = 2 Then Hint($"已写入变量：{Args(0)} → {Args(1)}", HintType.Green)
+                    If Args.Length = 2 Then Hint(GetLang("LangModEventVariableWritten", Args(0), Args(1)), HintType.Green)
 
                 Case EventType.加入房间
                     RunInUi(
@@ -372,20 +372,20 @@ Public Class CustomEvent
         RelativeUrl = RelativeUrl.Replace("/", "\").Lower.TrimStart("\")
 
         '确认实际路径
-        Dim Location As String, WorkingDir As String = PathExeFolder & "PCL"
+        Dim Location As String, WorkingDir As String = Paths.Base & "PCL"
         HelpTryExtract()
         If RelativeUrl.Contains(":\") Then
             '绝对路径
             Location = RelativeUrl
             Logger.Info($"自定义事件中由绝对路径{Type}：{Location}")
-        ElseIf FileUtils.Exists(PathExeFolder & "PCL\" & RelativeUrl) Then
+        ElseIf FileUtils.Exists(Paths.Base & "PCL\" & RelativeUrl) Then
             '相对 PCL 文件夹的路径
-            Location = PathExeFolder & "PCL\" & RelativeUrl
+            Location = Paths.Base & "PCL\" & RelativeUrl
             Logger.Info($"自定义事件中由相对 PCL 文件夹的路径{Type}：{Location}")
-        ElseIf FileUtils.Exists(PathExeFolder & "PCL\Help\" & RelativeUrl) Then
+        ElseIf FileUtils.Exists(Paths.Base & "PCL\Help\" & RelativeUrl) Then
             '相对 PCL 本地帮助文件夹的路径
-            Location = PathExeFolder & "PCL\Help\" & RelativeUrl
-            WorkingDir = PathExeFolder & "PCL\Help\"
+            Location = Paths.Base & "PCL\Help\" & RelativeUrl
+            WorkingDir = Paths.Base & "PCL\Help\"
             Logger.Info($"自定义事件中由相对 PCL 本地帮助文件夹的路径{Type}：{Location}")
         ElseIf Type = EventType.打开帮助 AndAlso FileUtils.Exists(PathTemp & "Help\" & RelativeUrl) Then
             '相对 PCL 自带帮助文件夹的路径
@@ -409,7 +409,7 @@ Public Class CustomEvent
     ''' </summary>
     Private Shared Function EventSafetyConfirm(Message As String) As Boolean
         If Settings.Get(Of Boolean)("HintCustomCommand") Then Return True
-        Select Case MyMsgBox(Message & vbCrLf & "请在确认没有安全隐患后再继续。", "执行确认", "继续", "继续且今后不再要求确认", "取消")
+        Select Case MyMsgBox(Message & vbCrLf & GetLang("LangModEventSafetyConfirmContent"), GetLang("LangModEventSafetyConfirmTitle"), GetLang("LangDialogBtnContinue"), GetLang("LangModEventSafetyConfirmBtnContinueAlways"), GetLang("LangDialogBtnCancel"))
             Case 1
                 Return True
             Case 2

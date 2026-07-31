@@ -1,3 +1,5 @@
+Imports System.Collections.ObjectModel
+
 Public Class PageDownloadResourceDetail
     Private ResourceItem As MyResourceItem = Nothing
 
@@ -24,7 +26,7 @@ Public Class PageDownloadResourceDetail
         Sub(Task)
             LoadPageArguments()
             Dim Result = ResourceVersion.FromProjectId(Project.Id, Project.Platform)
-            If Task.IsInterrupted Then Return
+            If Task.IsCanceled Then Return
             Task.Output = Result
         End Sub)
 
@@ -157,7 +159,7 @@ GroupDone:
         Dim Results = GetResults()
 
         Dim TargetCardName As String = If(TargetVersion <> "" OrElse TargetLoaders <> ModLoaders.None,
-            GetLang("LangDownloadCompSelectedVersion") & $"{If(TargetLoaders <> ModLoaders.None, TargetLoaders.ToString & " ", "")}{TargetVersion}", "")
+            GetLang("LangDownloadCompSelectedVersion") & $"{If(TargetLoaders <> ModLoaders.None, TargetLoaders.ToString + " ", "")}{TargetVersion}", "")
         '归类到卡片下
         Dim Dict As New SortedDictionary(Of String, List(Of ResourceVersion))(New CardSorter(TargetCardName))
         Dict.Add("其他", New List(Of ResourceVersion))
@@ -233,7 +235,7 @@ GroupDone:
             If Project.Types = ResourceTypes.ModOrDataPack AndAlso (TargetResourceType = ResourceTypes.Mod OrElse TargetResourceType = ResourceTypes.DataPack) Then
                 HintAlternative.Visibility = Visibility.Visible
                 HintAlternative.Text = If(TargetResourceType = ResourceTypes.Mod,
-                    "以下是该项目的 Mod 版本。点击这里查看其数据包版本。", "以下是该项目的数据包版本。点击这里查看其 Mod 版本。")
+                    GetLang("LangDownloadCompHintAlternativeMod"), GetLang("LangDownloadCompHintAlternativeDataPack"))
             Else
                 HintAlternative.Visibility = Visibility.Collapsed
             End If
@@ -298,7 +300,7 @@ GroupDone:
             Dim PackName As String = Project.TranslatedName.Replace(".zip", "").Replace(".rar", "").Replace(".mrpack", "").Replace("\", "＼").Replace("/", "／").Replace("|", "｜").Replace(":", "：").Replace("<", "＜").Replace(">", "＞").Replace("*", "＊").Replace("?", "？").Replace("""", "").Replace("： ", "：")
             Dim Validate As New ValidateFolderName(McFolderSelected & "versions")
             If Validate.Validate(PackName) <> "" Then PackName = ""
-            Dim InstanceName As String = MyMsgBoxInput(GetLang("LangDownloadCompInputInstanceName"), "", PackName, New ObjectModel.Collection(Of Validate) From {Validate})
+            Dim InstanceName As String = MyMsgBoxInput(GetLang("LangDownloadCompInputInstanceName"), "", PackName, New Collection(Of Validate) From {Validate})
             If String.IsNullOrEmpty(InstanceName) Then Return
 
             '构造步骤加载器
@@ -316,8 +318,8 @@ GroupDone:
             Sub(MyLoader)
                 Select Case MyLoader.State
                     Case LoadState.Failed
-                        Hint(MyLoader.Name & "失败：" & MyLoader.Error.GetDisplay(False), HintType.Red)
-                    Case LoadState.Interrupted
+                        Hint(MyLoader.Name & GetLang("LangPageVersionOverallCompleteFileFail") & MyLoader.Error.GetDisplay(False), HintType.Red)
+                    Case LoadState.Canceled
                         Hint(MyLoader.Name & GetLang("LangTaskAbort"), HintType.Blue)
                     Case LoadState.Loading
                         Return '不重新加载版本列表
@@ -526,14 +528,14 @@ GroupDone:
             Return ResourceProject.Cache.ContainsKey(dep)
         End Function).ToList
         '添加开头间隔
-        Stack.Children.Add(New TextBlock With {.Text = "前置资源", .FontSize = 14, .HorizontalAlignment = HorizontalAlignment.Left, .Margin = New Thickness(6, 2, 0, 5)})
+        Stack.Children.Add(New TextBlock With {.Text = GetLang("LangModCompModDependent"), .FontSize = 14, .HorizontalAlignment = HorizontalAlignment.Left, .Margin = New Thickness(6, 2, 0, 5)})
         '添加前置列表
         For Each Dep In Deps
             Dim Item = ResourceProject.Cache(Dep).ToResourceItem(False, False)
             Stack.Children.Add(Item)
         Next
         '添加结尾间隔
-        Stack.Children.Add(New TextBlock With {.Text = "版本列表", .FontSize = 14, .HorizontalAlignment = HorizontalAlignment.Left, .Margin = New Thickness(6, 12, 0, 5)})
+        Stack.Children.Add(New TextBlock With {.Text = GetLang("LangModCompModAlternateVersion"), .FontSize = 14, .HorizontalAlignment = HorizontalAlignment.Left, .Margin = New Thickness(6, 12, 0, 5)})
     End Sub
 
 End Class
