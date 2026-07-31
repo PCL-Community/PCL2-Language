@@ -73,7 +73,7 @@ jobs:
       uses: taiki-e/install-action@git-cliff
 
     - name: Generate changelog
-      run: git-cliff -o CHANGES.md
+      run: git-cliff --latest -o CHANGES.md
 
     - name: Create draft release with assets
       uses: softprops/action-gh-release@v3
