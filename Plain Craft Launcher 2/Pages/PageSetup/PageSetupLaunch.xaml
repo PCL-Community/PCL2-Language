@@ -53,7 +53,7 @@
                             <local:MyComboBoxItem Content="{StaticResource LangPageSetupLaunchLaunchVersionIsolationModOnly}"
                                     ToolTip="{StaticResource LangPageSetupLaunchLaunchVersionIsolationModOnlyToolTip}"/>
                             <local:MyComboBoxItem Content="{StaticResource LangPageSetupLaunchLaunchVersionIsolationBetaOnly}"
-                                    ToolTip="{StaticResource LangPageSetupLaunchLaunchVersionIsolationBetaOnlyToolTip}。"/>
+                                    ToolTip="{StaticResource LangPageSetupLaunchLaunchVersionIsolationBetaOnlyToolTip}"/>
                             <local:MyComboBoxItem Content="{StaticResource LangPageSetupLaunchLaunchVersionIsolationBetaAndMod}"
                                                   ToolTip="将可安装 Mod 的版本、Minecraft 快照、预发布版、远古版本、愚人节版本与其他版本进行隔离。"/>
                             <local:MyComboBoxItem Content="{StaticResource LangPageSetupLaunchLaunchVersionIsolationAll}"
