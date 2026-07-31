@@ -184,14 +184,14 @@ Friend Module ModSecret
         Dim releaseEx As Exception = Nothing
         Dim t1 = Task.Run(Sub()
                               Try
-                                  latestJson = GetJson(NetRequestByClientRetry("https://api.github.com/repos/PCL-Community/PCL2-Language/releases/latest", SimulateBrowserHeaders:=True))
+                                  latestJson = NetRequestByClientRetry("https://api.github.com/repos/PCL-Community/PCL2-Language/releases/latest", SimulateBrowserHeaders:=True, RequireJson:=True).DeserializeJson()
                               Catch ex As Exception
                                   releaseEx = ex
                               End Try
                           End Sub)
         Dim t2 = Task.Run(Sub()
                               Try
-                                  configJson = GetJson(NetRequestByClientRetry("https://github.com/PCL-Community/PCL2-Language/raw/refs/heads/main/remote_config/ServerConfig.json"))
+                                  configJson = NetRequestByClientRetry("https://github.com/PCL-Community/PCL2-Language/raw/refs/heads/main/remote_config/ServerConfig.json", RequireJson:=True).DeserializeJson()
                               Catch ex As Exception
                                   Logger.Warn(ex, "获取 ServerConfig 失败，将使用旧配置")
                               End Try
@@ -221,7 +221,7 @@ Friend Module ModSecret
         Dim Tag As String = If(LatestReleaseInfoJson IsNot Nothing, LatestReleaseInfoJson("tag_name")?.ToString, Nothing)
         If String.IsNullOrEmpty(Tag) Then Tag = "v" & VersionStr
         Dim DlLink As String = "https://github.com/PCL-Community/PCL2-Language/releases/download/" & Tag & "/PCL2_Lang.exe"
-        Dim DlTargetPath As String = Path.Combine(PathExeFolder, "PCL\Plain Craft Launcher 2.exe")
+        Dim DlTargetPath As String = Path.Combine(Paths.Base, "PCL\Plain Craft Launcher 2.exe")
         RunInNewThread(Sub()
                            Try
                                '构造步骤加载器
@@ -230,7 +230,7 @@ Friend Module ModSecret
                                Dim Address As New List(Of String)
                                Address.Add(DlLink)
                                Address.Add($"https://cdn.crashmc.com/{DlLink}")
-                               Loaders.Add(New LoaderDownload(GetLang("LangModSecretUpdateTaskDownload"), New List(Of NetFile) From {New NetFile(Address.ToArray, DlTargetPath, New FileChecker(MinSize:=1024 * 64))}) With {.ProgressWeight = 15})
+                               Loaders.Add(New LoaderDownload(GetLang("LangModSecretUpdateTaskDownload"), New List(Of NetFile) From {New NetFile(Address.ToArray, DlTargetPath, New FileChecker With {.MinSize = 1024 * 64})}) With {.ProgressWeight = 15})
                                '校验 assets[0] digest（如果存在且为 sha256: 开头）
                                Loaders.Add(New LoaderTask(Of Integer, Integer)(GetLang("LangModSecretUpdateTaskVerify"), Sub()
                                                                                                   Dim asset = LatestReleaseInfoJson?("assets")?(0)
@@ -264,7 +264,7 @@ Friend Module ModSecret
     End Sub
     Public Sub UpdateRestart(TriggerRestartAndByEnd As Boolean)
         Try
-            Dim fileName As String = PathExeFolder + "PCL\Plain Craft Launcher 2.exe"
+            Dim fileName As String = Paths.Base & "PCL\Plain Craft Launcher 2.exe"
             If Not File.Exists(fileName) Then
                 Logger.Info("[System] 更新失败：未找到更新文件")
                 Exit Sub
