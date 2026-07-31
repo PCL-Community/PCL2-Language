@@ -2217,4 +2217,33 @@ Modrinth の要件により、CurseForge からのみダウンロードできる
 二次配布は利用規約に違反する可能性があるため、エクスポートしたモッドパックの公開配布は避けるようにしてください！</s:String>
     <s:String x:Key="LangPageVersionExportDialogTitleAllGetFail">ファイル情報の取得に失敗しました</s:String>
     <s:String x:Key="LangPageVersionExportGenerateArchive">圧縮ファイルを生成する</s:String>
+    <s:String x:Key="LangModSecretHintUpdateCheckFail">ランチャーの更新情報の取得に失敗しました。ネットワーク接続を確認してください</s:String>
+    <s:String x:Key="LangModSecretHintUpdateDownloadFail">ランチャーの更新ファイルのダウンロードに失敗しました。ネットワーク接続を確認してください</s:String>
+    <s:String x:Key="LangModSecretUpdateBtnGoUpdate">今すぐ更新</s:String>
+    <s:String x:Key="LangModSecretUpdateChecking">更新を確認しています……</s:String>
+    <s:String x:Key="LangModSecretUpdateDialogContent">新しいバージョンが見つかりました：{0} → {1}
+今すぐ更新しますか？</s:String>
+    <s:String x:Key="LangModSecretUpdateDialogTitle">新しいバージョン</s:String>
+    <s:String x:Key="LangModSecretUpdateFailBtnHelp">ヘルプを表示</s:String>
+    <s:String x:Key="LangModSecretUpdateFailContent">Windows セキュリティにブロックされたか、権限の問題により PCL を更新できません。{0}PCL フォルダーをホワイトリストに追加するか、{1}PCL\Plain Craft Launcher 2.exe で現在のファイルを手動で置き換えてください！</s:String>
+    <s:String x:Key="LangModSecretUpdateFailCopyContent">PCL の更新に失敗しました：新しいファイルをコピーできません。PCL フォルダー内の新しいバージョンを手動で元のプログラムに上書きしてください。
+{0}</s:String>
+    <s:String x:Key="LangModSecretUpdateFailPermissionContent">PCL の更新に失敗しました：権限が不足しています。PCL フォルダー内の新しいバージョンを手動でコピーしてください。
+PCL がデスクトップまたは C ドライブにある場合は、別のフォルダーに移動すると解決する可能性があります。
+{0}</s:String>
+    <s:String x:Key="LangModSecretUpdateFailPermissionTryContent">権限が不足しているため、PCL は更新を完了できません。お試しください：
+{0}{1}</s:String>
+    <s:String x:Key="LangModSecretUpdateFailRestartContent">PCL の更新に失敗しました：再起動できません。
+{0}</s:String>
+    <s:String x:Key="LangModSecretUpdateFailTipManualCopy"> - PCL フォルダーにダウンロードされた新しいバージョンを手動で元のプログラムに上書きする</s:String>
+    <s:String x:Key="LangModSecretUpdateFailTipMoveFromC"> - PCL ファイルを C ドライブ以外のフォルダーに移動する（権限の問題を根本的に解決できる可能性があります）</s:String>
+    <s:String x:Key="LangModSecretUpdateFailTipMoveFromDesktop"> - PCL ファイルをデスクトップやドキュメント以外のフォルダーに移動する（権限の問題を根本的に解決できる可能性があります）</s:String>
+    <s:String x:Key="LangModSecretUpdateFailTipRunAsAdmin"> - PCL を右クリックして管理者として実行する</s:String>
+    <s:String x:Key="LangModSecretUpdateFailTitle">更新に失敗しました</s:String>
+    <s:String x:Key="LangModSecretUpdateLatest">すでに最新バージョンです：{0}</s:String>
+    <s:String x:Key="LangModSecretUpdateShaMismatch">ファイル検証に失敗しました。SHA256 が一致しません：期待値 {0}、実際の値 {1}</s:String>
+    <s:String x:Key="LangModSecretUpdateTaskDownload">更新ファイルをダウンロード</s:String>
+    <s:String x:Key="LangModSecretUpdateTaskName">更新</s:String>
+    <s:String x:Key="LangModSecretUpdateTaskReplace">更新ファイルを置き換え</s:String>
+    <s:String x:Key="LangModSecretUpdateTaskVerify">更新ファイルを検証</s:String>
 </ResourceDictionary>

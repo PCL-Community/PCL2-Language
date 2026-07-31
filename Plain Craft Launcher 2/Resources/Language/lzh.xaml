@@ -2215,4 +2215,33 @@ PCL 不支持其他亂七八糟的下載協議。</s:String>
 由于二次分发可能违反使用协议，请尽量不要公开发布导出的整合包！</s:String>
     <s:String x:Key="LangPageVersionExportDialogTitleAllGetFail">文件信息获取失败</s:String>
     <s:String x:Key="LangPageVersionExportGenerateArchive">生成压缩包</s:String>
+    <s:String x:Key="LangModSecretHintUpdateCheckFail">未得啟動器更新之訊，請查網路之連</s:String>
+    <s:String x:Key="LangModSecretHintUpdateDownloadFail">未得下載更新之檔，請查網路之連</s:String>
+    <s:String x:Key="LangModSecretUpdateBtnGoUpdate">即更</s:String>
+    <s:String x:Key="LangModSecretUpdateChecking">正查更新……</s:String>
+    <s:String x:Key="LangModSecretUpdateDialogContent">有新版本：{0} → {1}
+今更之乎？</s:String>
+    <s:String x:Key="LangModSecretUpdateDialogTitle">見新版本</s:String>
+    <s:String x:Key="LangModSecretUpdateFailBtnHelp">觀助</s:String>
+    <s:String x:Key="LangModSecretUpdateFailContent">為 Windows 安全中心所阻，或權限不足，故不得更新。{0}請以白名單納 PCL 之資料夾，或手以 {1}PCL\Plain Craft Launcher 2.exe 代今之檔！</s:String>
+    <s:String x:Key="LangModSecretUpdateFailCopyContent">PCL 更新不成：未能複製新檔。請手以 PCL 資料夾中新版程式覆蓋舊者。
+{0}</s:String>
+    <s:String x:Key="LangModSecretUpdateFailPermissionContent">PCL 更新不成：權限不足。請手以 PCL 資料夾中新版程式覆蓋舊者。
+若 PCL 居於桌面或 C 盤，可移置他處，或可解權限之患。
+{0}</s:String>
+    <s:String x:Key="LangModSecretUpdateFailPermissionTryContent">權限不足，PCL 不能完成更新。請試：
+{0}{1}</s:String>
+    <s:String x:Key="LangModSecretUpdateFailRestartContent">PCL 更新不成：不能重啟。
+{0}</s:String>
+    <s:String x:Key="LangModSecretUpdateFailTipManualCopy"> - 手以 PCL 資料夾中已下載之新版程式覆蓋舊者</s:String>
+    <s:String x:Key="LangModSecretUpdateFailTipMoveFromC"> - 移 PCL 檔案至 C 盤以外之資料夾（或可一勞永逸解權限之患）</s:String>
+    <s:String x:Key="LangModSecretUpdateFailTipMoveFromDesktop"> - 移 PCL 檔案至桌面、文檔以外之資料夾（或可一勞永逸解權限之患）</s:String>
+    <s:String x:Key="LangModSecretUpdateFailTipRunAsAdmin"> - 右鍵以管理員身分運行 PCL</s:String>
+    <s:String x:Key="LangModSecretUpdateFailTitle">更新不成</s:String>
+    <s:String x:Key="LangModSecretUpdateLatest">已是最新版：{0}</s:String>
+    <s:String x:Key="LangModSecretUpdateShaMismatch">檔案校驗不成，SHA256 不符：望得 {0}，實得 {1}</s:String>
+    <s:String x:Key="LangModSecretUpdateTaskDownload">下載更新檔</s:String>
+    <s:String x:Key="LangModSecretUpdateTaskName">更新</s:String>
+    <s:String x:Key="LangModSecretUpdateTaskReplace">代更新檔</s:String>
+    <s:String x:Key="LangModSecretUpdateTaskVerify">校驗更新檔</s:String>
 </ResourceDictionary>

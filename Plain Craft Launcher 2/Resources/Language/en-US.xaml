@@ -2215,4 +2215,33 @@ If continue, all files will be directly packaged.
 Since redistribution may violate the license, please avoid publicly sharing the exported modpack!</s:String>
     <s:String x:Key="LangPageVersionExportDialogTitleAllGetFail">Failed to obtain file information.</s:String>
     <s:String x:Key="LangPageVersionExportGenerateArchive">Generate archive</s:String>
+    <s:String x:Key="LangModSecretHintUpdateCheckFail">Failed to get launcher update information. Please check your network connection</s:String>
+    <s:String x:Key="LangModSecretHintUpdateDownloadFail">Failed to download the launcher update file. Please check your network connection</s:String>
+    <s:String x:Key="LangModSecretUpdateBtnGoUpdate">Update now</s:String>
+    <s:String x:Key="LangModSecretUpdateChecking">Checking for updates...</s:String>
+    <s:String x:Key="LangModSecretUpdateDialogContent">A new version is available: {0} -&gt; {1}
+Do you want to update now?</s:String>
+    <s:String x:Key="LangModSecretUpdateDialogTitle">New version available</s:String>
+    <s:String x:Key="LangModSecretUpdateFailBtnHelp">View help</s:String>
+    <s:String x:Key="LangModSecretUpdateFailContent">PCL was blocked by Windows Security or lacks permissions, so it cannot update. {0}Please add the PCL folder to the whitelist, or manually replace the current file with {1}PCL\Plain Craft Launcher 2.exe!</s:String>
+    <s:String x:Key="LangModSecretUpdateFailCopyContent">PCL update failed: could not copy the new file. Please manually copy the new version in the PCL folder over the old program.
+{0}</s:String>
+    <s:String x:Key="LangModSecretUpdateFailPermissionContent">PCL update failed: insufficient permissions. Please manually copy the new version in the PCL folder.
+If PCL is on the Desktop or the C drive, try moving it to another folder; this may fix the permission issue.
+{0}</s:String>
+    <s:String x:Key="LangModSecretUpdateFailPermissionTryContent">PCL cannot complete the update due to insufficient permissions. Please try:
+{0}{1}</s:String>
+    <s:String x:Key="LangModSecretUpdateFailRestartContent">PCL update failed: could not restart.
+{0}</s:String>
+    <s:String x:Key="LangModSecretUpdateFailTipManualCopy"> - Manually copy the downloaded new version in the PCL folder over the old program</s:String>
+    <s:String x:Key="LangModSecretUpdateFailTipMoveFromC"> - Move the PCL files to a folder outside the C drive (this may permanently fix the permission issue)</s:String>
+    <s:String x:Key="LangModSecretUpdateFailTipMoveFromDesktop"> - Move the PCL files to a folder other than the Desktop and Documents (this may permanently fix the permission issue)</s:String>
+    <s:String x:Key="LangModSecretUpdateFailTipRunAsAdmin"> - Right-click PCL and run as administrator</s:String>
+    <s:String x:Key="LangModSecretUpdateFailTitle">Update failed</s:String>
+    <s:String x:Key="LangModSecretUpdateLatest">You are already on the latest version: {0}</s:String>
+    <s:String x:Key="LangModSecretUpdateShaMismatch">File verification failed, SHA256 mismatch: expected {0}, got {1}</s:String>
+    <s:String x:Key="LangModSecretUpdateTaskDownload">Download update file</s:String>
+    <s:String x:Key="LangModSecretUpdateTaskName">Update</s:String>
+    <s:String x:Key="LangModSecretUpdateTaskReplace">Replace update file</s:String>
+    <s:String x:Key="LangModSecretUpdateTaskVerify">Verify update file</s:String>
 </ResourceDictionary>

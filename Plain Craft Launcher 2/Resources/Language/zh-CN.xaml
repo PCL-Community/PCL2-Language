@@ -1188,6 +1188,11 @@ PCL 不支持其他乱七八糟的下载协议。</s:String>
 2. 删除当前目录中的 PCL 文件夹，然后再试。
 3. 右键 PCL 选择属性，打开 兼容性 中的 以管理员身份运行此程序。</s:String>
     <s:String x:Key="LangModSecretPermissionError">运行环境错误</s:String>
+    <s:String x:Key="LangModSecretUpdateBtnGoUpdate">立即更新</s:String>
+    <s:String x:Key="LangModSecretUpdateChecking">正在检查更新……</s:String>
+    <s:String x:Key="LangModSecretUpdateDialogContent">检测到新版本：{0} → {1}
+是否立即更新？</s:String>
+    <s:String x:Key="LangModSecretUpdateDialogTitle">发现新版本</s:String>
     <s:String x:Key="LangModSecretUpdateFailBtnHelp">查看帮助</s:String>
     <s:String x:Key="LangModSecretUpdateFailContent">由于被 Windows 安全中心拦截，或者存在权限问题，导致 PCL 无法更新。{0}请将 PCL 所在文件夹加入白名单，或者手动用 {1}PCL\Plain Craft Launcher 2.exe 替换当前文件！</s:String>
     <s:String x:Key="LangModSecretUpdateFailCopyContent">PCL 更新失败：无法复制新文件。请手动复制 PCL 文件夹下的新版本程序。
@@ -1204,6 +1209,12 @@ PCL 不支持其他乱七八糟的下载协议。</s:String>
     <s:String x:Key="LangModSecretUpdateFailTipMoveFromDesktop"> - 将 PCL 文件移动到桌面、文档以外的文件夹（这或许可以一劳永逸地解决权限问题）</s:String>
     <s:String x:Key="LangModSecretUpdateFailTipRunAsAdmin"> - 右键以管理员身份运行 PCL</s:String>
     <s:String x:Key="LangModSecretUpdateFailTitle">更新失败</s:String>
+    <s:String x:Key="LangModSecretUpdateLatest">当前已是最新版本：{0}</s:String>
+    <s:String x:Key="LangModSecretUpdateShaMismatch">文件校验失败，SHA256 不匹配：期望 {0}，实际 {1}</s:String>
+    <s:String x:Key="LangModSecretUpdateTaskDownload">下载更新文件</s:String>
+    <s:String x:Key="LangModSecretUpdateTaskName">更新</s:String>
+    <s:String x:Key="LangModSecretUpdateTaskReplace">替换更新文件</s:String>
+    <s:String x:Key="LangModSecretUpdateTaskVerify">校验更新文件</s:String>
     <s:String x:Key="LangModTaskDownloadCode">源码获取 {0}</s:String>
     <s:String x:Key="LangModValidateFileHeadUriIncorrect">文件夹路径头存在错误！</s:String>
     <s:String x:Key="LangModValidateFileNoContain">文件名不可包含 % 字符！</s:String>

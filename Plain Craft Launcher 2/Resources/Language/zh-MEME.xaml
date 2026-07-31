@@ -2218,4 +2218,33 @@ PCL 不会上传或收集任何个人信息，包括上报的东西里面也没�
 由于二次分发可能违反食用协议，请尽量不要公开发布出口的整活包！</s:String>
     <s:String x:Key="LangPageVersionExportDialogTitleAllGetFail">文件信息获取不成功</s:String>
     <s:String x:Key="LangPageVersionExportGenerateArchive">生成压缩包</s:String>
+    <s:String x:Key="LangModSecretHintUpdateCheckFail">更新信息没拿到，检查下网络啊喂</s:String>
+    <s:String x:Key="LangModSecretHintUpdateDownloadFail">更新文件下载失败了，检查下网络啊喂</s:String>
+    <s:String x:Key="LangModSecretUpdateBtnGoUpdate">冲！现在就更新</s:String>
+    <s:String x:Key="LangModSecretUpdateChecking">正在蹲更新……</s:String>
+    <s:String x:Key="LangModSecretUpdateDialogContent">有新版本出没：{0} → {1}
+要不要现在就更新？</s:String>
+    <s:String x:Key="LangModSecretUpdateDialogTitle">新版本出没！</s:String>
+    <s:String x:Key="LangModSecretUpdateFailBtnHelp">看帮助去</s:String>
+    <s:String x:Key="LangModSecretUpdateFailContent">被 Windows 安全中心拦了或者权限不够，PCL 更不了新。{0}把 PCL 文件夹加进白名单，或者手动用 {1}PCL\Plain Craft Launcher 2.exe 替换掉当前文件！</s:String>
+    <s:String x:Key="LangModSecretUpdateFailCopyContent">PCL 更新失败：新文件复制不上。请手动把 PCL 文件夹里的新版本复制过去盖掉旧程序。
+{0}</s:String>
+    <s:String x:Key="LangModSecretUpdateFailPermissionContent">PCL 更新失败：权限不够。请手动把 PCL 文件夹里的新版本复制过去。
+如果 PCL 在桌面或 C 盘，挪到别的文件夹试试，说不定就好了。
+{0}</s:String>
+    <s:String x:Key="LangModSecretUpdateFailPermissionTryContent">权限不够，PCL 更新不了了。试试这样：
+{0}{1}</s:String>
+    <s:String x:Key="LangModSecretUpdateFailRestartContent">PCL 更新失败：重启不了了。
+{0}</s:String>
+    <s:String x:Key="LangModSecretUpdateFailTipManualCopy"> - 手动把下载到 PCL 文件夹里的新版本复制过去，盖掉原程序</s:String>
+    <s:String x:Key="LangModSecretUpdateFailTipMoveFromC"> - 把 PCL 文件挪到 C 盘以外的文件夹（也许能一劳永逸地解决权限问题）</s:String>
+    <s:String x:Key="LangModSecretUpdateFailTipMoveFromDesktop"> - 把 PCL 文件挪到桌面、文档以外的文件夹（也许能一劳永逸地解决权限问题）</s:String>
+    <s:String x:Key="LangModSecretUpdateFailTipRunAsAdmin"> - 右键 PCL，用管理员身份运行</s:String>
+    <s:String x:Key="LangModSecretUpdateFailTitle">更新失败了捏</s:String>
+    <s:String x:Key="LangModSecretUpdateLatest">已经是最新版本啦：{0}</s:String>
+    <s:String x:Key="LangModSecretUpdateShaMismatch">文件校验失败，SHA256 对不上：期望 {0}，实际 {1}</s:String>
+    <s:String x:Key="LangModSecretUpdateTaskDownload">下载更新文件</s:String>
+    <s:String x:Key="LangModSecretUpdateTaskName">更新</s:String>
+    <s:String x:Key="LangModSecretUpdateTaskReplace">替换更新文件</s:String>
+    <s:String x:Key="LangModSecretUpdateTaskVerify">校验更新文件</s:String>
 </ResourceDictionary>

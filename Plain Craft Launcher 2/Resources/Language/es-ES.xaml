@@ -2203,4 +2203,33 @@ Si continúas, todos los archivos serán empaquetados directamente.
 ¡Por favor, intenta no publicar públicamente el modpack exportado ya que la redistribución puede violar los términos de servicio!</s:String>
     <s:String x:Key="LangPageVersionExportDialogTitleAllGetFail">Error al Obtener Información de Archivos</s:String>
     <s:String x:Key="LangPageVersionExportGenerateArchive">Generar Archivo Comprimido</s:String>
+    <s:String x:Key="LangModSecretHintUpdateCheckFail">No se pudo obtener la información de actualización del iniciador. Comprueba tu conexión a internet</s:String>
+    <s:String x:Key="LangModSecretHintUpdateDownloadFail">No se pudo descargar el archivo de actualización del iniciador. Comprueba tu conexión a internet</s:String>
+    <s:String x:Key="LangModSecretUpdateBtnGoUpdate">Actualizar ahora</s:String>
+    <s:String x:Key="LangModSecretUpdateChecking">Buscando actualizaciones…</s:String>
+    <s:String x:Key="LangModSecretUpdateDialogContent">Hay una nueva versión disponible: {0} → {1}
+¿Quieres actualizar ahora?</s:String>
+    <s:String x:Key="LangModSecretUpdateDialogTitle">Nueva versión disponible</s:String>
+    <s:String x:Key="LangModSecretUpdateFailBtnHelp">Ver ayuda</s:String>
+    <s:String x:Key="LangModSecretUpdateFailContent">PCL fue bloqueado por el Centro de seguridad de Windows o no tiene permisos, por lo que no puede actualizarse. {0}Añade la carpeta de PCL a la lista de permitidos o reemplaza manualmente el archivo actual con {1}PCL\Plain Craft Launcher 2.exe!</s:String>
+    <s:String x:Key="LangModSecretUpdateFailCopyContent">Error al actualizar PCL: no se pudo copiar el archivo nuevo. Copia manualmente la nueva versión de la carpeta de PCL sobre el programa antiguo.
+{0}</s:String>
+    <s:String x:Key="LangModSecretUpdateFailPermissionContent">Error al actualizar PCL: permisos insuficientes. Copia manualmente la nueva versión de la carpeta de PCL.
+Si PCL está en el Escritorio o en la unidad C, intenta moverlo a otra carpeta; puede que esto solucione el problema.
+{0}</s:String>
+    <s:String x:Key="LangModSecretUpdateFailPermissionTryContent">PCL no puede completar la actualización por falta de permisos. Intenta:
+{0}{1}</s:String>
+    <s:String x:Key="LangModSecretUpdateFailRestartContent">Error al actualizar PCL: no se pudo reiniciar.
+{0}</s:String>
+    <s:String x:Key="LangModSecretUpdateFailTipManualCopy"> - Copia manualmente la nueva versión descargada en la carpeta de PCL sobre el programa antiguo</s:String>
+    <s:String x:Key="LangModSecretUpdateFailTipMoveFromC"> - Mueve los archivos de PCL a una carpeta fuera de la unidad C (puede solucionar definitivamente el problema de permisos)</s:String>
+    <s:String x:Key="LangModSecretUpdateFailTipMoveFromDesktop"> - Mueve los archivos de PCL a una carpeta fuera del Escritorio y Documentos (puede solucionar definitivamente el problema de permisos)</s:String>
+    <s:String x:Key="LangModSecretUpdateFailTipRunAsAdmin"> - Haz clic derecho en PCL y ejecútalo como administrador</s:String>
+    <s:String x:Key="LangModSecretUpdateFailTitle">Error de actualización</s:String>
+    <s:String x:Key="LangModSecretUpdateLatest">Ya tienes la última versión: {0}</s:String>
+    <s:String x:Key="LangModSecretUpdateShaMismatch">Error de verificación del archivo, SHA256 no coincide: se esperaba {0}, se obtuvo {1}</s:String>
+    <s:String x:Key="LangModSecretUpdateTaskDownload">Descargar archivo de actualización</s:String>
+    <s:String x:Key="LangModSecretUpdateTaskName">Actualizar</s:String>
+    <s:String x:Key="LangModSecretUpdateTaskReplace">Reemplazar archivo de actualización</s:String>
+    <s:String x:Key="LangModSecretUpdateTaskVerify">Verificar archivo de actualización</s:String>
 </ResourceDictionary>

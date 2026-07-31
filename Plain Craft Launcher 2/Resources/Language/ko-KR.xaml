@@ -2203,4 +2203,33 @@ Forge를 다시 설치해 보세요. </s:String>
 由于二次分发可能违反使用协议，请尽量不要公开发布导出的整合包！</s:String>
     <s:String x:Key="LangPageVersionExportDialogTitleAllGetFail">文件信息获取失败</s:String>
     <s:String x:Key="LangPageVersionExportGenerateArchive">生成压缩包</s:String>
+    <s:String x:Key="LangModSecretHintUpdateCheckFail">런처 업데이트 정보를 가져오지 못했습니다. 네트워크 연결을 확인하세요</s:String>
+    <s:String x:Key="LangModSecretHintUpdateDownloadFail">런처 업데이트 파일을 다운로드하지 못했습니다. 네트워크 연결을 확인하세요</s:String>
+    <s:String x:Key="LangModSecretUpdateBtnGoUpdate">지금 업데이트</s:String>
+    <s:String x:Key="LangModSecretUpdateChecking">업데이트 확인 중……</s:String>
+    <s:String x:Key="LangModSecretUpdateDialogContent">새 버전을 발견했습니다: {0} → {1}
+지금 업데이트할까요?</s:String>
+    <s:String x:Key="LangModSecretUpdateDialogTitle">새 버전 발견</s:String>
+    <s:String x:Key="LangModSecretUpdateFailBtnHelp">도움말 보기</s:String>
+    <s:String x:Key="LangModSecretUpdateFailContent">Windows 보안에 차단되었거나 권한 문제로 PCL을 업데이트할 수 없습니다. {0}PCL 폴더를 허용 목록에 추가하거나 {1}PCL\Plain Craft Launcher 2.exe로 현재 파일을 수동으로 교체하세요!</s:String>
+    <s:String x:Key="LangModSecretUpdateFailCopyContent">PCL 업데이트 실패: 새 파일을 복사할 수 없습니다. PCL 폴더의 새 버전을 수동으로 기존 프로그램에 덮어쓰세요.
+{0}</s:String>
+    <s:String x:Key="LangModSecretUpdateFailPermissionContent">PCL 업데이트 실패: 권한이 부족합니다. PCL 폴더의 새 버전을 수동으로 복사하세요.
+PCL이 바탕 화면이나 C 드라이브에 있다면 다른 폴더로 이동하면 해결될 수 있습니다.
+{0}</s:String>
+    <s:String x:Key="LangModSecretUpdateFailPermissionTryContent">권한이 부족하여 PCL이 업데이트를 완료할 수 없습니다. 다음을 시도하세요:
+{0}{1}</s:String>
+    <s:String x:Key="LangModSecretUpdateFailRestartContent">PCL 업데이트 실패: 다시 시작할 수 없습니다.
+{0}</s:String>
+    <s:String x:Key="LangModSecretUpdateFailTipManualCopy"> - PCL 폴더에 다운로드된 새 버전을 수동으로 기존 프로그램에 덮어쓰기</s:String>
+    <s:String x:Key="LangModSecretUpdateFailTipMoveFromC"> - PCL 파일을 C 드라이브 이외의 폴더로 이동(권한 문제를 영구적으로 해결할 수 있음)</s:String>
+    <s:String x:Key="LangModSecretUpdateFailTipMoveFromDesktop"> - PCL 파일을 바탕 화면·문서 이외의 폴더로 이동(권한 문제를 영구적으로 해결할 수 있음)</s:String>
+    <s:String x:Key="LangModSecretUpdateFailTipRunAsAdmin"> - PCL을 마우스 오른쪽 버튼으로 클릭하고 관리자로 실행</s:String>
+    <s:String x:Key="LangModSecretUpdateFailTitle">업데이트 실패</s:String>
+    <s:String x:Key="LangModSecretUpdateLatest">이미 최신 버전입니다: {0}</s:String>
+    <s:String x:Key="LangModSecretUpdateShaMismatch">파일 검증 실패, SHA256 불일치: 예상 {0}, 실제 {1}</s:String>
+    <s:String x:Key="LangModSecretUpdateTaskDownload">업데이트 파일 다운로드</s:String>
+    <s:String x:Key="LangModSecretUpdateTaskName">업데이트</s:String>
+    <s:String x:Key="LangModSecretUpdateTaskReplace">업데이트 파일 교체</s:String>
+    <s:String x:Key="LangModSecretUpdateTaskVerify">업데이트 파일 검증</s:String>
 </ResourceDictionary>

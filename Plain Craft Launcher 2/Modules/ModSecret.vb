@@ -158,18 +158,17 @@ Friend Module ModSecret
     Public LatestReleaseInfoJson As JObject = Nothing
     Private LatestUpdateTime As DateTime? = Nothing
     Public Sub UpdateCheckByButton()
-        Hint("Checking...")
+        Hint(GetLang("LangModSecretUpdateChecking"))
         If IsUpdateStarted Then
             Exit Sub
         End If
-        Dim LatestVersion As String = Nothing
         RunInNewThread(Sub()
                            Try
                                UpdateLatestVersionInfo()
                                NoticeUserUpdate()
                            Catch ex As Exception
                                Logger.Error(ex, "[Update] 获取启动器更新信息失败")
-                               Hint("获取启动器更新信息失败，请检查网络连接", HintType.Red)
+                               Hint(GetLang("LangModSecretHintUpdateCheckFail"), HintType.Red)
                            End Try
                        End Sub)
     End Sub
@@ -211,15 +210,17 @@ Friend Module ModSecret
     End Sub
     Public Sub NoticeUserUpdate()
         If Not LatestVersion = VersionBaseName Then
-            If MyMsgBox($"{VersionBaseName} -> {LatestVersion}?", "Update?", "Go update!", GetLang("LangDialogBtnCancel")) = 1 Then
+            If MyMsgBox(GetLang("LangModSecretUpdateDialogContent", VersionBaseName, LatestVersion), GetLang("LangModSecretUpdateDialogTitle"), GetLang("LangModSecretUpdateBtnGoUpdate"), GetLang("LangDialogBtnCancel")) = 1 Then
                 UpdateStart(LatestVersion, False)
             End If
         Else
-            Hint("Latest " + VersionBaseName, HintType.Green)
+            Hint(GetLang("LangModSecretUpdateLatest", VersionBaseName), HintType.Green)
         End If
     End Sub
     Public Sub UpdateStart(VersionStr As String, Slient As Boolean, Optional ReceivedKey As String = Nothing, Optional ForceValidated As Boolean = False)
-        Dim DlLink As String = "https://github.com/PCL-Community/PCL2-Language/releases/download/" + VersionStr + "/PCL2_Lang.exe"
+        Dim Tag As String = If(LatestReleaseInfoJson IsNot Nothing, LatestReleaseInfoJson("tag_name")?.ToString, Nothing)
+        If String.IsNullOrEmpty(Tag) Then Tag = "v" & VersionStr
+        Dim DlLink As String = "https://github.com/PCL-Community/PCL2-Language/releases/download/" & Tag & "/PCL2_Lang.exe"
         Dim DlTargetPath As String = Path.Combine(PathExeFolder, "PCL\Plain Craft Launcher 2.exe")
         RunInNewThread(Sub()
                            Try
@@ -229,24 +230,24 @@ Friend Module ModSecret
                                Dim Address As New List(Of String)
                                Address.Add(DlLink)
                                Address.Add($"https://cdn.crashmc.com/{DlLink}")
-                               Loaders.Add(New LoaderDownload("Download file", New List(Of NetFile) From {New NetFile(Address.ToArray, DlTargetPath, New FileChecker(MinSize:=1024 * 64))}) With {.ProgressWeight = 15})
+                               Loaders.Add(New LoaderDownload(GetLang("LangModSecretUpdateTaskDownload"), New List(Of NetFile) From {New NetFile(Address.ToArray, DlTargetPath, New FileChecker(MinSize:=1024 * 64))}) With {.ProgressWeight = 15})
                                '校验 assets[0] digest（如果存在且为 sha256: 开头）
-                               Loaders.Add(New LoaderTask(Of Integer, Integer)("Verify file", Sub()
+                               Loaders.Add(New LoaderTask(Of Integer, Integer)(GetLang("LangModSecretUpdateTaskVerify"), Sub()
                                                                                                   Dim asset = LatestReleaseInfoJson?("assets")?(0)
                                                                                                   Dim digestStr = If(asset IsNot Nothing, asset("digest")?.ToString, Nothing)
                                                                                                   If digestStr IsNot Nothing AndAlso digestStr.StartsWith("sha256:", StringComparison.OrdinalIgnoreCase) Then
                                                                                                       Dim expected = digestStr.Substring(7).Trim().ToLowerInvariant()
                                                                                                       Dim actual = CryptographyUtils.ComputeFileHash(DlTargetPath, CryptographyUtils.HashMethod.Sha256)
                                                                                                       If expected <> actual Then
-                                                                                                          Throw New Exception($"文件校验失败，SHA256 不匹配：期望 {expected}，实际 {actual}")
+                                                                                                          Throw New Exception(GetLang("LangModSecretUpdateShaMismatch", expected, actual))
                                                                                                       End If
                                                                                                   End If
                                                                                               End Sub) With {.ProgressWeight = 1})
                                If Not Slient Then
-                                   Loaders.Add(New LoaderTask(Of Integer, Integer)("Replace file", Sub() UpdateRestart(True)))
+                                   Loaders.Add(New LoaderTask(Of Integer, Integer)(GetLang("LangModSecretUpdateTaskReplace"), Sub() UpdateRestart(True)))
                                End If
                                '启动
-                               Dim Loader As New LoaderCombo(Of JObject)("Update", Loaders)
+                               Dim Loader As New LoaderCombo(Of JObject)(GetLang("LangModSecretUpdateTaskName"), Loaders)
                                Loader.Start()
                                If Slient Then
                                    IsUpdateWaitingRestart = True
@@ -257,7 +258,7 @@ Friend Module ModSecret
                                End If
                            Catch ex As Exception
                                Logger.Error(ex, "[Update] 下载启动器更新文件失败")
-                               Hint("下载启动器更新文件失败，请检查网络连接", HintType.Red)
+                               Hint(GetLang("LangModSecretHintUpdateDownloadFail"), HintType.Red)
                            End Try
                        End Sub)
     End Sub
@@ -278,7 +279,7 @@ Friend Module ModSecret
             End If
         Catch ex As UnauthorizedAccessException
             Logger.Trace(ex, "自动更新时触发 Win32 错误，疑似被拦截")
-            If MyMsgBox(String.Format("由于被 Windows 安全中心拦截，或者存在权限问题，导致 PCL 无法更新。{0}请将 PCL 所在文件夹加入白名单，或者手动用 {1}PCL\Plain Craft Launcher 2.exe 替换当前文件！", vbCrLf, ModBase.PathExe), "更新失败", "查看帮助", "确定", "", True, True, False, Nothing, Nothing, Nothing) = 1 Then
+            If MyMsgBox(GetLang("LangModSecretUpdateFailContent", vbCrLf, ModBase.PathExe), GetLang("LangModSecretUpdateFailTitle"), GetLang("LangModSecretUpdateFailBtnHelp"), GetLang("LangDialogBtnOK"), "", True, True, False, Nothing, Nothing, Nothing) = 1 Then
                 CustomEvent.Raise(CustomEvent.EventType.打开帮助, "启动器/Microsoft Defender 添加排除项.json")
             End If
         End Try
@@ -312,28 +313,28 @@ Friend Module ModSecret
             Try
                 FileUtils.Copy(NewFileName, OldFileName)
             Catch ex4 As UnauthorizedAccessException
-                MsgBox("PCL 更新失败：权限不足。请手动复制 PCL 文件夹下的新版本程序。" & vbCrLf & "若 PCL 位于桌面或 C 盘，你可以尝试将其挪到其他文件夹，这可能可以解决权限问题。" & vbCrLf + ex4.GetDisplay(True), MsgBoxStyle.Critical, "更新失败")
+                MsgBox(GetLang("LangModSecretUpdateFailPermissionContent", ex4.GetDisplay(True)), MsgBoxStyle.Critical, GetLang("LangModSecretUpdateFailTitle"))
             Catch ex5 As Exception
-                MsgBox("PCL 更新失败：无法复制新文件。请手动复制 PCL 文件夹下的新版本程序。" & vbCrLf + ex5.GetDisplay(True), MsgBoxStyle.Critical, "更新失败")
+                MsgBox(GetLang("LangModSecretUpdateFailCopyContent", ex5.GetDisplay(True)), MsgBoxStyle.Critical, GetLang("LangModSecretUpdateFailTitle"))
                 Return
             End Try
             If TriggerRestart Then
                 Try
                     Process.Start(OldFileName)
                 Catch ex6 As Exception
-                    MsgBox("PCL 更新失败：无法重新启动。" & vbCrLf + ex6.GetDisplay(True), MsgBoxStyle.Critical, "更新失败")
+                    MsgBox(GetLang("LangModSecretUpdateFailRestartContent", ex6.GetDisplay(True)), MsgBoxStyle.Critical, GetLang("LangModSecretUpdateFailTitle"))
                 End Try
             End If
             Return
         End If
         If TypeOf ex2 Is UnauthorizedAccessException Then
-            MsgBox(String.Concat(New String() {"由于权限不足，PCL 无法完成更新。请尝试：" & vbCrLf,
+            Dim UpdateFailTips As String = String.Concat(
                                  If((PathExe.StartsWithF(Environment.GetFolderPath(Environment.SpecialFolder.Desktop), False) OrElse PathExe.StartsWithF(Environment.GetFolderPath(Environment.SpecialFolder.Personal), False)),
-                                 " - 将 PCL 文件移动到桌面、文档以外的文件夹（这或许可以一劳永逸地解决权限问题）" & vbCrLf, ""),
+                                 GetLang("LangModSecretUpdateFailTipMoveFromDesktop") & vbCrLf, ""),
                                  If(PathExe.StartsWithF("C", True),
-                                 " - 将 PCL 文件移动到 C 盘以外的文件夹（这或许可以一劳永逸地解决权限问题）" & vbCrLf, ""),
-                                 " - 右键以管理员身份运行 PCL" & vbCrLf & " - 手动复制已下载到 PCL 文件夹下的新版本程序，覆盖原程序" & vbCrLf & vbCrLf,
-                                 ex2.GetDisplay(True)}), MsgBoxStyle.Critical, "更新失败")
+                                 GetLang("LangModSecretUpdateFailTipMoveFromC") & vbCrLf, ""),
+                                 GetLang("LangModSecretUpdateFailTipRunAsAdmin") & vbCrLf & GetLang("LangModSecretUpdateFailTipManualCopy") & vbCrLf & vbCrLf)
+            MsgBox(GetLang("LangModSecretUpdateFailPermissionTryContent", UpdateFailTips, ex2.GetDisplay(True)), MsgBoxStyle.Critical, GetLang("LangModSecretUpdateFailTitle"))
             Return
         End If
         'TODO: fix deletion detect fail

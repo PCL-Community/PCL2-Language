@@ -2203,4 +2203,33 @@ Vous pouvez également accéder à {1} sur un autre appareil et saisir le code.<
 由于二次分发可能违反使用协议，请尽量不要公开发布导出的整合包！</s:String>
     <s:String x:Key="LangPageVersionExportDialogTitleAllGetFail">文件信息获取失败</s:String>
     <s:String x:Key="LangPageVersionExportGenerateArchive">生成压缩包</s:String>
+    <s:String x:Key="LangModSecretHintUpdateCheckFail">Impossible d’obtenir les informations de mise à jour du lanceur. Vérifiez votre connexion internet</s:String>
+    <s:String x:Key="LangModSecretHintUpdateDownloadFail">Impossible de télécharger le fichier de mise à jour du lanceur. Vérifiez votre connexion internet</s:String>
+    <s:String x:Key="LangModSecretUpdateBtnGoUpdate">Mettre à jour maintenant</s:String>
+    <s:String x:Key="LangModSecretUpdateChecking">Recherche de mises à jour…</s:String>
+    <s:String x:Key="LangModSecretUpdateDialogContent">Une nouvelle version est disponible : {0} → {1}
+Voulez-vous mettre à jour maintenant ?</s:String>
+    <s:String x:Key="LangModSecretUpdateDialogTitle">Nouvelle version disponible</s:String>
+    <s:String x:Key="LangModSecretUpdateFailBtnHelp">Afficher l’aide</s:String>
+    <s:String x:Key="LangModSecretUpdateFailContent">PCL a été bloqué par le Centre de sécurité Windows ou ne dispose pas des permissions nécessaires, il ne peut donc pas se mettre à jour. {0}Ajoutez le dossier PCL à la liste blanche ou remplacez manuellement le fichier actuel par {1}PCL\Plain Craft Launcher 2.exe !</s:String>
+    <s:String x:Key="LangModSecretUpdateFailCopyContent">Échec de la mise à jour de PCL : impossible de copier le nouveau fichier. Copiez manuellement la nouvelle version du dossier PCL par-dessus l’ancien programme.
+{0}</s:String>
+    <s:String x:Key="LangModSecretUpdateFailPermissionContent">Échec de la mise à jour de PCL : permissions insuffisantes. Copiez manuellement la nouvelle version du dossier PCL.
+Si PCL se trouve sur le Bureau ou sur le lecteur C, essayez de le déplacer dans un autre dossier ; cela pourrait résoudre le problème.
+{0}</s:String>
+    <s:String x:Key="LangModSecretUpdateFailPermissionTryContent">PCL ne peut pas terminer la mise à jour en raison de permissions insuffisantes. Essayez :
+{0}{1}</s:String>
+    <s:String x:Key="LangModSecretUpdateFailRestartContent">Échec de la mise à jour de PCL : impossible de redémarrer.
+{0}</s:String>
+    <s:String x:Key="LangModSecretUpdateFailTipManualCopy"> - Copiez manuellement la nouvelle version téléchargée dans le dossier PCL par-dessus l’ancien programme</s:String>
+    <s:String x:Key="LangModSecretUpdateFailTipMoveFromC"> - Déplacez les fichiers de PCL dans un dossier en dehors du lecteur C (peut résoudre définitivement le problème de permissions)</s:String>
+    <s:String x:Key="LangModSecretUpdateFailTipMoveFromDesktop"> - Déplacez les fichiers de PCL dans un dossier autre que le Bureau et Documents (peut résoudre définitivement le problème de permissions)</s:String>
+    <s:String x:Key="LangModSecretUpdateFailTipRunAsAdmin"> - Cliquez avec le bouton droit sur PCL et exécutez-le en tant qu’administrateur</s:String>
+    <s:String x:Key="LangModSecretUpdateFailTitle">Échec de la mise à jour</s:String>
+    <s:String x:Key="LangModSecretUpdateLatest">Vous avez déjà la dernière version : {0}</s:String>
+    <s:String x:Key="LangModSecretUpdateShaMismatch">Échec de la vérification du fichier, SHA256 non concordant : attendu {0}, obtenu {1}</s:String>
+    <s:String x:Key="LangModSecretUpdateTaskDownload">Télécharger le fichier de mise à jour</s:String>
+    <s:String x:Key="LangModSecretUpdateTaskName">Mise à jour</s:String>
+    <s:String x:Key="LangModSecretUpdateTaskReplace">Remplacer le fichier de mise à jour</s:String>
+    <s:String x:Key="LangModSecretUpdateTaskVerify">Vérifier le fichier de mise à jour</s:String>
 </ResourceDictionary>

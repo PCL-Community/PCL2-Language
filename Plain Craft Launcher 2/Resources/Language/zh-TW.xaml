@@ -2218,4 +2218,33 @@ PCL 不支援其他亂七八糟的下載協議。</s:String>
 由於二次分發可能違反使用協議，請盡量不要公開發布匯出的模組包！</s:String>
     <s:String x:Key="LangPageVersionExportDialogTitleAllGetFail">檔案資訊取得失敗</s:String>
     <s:String x:Key="LangPageVersionExportGenerateArchive">建立壓縮檔</s:String>
+    <s:String x:Key="LangModSecretHintUpdateCheckFail">取得啟動器更新資訊失敗，請檢查網路連線</s:String>
+    <s:String x:Key="LangModSecretHintUpdateDownloadFail">下載啟動器更新檔案失敗，請檢查網路連線</s:String>
+    <s:String x:Key="LangModSecretUpdateBtnGoUpdate">立即更新</s:String>
+    <s:String x:Key="LangModSecretUpdateChecking">正在檢查更新……</s:String>
+    <s:String x:Key="LangModSecretUpdateDialogContent">偵測到新版本：{0} → {1}
+是否立即更新？</s:String>
+    <s:String x:Key="LangModSecretUpdateDialogTitle">發現新版本</s:String>
+    <s:String x:Key="LangModSecretUpdateFailBtnHelp">查看說明</s:String>
+    <s:String x:Key="LangModSecretUpdateFailContent">由於被 Windows 安全性中心攔截，或存在權限問題，導致 PCL 無法更新。{0}請將 PCL 所在資料夾加入白名單，或手動用 {1}PCL\Plain Craft Launcher 2.exe 取代目前的檔案！</s:String>
+    <s:String x:Key="LangModSecretUpdateFailCopyContent">PCL 更新失敗：無法複製新檔案。請手動複製 PCL 資料夾下的新版本程式。
+{0}</s:String>
+    <s:String x:Key="LangModSecretUpdateFailPermissionContent">PCL 更新失敗：權限不足。請手動複製 PCL 資料夾下的新版本程式。
+若 PCL 位於桌面或 C 碟，你可以嘗試將其移到其他資料夾，這或許可以解決權限問題。
+{0}</s:String>
+    <s:String x:Key="LangModSecretUpdateFailPermissionTryContent">由於權限不足，PCL 無法完成更新。請嘗試：
+{0}{1}</s:String>
+    <s:String x:Key="LangModSecretUpdateFailRestartContent">PCL 更新失敗：無法重新啟動。
+{0}</s:String>
+    <s:String x:Key="LangModSecretUpdateFailTipManualCopy"> - 手動複製已下載到 PCL 資料夾下的新版本程式，覆蓋原程式</s:String>
+    <s:String x:Key="LangModSecretUpdateFailTipMoveFromC"> - 將 PCL 檔案移到 C 碟以外的資料夾（這或許可以一勞永逸地解決權限問題）</s:String>
+    <s:String x:Key="LangModSecretUpdateFailTipMoveFromDesktop"> - 將 PCL 檔案移到桌面、文件以外的資料夾（這或許可以一勞永逸地解決權限問題）</s:String>
+    <s:String x:Key="LangModSecretUpdateFailTipRunAsAdmin"> - 右鍵以系統管理員身分執行 PCL</s:String>
+    <s:String x:Key="LangModSecretUpdateFailTitle">更新失敗</s:String>
+    <s:String x:Key="LangModSecretUpdateLatest">目前已是最新版本：{0}</s:String>
+    <s:String x:Key="LangModSecretUpdateShaMismatch">檔案驗證失敗，SHA256 不符：預期 {0}，實際 {1}</s:String>
+    <s:String x:Key="LangModSecretUpdateTaskDownload">下載更新檔案</s:String>
+    <s:String x:Key="LangModSecretUpdateTaskName">更新</s:String>
+    <s:String x:Key="LangModSecretUpdateTaskReplace">取代更新檔案</s:String>
+    <s:String x:Key="LangModSecretUpdateTaskVerify">驗證更新檔案</s:String>
 </ResourceDictionary>

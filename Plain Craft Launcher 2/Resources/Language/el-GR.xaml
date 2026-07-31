@@ -2214,4 +2214,33 @@ URL: {0}</s:String>
 由于二次分发可能违反使用协议，请尽量不要公开发布导出的整合包！</s:String>
     <s:String x:Key="LangPageVersionExportDialogTitleAllGetFail">文件信息获取失败</s:String>
     <s:String x:Key="LangPageVersionExportGenerateArchive">生成压缩包</s:String>
+    <s:String x:Key="LangModSecretHintUpdateCheckFail">Αποτυχία λήψης πληροφοριών ενημέρωσης του εκκινητή. Ελέγξτε τη σύνδεσή σας στο διαδίκτυο</s:String>
+    <s:String x:Key="LangModSecretHintUpdateDownloadFail">Αποτυχία λήψης του αρχείου ενημέρωσης του εκκινητή. Ελέγξτε τη σύνδεσή σας στο διαδίκτυο</s:String>
+    <s:String x:Key="LangModSecretUpdateBtnGoUpdate">Ενημέρωση τώρα</s:String>
+    <s:String x:Key="LangModSecretUpdateChecking">Έλεγχος για ενημερώσεις…</s:String>
+    <s:String x:Key="LangModSecretUpdateDialogContent">Υπάρχει νέα έκδοση: {0} → {1}
+Θέλετε να ενημερώσετε τώρα;</s:String>
+    <s:String x:Key="LangModSecretUpdateDialogTitle">Νέα έκδοση διαθέσιμη</s:String>
+    <s:String x:Key="LangModSecretUpdateFailBtnHelp">Προβολή βοήθειας</s:String>
+    <s:String x:Key="LangModSecretUpdateFailContent">Το PCL αποκλείστηκε από το Windows Security ή δεν έχει δικαιώματα, οπότε δεν μπορεί να ενημερωθεί. {0}Προσθέστε τον φάκελο PCL στη λίστα επιτρεπόμενων ή αντικαταστήστε χειροκίνητα το τρέχον αρχείο με το {1}PCL\Plain Craft Launcher 2.exe!</s:String>
+    <s:String x:Key="LangModSecretUpdateFailCopyContent">Αποτυχία ενημέρωσης του PCL: δεν ήταν δυνατή η αντιγραφή του νέου αρχείου. Αντιγράψτε χειροκίνητα τη νέα έκδοση από τον φάκελο PCL πάνω στο παλιό πρόγραμμα.
+{0}</s:String>
+    <s:String x:Key="LangModSecretUpdateFailPermissionContent">Αποτυχία ενημέρωσης του PCL: δεν υπάρχουν αρκετά δικαιώματα. Αντιγράψτε χειροκίνητα τη νέα έκδοση από τον φάκελο PCL.
+Εάν το PCL βρίσκεται στην επιφάνεια εργασίας ή στη μονάδα C, δοκιμάστε να το μετακινήσετε σε άλλο φάκελο.
+{0}</s:String>
+    <s:String x:Key="LangModSecretUpdateFailPermissionTryContent">Το PCL δεν μπορεί να ολοκληρώσει την ενημέρωση λόγω ανεπαρκών δικαιωμάτων. Δοκιμάστε:
+{0}{1}</s:String>
+    <s:String x:Key="LangModSecretUpdateFailRestartContent">Αποτυχία ενημέρωσης του PCL: δεν ήταν δυνατή η επανεκκίνηση.
+{0}</s:String>
+    <s:String x:Key="LangModSecretUpdateFailTipManualCopy"> - Αντιγράψτε χειροκίνητα τη νέα έκδοση που κατέβηκε στον φάκελο PCL πάνω στο παλιό πρόγραμμα</s:String>
+    <s:String x:Key="LangModSecretUpdateFailTipMoveFromC"> - Μετακινήστε τα αρχεία του PCL σε φάκελο εκτός της μονάδας C (μπορεί να λύσει οριστικά το πρόβλημα δικαιωμάτων)</s:String>
+    <s:String x:Key="LangModSecretUpdateFailTipMoveFromDesktop"> - Μετακινήστε τα αρχεία του PCL σε φάκελο εκτός επιφάνειας εργασίας και Εγγράφων (μπορεί να λύσει οριστικά το πρόβλημα δικαιωμάτων)</s:String>
+    <s:String x:Key="LangModSecretUpdateFailTipRunAsAdmin"> - Κάντε δεξί κλικ στο PCL και επιλέξτε Εκτέλεση ως διαχειριστής</s:String>
+    <s:String x:Key="LangModSecretUpdateFailTitle">Αποτυχία ενημέρωσης</s:String>
+    <s:String x:Key="LangModSecretUpdateLatest">Έχετε ήδη την πιο πρόσφατη έκδοση: {0}</s:String>
+    <s:String x:Key="LangModSecretUpdateShaMismatch">Αποτυχία επαλήθευσης αρχείου, το SHA256 δεν ταιριάζει: αναμενόταν {0}, βρέθηκε {1}</s:String>
+    <s:String x:Key="LangModSecretUpdateTaskDownload">Λήψη αρχείου ενημέρωσης</s:String>
+    <s:String x:Key="LangModSecretUpdateTaskName">Ενημέρωση</s:String>
+    <s:String x:Key="LangModSecretUpdateTaskReplace">Αντικατάσταση αρχείου ενημέρωσης</s:String>
+    <s:String x:Key="LangModSecretUpdateTaskVerify">Επαλήθευση αρχείου ενημέρωσης</s:String>
 </ResourceDictionary>
