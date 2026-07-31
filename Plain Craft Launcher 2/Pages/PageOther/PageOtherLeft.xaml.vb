@@ -137,7 +137,7 @@ Public Class PageOtherLeft
             Case 1
                 Feedback(True, False)
             Case 2
-                OpenWebsite("https://github.com/Meloong-Git/PCL/issues/")
+                OpenWebsite("https://github.com/PCL-Community/PCL2-Language/issues/new/choose")
         End Select
     End Sub
     Private Sub TryVote(sender As Object, e As RouteEventArgs) Handles ItemVote.Changed
