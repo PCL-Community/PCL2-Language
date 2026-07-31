@@ -302,7 +302,7 @@ Public Class FormMain
         PageRight = FrmLaunchRight
         FrmLaunchRight.PageState = MyPageRight.PageStates.ContentStay
         '模式提醒
-        If BuildType = BuildTypes.Debug Then Hint("[开发者模式] PCL 正以开发者模式运行，这可能会造成严重的性能下降，请务必立即向开发者反馈此问题！", HintType.Red)
+        If BuildType = BuildTypes.Debug Then Hint(GetLang("LangHintDebugDeveloperWarning"), HintType.Red)
         If ModeDebug Then Hint(GetLang("LangHintDebugWarning"))
         '尽早执行的加载池
         McFolderListLoader.Start(0) '为了让下载已存在文件检测可以正常运行，必须跑一次；为了让启动按钮尽快可用，需要尽早执行；为了与 PageLaunchLeft 联动，需要为 0 而不是 GetUuid
@@ -425,9 +425,7 @@ Public Class FormMain
         If BuildType = BuildTypes.Snapshot Then
             Select Case Settings.Get(Of Integer)("SystemCount")
                 Case 1
-                    MyMsgBox("欢迎使用 PCL 快照版！" & vbCrLf &
-                             "快照版包含尚未在正式版发布的测试性功能，仅用于赞助者本人尝鲜。所以请不要发给其他人或者用于制作整合包哦！" & vbCrLf &
-                             "如果你并非通过赞助或赞助者本人邀请进群获得的本程序，那么可能是有人在违规传播，记得提醒他一下啦。", "快照版使用说明")
+                    MyMsgBox(GetLang("LangFormMainSnapshotDialogContent"), GetLang("LangFormMainSnapshotDialogTitle"))
             End Select
             If Settings.Get(Of Integer)("SystemCount") >= 99 Then
                 If ThemeUnlock(6, False) Then
@@ -463,16 +461,14 @@ Public Class FormMain
             Dim UnlockedTheme As New List(Of String)(Settings.Get(Of String)("UiLauncherThemeHide2").ToString.Split("|"))
             UnlockedTheme.Remove("13")
             Settings.Set("UiLauncherThemeHide2", UnlockedTheme.Join("|"c))
-            MyMsgBox("由于新版 PCL 修改了欧皇彩的解锁方式，你需要重新解锁欧皇彩。" & vbCrLf &
-                     "多谢各位的理解啦！", "重新解锁提醒")
+            MyMsgBox(GetLang("LangFormMainThemeUnlockContentA"), GetLang("LangFormMainThemeUnlockDialogTitle"))
         End If
         '重置滑稽彩
         If LastVersionCode <= 152 AndAlso Settings.Get(Of String)("UiLauncherThemeHide2").ToString.Split("|").Contains("12") Then
             Dim UnlockedTheme As New List(Of String)(Settings.Get(Of String)("UiLauncherThemeHide2").ToString.Split("|"))
             UnlockedTheme.Remove("12")
             Settings.Set("UiLauncherThemeHide2", UnlockedTheme.Join("|"c))
-            MyMsgBox("由于新版 PCL 修改了滑稽彩的解锁方式，你需要重新解锁滑稽彩。" & vbCrLf &
-                     "多谢各位的理解啦！", "重新解锁提醒")
+            MyMsgBox(GetLang("LangFormMainThemeUnlockContentB"), GetLang("LangFormMainThemeUnlockDialogTitle"))
         End If
         '移动自定义皮肤
         If LastVersionCode <= 161 AndAlso FileUtils.Exists(Paths.Base & "PCL\CustomSkin.png") AndAlso Not FileUtils.Exists(Paths.AppDataThenName & "CustomSkin.png") Then
@@ -861,7 +857,7 @@ Public Class FormMain
         Settings.Set("LinkLastAutoJoinInviteCode", Code)
         RunInThread(
         Sub()
-            If MyMsgBox("嘿，是否使用复制的邀请码加入房间？", "加入联机房间", "加入", "取消") = 2 Then Return '防止弹窗阻碍主线程，所以必须放在工作线程
+            If MyMsgBox(GetLang("LangFormMainJoinRoomDialogContent"), GetLang("LangFormMainJoinRoomDialogTitle"), GetLang("LangFormMainJoinRoomDialogBtnJoin"), GetLang("LangDialogBtnCancel")) = 2 Then Return '防止弹窗阻碍主线程，所以必须放在工作线程
             RunInUi(
             Sub()
                 PageLinkMain.Join(Code)

@@ -125,7 +125,7 @@ Public Class PageInstanceExport
                 Try
                     If AllEntries.Any(Function(Entry) Entry.Lower Like Rule.Lower) Then Return True
                 Catch ex As Exception
-                    Logger.Error(ex, $"错误的规则：{Rule}", LogBehavior.Toast)
+                    Logger.Error(ex, GetLang("LangPageVersionExportWrongRule", Rule), LogBehavior.Toast)
                     Return False
                 End Try
                 '粗略检查所有级

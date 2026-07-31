@@ -31,7 +31,7 @@ Public Module ModModpack
         Try
             '字符校验
             Dim TargetFolder As String = $"{McFolderSelected}versions\{InstanceName}\"
-            If TargetFolder.Contains("!") OrElse TargetFolder.Contains(";") Then Hint("游戏路径中不能含有感叹号或分号：" & TargetFolder, HintType.Red) : Throw New OperationCanceledException
+            If TargetFolder.Contains("!") OrElse TargetFolder.Contains(";") Then Hint(GetLang("LangModModpackPathNoExclamationOrSemicolon", TargetFolder), HintType.Red) : Throw New OperationCanceledException
             '获取整合包种类与关键 Json
             Dim PackType As Integer = -1
             Try
@@ -166,8 +166,8 @@ Retry:
     ''' 如果取消，则抛出 CancelledException。
     ''' </summary>
     Private Sub NotifyIncompatibleLoader(LoaderName As String)
-        If MyMsgBox($"整合包中存在不兼容的加载器：{LoaderName}{vbCrLf}如果你知道如何手动安装它，可以先选择跳过，然后在整合包下载结束后手动安装。",
-            "不兼容的加载器", "取消", $"不安装 {LoaderName} 并继续") = 1 Then Throw New OperationCanceledException
+        If MyMsgBox(GetLang("LangModModpackDialogContentIncompatibleLoader", LoaderName),
+            GetLang("LangModModpackDialogTitleIncompatibleLoader"), GetLang("LangDialogBtnCancel"), GetLang("LangModModpackDialogBtnSkipLoader", LoaderName)) = 1 Then Throw New OperationCanceledException
     End Sub
 
 #Region "不同类型整合包的安装方法"
@@ -236,7 +236,7 @@ Retry:
         Dim ModOptionalList As New List(Of Integer)
         For Each ModEntry In If(Json("files"), {})
             If ModEntry("projectID") Is Nothing OrElse ModEntry("fileID") Is Nothing Then
-                Hint("某项 Mod 缺少必要信息，已跳过：" & ModEntry.ToString)
+                Hint(GetLang("LangModModpackHintModInfoMissing", ModEntry.ToString))
                 Continue For
             End If
             ModList.Add(ModEntry("fileID"))
@@ -454,7 +454,7 @@ Retry:
             Urls = Urls.Distinct.ToList()
             Dim TargetPath As String = $"{McFolderSelected}versions\{InstanceName}\{File("path")}"
             If Not Path.GetFullPath(TargetPath).StartsWithF(Path.GetFullPath($"{McFolderSelected}versions\{InstanceName}\")) Then
-                MyMsgBox($"整合包的文件路径超出了版本文件夹，请向整合包作者反馈此问题！{vbCrLf}目标：{Path.GetFullPath(TargetPath)}{vbCrLf}错误的文件：{TargetPath}", "文件路径校验失败", IsWarn:=True)
+                MyMsgBox(GetLang("LangModModpackDialogContentPathOutOfRange", Path.GetFullPath(TargetPath), TargetPath), GetLang("LangModModpackDialogTitlePathInvalid"), IsWarn:=True)
                 Throw New OperationCanceledException
             End If
             FileList.Add(New NetFile(Urls, TargetPath,

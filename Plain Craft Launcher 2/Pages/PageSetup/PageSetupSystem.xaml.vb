@@ -28,7 +28,7 @@ Public Class PageSetupSystem
         Lang = TargetLang
         Settings.Set("SystemLang", Lang)
         Application.Current.Resources.MergedDictionaries(1) = New ResourceDictionary With {.Source = New Uri("pack://application:,,,/Resources/Language/" & Lang & ".xaml", UriKind.RelativeOrAbsolute)}
-        If Lang.Equals("zh-MEME") Then MyMsgBox($"此语言仅供娱乐，请勿当真{vbCr}此語言僅供娛樂，請勿當真{vbCr}This language is for entertainment only, please don't take it seriously", IsWarn:=True)
+        If Lang.Equals("zh-MEME") Then MyMsgBox(GetLang("LangPageSetupSystemDialogContentEntertainment"), IsWarn:=True)
         MyMsgBox(GetLang("LangPageSetupSystemDialogContentLanguageRestart"), ForceWait:=True)
         Process.Start(New ProcessStartInfo(PathExe))
         FormMain.EndProgramForce()

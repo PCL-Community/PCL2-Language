@@ -63,17 +63,18 @@
                                       Content="{StaticResource LangDownloadShaderTypeHigh}"
                                       Tag="/high"/>
 
-                <local:MyComboBoxItem Content="加载器"
-                                      IsEnabled="False"/>
-                <local:MyComboBoxItem Margin="15,0,0,0"
-                                      Content="{StaticResource LangDownloadShaderTypeVanilla}"
-                                      Tag="/vanilla"
-                                      ToolTip="{StaticResource LangDownloadShaderTypeVanillaToolTip}"/>
-                <local:MyComboBoxItem Margin="15,0,0,0"
-                                      Content="Iris"
-                                      Tag="/iris"/>
-                <local:MyComboBoxItem Margin="15,0,0,0"
-                                      Content="OptiFine"
-                                      Tag="/optifine"/>
-        </local:PageResource>
+        <local:MyComboBoxItem Content="{StaticResource LangDownloadShaderTypeLoader}"
+                IsEnabled="False"/>
+        <local:MyComboBoxItem Margin="15,0,0,0"
+                Content="{StaticResource LangDownloadShaderTypeVanilla}"
+                Tag="/vanilla"
+                ToolTip="{StaticResource LangDownloadShaderTypeVanillaToolTip}"
+                ToolTipService.HorizontalOffset="70"/>
+        <local:MyComboBoxItem Margin="15,0,0,0"
+                Content="Iris"
+                Tag="/iris"/>
+        <local:MyComboBoxItem Margin="15,0,0,0"
+                Content="OptiFine"
+                Tag="/optifine"/>
+    </local:PageResource>
 </local:MyPageRight>

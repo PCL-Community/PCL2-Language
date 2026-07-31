@@ -43,7 +43,7 @@ Public Module ModLaunch
             Try
                 CurrentLaunchOptions.Instance.GetJsonPath()
             Catch
-                Hint($"无法启动 {CurrentLaunchOptions.Instance.Name}：当前 Minecraft 文件夹中尚未安装该版本！", HintType.Red)
+                Hint(GetLang("LangModLaunchHintVersionNotInstalled", CurrentLaunchOptions.Instance.Name), HintType.Red)
                 Return False
             End Try
             '检查版本
@@ -174,7 +174,8 @@ Public Module ModLaunch
 NextInner:
             If CurrentEx.Message.StartsWithF("$") Then
                 '若有以 $ 开头的错误信息，则以此为准显示提示
-                MyMsgBox(CurrentEx.Message.TrimStart("$"), If(IsSavingBatch, "导出启动脚本失败", "启动失败"))
+                '若错误信息为 $$，则不提示
+                If Not CurrentEx.Message = "$$" Then MyMsgBox(CurrentEx.Message.TrimStart("$"), If(IsSavingBatch, GetLang("LangPageVersionOverallHintExportingCommandFail"), GetLang("LangModLaunchDialogTitleLaunchFail")))
                 Throw
             ElseIf CurrentEx.InnerException IsNot Nothing Then
                 '检查下一级错误
@@ -914,10 +915,10 @@ Retry:
                Response.ContainsIgnoreCase("expired") Then '#8611
                 Return ("Relogin", "")
             ElseIf Response.Contains("Account security interrupt") Then
-                MyMsgBox("该账号由于安全问题无法登陆，请前往微软账户页获取更多信息。", "登录失败", "我知道了", IsWarn:=True)
+                MyMsgBox(GetLang("LangModLaunchDialogContentSecurityInterrupt"), GetLang("LangModLaunchDialogTitleLoginFail"), GetLang("LangModLaunchDialogBtnISee"), IsWarn:=True)
                 Throw New OperationCanceledException
             ElseIf Response.Contains("service abuse") Then
-                MyMsgBox("非常抱歉，该账号已被微软封禁，无法登录。", "登录失败", "我知道了", IsWarn:=True)
+                MyMsgBox(GetLang("LangModLaunchDialogContentBanned"), GetLang("LangModLaunchDialogTitleLoginFail"), GetLang("LangModLaunchDialogBtnISee"), IsWarn:=True)
                 Throw New OperationCanceledException
             Else
                 Throw

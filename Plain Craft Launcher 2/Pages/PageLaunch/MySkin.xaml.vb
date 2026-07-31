@@ -52,7 +52,7 @@ Public Class MySkin
             Return
         End If
         Try
-            Dim FileAddress As String = Dialogs.SaveFile(GetLang("LangMySkinDialogChoseSavePath"), PathUtils.GetLastPart(Address), filter:={("png", "皮肤图片文件")})
+            Dim FileAddress As String = Dialogs.SaveFile(GetLang("LangMySkinDialogChoseSavePath"), PathUtils.GetLastPart(Address), filter:={("png", GetLang("LangMySkinDialogSaveSkinFilter"))})
             If FileAddress Is Nothing Then Return
             If FileAddress.Contains("\") Then
                 FileUtils.Delete(FileAddress)

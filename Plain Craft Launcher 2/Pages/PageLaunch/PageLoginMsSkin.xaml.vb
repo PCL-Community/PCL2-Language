@@ -162,13 +162,13 @@ Retry:
         RunInThread(
         Sub()
             Try
-                Hint("正在刷新披风列表……")
+                Hint(GetLang("LangPageLoginMsSkinCapeListRefreshing"))
                 If McLaunchLoader.State = LoadState.Loading Then
                     McLoginMsLoader.WaitForExit()
                 Else
                     McLoginMsLoader.WaitForExit(GetLoginData(), IsForceRestart:=True)
                 End If
-                Hint("已刷新披风列表！", HintType.Green)
+                Hint(GetLang("LangPageLoginMsSkinCapeListRefreshed"), HintType.Green)
             Catch ex As Exception
                 Logger.Error(ex, "刷新披风列表失败", LogBehavior.Toast)
             End Try

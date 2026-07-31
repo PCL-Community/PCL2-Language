@@ -157,7 +157,7 @@ Public Class PageSetupUI
 
     '顶部栏
     Private Sub BtnLogoChange_Click(sender As Object, e As EventArgs) Handles BtnLogoChange.Click
-        Dim FileName As String = Dialogs.SelectFile("选择图片", False, filter:={({"png", "jpg", "jpeg", "gif", "webp"}, "常用图片文件")}).FirstOrDefault()
+        Dim FileName As String = Dialogs.SelectFile(GetLang("LangDialogSelectImage"), False, filter:={({"png", "jpg", "jpeg", "gif", "webp"}, GetLang("LangDialogImageFileFilter"))}).FirstOrDefault()
         If String.IsNullOrEmpty(FileName) Then Return
         Dim TargetPath As String = Paths.Base & "PCL\Logo.png"
         Try
@@ -201,7 +201,7 @@ Refresh:
             Return
         End If
         '没有图片则要求选择
-        Dim FileName As String = Dialogs.SelectFile("选择图片", False, filter:={({"png", "jpeg", "jpg", "gif", "webp"}, "常用图片文件")}).FirstOrDefault()
+        Dim FileName As String = Dialogs.SelectFile(GetLang("LangDialogSelectImage"), False, filter:={({"png", "jpeg", "jpg", "gif", "webp"}, GetLang("LangDialogImageFileFilter"))}).FirstOrDefault()
         If String.IsNullOrEmpty(FileName) Then
             FrmMain.ImageTitleLogo.Source = Nothing
             e.Handled = True
@@ -316,7 +316,7 @@ Refresh:
                 FrmSetupUI.PanCustomNet.Visibility = Visibility.Collapsed
                 FrmSetupUI.HintCustom.Visibility = Visibility.Visible
                 FrmSetupUI.HintCustomWarn.Visibility = If(Settings.Get(Of Boolean)("HintCustomWarn"), Visibility.Collapsed, Visibility.Visible)
-                FrmSetupUI.HintCustom.Text = $"从 PCL 文件夹下的 Custom.xaml 读取主页内容。{vbCrLf}你可以手动编辑该文件，向主页添加文本、图片、常用网站、快捷启动等功能。"
+                FrmSetupUI.HintCustom.Text = GetLang("LangSetHomePageTipLocal")
                 CustomEventService.SetEventType(FrmSetupUI.HintCustom, CustomEvent.EventType.None)
             Case 2 '联网
                 FrmSetupUI.PanCustomPreset.Visibility = Visibility.Collapsed
@@ -324,7 +324,7 @@ Refresh:
                 FrmSetupUI.PanCustomNet.Visibility = Visibility.Visible
                 FrmSetupUI.HintCustom.Visibility = Visibility.Visible
                 FrmSetupUI.HintCustomWarn.Visibility = If(Settings.Get(Of Boolean)("HintCustomWarn"), Visibility.Collapsed, Visibility.Visible)
-                FrmSetupUI.HintCustom.Text = $"从指定网址联网获取主页内容。服主也可以用于动态更新服务器公告。{vbCrLf}如果你制作了稳定运行的联网主页，可以点击这条提示投稿，若合格即可加入预设！"
+                FrmSetupUI.HintCustom.Text = GetLang("LangSetHomePageTipOnline")
                 CustomEventService.SetEventType(FrmSetupUI.HintCustom, CustomEvent.EventType.打开网页)
                 CustomEventService.SetEventData(FrmSetupUI.HintCustom, "https://github.com/Meloong-Git/PCL/discussions/2528")
             Case 3 '预设

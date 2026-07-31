@@ -146,7 +146,7 @@ Public Class PageSelectLeft
         End If
         Try
             '获取输入
-            NewFolder = Dialogs.SelectFolder("选择 Minecraft 文件夹", False).FirstOrDefault
+            NewFolder = Dialogs.SelectFolder(GetLang("LangSelectDialogChooseMinecraftFolder"), False).FirstOrDefault
             If NewFolder Is Nothing Then Return
             If NewFolder.Contains("!") OrElse NewFolder.Contains(";") Then Hint(GetLang("LangSelectNoSpecialSymbol"), HintType.Red) : Return
             '要求输入显示名称
@@ -294,24 +294,23 @@ Public Class PageSelectLeft
     Public Sub Delete_Click(sender As Object, e As RoutedEventArgs)
         Dim Target As McFolder = CType(CType(CType(sender.Parent, ContextMenu).Parent, Primitives.Popup).PlacementTarget, MyListItem).Tag
         Dim DeleteText As String = If((Target.Type = McFolder.Types.Vanilla OrElse Target.Type = McFolder.Types.RenamedVanilla) AndAlso Target.Location = Paths.Base & ".minecraft\" AndAlso McFolderList.IsSingle, "清空", "删除")
-        If MyMsgBox("你确定要" & DeleteText & "这个文件夹吗？" & vbCrLf &
-                    "目标文件夹：" & Target.Location & vbCrLf & vbCrLf &
-                    "该文件夹中的游戏存档、游戏版本，以及 MC 之外的其他文件，都会永久丢失，不可恢复！", "警告", "取消", "确认", "取消") <> 2 Then Return
-        If MyMsgBoxInput("删除确认",
-                         "该文件夹中的游戏存档、游戏版本，以及 MC 之外的其他文件，都会永久丢失，不可恢复！" & vbCrLf &
-                         "目标文件夹：" & Target.Location & vbCrLf & vbCrLf &
-                         "如果确实要删除，请在下面输入【Potato】这个单词以继续。",
-                         ValidateRules:=New ObjectModel.Collection(Of Validate) From {New ValidateSame("Potato", $"请输入 {vbLQ}Potato{vbRQ}", IgnoreCase:=True)},
-                         Button1:="永久删除文件夹", Button2:="取消", IsWarn:=True) Is Nothing Then Return
+        Dim DeleteTextLang As String = If(DeleteText = "清空", GetLang("LangDialogBtnEmpty"), GetLang("LangSelectDelete"))
+        If MyMsgBox(GetLang("LangSelectDialogDeleteConfirmContent", DeleteTextLang, Target.Location),
+                    GetLang("LangDialogTitleWarning"), GetLang("LangDialogBtnCancel"), GetLang("LangDialogBtnConfirm"), GetLang("LangDialogBtnCancel")) <> 2 Then Return
+        If MyMsgBoxInput(GetLang("LangSelectDialogDeleteConfirmTitle"),
+                         GetLang("LangSelectDialogDeleteConfirmContent", DeleteTextLang, Target.Location) & vbCrLf & vbCrLf &
+                         GetLang("LangSelectDialogDeleteInputPotato"),
+                         ValidateRules:=New ObjectModel.Collection(Of Validate) From {New ValidateSame("Potato", GetLang("LangSelectDialogDeleteInputPotatoHint"), IgnoreCase:=True)},
+                         Button1:=GetLang("LangSelectDialogDeleteBtnPermanentDelete"), Button2:=GetLang("LangDialogBtnCancel"), IsWarn:=True) Is Nothing Then Return
         RemoveFolderFromSetup(Target)
         RunInNewThread(
         Sub()
             '删除文件夹
             Try
-                Hint("正在" & DeleteText & "文件夹 " & Target.Name & "！", HintType.Blue)
+                Hint(GetLang("LangSelectFolderDeleting", DeleteTextLang, Target.Name), HintType.Blue)
                 DirectoryUtils.Delete(Target.Location)
                 If DeleteText = "清空" Then DirectoryUtils.Create(Target.Location)
-                Hint("已" & DeleteText & "文件夹 " & Target.Name & "！", HintType.Green)
+                Hint(If(DeleteText = "清空", GetLang("LangSelectFolderEmptied", Target.Name), GetLang("LangSelectFolderDeleted", Target.Name)), HintType.Green)
             Catch ex As Exception
                 Logger.Error(ex, $"{DeleteText}文件夹 {Target.Name} 失败", LogBehavior.Toast)
             Finally
@@ -378,7 +377,7 @@ Public Class PageSelectLeft
             Next
             '如果没有添加过，则添加进去（因为修改了默认项的名称）
             If Not IsAdded Then Folders.Add(NewName & ">" & Folder.Location)
-            Hint("文件夹名称已更新为 " & NewName & " ！", HintType.Green)
+            Hint(GetLang("LangSelectRenameSuccess", NewName), HintType.Green)
             '保存
             Settings.Set("LaunchFolders", Folders.Join("|"))
             McFolderListLoader.Start(IsForceRestart:=True)

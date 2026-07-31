@@ -71,9 +71,9 @@
                                      HorizontalOffset="10"
                                      VerticalOffset="18">
                             <local:MyMenuItem Click="BtnEditPassword_Click"
-                                              Header="修改密码"/>
+                Header="{StaticResource LangPageLoginMsSkinInfoChangePassword}"/>
                             <local:MyMenuItem Click="BtnEditName_Click"
-                                              Header="修改玩家名"/>
+                Header="{StaticResource LangPageLoginMsSkinInfoChangeID}"/>
                         </ContextMenu>
                     </local:MyIconButton.ContextMenu>
                 </local:MyIconButton>

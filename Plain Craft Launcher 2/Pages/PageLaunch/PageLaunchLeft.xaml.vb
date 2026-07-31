@@ -737,8 +737,8 @@ ExitRefresh:
                 Return
             End Try
             LabLaunchingTitle.Text = If(IsLaunched OrElse McLaunchLoaderReal.State = LoadState.Finished,
-                "已启动游戏",
-                If(CurrentLaunchOptions.SaveBatch Is Nothing, "正在启动游戏", "正在导出启动脚本"))
+                GetLang("LangLaunchLeftStarted"),
+                If(CurrentLaunchOptions.SaveBatch Is Nothing, GetLang("LangLaunchLeftStartingInstance"), GetLang("LangLaunchLeftExportStartingInstanceCommand")))
             If AniIsRun("Launch State Page") Then IsLaunched = False '等待页面切换动画完成
             '更新进度
             Dim ActualProgress = McLaunchLoaderReal.Progress

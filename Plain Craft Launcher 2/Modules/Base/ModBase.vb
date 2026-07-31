@@ -1081,7 +1081,7 @@ Public Module ModBase
                         If Not String.IsNullOrEmpty(Text) Then My.Computer.Clipboard.SetText(Text)
                     End Sub)
                 End Sub)
-                If ShowSuccessHint Then Hint("已成功复制！", HintType.Green)
+                If ShowSuccessHint Then Hint(GetLang("LangModBaseHintCopySuccess"), HintType.Green)
             Catch ex As Exception
                 Logger.Error(ex, "可能由于剪贴板被其他程序占用，文本复制失败", LogBehavior.Toast)
             End Try

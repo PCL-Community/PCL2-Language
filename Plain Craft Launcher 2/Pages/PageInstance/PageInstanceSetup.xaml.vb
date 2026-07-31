@@ -536,10 +536,8 @@ PreFin:
         If AniControlEnabled <> 0 Then Return
         Static IsReverting As Boolean = False
         If IsReverting Then Return
-        If MyMsgBox("调整版本隔离设置后，你需要游戏存档、Mod 等文件手动迁移到新的游戏文件夹中。" & vbCrLf &
-                    "如果发现存档消失，把这项设置改回来就能恢复。" & vbCrLf &
-                    "如果你不会迁移存档，不建议修改这项设置！",
-                    "警告", "我知道我在做什么", "取消", IsWarn:=True) = 2 Then
+        If MyMsgBox(GetLang("LangPageVersionSetupIndieV2DialogContent"), GetLang("LangDialogTitleWarning"),
+                    GetLang("LangPageSetupSystemLaunchDialogAnnouncementBtnConfirm"), GetLang("LangDialogBtnCancel"), IsWarn:=True) = 2 Then
             IsReverting = True
             If e.RemovedItems.Count > 0 Then ComboArgumentIndieV2.SelectedItem = e.RemovedItems(0)
             IsReverting = False

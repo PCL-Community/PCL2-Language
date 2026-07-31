@@ -162,7 +162,7 @@ Public Class PageInstanceOverall
         '选择 自定义 时修改图片
         Try
             If ComboDisplayLogo.SelectedItem Is ItemDisplayLogoCustom Then
-                Dim FileName As String = Dialogs.SelectFile("选择图片", False, filter:={({"png", "jpeg", "jpg", "gif", "webp"}, "常用图片文件")}).FirstOrDefault()
+                Dim FileName As String = Dialogs.SelectFile(GetLang("LangDialogSelectImage"), False, filter:={({"png", "jpeg", "jpg", "gif", "webp"}, GetLang("LangDialogImageFileFilter"))}).FirstOrDefault()
                 If String.IsNullOrEmpty(FileName) Then
                     Reload() '还原选项
                     Return
@@ -236,7 +236,7 @@ Public Class PageInstanceOverall
     Private Sub BtnManageScript_Click() Handles BtnManageScript.Click
         Try
             '弹窗要求指定脚本的保存位置
-            Dim SavePath As String = Dialogs.SaveFile(GetLang("LangPageVersionOverallSelectSaveCommandFile"), "启动 " & PageInstanceLeft.Instance.Name & ".bat", filter:={("bat", "批处理文件")})
+            Dim SavePath As String = Dialogs.SaveFile(GetLang("LangPageVersionOverallSelectSaveCommandFile"), "启动 " & PageInstanceLeft.Instance.Name & ".bat", filter:={("bat", GetLang("LangPageVersionOverallBatchFileFilter"))})
             If SavePath Is Nothing Then Return
             '检查中断（等玩家选完弹窗指不定任务就结束了呢……）
             If McLaunchLoader.State = LoadState.Loading Then

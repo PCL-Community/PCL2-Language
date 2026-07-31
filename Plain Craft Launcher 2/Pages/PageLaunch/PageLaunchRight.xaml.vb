@@ -248,8 +248,8 @@ Public Class PageLaunchRight
     Private Sub OnLoadContentFailed(ex As Exception)
         If ModeDebug OrElse Settings.Get(Of Integer)("UiCustomType") = 1 Then
             Logger.Warn(ex, "加载主页失败")
-            If MyMsgBox(If(TypeOf ex Is UnauthorizedAccessException, ex.Message, $"主页内容编写有误，请根据下列错误信息进行检查：{vbCrLf}{ex.GetDisplay(False)}"),
-                        "加载主页失败", "重试", "取消") = 1 Then ForceRefresh()
+            If MyMsgBox(If(TypeOf ex Is UnauthorizedAccessException, ex.Message, GetLang("LangLaunchRightPageLoadFailContent", ex.GetDisplay(False))),
+                        GetLang("LangLaunchRightPageLoadFailTitle"), GetLang("LangDialogBtnRetry"), GetLang("LangDialogBtnCancel")) = 1 Then ForceRefresh()
         Else
             Logger.Error(ex, "加载主页失败", LogBehavior.Toast)
         End If

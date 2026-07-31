@@ -472,7 +472,7 @@ PreFin:
     '版本隔离提示
     Private Sub ComboArgumentIndie_SelectionChanged(sender As Object, e As SelectionChangedEventArgs) Handles ComboArgumentIndieV2.SelectionChanged
         If AniControlEnabled <> 0 Then Return
-        MyMsgBox("本设置仅会对之后新安装的版本生效。" & vbCrLf & "如果要修改已安装的版本的隔离方式，请在它的版本独立设置中调整。")
+        MyMsgBox(GetLang("LangPageSetupLaunchVersionIsolationDialogContent"))
     End Sub
 
 #End Region

@@ -664,7 +664,7 @@
                                 local:SettingService.Key="UiCustomNet"
                                 Grid.Column="1"
                                 MaxHeight="28"
-                                         ToolTip="你可以用替换标记动态改变网址，以传入参数或变量。&#xa;在 更多 → 帮助 中搜索 “替换标记” 以了解用法。">
+                                         ToolTip="{StaticResource LangSetHomePageTipNet}">
                             <local:MyTextBox.ValidateRules>
                                 <local:ValidateNullable/>
                                 <local:ValidateHttp/>

@@ -275,7 +275,7 @@ Public Class PageInstanceMod
     ''' 安装 Mod。
     ''' </summary>
     Private Sub BtnManageInstall_Click(sender As Object, e As MouseButtonEventArgs) Handles BtnManageInstall.Click, BtnHintInstall.Click
-        Dim FileList = Dialogs.SelectFile("选择要安装的 Mod", True, filter:={({"jar", "litemod", "disabled", "old"}, "Mod 文件")})
+        Dim FileList = Dialogs.SelectFile(GetLang("LangPageVersionModSelectModToInstall"), True, filter:={({"jar", "litemod", "disabled", "old"}, GetLang("LangPageVersionModFileFilter"))})
         If Not FileList.Any Then Return
         InstallMods(FileList)
     End Sub
